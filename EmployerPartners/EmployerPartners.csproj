@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4355DE2E-E7A0-4DDA-9880-8E7BB3A87D34}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EmployerPartners</RootNamespace>
+    <AssemblyName>EmployerPartners</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CardContact.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CardContact.Designer.cs">
+      <DependentUpon>CardContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\CardPartner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\CardPartner.Designer.cs">
+      <DependentUpon>CardPartner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\CardPartner.Fields.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\CardSettingsEmail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\CardSettingsEmail.Designer.cs">
+      <DependentUpon>CardSettingsEmail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cards\ListOrganizations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cards\ListOrganizations.Designer.cs">
+      <DependentUpon>ListOrganizations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Country.cs">
+      <DependentUpon>EmployerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="C_AppSettings.cs">
+      <DependentUpon>EmployerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployerPartners.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployerPartners.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployerPartners.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployerPartners.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployerPartners.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Graphics\GListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="InboxMessage.cs">
+      <DependentUpon>EmployerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InboxMessageFile.cs">
+      <DependentUpon>EmployerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Organization.cs">
+      <DependentUpon>EmployerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrganizationContacts.cs">
+      <DependentUpon>EmployerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Region.cs">
+      <DependentUpon>EmployerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Util.cs" />
+    <EmbeddedResource Include="CardContact.resx">
+      <DependentUpon>CardContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cards\CardPartner.resx">
+      <DependentUpon>CardPartner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cards\CardSettingsEmail.resx">
+      <DependentUpon>CardSettingsEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cards\ListOrganizations.resx">
+      <DependentUpon>ListOrganizations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EntityDeploy Include="EmployerPartners.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EmployerPartners.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EmployerPartners.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EmployerPartners.edmx</DependentUpon>
+      <LastGenOutput>EmployerPartners.Context.cs</LastGenOutput>
+    </None>
+    <None Include="EmployerPartners.edmx.diagram">
+      <DependentUpon>EmployerPartners.edmx</DependentUpon>
+    </None>
+    <None Include="EmployerPartners.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EmployerPartners.edmx</DependentUpon>
+      <LastGenOutput>EmployerPartners.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\add-icon_16px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\KLADR\KLADR\KLADR.csproj">
+      <Project>{73f34af5-f8f4-4fc8-9364-b14e2c5ec8ba}</Project>
+      <Name>KLADR</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
