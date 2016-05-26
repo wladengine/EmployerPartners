@@ -18,6 +18,7 @@ namespace EmployerPartners
         public Country()
         {
             this.Organization = new HashSet<Organization>();
+            this.PartnerPerson = new HashSet<PartnerPerson>();
         }
     
         public int Id { get; set; }
@@ -30,5 +31,7 @@ namespace EmployerPartners
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Organization> Organization { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PartnerPerson> PartnerPerson { get; set; }
     }
 }

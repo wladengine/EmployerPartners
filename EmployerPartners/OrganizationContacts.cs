@@ -14,14 +14,8 @@ namespace EmployerPartners
     
     public partial class OrganizationContacts
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OrganizationContacts()
-        {
-            this.Author = "";
-        }
-    
         public int Id { get; set; }
-        public System.Guid OrganizationId { get; set; }
+        public int OrganizationId { get; set; }
         public string Name { get; set; }
         public string NameEng { get; set; }
         public string Position { get; set; }

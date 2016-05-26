@@ -34,5 +34,41 @@ namespace EmployerPartners
         {
             new CardSettingsEmail().Show();
         }
+
+        private void smiPersonList_Click(object sender, EventArgs e)
+        {
+            new ListPersons().Show();
+        }
+
+        private void smiDegree_Click(object sender, EventArgs e)
+        {
+            new CardDictionaryDegree().Show();
+        }
+
+        private void smiRank_Click(object sender, EventArgs e)
+        {
+            new CardDictionaryRank().Show();
+        }
+
+        private void smiActivityArea_Click(object sender, EventArgs e)
+        {
+            new CardDictionaryActivityArea().Show();
+        }
+
+        private void smiActivityGoal_Click(object sender, EventArgs e)
+        {
+            new CardDictionaryActivityGoal().Show();
+
+        }
+
+        private void ationalityAffiliation_Click(object sender, EventArgs e)
+        {
+            new CardDictionaryNatAffiliation().Show();
+        }
+
+        private void smiOwnership_Click(object sender, EventArgs e)
+        {
+            new CardDictionaryOwnership().Show();
+        }
     }
 }

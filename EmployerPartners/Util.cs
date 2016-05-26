@@ -108,4 +108,9 @@ namespace EmployerPartners
             return false;
         }
     }
+   
+    public delegate void UpdateVoidHandler(int? id);
+    public delegate void UpdateStringHandler(int? id, string Name);
+
+
 }
