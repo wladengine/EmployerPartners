@@ -303,6 +303,7 @@
             this.btnAreaDelete.Size = new System.Drawing.Size(25, 24);
             this.btnAreaDelete.TabIndex = 28;
             this.btnAreaDelete.UseVisualStyleBackColor = true;
+            this.btnAreaDelete.Visible = false;
             this.btnAreaDelete.Click += new System.EventHandler(this.btnAreaDelete_Click);
             // 
             // btnAreaAdd
@@ -313,6 +314,7 @@
             this.btnAreaAdd.Size = new System.Drawing.Size(25, 24);
             this.btnAreaAdd.TabIndex = 28;
             this.btnAreaAdd.UseVisualStyleBackColor = true;
+            this.btnAreaAdd.Visible = false;
             this.btnAreaAdd.Click += new System.EventHandler(this.btnAreaAdd_Click);
             // 
             // dgvArea
@@ -325,6 +327,7 @@
             this.dgvArea.ReadOnly = true;
             this.dgvArea.Size = new System.Drawing.Size(345, 160);
             this.dgvArea.TabIndex = 27;
+            this.dgvArea.Visible = false;
             this.dgvArea.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvActivityArea_CellDoubleClick);
             // 
             // cbNationalAffiliation
@@ -645,6 +648,7 @@
             this.label27.Size = new System.Drawing.Size(118, 13);
             this.label27.TabIndex = 3;
             this.label27.Text = "Сферы деятельности:";
+            this.label27.Visible = false;
             // 
             // label26
             // 

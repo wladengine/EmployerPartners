@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using FastMember;
 
 using KLADR;
 
@@ -125,18 +126,11 @@ namespace EmployerPartners
                                x.Id,
                                Название = a.Name,
                            }).ToList();
-                DataTable tbl = new DataTable();
-                tbl.Columns.Add("Id");
-                tbl.Columns.Add("Название");
-                foreach (var x in lst)
-                {
-                    DataRow rw = tbl.NewRow();
-                    rw.SetField<int>("Id", x.Id);
-                    rw.SetField<string>("Название", x.Название);
-                    tbl.Rows.Add(rw);
-                }
-                dgvArea.DataSource = tbl;
-                dgvActivityArea.DataSource = tbl;
+                
+                
+                
+                dgvArea.DataSource = lst;
+                dgvActivityArea.DataSource = lst;
 
                 foreach (string s in new List<string>() { "Id" })
                 {
@@ -174,6 +168,9 @@ namespace EmployerPartners
                                Должность_в_организации = x.Position,
                                Комментарий = x.Comment,
                            }).ToList();
+
+
+
                 dgvContacts.DataSource = lst;
                 foreach (string s in new List<string>() { "Id", "OrgId" })
                     if (dgvContacts.Columns.Contains(s))
@@ -552,6 +549,9 @@ namespace EmployerPartners
                                x.Id,
                                Рубрика = r.Name
                            }).ToList();
+
+
+
                 dgvRubric.DataSource = lst;
                 foreach (string s in new List<string>() { "Id" })
                     if (dgvRubric.Columns.Contains(s))
@@ -623,6 +623,9 @@ namespace EmployerPartners
                                x.Id,
                                Направление = r.Name
                            }).ToList();
+
+
+
                 dgvFaculty.DataSource = lst;
                 foreach (string s in new List<string>() { "Id" })
                     if (dgvFaculty.Columns.Contains(s))
@@ -698,6 +701,9 @@ namespace EmployerPartners
                                Тип_программы = r.ProgramType.Name,
                                Квалификация = r.Qualification.Name,
                            }).ToList();
+
+
+
                 dgvLP.DataSource = lst;
                 foreach (string s in new List<string>() { "Id" })
                     if (dgvLP.Columns.Contains(s))

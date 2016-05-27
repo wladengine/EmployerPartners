@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FastMember;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,6 +30,9 @@ namespace EmployerPartners
                                x.Id,
                                x.Name
                            }).OrderBy(x=>x.Name).ToList();
+                
+                
+                
                 dgv.DataSource = lst;
 
                 if (dgv.Columns.Contains("Id"))

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FastMember;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -105,6 +106,9 @@ namespace EmployerPartners
                                Комментарий = org.Comment,
 
                            }).ToList();
+                
+                
+                
                 dgv.DataSource = lst;
                 List<string> Cols = new List<string>() { "Id" };
 

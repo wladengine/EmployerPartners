@@ -32,6 +32,7 @@
             this.организацииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smiOrganizationList = new System.Windows.Forms.ToolStripMenuItem();
             this.smiPersonList = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiOrganizationStat = new System.Windows.Forms.ToolStripMenuItem();
             this.smiSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.smiEmailSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.образовательныеСоветыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,7 +65,8 @@
             // 
             this.организацииToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.smiOrganizationList,
-            this.smiPersonList});
+            this.smiPersonList,
+            this.smiOrganizationStat});
             this.организацииToolStripMenuItem.Name = "организацииToolStripMenuItem";
             this.организацииToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.организацииToolStripMenuItem.Text = "Списки";
@@ -72,16 +74,23 @@
             // smiOrganizationList
             // 
             this.smiOrganizationList.Name = "smiOrganizationList";
-            this.smiOrganizationList.Size = new System.Drawing.Size(189, 22);
+            this.smiOrganizationList.Size = new System.Drawing.Size(234, 22);
             this.smiOrganizationList.Text = "Список организаций";
             this.smiOrganizationList.Click += new System.EventHandler(this.smiOrganizationList_Click);
             // 
             // smiPersonList
             // 
             this.smiPersonList.Name = "smiPersonList";
-            this.smiPersonList.Size = new System.Drawing.Size(189, 22);
+            this.smiPersonList.Size = new System.Drawing.Size(234, 22);
             this.smiPersonList.Text = "Список физ.лиц";
             this.smiPersonList.Click += new System.EventHandler(this.smiPersonList_Click);
+            // 
+            // smiOrganizationStat
+            // 
+            this.smiOrganizationStat.Name = "smiOrganizationStat";
+            this.smiOrganizationStat.Size = new System.Drawing.Size(234, 22);
+            this.smiOrganizationStat.Text = "Статистика по организациям";
+            this.smiOrganizationStat.Click += new System.EventHandler(this.smiOrganizationStat_Click);
             // 
             // smiSettings
             // 
@@ -200,5 +209,6 @@
         private System.Windows.Forms.ToolStripMenuItem smiOwnership;
         private System.Windows.Forms.ToolStripMenuItem smiActivityGoal;
         private System.Windows.Forms.ToolStripMenuItem ationalityAffiliation;
+        private System.Windows.Forms.ToolStripMenuItem smiOrganizationStat;
     }
 }

@@ -44,14 +44,17 @@
             // 
             // tbName
             // 
+            this.tbName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbName.Location = new System.Drawing.Point(12, 36);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(366, 20);
+            this.tbName.Size = new System.Drawing.Size(392, 20);
             this.tbName.TabIndex = 1;
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(303, 62);
+            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAdd.Location = new System.Drawing.Point(329, 62);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 2;
@@ -63,10 +66,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(390, 98);
+            this.ClientSize = new System.Drawing.Size(416, 98);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.label1);
+            this.MaximumSize = new System.Drawing.Size(999, 136);
+            this.MinimumSize = new System.Drawing.Size(432, 136);
             this.Name = "CardDictionaryItem";
             this.Text = "Редактирование элемента";
             this.ResumeLayout(false);

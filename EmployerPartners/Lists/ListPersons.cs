@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FastMember;
 
 namespace EmployerPartners
 {
@@ -90,6 +91,9 @@ namespace EmployerPartners
                                Web_сайт = org.WebSite,
                                Комментарий = org.Comment,
                            }).ToList();
+
+
+
                 dgv.DataSource = lst;
                 List<string> Cols = new List<string>() { "Id" };
 

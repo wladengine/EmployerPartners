@@ -70,5 +70,10 @@ namespace EmployerPartners
         {
             new CardDictionaryOwnership().Show();
         }
+
+        private void smiOrganizationStat_Click(object sender, EventArgs e)
+        {
+            new CardOrganizationStat().Show();
+        }
     }
 }

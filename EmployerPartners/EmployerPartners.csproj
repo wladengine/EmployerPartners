@@ -41,6 +41,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\_Shared libs\EducServLib\EducServLib\bin\Debug\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, PublicKeyToken=9056fda458ff61cf, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.Signed.1.0.0.11\lib\net40\FastMember.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -56,6 +63,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WordOut">
+      <HintPath>..\..\_Shared libs\WordOut.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityArea.cs">
@@ -240,6 +250,9 @@
     <Compile Include="Dictionary\CardDictionaryDegree.Designer.cs">
       <DependentUpon>CardDictionaryDegree.cs</DependentUpon>
     </Compile>
+    <Compile Include="Graphics\GListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HelpClass.cs" />
     <Compile Include="ListItem.cs" />
     <Compile Include="Lists\ListPersons.cs">
@@ -247,6 +260,12 @@
     </Compile>
     <Compile Include="Lists\ListPersons.Designer.cs">
       <DependentUpon>ListPersons.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Lists\CardOrganizationStat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lists\CardOrganizationStat.Designer.cs">
+      <DependentUpon>CardOrganizationStat.cs</DependentUpon>
     </Compile>
     <Compile Include="OldCards\CardPartner_old.cs">
       <SubType>Form</SubType>
@@ -316,9 +335,6 @@
     </Compile>
     <Compile Include="Lists\ListOrganizations.Designer.cs">
       <DependentUpon>ListOrganizations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Graphics\GListBox.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -487,6 +503,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CardsCommon\CardDictionary.resx">
       <DependentUpon>CardDictionary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lists\CardOrganizationStat.resx">
+      <DependentUpon>CardOrganizationStat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Lists\ListPersons.resx">
       <DependentUpon>ListPersons.cs</DependentUpon>

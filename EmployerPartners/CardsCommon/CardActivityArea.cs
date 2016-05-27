@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace EmployerPartners
 {
-    public partial class CardActivityArea : CardDictionary
+    public partial class CardActivityArea : Form
     {
         public int? _id;
         public int ObjectId;

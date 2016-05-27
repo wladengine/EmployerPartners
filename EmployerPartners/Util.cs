@@ -18,6 +18,7 @@ namespace EmployerPartners
         public static List<KeyValuePair<int, string>> lstCountry;
         public static List<KeyValuePair<int, string>> lstRegion;
         public static string TempFilesFolder;
+        public static string TemplatesFolder;
         public static List<KeyValuePair<int, string>> lstRegionCode;
 
         public static List<KeyValuePair<int, string>> lstCountryCity;
@@ -27,6 +28,8 @@ namespace EmployerPartners
         static Util()
         {
             Init();
+
+            TemplatesFolder = string.Format(@"{0}\Templates", Application.StartupPath);
             TempFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\EmployerPartners_TempFiles\";
             try
             {
