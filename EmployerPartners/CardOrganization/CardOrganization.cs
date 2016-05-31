@@ -1029,12 +1029,18 @@ namespace EmployerPartners
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
                 var lst = (from x in context.OrganizationFaculty
-                           join r in context.Faculty on x.FacultyId equals r.Id
+                            
+                           join f in context.Faculty on x.FacultyId equals f.Id
+
+                           join r in context.Rubric on x.RubricId equals r.Id into _r
+                           from r in _r.DefaultIfEmpty()
+
                            where x.OrganizationId == _Id
                            select new
                            {
                                x.Id,
-                               Направление = r.Name
+                               Рубрика = r.ShortName,
+                               Направление = f.Name
                            }).ToList();
                 dgvFaculty.DataSource = lst;
                 foreach (string s in new List<string>() { "Id" })
@@ -1044,7 +1050,7 @@ namespace EmployerPartners
                     foreach (DataGridViewRow rw in dgvFaculty.Rows)
                         if (rw.Cells[0].Value.ToString() == id.Value.ToString())
                         {
-                            dgvFaculty.CurrentCell = rw.Cells["Направление"];
+                            dgvFaculty.CurrentCell = rw.Cells["Рубрика"];
                             break;
                         }
             }
@@ -1100,16 +1106,19 @@ namespace EmployerPartners
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
                 var lst = (from x in context.OrganizationLP
-                           join r in context.LicenseProgram on x.LicenseProgramId equals r.Id
+                           join f in context.LicenseProgram on x.LicenseProgramId equals f.Id
+                           join r in context.Rubric on x.RubricId equals r.Id into _r
+                           from r in _r.DefaultIfEmpty()
                            where x.OrganizationId == _Id
                            select new
                            {
                                x.Id,
-                               Код = r.Code,
-                               Уровень = r.StudyLevel.Name,
-                               Направление = r.Name,
-                               Тип_программы = r.ProgramType.Name,
-                               Квалификация = r.Qualification.Name,
+                               Рубрика = r.ShortName,
+                               Код = f.Code,
+                               Уровень = f.StudyLevel.Name,
+                               Направление = f.Name,
+                               Тип_программы = f.ProgramType.Name,
+                               Квалификация = f.Qualification.Name,
                            }).ToList();
                 dgvLP.DataSource = lst;
                 foreach (string s in new List<string>() { "Id" })

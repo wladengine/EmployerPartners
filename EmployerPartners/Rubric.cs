@@ -19,6 +19,10 @@ namespace EmployerPartners
         {
             this.OrganizationRubric = new HashSet<OrganizationRubric>();
             this.PartnerPersonRubric = new HashSet<PartnerPersonRubric>();
+            this.OrganizationFaculty = new HashSet<OrganizationFaculty>();
+            this.OrganizationLP = new HashSet<OrganizationLP>();
+            this.PartnerPersonFaculty = new HashSet<PartnerPersonFaculty>();
+            this.PartnerPersonLP = new HashSet<PartnerPersonLP>();
         }
     
         public int Id { get; set; }
@@ -32,5 +36,13 @@ namespace EmployerPartners
         public virtual ICollection<OrganizationRubric> OrganizationRubric { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PartnerPersonRubric> PartnerPersonRubric { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrganizationFaculty> OrganizationFaculty { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrganizationLP> OrganizationLP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PartnerPersonFaculty> PartnerPersonFaculty { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PartnerPersonLP> PartnerPersonLP { get; set; }
     }
 }

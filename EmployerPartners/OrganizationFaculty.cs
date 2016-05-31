@@ -19,8 +19,10 @@ namespace EmployerPartners
         public int FacultyId { get; set; }
         public string Author { get; set; }
         public System.DateTime DateCreated { get; set; }
+        public Nullable<int> RubricId { get; set; }
     
         public virtual Faculty Faculty { get; set; }
         public virtual Organization Organization { get; set; }
+        public virtual Rubric Rubric { get; set; }
     }
 }

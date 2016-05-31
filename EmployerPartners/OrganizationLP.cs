@@ -19,8 +19,10 @@ namespace EmployerPartners
         public int LicenseProgramId { get; set; }
         public string Author { get; set; }
         public System.DateTime DateCreated { get; set; }
+        public Nullable<int> RubricId { get; set; }
     
         public virtual LicenseProgram LicenseProgram { get; set; }
         public virtual Organization Organization { get; set; }
+        public virtual Rubric Rubric { get; set; }
     }
 }

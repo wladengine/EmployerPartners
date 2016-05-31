@@ -102,6 +102,10 @@
         <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPersonLP_PartnerPerson" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPersonRubric_PartnerPerson" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPersonRubric_Rubric" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationFaculty_Rubric" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationLP_Rubric" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPersonFaculty_Rubric" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPersonLP_Rubric" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

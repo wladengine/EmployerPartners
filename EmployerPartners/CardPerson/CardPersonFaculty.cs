@@ -22,11 +22,12 @@ namespace EmployerPartners
         }
         public override void FillCard()
         {
-            string query = "dbo.Faculty where Id not in (select FacultyId from dbo.PartnerPersonFaculty where PartnerPersonId = " + ObjectId.ToString() +
-                ((_id.HasValue) ? (" and Id!= " + _id.Value.ToString() + ")") : ")");
+            string query = "dbo.Faculty ";
+            //string query = "dbo.Faculty where Id not in (select FacultyId from dbo.PartnerPersonFaculty where PartnerPersonId = " + ObjectId.ToString() +
+            //    ((_id.HasValue) ? (" and Id!= " + _id.Value.ToString() + ")") : ")");
             if (!_id.HasValue)
             {
-                FillControls(query, null);
+                FillControls(query, null, null);
                 return;
             }
             else
@@ -39,12 +40,13 @@ namespace EmployerPartners
                                && x.PartnerPersonId == ObjectId
                                select new
                                {
-                                   p.Id,
+                                   x.RubricId,
+                                  FacultyId = p.Id,
                                    p.Name,
                                }).FirstOrDefault();
                     if (lst == null)
                         return;
-                    FillControls(query, lst.Id);
+                    FillControls(query, lst.FacultyId, lst.RubricId);
                 }
         }
         public override bool CheckExist(EmployerPartnersEntities context, int? AreaId)
@@ -64,21 +66,23 @@ namespace EmployerPartners
             }
             return true;
         }
-        public override void InsertRec(EmployerPartnersEntities context, int fId)
+        public override void InsertRec(EmployerPartnersEntities context, int fId, int? RubricId)
         {
             PartnerPersonFaculty org = new PartnerPersonFaculty()
             {
                 PartnerPersonId = ObjectId,
                 FacultyId = fId,
+                RubricId = RubricId,
             };
             context.PartnerPersonFaculty.Add(org);
             context.SaveChanges();
             _id = org.Id;
         }
-        public override void UpdateRec(EmployerPartnersEntities context, int fId)
+        public override void UpdateRec(EmployerPartnersEntities context, int fId, int? RubricId)
         {
             PartnerPersonFaculty org = context.PartnerPersonFaculty.Where(x => x.Id == _id.Value).First();
             org.FacultyId = fId;
+            org.RubricId = RubricId;
             context.SaveChanges();
         }
     }

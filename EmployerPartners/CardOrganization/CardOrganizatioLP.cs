@@ -22,16 +22,44 @@ namespace EmployerPartners
         }
         public override void FillCard()
         {
+            base.FillCard();
+            if (_id.HasValue)
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = (from x in context.OrganizationLP
+                               join p in context.LicenseProgram
+                               on x.LicenseProgramId equals p.Id
+                               where x.Id == _id.Value
+                               && x.OrganizationId == ObjectId
+                               select new
+                               {
+                                   x.RubricId,
+                                   LPId = p.Id,
+                                   p.StudyLevelId,
+                                   p.ProgramTypeId,
+                                   p.QualificationId,
+                               }).FirstOrDefault();
+                    if (lst == null)
+                        return;
+
+                    RubricId = lst.RubricId;
+                    StudyLevelId = lst.StudyLevelId;
+                    ProgramTypeId = lst.ProgramTypeId;
+                    QualificationId = lst.QualificationId;
+                }
+            }
+        }
+        public override void FillLP()
+        {
             List<string> AddString = new List<string>();
             if (StudyLevelId.HasValue) AddString.Add(" and StudyLevelId= " + StudyLevelId.Value.ToString());
             if (ProgramTypeId.HasValue) AddString.Add(" and ProgramTypeId= " + ProgramTypeId.Value.ToString());
             if (QualificationId.HasValue) AddString.Add(" and QualificationId= " + QualificationId.Value.ToString());
 
-
             string query = @"
 select distinct  CONVERT(varchar(100), LicenseProgram.Id) AS Id, LicenseProgram.Code + ' ('+LicenseProgram.Name +')' as Name
-from dbo.LicenseProgram where Id not in (select LicenseProgramId from dbo.OrganizationLP where OrganizationId = " + ObjectId.ToString() 
-                + ((_id.HasValue) ? (" and Id!= " + _id.Value.ToString() +")") : ")");
+from dbo.LicenseProgram ";
             foreach (string s in AddString)
                 query += s;
             query += " order by 2";
@@ -50,22 +78,24 @@ from dbo.LicenseProgram where Id not in (select LicenseProgramId from dbo.Organi
                                && x.OrganizationId == ObjectId
                                select new
                                {
-                                   p.Id,
+                                   x.RubricId,
+                                   LPId = p.Id,
                                }).FirstOrDefault();
                     if (lst == null)
                         return;
-                    FillControls(query, lst.Id);
+                    FillControls(query, lst.LPId);
                 }
         }
-        public override bool CheckExist(EmployerPartnersEntities context, int? AreaId)
+        public override bool CheckExist(EmployerPartnersEntities context, int? LPId)
         {
             var lst = (from x in context.OrganizationLP
                        where x.OrganizationId == ObjectId
                        && x.Id != _id
-                       && x.LicenseProgramId == AreaId
+                       && x.LicenseProgramId == LPId
+                       && x.RubricId == RubricId
                        select new
                        {
-                           x.Id
+                           LPId = x.Id,
                        }).ToList().Count();
             if (lst > 0)
             {
@@ -74,21 +104,23 @@ from dbo.LicenseProgram where Id not in (select LicenseProgramId from dbo.Organi
             }
             return true;
         }
-        public override void InsertRec(EmployerPartnersEntities context, int AreaId)
+        public override void InsertRec(EmployerPartnersEntities context, int ObjId)
         {
             OrganizationLP org = new OrganizationLP()
             {
                 OrganizationId = ObjectId,
-                LicenseProgramId = AreaId,
+                LicenseProgramId = ObjId,
+                RubricId = RubricId,
             };
             context.OrganizationLP.Add(org);
             context.SaveChanges();
             _id = org.Id;
         }
-        public override void UpdateRec(EmployerPartnersEntities context, int RubricId)
+        public override void UpdateRec(EmployerPartnersEntities context, int ObjId)
         {
             OrganizationLP org = context.OrganizationLP.Where(x => x.Id == _id.Value).First();
-            org.LicenseProgramId = RubricId;
+            org.LicenseProgramId = ObjId;
+            org.RubricId = RubricId;
             context.SaveChanges();
         }
     }

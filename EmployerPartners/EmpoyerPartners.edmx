@@ -310,6 +310,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrganizationId" Type="int" Nullable="false" />
+          <Property Name="RubricId" Type="int" />
           <Property Name="FacultyId" Type="int" Nullable="false" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
@@ -320,6 +321,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrganizationId" Type="int" Nullable="false" />
+          <Property Name="RubricId" Type="int" />
           <Property Name="LicenseProgramId" Type="int" Nullable="false" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
@@ -411,6 +413,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PartnerPersonId" Type="int" Nullable="false" />
+          <Property Name="RubricId" Type="int" />
           <Property Name="FacultyId" Type="int" Nullable="false" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
@@ -421,6 +424,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PartnerPersonId" Type="int" Nullable="false" />
+          <Property Name="RubricId" Type="int" />
           <Property Name="LicenseProgramId" Type="int" Nullable="false" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
@@ -966,6 +970,18 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrganizationFaculty_Rubric">
+          <End Role="Rubric" Type="Self.Rubric" Multiplicity="0..1" />
+          <End Role="OrganizationFaculty" Type="Self.OrganizationFaculty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationFaculty">
+              <PropertyRef Name="RubricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrganizationLP_LicenseProgram">
           <End Role="LicenseProgram" Type="Self.LicenseProgram" Multiplicity="1" />
           <End Role="OrganizationLP" Type="Self.OrganizationLP" Multiplicity="*" />
@@ -989,6 +1005,18 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
             </Principal>
             <Dependent Role="OrganizationLP">
               <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationLP_Rubric">
+          <End Role="Rubric" Type="Self.Rubric" Multiplicity="0..1" />
+          <End Role="OrganizationLP" Type="Self.OrganizationLP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationLP">
+              <PropertyRef Name="RubricId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1180,6 +1208,18 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PartnerPersonFaculty_Rubric">
+          <End Role="Rubric" Type="Self.Rubric" Multiplicity="0..1" />
+          <End Role="PartnerPersonFaculty" Type="Self.PartnerPersonFaculty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerPersonFaculty">
+              <PropertyRef Name="RubricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PartnerPersonLP_LicenseProgram">
           <End Role="LicenseProgram" Type="Self.LicenseProgram" Multiplicity="1" />
           <End Role="PartnerPersonLP" Type="Self.PartnerPersonLP" Multiplicity="*" />
@@ -1203,6 +1243,18 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
             </Principal>
             <Dependent Role="PartnerPersonLP">
               <PropertyRef Name="PartnerPersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartnerPersonLP_Rubric">
+          <End Role="Rubric" Type="Self.Rubric" Multiplicity="0..1" />
+          <End Role="PartnerPersonLP" Type="Self.PartnerPersonLP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerPersonLP">
+              <PropertyRef Name="RubricId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1495,12 +1547,20 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
             <End Role="Organization" EntitySet="Organization" />
             <End Role="OrganizationFaculty" EntitySet="OrganizationFaculty" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrganizationFaculty_Rubric" Association="Self.FK_OrganizationFaculty_Rubric">
+            <End Role="Rubric" EntitySet="Rubric" />
+            <End Role="OrganizationFaculty" EntitySet="OrganizationFaculty" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrganizationLP_LicenseProgram" Association="Self.FK_OrganizationLP_LicenseProgram">
             <End Role="LicenseProgram" EntitySet="LicenseProgram" />
             <End Role="OrganizationLP" EntitySet="OrganizationLP" />
           </AssociationSet>
           <AssociationSet Name="FK_OrganizationLP_Organization" Association="Self.FK_OrganizationLP_Organization">
             <End Role="Organization" EntitySet="Organization" />
+            <End Role="OrganizationLP" EntitySet="OrganizationLP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationLP_Rubric" Association="Self.FK_OrganizationLP_Rubric">
+            <End Role="Rubric" EntitySet="Rubric" />
             <End Role="OrganizationLP" EntitySet="OrganizationLP" />
           </AssociationSet>
           <AssociationSet Name="FK_OrganizationOkved_OkvedType" Association="Self.FK_OrganizationOkved_OkvedType">
@@ -1563,12 +1623,20 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
             <End Role="PartnerPerson" EntitySet="PartnerPerson" />
             <End Role="PartnerPersonFaculty" EntitySet="PartnerPersonFaculty" />
           </AssociationSet>
+          <AssociationSet Name="FK_PartnerPersonFaculty_Rubric" Association="Self.FK_PartnerPersonFaculty_Rubric">
+            <End Role="Rubric" EntitySet="Rubric" />
+            <End Role="PartnerPersonFaculty" EntitySet="PartnerPersonFaculty" />
+          </AssociationSet>
           <AssociationSet Name="FK_PartnerPersonLP_LicenseProgram" Association="Self.FK_PartnerPersonLP_LicenseProgram">
             <End Role="LicenseProgram" EntitySet="LicenseProgram" />
             <End Role="PartnerPersonLP" EntitySet="PartnerPersonLP" />
           </AssociationSet>
           <AssociationSet Name="FK_PartnerPersonLP_PartnerPerson" Association="Self.FK_PartnerPersonLP_PartnerPerson">
             <End Role="PartnerPerson" EntitySet="PartnerPerson" />
+            <End Role="PartnerPersonLP" EntitySet="PartnerPersonLP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartnerPersonLP_Rubric" Association="Self.FK_PartnerPersonLP_Rubric">
+            <End Role="Rubric" EntitySet="Rubric" />
             <End Role="PartnerPersonLP" EntitySet="PartnerPersonLP" />
           </AssociationSet>
           <AssociationSet Name="FK_PartnerPersonRubric_PartnerPerson" Association="Self.FK_PartnerPersonRubric_PartnerPerson">
@@ -1972,6 +2040,8 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Faculty" Relationship="Self.FK_OrganizationFaculty_Faculty" FromRole="OrganizationFaculty" ToRole="Faculty" />
           <NavigationProperty Name="Organization" Relationship="Self.FK_OrganizationFaculty_Organization" FromRole="OrganizationFaculty" ToRole="Organization" />
+          <Property Name="RubricId" Type="Int32" />
+          <NavigationProperty Name="Rubric" Relationship="EmployerPartnersModel.FK_OrganizationFaculty_Rubric" FromRole="OrganizationFaculty" ToRole="Rubric" />
         </EntityType>
         <EntityType Name="OrganizationLP">
           <Key>
@@ -1984,6 +2054,8 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="LicenseProgram" Relationship="Self.FK_OrganizationLP_LicenseProgram" FromRole="OrganizationLP" ToRole="LicenseProgram" />
           <NavigationProperty Name="Organization" Relationship="Self.FK_OrganizationLP_Organization" FromRole="OrganizationLP" ToRole="Organization" />
+          <Property Name="RubricId" Type="Int32" />
+          <NavigationProperty Name="Rubric" Relationship="EmployerPartnersModel.FK_OrganizationLP_Rubric" FromRole="OrganizationLP" ToRole="Rubric" />
         </EntityType>
         <EntityType Name="OrganizationOkved">
           <Key>
@@ -2183,6 +2255,10 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <Property Name="Sorting" Type="Int32" />
           <NavigationProperty Name="OrganizationRubric" Relationship="Self.FK_OrganizationRubric_Rubric" FromRole="Rubric" ToRole="OrganizationRubric" />
           <NavigationProperty Name="PartnerPersonRubric" Relationship="EmployerPartnersModel.FK_PartnerPersonRubric_Rubric" FromRole="Rubric" ToRole="PartnerPersonRubric" />
+          <NavigationProperty Name="OrganizationFaculty" Relationship="EmployerPartnersModel.FK_OrganizationFaculty_Rubric" FromRole="Rubric" ToRole="OrganizationFaculty" />
+          <NavigationProperty Name="OrganizationLP" Relationship="EmployerPartnersModel.FK_OrganizationLP_Rubric" FromRole="Rubric" ToRole="OrganizationLP" />
+          <NavigationProperty Name="PartnerPersonFaculty" Relationship="EmployerPartnersModel.FK_PartnerPersonFaculty_Rubric" FromRole="Rubric" ToRole="PartnerPersonFaculty" />
+          <NavigationProperty Name="PartnerPersonLP" Relationship="EmployerPartnersModel.FK_PartnerPersonLP_Rubric" FromRole="Rubric" ToRole="PartnerPersonLP" />
         </EntityType>
         <EntityType Name="Specialist">
           <Key>
@@ -3114,6 +3190,22 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
             <End Role="Rubric" EntitySet="Rubric" />
             <End Role="PartnerPersonRubric" EntitySet="PartnerPersonRubric" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrganizationFaculty_Rubric" Association="EmployerPartnersModel.FK_OrganizationFaculty_Rubric">
+            <End Role="Rubric" EntitySet="Rubric" />
+            <End Role="OrganizationFaculty" EntitySet="OrganizationFaculty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationLP_Rubric" Association="EmployerPartnersModel.FK_OrganizationLP_Rubric">
+            <End Role="Rubric" EntitySet="Rubric" />
+            <End Role="OrganizationLP" EntitySet="OrganizationLP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartnerPersonFaculty_Rubric" Association="EmployerPartnersModel.FK_PartnerPersonFaculty_Rubric">
+            <End Role="Rubric" EntitySet="Rubric" />
+            <End Role="PartnerPersonFaculty" EntitySet="PartnerPersonFaculty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartnerPersonLP_Rubric" Association="EmployerPartnersModel.FK_PartnerPersonLP_Rubric">
+            <End Role="Rubric" EntitySet="Rubric" />
+            <End Role="PartnerPersonLP" EntitySet="PartnerPersonLP" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PartnerPersonActivityArea">
           <Key>
@@ -3138,6 +3230,8 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Faculty" Relationship="EmployerPartnersModel.FK_PartnerPersonFaculty_Faculty" FromRole="PartnerPersonFaculty" ToRole="Faculty" />
           <NavigationProperty Name="PartnerPerson" Relationship="EmployerPartnersModel.FK_PartnerPersonFaculty_PartnerPerson" FromRole="PartnerPersonFaculty" ToRole="PartnerPerson" />
+          <Property Name="RubricId" Type="Int32" />
+          <NavigationProperty Name="Rubric" Relationship="EmployerPartnersModel.FK_PartnerPersonFaculty_Rubric" FromRole="PartnerPersonFaculty" ToRole="Rubric" />
         </EntityType>
         <EntityType Name="PartnerPersonLP">
           <Key>
@@ -3150,6 +3244,8 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="LicenseProgram" Relationship="EmployerPartnersModel.FK_PartnerPersonLP_LicenseProgram" FromRole="PartnerPersonLP" ToRole="LicenseProgram" />
           <NavigationProperty Name="PartnerPerson" Relationship="EmployerPartnersModel.FK_PartnerPersonLP_PartnerPerson" FromRole="PartnerPersonLP" ToRole="PartnerPerson" />
+          <Property Name="RubricId" Type="Int32" />
+          <NavigationProperty Name="Rubric" Relationship="EmployerPartnersModel.FK_PartnerPersonLP_Rubric" FromRole="PartnerPersonLP" ToRole="Rubric" />
         </EntityType>
         <EntityType Name="PartnerPersonRubric">
           <Key>
@@ -3263,6 +3359,54 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PartnerPersonRubric">
+              <PropertyRef Name="RubricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationFaculty_Rubric">
+          <End Type="EmployerPartnersModel.Rubric" Role="Rubric" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.OrganizationFaculty" Role="OrganizationFaculty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationFaculty">
+              <PropertyRef Name="RubricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationLP_Rubric">
+          <End Type="EmployerPartnersModel.Rubric" Role="Rubric" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.OrganizationLP" Role="OrganizationLP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationLP">
+              <PropertyRef Name="RubricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartnerPersonFaculty_Rubric">
+          <End Type="EmployerPartnersModel.Rubric" Role="Rubric" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.PartnerPersonFaculty" Role="PartnerPersonFaculty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerPersonFaculty">
+              <PropertyRef Name="RubricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartnerPersonLP_Rubric">
+          <End Type="EmployerPartnersModel.Rubric" Role="Rubric" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.PartnerPersonLP" Role="PartnerPersonLP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerPersonLP">
               <PropertyRef Name="RubricId" />
             </Dependent>
           </ReferentialConstraint>
@@ -3594,6 +3738,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <EntitySetMapping Name="OrganizationFaculty">
             <EntityTypeMapping TypeName="EmployerPartnersModel.OrganizationFaculty">
               <MappingFragment StoreEntitySet="OrganizationFaculty">
+                <ScalarProperty Name="RubricId" ColumnName="RubricId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
                 <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
@@ -3605,6 +3750,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <EntitySetMapping Name="OrganizationLP">
             <EntityTypeMapping TypeName="EmployerPartnersModel.OrganizationLP">
               <MappingFragment StoreEntitySet="OrganizationLP">
+                <ScalarProperty Name="RubricId" ColumnName="RubricId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
                 <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
@@ -3958,6 +4104,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <EntitySetMapping Name="PartnerPersonFaculty">
             <EntityTypeMapping TypeName="EmployerPartnersModel.PartnerPersonFaculty">
               <MappingFragment StoreEntitySet="PartnerPersonFaculty">
+                <ScalarProperty Name="RubricId" ColumnName="RubricId" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
@@ -3969,6 +4116,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <EntitySetMapping Name="PartnerPersonLP">
             <EntityTypeMapping TypeName="EmployerPartnersModel.PartnerPersonLP">
               <MappingFragment StoreEntitySet="PartnerPersonLP">
+                <ScalarProperty Name="RubricId" ColumnName="RubricId" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />

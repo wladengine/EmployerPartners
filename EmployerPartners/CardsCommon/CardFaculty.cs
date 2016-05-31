@@ -13,10 +13,15 @@ namespace EmployerPartners
     public partial class CardFaculty : Form
     {
         
-         public int? _id;
+        public int? _id;
         public int ObjectId;
         UpdateVoidHandler _hdl;
 
+        public int? RubricId
+        {
+            get { return ComboServ.GetComboIdInt(cbRubric); }
+            set { ComboServ.SetComboId(cbRubric, value); }
+        }
         public CardFaculty()
         {
             InitializeComponent();
@@ -30,12 +35,17 @@ namespace EmployerPartners
             this.MdiParent = Util.mainform;
             FillCard();
         }
-        public void FillControls(string TableName, int? x)
+        public void FillControls(string TableName, int? FacultyId, int? RubricId)
         {
             btnAdd.Text = (_id.HasValue) ? "Обновить" : "Добавить";
+            ComboServ.FillCombo(cbRubric, HelpClass.GetComboListByQuery(@" select distinct  CONVERT(varchar(100), Rubric.Id) AS Id, Rubric.ShortName as Name
+                from dbo.Rubric order by ShortName"), true, false);
+            if (RubricId.HasValue)
+                ComboServ.SetComboId(cbRubric, RubricId);
+                
             ComboServ.FillCombo(cbName, HelpClass.GetComboListByTable(TableName), false, false);
-            if (x.HasValue)
-                ComboServ.SetComboId(cbName, x);
+            if (FacultyId.HasValue)
+                ComboServ.SetComboId(cbName, FacultyId);
         }
 
         virtual public void FillCard()
@@ -44,6 +54,7 @@ namespace EmployerPartners
         
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            int? RubricId = ComboServ.GetComboIdInt(cbRubric);
             int? FacultyId = ComboServ.GetComboIdInt(cbName);
             if (!FacultyId.HasValue)
             { 
@@ -57,25 +68,25 @@ namespace EmployerPartners
                 
                 if (!_id.HasValue)
                 {
-                    InsertRec(context, FacultyId.Value);
+                    InsertRec(context, FacultyId.Value, RubricId);
                 }
                 else if (_id.HasValue)
                 {
-                    UpdateRec(context, FacultyId.Value);
+                    UpdateRec(context, FacultyId.Value, RubricId);
                 }
                 if (_hdl != null && _id.HasValue)
                     _hdl(_id);
             }
             this.Close();
         }
-        virtual public bool CheckExist(EmployerPartnersEntities context, int? AreaId)
+        virtual public bool CheckExist(EmployerPartnersEntities context, int? ObjId)
         {
             return true;
         }
-        virtual public void InsertRec(EmployerPartnersEntities context, int AreaId)
+        virtual public void InsertRec(EmployerPartnersEntities context, int ObjId, int? RubricId)
         {
         }
-        virtual public void UpdateRec(EmployerPartnersEntities context, int AreaId)
+        virtual public void UpdateRec(EmployerPartnersEntities context, int ObjId, int? RubricId)
         {
         }
     }

@@ -157,10 +157,14 @@ namespace EmployerPartners
         {
             var lst = (from x in context.OrganizationFaculty
                        join a in context.Faculty on x.FacultyId equals a.Id
+                       join r in context.Rubric on x.RubricId equals r.Id into _r
+                       from r in _r.DefaultIfEmpty()
+
                        select new
                        {
                            a.Id,
                            a.Name,
+                           RubricName = r.ShortName,
                            x.OrganizationId,
                        }).Distinct().ToList();
             int cnt = lst.Select(x => x.OrganizationId).Distinct().Count();
@@ -170,6 +174,7 @@ namespace EmployerPartners
                       group l by l.Id into l
                       select new
                       {
+                          Рубрика = l.First().RubricName,
                           Направление = l.First().Name,
                           Кол__во_организаций = l.Count(),
                       }).OrderByDescending(x => x.Кол__во_организаций).ToList();
@@ -236,6 +241,9 @@ namespace EmployerPartners
         {
             var lst = (from x in context.OrganizationLP
                        join a in context.LicenseProgram on x.LicenseProgramId equals a.Id
+                       join r in context.Rubric on x.RubricId equals r.Id into _r
+                       from r in _r.DefaultIfEmpty()
+
                        select new
                        {
                            a.Id,
@@ -244,6 +252,7 @@ namespace EmployerPartners
                            a.Name,
                            Ptype = a.ProgramType.Name,
                            Qual = a.Qualification.Name,
+                           RubricName = r.ShortName,
                            x.OrganizationId,
                        }).Distinct().ToList();
             int cnt = lst.Select(x => x.OrganizationId).Distinct().Count();
@@ -253,6 +262,7 @@ namespace EmployerPartners
                       group l by l.Id into l
                       select new
                       {
+                          Рубрика = l.First().RubricName,
                           Код = l.First().Code,
                           Уровень = l.First().Level,
                           Направление = l.First().Name,
@@ -260,8 +270,6 @@ namespace EmployerPartners
                           Квалификация = l.First().Qual,
                           Кол__во_организаций = l.Count(),
                       }).OrderByDescending(x => x.Кол__во_организаций).ToList();
-            
-            
             
             dgvLP.DataSource = gr;
             foreach (DataGridViewColumn col in dgvLP.Columns)
@@ -374,7 +382,8 @@ namespace EmployerPartners
                             curRow++;
                             foreach (DataGridViewCell cell in rw.Cells)
                             {
-                                td[cell.ColumnIndex, curRow] = cell.Value.ToString();
+                                if (cell.Value != null)
+                                    td[cell.ColumnIndex, curRow] = cell.Value.ToString();
                             }
                         }
                         td.DeleteLastRow();

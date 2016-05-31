@@ -16,6 +16,12 @@ namespace EmployerPartners
         public int ObjectId;
         UpdateVoidHandler _hdl;
 
+        public int? RubricId
+        {
+            get { return ComboServ.GetComboIdInt(cbRubric); }
+            set { ComboServ.SetComboId(cbRubric, value); }
+        }
+
         public int? StudyLevelId
         {
             get { return ComboServ.GetComboIdInt(cbLevel); }
@@ -43,11 +49,10 @@ namespace EmployerPartners
             ObjectId = objId;
             _hdl = h;
             this.MdiParent = Util.mainform;
-            ComboServ.FillCombo(cbLevel, HelpClass.GetComboListByTable("dbo.StudyLevel"), false, true);
+            FillCard();
         }
         public void FillControls(string TableName, int? x)
-        {
-            btnAdd.Text = (_id.HasValue) ? "Обновить" : "Добавить";
+        {  
             ComboServ.FillCombo(cbName, HelpClass.GetComboListByQuery(TableName), false, false);
             if (x.HasValue)
                 ComboServ.SetComboId(cbName, x);
@@ -55,9 +60,15 @@ namespace EmployerPartners
 
         virtual public void FillCard()
         {
+            btnAdd.Text = (_id.HasValue) ? "Обновить" : "Добавить";
+            ComboServ.FillCombo(cbLevel, HelpClass.GetComboListByTable("dbo.StudyLevel"), false, true);
+            ComboServ.FillCombo(cbRubric, HelpClass.GetComboListByQuery(@" select distinct  CONVERT(varchar(100), Rubric.Id) AS Id, Rubric.ShortName as Name
+                from dbo.Rubric order by ShortName"), true, false);
+        }
+        virtual public void FillLP()
+        {
 
         }
-        
         private void btnAdd_Click(object sender, EventArgs e)
         {
             int? LPId = ComboServ.GetComboIdInt(cbName);
@@ -84,14 +95,14 @@ namespace EmployerPartners
             }
             this.Close();
         }
-        virtual public bool CheckExist(EmployerPartnersEntities context, int? AreaId)
+        virtual public bool CheckExist(EmployerPartnersEntities context, int? ObjId)
         {
             return true;
         }
-        virtual public void InsertRec(EmployerPartnersEntities context, int AreaId)
+        virtual public void InsertRec(EmployerPartnersEntities context, int ObjId)
         {
         }
-        virtual public void UpdateRec(EmployerPartnersEntities context, int AreaId)
+        virtual public void UpdateRec(EmployerPartnersEntities context, int ObjId)
         {
         }
 
@@ -128,7 +139,7 @@ namespace EmployerPartners
 
         private void cbQulification_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FillCard();
+            FillLP();
         }
 
         private void cbName_SelectedIndexChanged(object sender, EventArgs e)
