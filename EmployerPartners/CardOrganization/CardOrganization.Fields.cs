@@ -57,6 +57,11 @@ namespace EmployerPartners
             get { return ComboServ.GetComboIdInt(cbNationalAffiliation); }
             set { ComboServ.SetComboId(cbNationalAffiliation, value); }
         }
+        public int? AreaId
+        {
+            get { return ComboServ.GetComboIdInt(cbArea); }
+            set { ComboServ.SetComboId(cbArea, value); }
+        }
         public string INN
         {
             get { return tbINN.Text.Trim(); }
@@ -133,6 +138,11 @@ namespace EmployerPartners
         public string House
         {
             get { return tbHouse.Text.Trim(); }
+            set { tbHouse.Text = value; }
+        }
+        public string Apartment
+        {
+            get { return tbApartment.Text.Trim(); }
             set { tbHouse.Text = value; }
         }
         public string Code

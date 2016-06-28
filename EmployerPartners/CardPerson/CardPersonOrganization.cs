@@ -32,7 +32,7 @@ namespace EmployerPartners
         public void FillCard()
         {
             btnAdd.Text = (_id.HasValue) ? "Обновить" : "Добавить";
-            ComboServ.FillCombo(cbOrganization, HelpClass.GetComboListByTable("dbo.PartnerPerson"), false, false);
+            ComboServ.FillCombo(cbOrganization, HelpClass.GetComboListByTable("dbo.Organization"), false, false);
 
             if (!_id.HasValue) return;
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
@@ -47,12 +47,14 @@ namespace EmployerPartners
                                    p.Id,
                                    p.Name,
                                    x.Position,
+                                   x.PositionEng,
                                    x.Comment,
                                }).FirstOrDefault();
                 if (lst == null)
                     return;
 
                 tbposition.Text = lst.Position;
+                tbpositionEng.Text = lst.PositionEng;
                 tbComment.Text = lst.Comment;
                 ComboServ.SetComboId(cbOrganization, lst.Id);
             }
@@ -88,6 +90,7 @@ namespace EmployerPartners
                         OrganizationId = OrgId.Value,
                         PartnerPersonId = PersId,
                         Position = tbposition.Text.Trim(),
+                        PositionEng = tbpositionEng.Text.Trim(),
                         Comment = tbComment.Text.Trim(),
                     };
                     context.OrganizationPerson.Add(org);
@@ -99,6 +102,7 @@ namespace EmployerPartners
                     OrganizationPerson org = context.OrganizationPerson.Where(x => x.Id == _id.Value).First();
                     org.OrganizationId = OrgId.Value;
                     org.Position = tbposition.Text.Trim();
+                    org.PositionEng = tbpositionEng.Text.Trim();
                     org.Comment = tbComment.Text.Trim();
                     context.SaveChanges();
                 }

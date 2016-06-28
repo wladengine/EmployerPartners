@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EmployerPartnersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EmployerPartnersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="_AppSettings">
           <Key>
             <PropertyRef Name="Key" />
@@ -117,6 +117,18 @@
           <Property Name="IsCommonUniversity" Type="bit" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="HelpFiles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileText" Type="ntext" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FileType" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="FileData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="DateLoad" Type="datetime" Nullable="false" />
+          <Property Name="FileSizeKBytes" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="InboxMessage">
           <Key>
@@ -273,6 +285,7 @@
           <Property Name="City" Type="nvarchar" MaxLength="500" />
           <Property Name="Street" Type="nvarchar" MaxLength="255" />
           <Property Name="House" Type="nvarchar" MaxLength="255" />
+          <Property Name="Apartment" Type="nvarchar" MaxLength="255" />
           <Property Name="Comment" Type="nvarchar" MaxLength="500" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
@@ -346,6 +359,7 @@
           <Property Name="OrganizationId" Type="int" Nullable="false" />
           <Property Name="PartnerPersonId" Type="int" Nullable="false" />
           <Property Name="Position" Type="nvarchar" MaxLength="255" />
+          <Property Name="PositionEng" Type="nvarchar" MaxLength="255" />
           <Property Name="Comment" Type="nvarchar" MaxLength="500" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
@@ -533,9 +547,9 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ShortName" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="NameEng" Type="nvarchar" MaxLength="100" />
-          <Property Name="ShortNameEng" Type="nvarchar" MaxLength="10" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="NameEng" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ShortNameEng" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="Sorting" Type="int" />
         </EntityType>
         <EntityType Name="Specialist">
@@ -614,79 +628,17 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <EntityType Name="WorkData">
+        <EntityType Name="Templates">
           <Key>
-            <PropertyRef Name="SystemUser" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SystemUser" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="OrgId" Type="int" />
-          <Property Name="PPId" Type="int" />
-          <Property Name="FacultyId" Type="int" />
-          <Property Name="UMKId" Type="int" />
-          <Property Name="SOPId" Type="int" />
-          <Property Name="VKRYear" Type="int" />
-          <Property Name="PracticeId" Type="int" />
-          <Property Name="PracticeLPId" Type="int" />
-          <Property Name="GAKId" Type="int" />
-          <Property Name="GAKLPId" Type="int" />
-          <Property Name="Rep_LicenseProgramId" Type="int" />
-          <Property Name="Rep_VKRLicenseProgramId" Type="int" />
-          <Property Name="Okved" Type="nvarchar" MaxLength="20" />
-          <Property Name="OwnershipTypeId" Type="int" />
-          <Property Name="ActivityGoalId" Type="int" />
-          <Property Name="NationalAffiliationId" Type="int" />
-          <Property Name="CountryId" Type="int" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'EmployerPartners.dbo.OrganizationList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="OrganizationList">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="Author" />
-            <PropertyRef Name="DateCreated" />
-          </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="1000" Nullable="false" />
-          <Property Name="NameEng" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
-          <Property Name="ShortNameEng" Type="nvarchar" MaxLength="50" />
-          <Property Name="Contact" Type="nvarchar" MaxLength="250" />
-          <Property Name="INN" Type="nvarchar" MaxLength="50" />
-          <Property Name="Email" Type="nvarchar" MaxLength="200" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="200" />
-          <Property Name="Mobiles" Type="nvarchar" MaxLength="200" />
-          <Property Name="Fax" Type="nvarchar" MaxLength="100" />
-          <Property Name="WebSite" Type="nvarchar" MaxLength="1000" />
-          <Property Name="CountryId" Type="int" />
-          <Property Name="RegionId" Type="int" />
-          <Property Name="CodeKLADR" Type="nvarchar" MaxLength="25" />
-          <Property Name="Code" Type="nvarchar" MaxLength="50" />
-          <Property Name="City" Type="nvarchar" MaxLength="500" />
-          <Property Name="Street" Type="nvarchar" MaxLength="200" />
-          <Property Name="House" Type="nvarchar" MaxLength="10" />
-          <Property Name="Comment" Type="nvarchar" MaxLength="500" />
-          <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="DateCreated" Type="datetime" Nullable="false" />
-          <Property Name="Country" Type="nvarchar" MaxLength="100" />
-          <Property Name="Region" Type="nvarchar" MaxLength="100" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="OrganizationRubricList">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="OrganizationId" />
-            <PropertyRef Name="RubricId" />
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="OrganizationId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="RubricId" Type="int" Nullable="false" />
-          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
-          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TemplateName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FileType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FileData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="DateLoad" Type="datetime" Nullable="false" />
+          <Property Name="FileSizeKBytes" Type="float" Nullable="false" />
         </EntityType>
         <Association Name="FK_InboxMessage_Organization">
           <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
@@ -1382,6 +1334,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <EntitySet Name="EducationDocument" EntityType="Self.EducationDocument" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EducationPermit" EntityType="Self.EducationPermit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HelpFiles" EntityType="Self.HelpFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InboxMessage" EntityType="Self.InboxMessage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InboxMessageFile" EntityType="Self.InboxMessageFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="License" EntityType="Self.License" Schema="dbo" store:Type="Tables" />
@@ -1416,45 +1369,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <EntitySet Name="StudyLevelGroup" EntityType="Self.StudyLevelGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudyPlanPrintFormType" EntityType="Self.StudyPlanPrintFormType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="WorkData" EntityType="Self.WorkData" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OrganizationList" EntityType="Self.OrganizationList" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [OrganizationList].[Id] AS [Id], 
-    [OrganizationList].[Name] AS [Name], 
-    [OrganizationList].[NameEng] AS [NameEng], 
-    [OrganizationList].[ShortName] AS [ShortName], 
-    [OrganizationList].[ShortNameEng] AS [ShortNameEng], 
-    [OrganizationList].[Contact] AS [Contact], 
-    [OrganizationList].[INN] AS [INN], 
-    [OrganizationList].[Email] AS [Email], 
-    [OrganizationList].[Phone] AS [Phone], 
-    [OrganizationList].[Mobiles] AS [Mobiles], 
-    [OrganizationList].[Fax] AS [Fax], 
-    [OrganizationList].[WebSite] AS [WebSite], 
-    [OrganizationList].[CountryId] AS [CountryId], 
-    [OrganizationList].[RegionId] AS [RegionId], 
-    [OrganizationList].[CodeKLADR] AS [CodeKLADR], 
-    [OrganizationList].[Code] AS [Code], 
-    [OrganizationList].[City] AS [City], 
-    [OrganizationList].[Street] AS [Street], 
-    [OrganizationList].[House] AS [House], 
-    [OrganizationList].[Comment] AS [Comment], 
-    [OrganizationList].[Author] AS [Author], 
-    [OrganizationList].[DateCreated] AS [DateCreated], 
-    [OrganizationList].[Country] AS [Country], 
-    [OrganizationList].[Region] AS [Region]
-    FROM [dbo].[OrganizationList] AS [OrganizationList]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="OrganizationRubricList" EntityType="Self.OrganizationRubricList" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [OrganizationRubricList].[Id] AS [Id], 
-    [OrganizationRubricList].[OrganizationId] AS [OrganizationId], 
-    [OrganizationRubricList].[RubricId] AS [RubricId], 
-    [OrganizationRubricList].[Author] AS [Author], 
-    [OrganizationRubricList].[DateCreated] AS [DateCreated], 
-    [OrganizationRubricList].[Name] AS [Name]
-    FROM [dbo].[OrganizationRubricList] AS [OrganizationRubricList]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Templates" EntityType="Self.Templates" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_InboxMessage_Organization" Association="Self.FK_InboxMessage_Organization">
             <End Role="Organization" EntitySet="Organization" />
             <End Role="InboxMessage" EntitySet="InboxMessage" />
@@ -1999,6 +1914,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <NavigationProperty Name="OrganizationOkved" Relationship="Self.FK_OrganizationOkved_Organization" FromRole="Organization" ToRole="OrganizationOkved" />
           <NavigationProperty Name="OrganizationPerson" Relationship="Self.FK_OrganizationPerson_Organization" FromRole="Organization" ToRole="OrganizationPerson" />
           <NavigationProperty Name="OrganizationRubric" Relationship="Self.FK_OrganizationRubric_Organization" FromRole="Organization" ToRole="OrganizationRubric" />
+          <Property Name="Apartment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OrganizationActivityArea">
           <Key>
@@ -2084,6 +2000,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Organization" Relationship="Self.FK_OrganizationPerson_Organization" FromRole="OrganizationPerson" ToRole="Organization" />
           <NavigationProperty Name="PartnerPerson" Relationship="Self.FK_OrganizationPerson_PartnerPerson" FromRole="OrganizationPerson" ToRole="PartnerPerson" />
+          <Property Name="PositionEng" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OrganizationRubric">
           <Key>
@@ -2249,9 +2166,9 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShortName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="NameEng" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ShortNameEng" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NameEng" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ShortNameEng" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Sorting" Type="Int32" />
           <NavigationProperty Name="OrganizationRubric" Relationship="Self.FK_OrganizationRubric_Rubric" FromRole="Rubric" ToRole="OrganizationRubric" />
           <NavigationProperty Name="PartnerPersonRubric" Relationship="EmployerPartnersModel.FK_PartnerPersonRubric_Rubric" FromRole="Rubric" ToRole="PartnerPersonRubric" />
@@ -2346,76 +2263,6 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="WorkData">
-          <Key>
-            <PropertyRef Name="SystemUser" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SystemUser" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OrgId" Type="Int32" />
-          <Property Name="PPId" Type="Int32" />
-          <Property Name="FacultyId" Type="Int32" />
-          <Property Name="UMKId" Type="Int32" />
-          <Property Name="SOPId" Type="Int32" />
-          <Property Name="VKRYear" Type="Int32" />
-          <Property Name="PracticeId" Type="Int32" />
-          <Property Name="PracticeLPId" Type="Int32" />
-          <Property Name="GAKId" Type="Int32" />
-          <Property Name="GAKLPId" Type="Int32" />
-          <Property Name="Rep_LicenseProgramId" Type="Int32" />
-          <Property Name="Rep_VKRLicenseProgramId" Type="Int32" />
-          <Property Name="Okved" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="OwnershipTypeId" Type="Int32" />
-          <Property Name="ActivityGoalId" Type="Int32" />
-          <Property Name="NationalAffiliationId" Type="Int32" />
-          <Property Name="CountryId" Type="Int32" />
-        </EntityType>
-        <EntityType Name="OrganizationList">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="Author" />
-            <PropertyRef Name="DateCreated" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="NameEng" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ShortNameEng" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Contact" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="INN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Mobiles" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Fax" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="WebSite" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="CountryId" Type="Int32" />
-          <Property Name="RegionId" Type="Int32" />
-          <Property Name="CodeKLADR" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Street" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="House" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="None" />
-          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Region" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="OrganizationRubricList">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="OrganizationId" />
-            <PropertyRef Name="RubricId" />
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="OrganizationId" Type="Guid" Nullable="false" />
-          <Property Name="RubricId" Type="Int32" Nullable="false" />
-          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <Association Name="FK_Organization_ActivityArea">
           <End Role="ActivityArea" Type="Self.ActivityArea" Multiplicity="0..1" />
@@ -2975,9 +2822,6 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <EntitySet Name="StudyLevelGroup" EntityType="Self.StudyLevelGroup" />
           <EntitySet Name="StudyPlanPrintFormType" EntityType="Self.StudyPlanPrintFormType" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="WorkData" EntityType="Self.WorkData" />
-          <EntitySet Name="OrganizationList" EntityType="Self.OrganizationList" />
-          <EntitySet Name="OrganizationRubricList" EntityType="Self.OrganizationRubricList" />
           <AssociationSet Name="FK_Organization_ActivityArea" Association="Self.FK_Organization_ActivityArea">
             <End Role="ActivityArea" EntitySet="ActivityArea" />
             <End Role="Organization" EntitySet="Organization" />
@@ -3206,6 +3050,8 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
             <End Role="Rubric" EntitySet="Rubric" />
             <End Role="PartnerPersonLP" EntitySet="PartnerPersonLP" />
           </AssociationSet>
+          <EntitySet Name="HelpFiles" EntityType="EmployerPartnersModel.HelpFiles" />
+          <EntitySet Name="Templates" EntityType="EmployerPartnersModel.Templates" />
         </EntityContainer>
         <EntityType Name="PartnerPersonActivityArea">
           <Key>
@@ -3411,6 +3257,30 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="HelpFiles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FileType" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="FileData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateLoad" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FileSizeKBytes" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Templates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TemplateName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FileType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FileData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateLoad" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FileSizeKBytes" Type="Double" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3672,6 +3542,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <EntitySetMapping Name="Organization">
             <EntityTypeMapping TypeName="EmployerPartnersModel.Organization">
               <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="Apartment" ColumnName="Apartment" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
@@ -3775,6 +3646,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
           <EntitySetMapping Name="OrganizationPerson">
             <EntityTypeMapping TypeName="EmployerPartnersModel.OrganizationPerson">
               <MappingFragment StoreEntitySet="OrganizationPerson">
+                <ScalarProperty Name="PositionEng" ColumnName="PositionEng" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
                 <ScalarProperty Name="PartnerPersonId" ColumnName="PartnerPersonId" />
@@ -4022,73 +3894,6 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="WorkData">
-            <EntityTypeMapping TypeName="EmployerPartnersModel.WorkData">
-              <MappingFragment StoreEntitySet="WorkData">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="SystemUser" ColumnName="SystemUser" />
-                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
-                <ScalarProperty Name="PPId" ColumnName="PPId" />
-                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
-                <ScalarProperty Name="UMKId" ColumnName="UMKId" />
-                <ScalarProperty Name="SOPId" ColumnName="SOPId" />
-                <ScalarProperty Name="VKRYear" ColumnName="VKRYear" />
-                <ScalarProperty Name="PracticeId" ColumnName="PracticeId" />
-                <ScalarProperty Name="PracticeLPId" ColumnName="PracticeLPId" />
-                <ScalarProperty Name="GAKId" ColumnName="GAKId" />
-                <ScalarProperty Name="GAKLPId" ColumnName="GAKLPId" />
-                <ScalarProperty Name="Rep_LicenseProgramId" ColumnName="Rep_LicenseProgramId" />
-                <ScalarProperty Name="Rep_VKRLicenseProgramId" ColumnName="Rep_VKRLicenseProgramId" />
-                <ScalarProperty Name="Okved" ColumnName="Okved" />
-                <ScalarProperty Name="OwnershipTypeId" ColumnName="OwnershipTypeId" />
-                <ScalarProperty Name="ActivityGoalId" ColumnName="ActivityGoalId" />
-                <ScalarProperty Name="NationalAffiliationId" ColumnName="NationalAffiliationId" />
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrganizationList">
-            <EntityTypeMapping TypeName="EmployerPartnersModel.OrganizationList">
-              <MappingFragment StoreEntitySet="OrganizationList">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="NameEng" ColumnName="NameEng" />
-                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
-                <ScalarProperty Name="ShortNameEng" ColumnName="ShortNameEng" />
-                <ScalarProperty Name="Contact" ColumnName="Contact" />
-                <ScalarProperty Name="INN" ColumnName="INN" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Mobiles" ColumnName="Mobiles" />
-                <ScalarProperty Name="Fax" ColumnName="Fax" />
-                <ScalarProperty Name="WebSite" ColumnName="WebSite" />
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
-                <ScalarProperty Name="CodeKLADR" ColumnName="CodeKLADR" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="House" ColumnName="House" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="Author" ColumnName="Author" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Region" ColumnName="Region" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrganizationRubricList">
-            <EntityTypeMapping TypeName="EmployerPartnersModel.OrganizationRubricList">
-              <MappingFragment StoreEntitySet="OrganizationRubricList">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
-                <ScalarProperty Name="RubricId" ColumnName="RubricId" />
-                <ScalarProperty Name="Author" ColumnName="Author" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="RoleMember" FunctionName="EmployerPartnersModel.Store.RoleMember" />
           <EntitySetMapping Name="PartnerPersonActivityArea">
             <EntityTypeMapping TypeName="EmployerPartnersModel.PartnerPersonActivityArea">
@@ -4132,6 +3937,32 @@ warning 6002: The table/view 'EmployerPartners.dbo.OrganizationRubricList' does 
                 <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="RubricId" ColumnName="RubricId" />
                 <ScalarProperty Name="PartnerPersonId" ColumnName="PartnerPersonId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HelpFiles">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.HelpFiles">
+              <MappingFragment StoreEntitySet="HelpFiles">
+                <ScalarProperty Name="FileSizeKBytes" ColumnName="FileSizeKBytes" />
+                <ScalarProperty Name="DateLoad" ColumnName="DateLoad" />
+                <ScalarProperty Name="FileData" ColumnName="FileData" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileText" ColumnName="FileText" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Templates">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.Templates">
+              <MappingFragment StoreEntitySet="Templates">
+                <ScalarProperty Name="FileSizeKBytes" ColumnName="FileSizeKBytes" />
+                <ScalarProperty Name="DateLoad" ColumnName="DateLoad" />
+                <ScalarProperty Name="FileData" ColumnName="FileData" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="TemplateName" ColumnName="TemplateName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

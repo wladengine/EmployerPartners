@@ -24,7 +24,7 @@ namespace EmployerPartners
         {
             if (tbName.Text.Trim().Length == 0)
             {
-                MessageBox.Show("", "");
+                MessageBox.Show("Введите наименование организации", "Напоминание");
                 return false;
             }
             return true;
@@ -39,7 +39,7 @@ namespace EmployerPartners
                            select new { x.Id }).ToList();
                 if (cnt.Count > 0)
                 {
-                    MessageBox.Show("Организация-парнер с таким названием уже существует.", "");
+                    MessageBox.Show("Организация-партнер с таким названием уже существует.", "Инфо");
                     if (_hdl != null)
                         _hdl(cnt.First().Id);
                     return false;
@@ -69,6 +69,11 @@ namespace EmployerPartners
         }
         private void btnClose_Click(object sender, EventArgs e)
         {
+            if (tbName.Text.Trim().Length == 0)
+            {
+                this.Close();
+                return;
+            }
             if (MessageBox.Show("Закрыть без сохранения?", "", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 this.Close();
         }

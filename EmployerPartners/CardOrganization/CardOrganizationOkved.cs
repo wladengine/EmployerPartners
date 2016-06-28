@@ -52,6 +52,16 @@ namespace EmployerPartners
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            if (tbokved.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("Введите Код ОКВЭД", "Напоминание");
+                return;
+            }
+            if (tbName.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("Введите название вида деятельности", "Напоминание");
+                return;
+            }
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
                 var lst = (from x in context.OrganizationOkved
