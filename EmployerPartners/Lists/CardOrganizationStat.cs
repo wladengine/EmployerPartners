@@ -59,13 +59,14 @@ namespace EmployerPartners
             
             var gr = (from l in lst
                       group l by l.Id into l
+                      orderby l.Count() descending, l.First().Name
                       select new
                       {
-                          Область_деятельности = l.First().Name,
+                          Сфера_деятельности = l.First().Name,
                           Кол__во_организаций = l.Count(),
-                      }).OrderByDescending(x => x.Кол__во_организаций).ToList();
-            
-            
+                      }).ToList();
+                      //}).OrderByDescending(x => x.Кол__во_организаций).ToList();
+                      
             
             dgvActivityArea.DataSource = gr;
             foreach (DataGridViewColumn col in dgvActivityArea.Columns)
@@ -290,13 +291,26 @@ namespace EmployerPartners
         {
             try
             {
-                string filenameDate = "Выгрузка ";
+                string filenameDate = "Статистика по организациям";
                 string filename = Util.TempFilesFolder + filenameDate + ".xlsx";
+                string[] fileList = Directory.GetFiles(Util.TempFilesFolder, "Статистика по организациям*" + ".xlsx");
+
+                try
+                {
+                    File.Delete(filename);
+                    foreach (string f in fileList)
+                    {
+                        File.Delete(f);
+                    }
+                }
+                catch (Exception)
+                {
+                }
 
                 int fileindex = 1;
                 while (File.Exists(filename))
                 {
-                    filename = Util.TempFilesFolder + filenameDate + "(" + fileindex + ")" + ".xlsx";
+                    filename = Util.TempFilesFolder + filenameDate + " (" + fileindex + ")" + ".xlsx";
                     fileindex++;
                 }
                 System.IO.FileInfo newFile = new System.IO.FileInfo(filename);
@@ -313,30 +327,78 @@ namespace EmployerPartners
                 dgvlst.Add(new KeyValuePair<string, DataGridView>("Национальная принадлежность", dgvNatAffil));
                 dgvlst.Add(new KeyValuePair<string, DataGridView>("Страны", dgvCountry));
                 dgvlst.Add(new KeyValuePair<string, DataGridView>("Направления подготовки", dgvLP));
-                dgvlst.Add(new KeyValuePair<string, DataGridView>("Область деятельности", dgvActivityArea));
+                dgvlst.Add(new KeyValuePair<string, DataGridView>("Сферы деятельности", dgvActivityArea));
 
                 using (ExcelPackage doc = new ExcelPackage(newFile))
                 {
+                    int rowshift = 0;
+                    ExcelWorksheet ws = doc.Workbook.Worksheets.Add("Рубрики и направления");
+                    Color lightGray = Color.FromName("LightGray");
+                    Color darkGray = Color.FromName("DarkGray");
+
                     foreach (KeyValuePair<string, DataGridView> kvp in dgvlst)
                     {
-                        ExcelWorksheet ws = doc.Workbook.Worksheets.Add(kvp.Key);
+                        switch (kvp.Key)
+                        {
+                            /*case "Рубрики":
+                                rowshift = 0;
+                                ws = doc.Workbook.Worksheets.Add("Рубрики и направления");
+                                break;*/
+                            case "Формы собственности":
+                                rowshift = 0;
+                                ws = doc.Workbook.Worksheets.Add("Общая статистика");
+                                break;
+                            case "Направления подготовки":
+                                rowshift = 0;
+                                ws = doc.Workbook.Worksheets.Add("Направления подготовки");
+                                break;
+                            case "Сферы деятельности":
+                                rowshift = 0;
+                                ws = doc.Workbook.Worksheets.Add("Сферы деятельности");
+                                break;
+                            default:
+                                break;
+                        }
+                        //ExcelWorksheet ws = doc.Workbook.Worksheets.Add(kvp.Key);
                         DataGridView dgv = kvp.Value;
 
                         int colind = 0;
+                        int delta = 0;
+                        
                         foreach (DataGridViewColumn cl in dgv.Columns)
                         {
-                            ws.Cells[1, ++colind].Value = cl.HeaderText.ToString();
+                            ws.Cells[1 + rowshift, ++colind].Value = cl.HeaderText.ToString();
+                            ws.Cells[1 + rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                            ws.Cells[1 + rowshift, colind].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid; 
+                            ws.Cells[1 + rowshift, colind].Style.Fill.BackgroundColor.SetColor(lightGray);
                         }
+                        delta++;
 
                         for (int rwInd = 0; rwInd < dgv.Rows.Count; rwInd++)
                         {
                             DataGridViewRow rw = dgv.Rows[rwInd];
+                            delta++;
                             int colInd = 0;
                             foreach (DataGridViewCell cell in rw.Cells)
                             {
-                                ws.Cells[rwInd + 2, colInd + 1].Value = cell.Value.ToString();
+                                if (cell.Value == null)
+                                {
+                                    ws.Cells[rwInd + 2 + rowshift, colInd + 1].Value = "";
+                                }
+                                else
+                                {
+                                    ws.Cells[rwInd + 2 + rowshift, colInd + 1].Value = cell.Value; //.ToString(); 
+                                }
+                                ws.Cells[rwInd + 2 + rowshift, colInd + 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
                                 colInd++;
                             }
+                        }
+                        rowshift += delta + 2;
+                        //форматирование
+                        int clmnInd = 0;
+                        foreach (DataGridViewColumn clmn in dgv.Columns)
+                        {
+                            ws.Column(++clmnInd).AutoFit();
                         }
                     }
                     doc.Save();
@@ -355,17 +417,104 @@ namespace EmployerPartners
         }
         public void ToDOC()
         {
+            //извлечение шаблона из БД
+            byte[] fileByteArray;
+            string type;
+            string name;
+            string nameshort;
+            string templatename = "Статистика по организациям";
+
             try
             {
-                WordDoc wd = new WordDoc(string.Format(@"{0}\СтатистикаОрганизаций.dot", Util.TemplatesFolder));
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var template = (from x in context.Templates
+                                    where x.TemplateName == templatename
+                                    select x).First();
+
+                    fileByteArray = (byte[])template.FileData;
+                    type = (string)template.FileType.Trim();
+                    name = (string)template.FileName.Trim();
+                    nameshort = name.Substring(0, name.Length - type.Length);
+                }
+            }
+            catch (Exception exc)
+            {
+                if (Util.IsDBOwner())
+                {
+                    MessageBox.Show("Не удалось получить данные...\r\n" + exc.Message, "Сообщение");
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось получить данные...", "Сообщение");
+                }
+                return;
+            }
+            string TempFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\EmployerPartners_TempFiles\";
+            try
+            {
+                if (!Directory.Exists(TempFilesFolder))
+                    Directory.CreateDirectory(TempFilesFolder);
+            }
+            catch (Exception ex)
+            {
+                if (Util.IsDBOwner())
+                {
+                    MessageBox.Show("Не удалось создать директорию.\r\n" + ex.Message, "Сообщение");
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось открыть файл...", "Сообщение");
+                }
+                return;
+            }
+
+            string filePath = TempFilesFolder + name;
+            string[] fileList = Directory.GetFiles(TempFilesFolder, nameshort + "*" + type);
+            int suffix;
+            Random rnd = new Random();
+            suffix = rnd.Next();
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    File.Delete(filePath);
+                    foreach (string f in fileList)
+                    {
+                        File.Delete(f);
+                    }
+                }
+                catch (Exception)
+                {
+                    filePath = TempFilesFolder + nameshort + " " + suffix + type;
+                }
+            }
+            //Запись на диск
+            try
+            {
+                FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
+                BinaryWriter binWriter = new BinaryWriter(fileStream);
+                binWriter.Write(fileByteArray);
+                binWriter.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось открыть файл...", "Сообщение");
+                return;
+            }
+
+            //заполнение шаблона
+            try
+            {
+                //WordDoc wd = new WordDoc(string.Format(@"{0}\Статистика по организациям.docx", Util.TemplatesFolder), true);
+                WordDoc wd = new WordDoc(string.Format(filePath), true);
 
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    wd.SetFields("Count", _Count.ToString());
-
+                    //wd.SetFields("Count", _Count.ToString());
                     List<DataGridView> dgvlst = new List<DataGridView>() { dgvRubrics, dgvFaculty, dgvOwner, dgvActivityGoal, dgvNatAffil, dgvCountry, dgvLP, dgvActivityArea };
                     
-                    int tbl_ind = 1;
+                    int tbl_ind = 0;
                     foreach (DataGridView dgv in dgvlst)
                     {
                         TableDoc td = wd.Tables[tbl_ind];

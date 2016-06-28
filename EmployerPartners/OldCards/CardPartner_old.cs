@@ -447,7 +447,7 @@ namespace EmployerPartners
                     return true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Ошибка при сохранении карточки", "");
                 return false;

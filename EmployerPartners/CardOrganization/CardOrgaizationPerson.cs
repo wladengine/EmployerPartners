@@ -52,6 +52,7 @@ namespace EmployerPartners
                                ActivityAreaName = p.ActivityArea.Name,
                                p.Email,
                                x.Position,
+                               x.PositionEng,
                                x.Comment,
                            }).FirstOrDefault();
                 if (lst == null)
@@ -63,6 +64,7 @@ namespace EmployerPartners
                 lblIsGreduateSPbGU.Text = (lst.IsSPbGUGraduate ?? false) ? "да" : "нет";
 
                 tbposition.Text = lst.Position;
+                tbpositionEng.Text = lst.PositionEng;
                 tbComment.Text = lst.Comment;
                 ComboServ.SetComboId(cbPerson, lst.Id);
             }
@@ -73,8 +75,13 @@ namespace EmployerPartners
             int? PersonId = ComboServ.GetComboIdInt(cbPerson);
             if (!PersonId.HasValue)
             {
-                MessageBox.Show("Контактное лицо не выбрано");
+                MessageBox.Show("Контактное лицо не выбрано","Инфо");
                 return;
+            }
+            if (tbposition.Text.Trim().Length == 0)
+            {
+                if (MessageBox.Show("Не указана должность контактного лица в организации.\r\n" + "Продолжить тем не менее?", "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                    return;
             }
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
@@ -88,7 +95,7 @@ namespace EmployerPartners
                            }).ToList().Count();
                 if (lst > 0)
                 {
-                    MessageBox.Show("Такое контактное лицо уже было добавлено");
+                    MessageBox.Show("Такое контактное лицо уже было добавлено","Инфо");
                     return;
                 }
                 else if (!_id.HasValue)
@@ -98,6 +105,7 @@ namespace EmployerPartners
                         OrganizationId = PersId,
                         PartnerPersonId = PersonId.Value,
                         Position = tbposition.Text.Trim(),
+                        PositionEng=tbpositionEng.Text.Trim(),
                         Comment = tbComment.Text.Trim(),
                     };
                     context.OrganizationPerson.Add(org);
@@ -109,6 +117,7 @@ namespace EmployerPartners
                     OrganizationPerson org = context.OrganizationPerson.Where(x => x.Id == _id.Value).First();
                     org.PartnerPersonId = PersonId.Value;
                     org.Position = tbposition.Text.Trim();
+                    org.PositionEng = tbpositionEng.Text.Trim();
                     org.Comment = tbComment.Text.Trim();
                     context.SaveChanges();
                 }

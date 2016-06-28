@@ -42,7 +42,7 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus">
-      <HintPath>..\..\_Shared libs\EducServLib\EducServLib\bin\Debug\EPPlus.dll</HintPath>
+      <HintPath>..\packages\EPPlus.4.0.5\lib\net20\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, PublicKeyToken=9056fda458ff61cf, processorArchitecture=MSIL">
       <HintPath>..\packages\FastMember.Signed.1.0.0.11\lib\net40\FastMember.dll</HintPath>
@@ -50,6 +50,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
@@ -64,7 +65,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WordOut">
-      <HintPath>..\..\_Shared libs\WordOut.dll</HintPath>
+      <HintPath>..\libs\WordOut.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +255,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="HelpClass.cs" />
+    <Compile Include="HelpFiles.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="ListItem.cs" />
     <Compile Include="Lists\ListPersons.cs">
       <SubType>Form</SubType>
@@ -366,9 +370,6 @@
     <Compile Include="OrganizationFaculty.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrganizationList.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
     <Compile Include="OrganizationLP.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
@@ -379,9 +380,6 @@
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="OrganizationRubric.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OrganizationRubricList.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="OwnershipType.cs">
@@ -440,10 +438,17 @@
     <Compile Include="sysdiagrams.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
-    <Compile Include="Util.cs" />
-    <Compile Include="WorkData.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    <Compile Include="Options\Templates.cs">
+      <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Options\Templates.Designer.cs">
+      <DependentUpon>Templates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Templates.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Util.cs" />
     <EmbeddedResource Include="CardContact.resx">
       <DependentUpon>CardContact.cs</DependentUpon>
     </EmbeddedResource>
@@ -521,6 +526,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\Templates.resx">
+      <DependentUpon>Templates.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

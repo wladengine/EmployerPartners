@@ -45,6 +45,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.tbpositionEng = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -61,14 +63,14 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(15, 15);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 13);
+            this.label2.Size = new System.Drawing.Size(101, 13);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Организация:";
+            this.label2.Text = "Физическое лицо:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(29, 156);
+            this.label3.Location = new System.Drawing.Point(29, 192);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 13);
             this.label3.TabIndex = 0;
@@ -94,18 +96,18 @@
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(117, 156);
+            this.tbComment.Location = new System.Drawing.Point(117, 192);
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(313, 38);
-            this.tbComment.TabIndex = 2;
+            this.tbComment.TabIndex = 4;
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(355, 200);
+            this.btnAdd.Location = new System.Drawing.Point(355, 236);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 3;
+            this.btnAdd.TabIndex = 5;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -200,11 +202,30 @@
             this.label8.TabIndex = 4;
             this.label8.Text = "Выпускник СПбГУ:";
             // 
+            // tbpositionEng
+            // 
+            this.tbpositionEng.Location = new System.Drawing.Point(117, 156);
+            this.tbpositionEng.Multiline = true;
+            this.tbpositionEng.Name = "tbpositionEng";
+            this.tbpositionEng.Size = new System.Drawing.Size(313, 30);
+            this.tbpositionEng.TabIndex = 3;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 159);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(106, 13);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "Должность (англ.) :";
+            // 
             // CardOrganizationPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(442, 231);
+            this.ClientSize = new System.Drawing.Size(442, 319);
+            this.Controls.Add(this.tbpositionEng);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.lblIsGreduateSPbGU);
             this.Controls.Add(this.label7);
@@ -249,5 +270,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        public System.Windows.Forms.TextBox tbpositionEng;
+        public System.Windows.Forms.Label label9;
     }
 }

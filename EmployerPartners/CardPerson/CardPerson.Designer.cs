@@ -94,6 +94,8 @@
             this.btnRubricDelete = new System.Windows.Forms.Button();
             this.btnRublrikAdd = new System.Windows.Forms.Button();
             this.dgvRubric = new System.Windows.Forms.DataGridView();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnEditContact = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.err)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SaveSuccess)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -193,7 +195,7 @@
             this.chbAlumni.Location = new System.Drawing.Point(453, 232);
             this.chbAlumni.Name = "chbAlumni";
             this.chbAlumni.Size = new System.Drawing.Size(15, 14);
-            this.chbAlumni.TabIndex = 29;
+            this.chbAlumni.TabIndex = 9;
             this.chbAlumni.UseVisualStyleBackColor = true;
             // 
             // chbIsGraduate
@@ -202,7 +204,7 @@
             this.chbIsGraduate.Location = new System.Drawing.Point(183, 211);
             this.chbIsGraduate.Name = "chbIsGraduate";
             this.chbIsGraduate.Size = new System.Drawing.Size(15, 14);
-            this.chbIsGraduate.TabIndex = 29;
+            this.chbIsGraduate.TabIndex = 7;
             this.chbIsGraduate.UseVisualStyleBackColor = true;
             // 
             // lbCountry
@@ -258,7 +260,7 @@
             this.cbDegree.Location = new System.Drawing.Point(183, 122);
             this.cbDegree.Name = "cbDegree";
             this.cbDegree.Size = new System.Drawing.Size(324, 21);
-            this.cbDegree.TabIndex = 26;
+            this.cbDegree.TabIndex = 4;
             // 
             // cbArea
             // 
@@ -267,7 +269,7 @@
             this.cbArea.Location = new System.Drawing.Point(183, 176);
             this.cbArea.Name = "cbArea";
             this.cbArea.Size = new System.Drawing.Size(324, 21);
-            this.cbArea.TabIndex = 26;
+            this.cbArea.TabIndex = 6;
             // 
             // cbRank
             // 
@@ -276,7 +278,7 @@
             this.cbRank.Location = new System.Drawing.Point(183, 149);
             this.cbRank.Name = "cbRank";
             this.cbRank.Size = new System.Drawing.Size(324, 21);
-            this.cbRank.TabIndex = 26;
+            this.cbRank.TabIndex = 5;
             // 
             // label18
             // 
@@ -293,36 +295,36 @@
             this.tbWebSite.Location = new System.Drawing.Point(183, 322);
             this.tbWebSite.Name = "tbWebSite";
             this.tbWebSite.Size = new System.Drawing.Size(324, 20);
-            this.tbWebSite.TabIndex = 8;
+            this.tbWebSite.TabIndex = 12;
             // 
             // tbEmail
             // 
             this.tbEmail.Location = new System.Drawing.Point(183, 296);
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Size = new System.Drawing.Size(324, 20);
-            this.tbEmail.TabIndex = 7;
+            this.tbEmail.TabIndex = 11;
             // 
             // tbMobiles
             // 
             this.tbMobiles.Location = new System.Drawing.Point(183, 373);
             this.tbMobiles.Name = "tbMobiles";
             this.tbMobiles.Size = new System.Drawing.Size(324, 20);
-            this.tbMobiles.TabIndex = 11;
+            this.tbMobiles.TabIndex = 14;
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(183, 415);
+            this.tbComment.Location = new System.Drawing.Point(179, 415);
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(686, 64);
-            this.tbComment.TabIndex = 24;
+            this.tbComment.TabIndex = 15;
             // 
             // tbCountry
             // 
             this.tbCountry.Location = new System.Drawing.Point(183, 252);
             this.tbCountry.Name = "tbCountry";
             this.tbCountry.Size = new System.Drawing.Size(324, 20);
-            this.tbCountry.TabIndex = 12;
+            this.tbCountry.TabIndex = 10;
             this.tbCountry.TextChanged += new System.EventHandler(this.tbCountry_TextChanged);
             this.tbCountry.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbCountry_KeyDown);
             this.tbCountry.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tbCountry_MouseDoubleClick);
@@ -332,7 +334,7 @@
             this.tbPhone.Location = new System.Drawing.Point(183, 347);
             this.tbPhone.Name = "tbPhone";
             this.tbPhone.Size = new System.Drawing.Size(324, 20);
-            this.tbPhone.TabIndex = 10;
+            this.tbPhone.TabIndex = 13;
             // 
             // tbTitle
             // 
@@ -347,7 +349,7 @@
             this.tbGraduateYear.Location = new System.Drawing.Point(385, 208);
             this.tbGraduateYear.Name = "tbGraduateYear";
             this.tbGraduateYear.Size = new System.Drawing.Size(83, 20);
-            this.tbGraduateYear.TabIndex = 3;
+            this.tbGraduateYear.TabIndex = 8;
             // 
             // tbNameEng
             // 
@@ -404,9 +406,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(23, 179);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(150, 13);
+            this.label7.Size = new System.Drawing.Size(141, 13);
             this.label7.TabIndex = 3;
-            this.label7.Text = "Осн. область деятельности:";
+            this.label7.Text = "Осн. сфера деятельности:";
             // 
             // label19
             // 
@@ -524,6 +526,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnEditContact);
             this.tabPage2.Controls.Add(this.btnDeleteContact);
             this.tabPage2.Controls.Add(this.btnOrganizationCardOpen);
             this.tabPage2.Controls.Add(this.btnContactAdd);
@@ -539,11 +542,11 @@
             // btnDeleteContact
             // 
             this.btnDeleteContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteContact.Location = new System.Drawing.Point(541, 11);
+            this.btnDeleteContact.Location = new System.Drawing.Point(490, 11);
             this.btnDeleteContact.Name = "btnDeleteContact";
-            this.btnDeleteContact.Size = new System.Drawing.Size(158, 23);
+            this.btnDeleteContact.Size = new System.Drawing.Size(209, 23);
             this.btnDeleteContact.TabIndex = 4;
-            this.btnDeleteContact.Text = "Удалить организацию";
+            this.btnDeleteContact.Text = "Удалить контакт с организацией";
             this.btnDeleteContact.UseVisualStyleBackColor = true;
             this.btnDeleteContact.Click += new System.EventHandler(this.btnDeleteContact_Click);
             // 
@@ -797,18 +800,41 @@
             this.dgvRubric.TabIndex = 0;
             this.dgvRubric.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRubric_CellDoubleClick);
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDelete.Location = new System.Drawing.Point(12, 604);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(134, 23);
+            this.btnDelete.TabIndex = 5;
+            this.btnDelete.Text = "Удалить карточчку";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnEditContact
+            // 
+            this.btnEditContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditContact.Location = new System.Drawing.Point(6, 485);
+            this.btnEditContact.Name = "btnEditContact";
+            this.btnEditContact.Size = new System.Drawing.Size(233, 23);
+            this.btnEditContact.TabIndex = 6;
+            this.btnEditContact.Text = "Редактировать контакт с организацией";
+            this.btnEditContact.UseVisualStyleBackColor = true;
+            this.btnEditContact.Click += new System.EventHandler(this.btnEditContact_Click);
+            // 
             // CardPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(923, 639);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "CardPerson";
-            this.Text = "Организация";
+            this.Text = "Физическое лицо";
             ((System.ComponentModel.ISupportInitialize)(this.err)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SaveSuccess)).EndInit();
             this.tabPage1.ResumeLayout(false);
@@ -896,6 +922,8 @@
         private System.Windows.Forms.Button btnRubricDelete;
         private System.Windows.Forms.Button btnRublrikAdd;
         private System.Windows.Forms.DataGridView dgvRubric;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnEditContact;
     }
 }
 

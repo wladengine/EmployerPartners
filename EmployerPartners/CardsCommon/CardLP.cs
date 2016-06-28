@@ -62,8 +62,8 @@ namespace EmployerPartners
         {
             btnAdd.Text = (_id.HasValue) ? "Обновить" : "Добавить";
             ComboServ.FillCombo(cbLevel, HelpClass.GetComboListByTable("dbo.StudyLevel"), false, true);
-            ComboServ.FillCombo(cbRubric, HelpClass.GetComboListByQuery(@" select distinct  CONVERT(varchar(100), Rubric.Id) AS Id, Rubric.ShortName as Name
-                from dbo.Rubric order by ShortName"), true, false);
+            ComboServ.FillCombo(cbRubric, HelpClass.GetComboListByQuery(@" select distinct  CONVERT(varchar(100), Rubric.Id) AS Id, Rubric.Name as Name
+                from dbo.Rubric order by Name"), true, false);
         }
         virtual public void FillLP()
         {
@@ -73,10 +73,17 @@ namespace EmployerPartners
         {
             int? LPId = ComboServ.GetComboIdInt(cbName);
             if (!LPId.HasValue)
-            { 
-                MessageBox.Show("Рубрика не выбрано");
+            {
+                MessageBox.Show("Не выбрано направление подготовки", "Инфо");
                 return;
             }
+            int? RubricId = ComboServ.GetComboIdInt(cbRubric);
+            if (!RubricId.HasValue)
+            {
+                MessageBox.Show("Не выбрана рубрика", "Инфо");
+                return;
+            }
+
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
                 if (!CheckExist(context, LPId))

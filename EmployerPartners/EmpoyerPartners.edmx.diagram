@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f8fd0f54a3c44cac9815de3b200570a7" Name="Diagram1">
+      <Diagram DiagramId="f8fd0f54a3c44cac9815de3b200570a7" Name="Diagram1" ZoomLevel="90">
         <EntityTypeShape EntityType="EmployerPartnersModel.C_AppSettings" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EmployerPartnersModel.ActivityArea" Width="1.5" PointX="0.75" PointY="18.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EmployerPartnersModel.ActivityGoal" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
@@ -44,9 +44,6 @@
         <EntityTypeShape EntityType="EmployerPartnersModel.StudyLevelGroup" Width="1.5" PointX="3.5" PointY="50.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EmployerPartnersModel.StudyPlanPrintFormType" Width="1.5" PointX="3.5" PointY="53.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EmployerPartnersModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EmployerPartnersModel.WorkData" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EmployerPartnersModel.OrganizationList" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EmployerPartnersModel.OrganizationRubricList" Width="1.5" PointX="11.75" PointY="7.75" IsExpanded="true" />
         <AssociationConnector Association="EmployerPartnersModel.FK_Organization_ActivityArea" ManuallyRouted="false" />
         <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationActivityArea_ActivityArea" ManuallyRouted="false" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPerson_ActivityArea" ManuallyRouted="false" />
@@ -106,6 +103,8 @@
         <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationLP_Rubric" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPersonFaculty_Rubric" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPersonLP_Rubric" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.HelpFiles" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.Templates" Width="1.5" PointX="8.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

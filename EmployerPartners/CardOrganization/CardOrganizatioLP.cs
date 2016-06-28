@@ -53,9 +53,40 @@ namespace EmployerPartners
         public override void FillLP()
         {
             List<string> AddString = new List<string>();
-            if (StudyLevelId.HasValue) AddString.Add(" and StudyLevelId= " + StudyLevelId.Value.ToString());
-            if (ProgramTypeId.HasValue) AddString.Add(" and ProgramTypeId= " + ProgramTypeId.Value.ToString());
-            if (QualificationId.HasValue) AddString.Add(" and QualificationId= " + QualificationId.Value.ToString());
+            //if (StudyLevelId.HasValue) AddString.Add(" and StudyLevelId= " + StudyLevelId.Value.ToString());
+            //if (ProgramTypeId.HasValue) AddString.Add(" and ProgramTypeId= " + ProgramTypeId.Value.ToString());
+            //if (QualificationId.HasValue) AddString.Add(" and QualificationId= " + QualificationId.Value.ToString());
+
+            bool sqlWhere = false;
+            if (StudyLevelId.HasValue)
+            {
+                sqlWhere = true;
+                AddString.Add(" where StudyLevelId = " + StudyLevelId.Value.ToString());
+            }
+            if (ProgramTypeId.HasValue)
+            {
+                if (sqlWhere)
+                {
+                    AddString.Add(" and ProgramTypeId = " + ProgramTypeId.Value.ToString());
+                }
+                else
+                {
+                    sqlWhere = true;
+                    AddString.Add(" where ProgramTypeId = " + ProgramTypeId.Value.ToString());
+                }
+            }
+            if (QualificationId.HasValue)
+            {
+                if (sqlWhere)
+                {
+                    AddString.Add(" and QualificationId = " + QualificationId.Value.ToString());
+                }
+                else
+                {
+                    sqlWhere = true;
+                    AddString.Add(" where QualificationId = " + QualificationId.Value.ToString());
+                }
+            }
 
             string query = @"
 select distinct  CONVERT(varchar(100), LicenseProgram.Id) AS Id, LicenseProgram.Code + ' ('+LicenseProgram.Name +')' as Name
@@ -99,7 +130,7 @@ from dbo.LicenseProgram ";
                        }).ToList().Count();
             if (lst > 0)
             {
-                MessageBox.Show("Такое направление уже была добавлено");
+                MessageBox.Show("Такое направление уже было добавлено");
                 return false;
             }
             return true;

@@ -24,12 +24,12 @@ namespace EmployerPartners
         {
             if (tbName.Text.Trim().Length == 0)
             {
-                MessageBox.Show("Введите ФИО физического лица", "");
+                MessageBox.Show("Введите ФИО физического лица", "Напоминание");
                 return false;
             }
             if (tbTitle.Text.Trim().Length == 0)
             {
-                MessageBox.Show("Введите регалии", "");
+                MessageBox.Show("Введите регалии", "Напоминание");
                 return false;
             }
             return true;
@@ -90,7 +90,12 @@ namespace EmployerPartners
         }
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Закрыть без сохранения?", "", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+            if ((tbName.Text.Trim().Length == 0) && (tbTitle.Text.Trim().Length == 0))
+            {
+                this.Close();
+                return;
+            }
+            if (MessageBox.Show("Закрыть без сохранения?", "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 this.Close();
         }
     }
