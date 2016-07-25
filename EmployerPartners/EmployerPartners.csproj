@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EmployerPartners</RootNamespace>
     <AssemblyName>EmployerPartners</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -42,7 +42,7 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus">
-      <HintPath>..\..\_Shared libs\EducServLib\EducServLib\bin\Debug\EPPlus.dll</HintPath>
+      <HintPath>..\..\EDUCATION\EducationLib\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, PublicKeyToken=9056fda458ff61cf, processorArchitecture=MSIL">
       <HintPath>..\packages\FastMember.Signed.1.0.0.11\lib\net40\FastMember.dll</HintPath>
@@ -64,7 +64,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WordOut">
-      <HintPath>..\..\_Shared libs\WordOut.dll</HintPath>
+      <HintPath>..\..\OlympCrypto\VKRCrypto\CryptoLib\WordOut.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -413,6 +413,11 @@
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Qualification.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
@@ -525,6 +530,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EntityDeploy Include="EmpoyerPartners.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -571,12 +577,11 @@
     <None Include="Resources\delete-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\_Shared libs\KLADR\KLADR\KLADR.csproj">
+    <ProjectReference Include="..\..\KLADR\KLADR\KLADR.csproj">
       <Project>{73f34af5-f8f4-4fc8-9364-b14e2c5ec8ba}</Project>
       <Name>KLADR</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
