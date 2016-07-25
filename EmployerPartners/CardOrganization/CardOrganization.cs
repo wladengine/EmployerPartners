@@ -98,9 +98,10 @@ namespace EmployerPartners
         public void FillCard()
         {
             ExtraInit(false);
-            ComboServ.FillCombo(cbActivityGoal, HelpClass.GetComboListByTable("dbo.ActivityGoal"), false, false);
-            ComboServ.FillCombo(cbNationalAffiliation, HelpClass.GetComboListByTable("dbo.NationalAffiliation"), false, false);
-            ComboServ.FillCombo(cbOwnershipType, HelpClass.GetComboListByTable("dbo.OwnershipType"), false, false);
+            ComboServ.FillCombo(cbActivityGoal, HelpClass.GetComboListByTable("dbo.ActivityGoal"), true, false);
+            ComboServ.FillCombo(cbNationalAffiliation, HelpClass.GetComboListByTable("dbo.NationalAffiliation"), true, false);
+            ComboServ.FillCombo(cbOwnershipType, HelpClass.GetComboListByTable("dbo.OwnershipType"), true, false);
+            ComboServ.FillCombo(cbArea, HelpClass.GetComboListByTable("dbo.ActivityArea"), true, false);
 
             FillPartnerInfo();
             FillOrganizationArea();
@@ -131,6 +132,7 @@ namespace EmployerPartners
                     OwnershipTypeId = Partner.OwnershipTypeId;
                     ActivityGoalId = Partner.ActivityGoalId;
                     NationalAffiliationId = Partner.NationalAffiliationId;
+                    AreaId = Partner.ActivityAreaId;
 
                     Source = Partner.Source;
                     Description = Partner.Description;
@@ -167,6 +169,7 @@ namespace EmployerPartners
                 var lst = (from x in context.OrganizationActivityArea
                            join a in context.ActivityArea on x.ActivityAreaId equals a.Id
                            where x.OrganizationId == _Id.Value
+                           orderby a.Name 
                            select new 
                            {
                                x.Id,
@@ -244,7 +247,9 @@ namespace EmployerPartners
                                x.Id,
                                PersonId = p.Id,
                                ФИО = p.Name,
-                               Должность = x.Position + " (" + p.Title + ")",
+                               //Должность = x.Position + " (" + p.Title + ")",
+                               Должность = x.Position,
+                               Должность_англ = x.PositionEng,
                                Комментарий = x.Comment,
                                p.Email,
                                Телефон = p.Phone,
@@ -271,7 +276,7 @@ namespace EmployerPartners
         {
             if (String.IsNullOrEmpty(OrgName))
             {
-                err.SetError(tbName, "не задано название");
+                err.SetError(tbName, "не задано полное наименование организации");
                 tabControl1.SelectedTab = tabPage1;
                 return false;
             }
@@ -362,6 +367,7 @@ namespace EmployerPartners
                         NationalAffiliationId = NationalAffiliationId,
                         OwnershipTypeId = OwnershipTypeId,
                         ActivityGoalId = ActivityGoalId,
+                        ActivityAreaId = AreaId,
 
                         INN = INN,
                         Email = Email,
@@ -371,6 +377,7 @@ namespace EmployerPartners
                         City = City,
                         Street = Street,
                         House = House,
+                        Apartment = Apartment,
                         Code = Code,
                         CodeKLADR = CodeKLADR,
                         Fax = Fax,
@@ -409,6 +416,7 @@ namespace EmployerPartners
                     Org.OwnershipTypeId = OwnershipTypeId;
                     Org.ActivityGoalId = ActivityGoalId;
                     Org.NationalAffiliationId = NationalAffiliationId;
+                    Org.ActivityAreaId = AreaId;
 
                     Org.INN = INN;
                     Org.Email = Email;
@@ -422,6 +430,7 @@ namespace EmployerPartners
                     Org.City = City;
                     Org.Street = Street;
                     Org.House = House;
+                    Org.Apartment = Apartment;
                     Org.Code = Code;
                     Org.CodeKLADR = CodeKLADR;
 
@@ -433,7 +442,7 @@ namespace EmployerPartners
                     return true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Ошибка при сохранении карточки", "");
                 return false;
@@ -874,7 +883,7 @@ namespace EmployerPartners
                 if (dgvContacts.CurrentCell != null)
                     if (dgvContacts.CurrentRow.Index >= 0)
                     {
-                        if (MessageBox.Show("Удалить выбранный контакт?", "", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                        if (MessageBox.Show("Удалить выбранный контакт? \r\n" + dgvContacts.CurrentRow.Cells["ФИО"].Value.ToString(), "Запрос на подтверждение", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
                             return;
 
                         int id = int.Parse(dgvContacts.CurrentRow.Cells["Id"].Value.ToString());
@@ -932,7 +941,7 @@ namespace EmployerPartners
                     if (dgv.CurrentRow.Index >= 0)
                     {
                         int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
-                        if (MessageBox.Show("Удалить выбранную сферу деятельности организации?", "", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                        if (MessageBox.Show("Удалить выбранную сферу деятельности организации? \r\n" + dgvActivityArea.CurrentRow.Cells["Название"].Value.ToString(), "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                         {
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                             {
@@ -994,7 +1003,15 @@ namespace EmployerPartners
                     if (dgvRubric.CurrentRow.Index >= 0)
                     {
                         int id = int.Parse(dgvRubric.CurrentRow.Cells["Id"].Value.ToString());
-                        if (MessageBox.Show("Удалить выбранную рубрику организации?", "", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                        string sRubric = "";
+                        try
+                        {
+                            sRubric = dgvRubric.CurrentRow.Cells["Рубрика"].Value.ToString();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        if (MessageBox.Show("Удалить выбранную рубрику? \r\n" + sRubric, "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                         {
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                             {
@@ -1071,7 +1088,24 @@ namespace EmployerPartners
                     if (dgvFaculty.CurrentRow.Index >= 0)
                     {
                         int id = int.Parse(dgvFaculty.CurrentRow.Cells["Id"].Value.ToString());
-                        if (MessageBox.Show("Удалить выбранное направление организации?", "", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                        string sFac = "";
+                        try
+                        {
+                            sFac = dgvFaculty.CurrentRow.Cells["Направление"].Value.ToString();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        string sRubric = "";
+                        try
+                        {
+                            sRubric = dgvFaculty.CurrentRow.Cells["Рубрика"].Value.ToString();
+                        }
+                        catch (Exception)
+                        {
+                        }
+
+                        if (MessageBox.Show("Удалить выбранное направление? \r" + sFac + "\r" + sRubric, "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                         {
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                             {
@@ -1152,7 +1186,31 @@ namespace EmployerPartners
                     if (dgvLP.CurrentRow.Index >= 0)
                     {
                         int id = int.Parse(dgvLP.CurrentRow.Cells["Id"].Value.ToString());
-                        if (MessageBox.Show("Удалить выбранное направление организации?", "", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                        string sCode = "";
+                        try
+                        {
+                            sCode = dgvLP.CurrentRow.Cells["Код"].Value.ToString() + "  ";
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        string sLPName = ""; 
+                        try
+                        {
+                            sLPName = dgvLP.CurrentRow.Cells["Направление"].Value.ToString();
+                        }
+                        catch (Exception)
+                        {   
+                        }
+                        string sRubric = "";
+                        try
+                        {
+                            sRubric = dgvLP.CurrentRow.Cells["Рубрика"].Value.ToString();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        if (MessageBox.Show("Удалить выбранное направление подготовки? \r" + sCode + sLPName + "\r" + sRubric, "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                         {
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                             {
@@ -1176,5 +1234,63 @@ namespace EmployerPartners
                     }
         }
         #endregion
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            {
+                string OrgName = "";
+                try
+                {
+                    OrgName = tbName.Text;
+                }
+                catch (Exception)
+                {
+                }
+                if (MessageBox.Show("Удалить карточку? \r\n" + OrgName, "Запрос на подтверждение", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                    return;
+                try
+                {
+                    context.Organization.Remove(context.Organization.Where(x => x.Id == _Id).First());
+                    context.SaveChanges();
+                    this.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Не удалось удалить карточку...\r\n" + "Обычно это связано с тем, что у данной записи имеются связанные записи в других таблицах.", "Сообщение");
+                }
+
+            }
+        }
+
+        private void BtnContactEdit_Click(object sender, EventArgs e)
+        {
+            if (_Id.HasValue)
+                if (dgvContacts.CurrentCell != null)
+                    if (dgvContacts.CurrentRow.Index >= 0)
+                    {
+                        int id = int.Parse(dgvContacts.CurrentRow.Cells["Id"].Value.ToString());
+                        new CardOrganizationPerson(id, _Id.Value, new UpdateVoidHandler(FillOrganizationPerson)).Show();
+                    }
+        }
+
+        private void btnDelOkved_Click(object sender, EventArgs e)
+        {
+            if (_Id.HasValue)
+                if (dgvOkvedCodes.CurrentCell != null)
+                    if (dgvOkvedCodes.CurrentRow.Index >= 0)
+                    {
+                        if (MessageBox.Show("Удалить выбранный ОКВЭД? \r" + dgvOkvedCodes.CurrentRow.Cells["ОКВЭД"].Value.ToString() + "\r" + dgvOkvedCodes.CurrentRow.Cells["Название"].Value.ToString(), "Запрос на подтверждение", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                            return;
+
+                        int id = int.Parse(dgvOkvedCodes.CurrentRow.Cells["Id"].Value.ToString());
+                        using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                        {
+                            context.OrganizationOkved.RemoveRange(context.OrganizationOkved.Where(x => x.Id == id));
+                            context.SaveChanges();
+                        }
+                        FillOkvedCode();
+                    }
+        }
     }
 }

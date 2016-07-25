@@ -47,7 +47,7 @@ namespace EmployerPartners
             int? RubricId = ComboServ.GetComboIdInt(cbName);
             if (!RubricId.HasValue)
             { 
-                MessageBox.Show("Рубрика не выбрано");
+                MessageBox.Show("Рубрика не выбрана");
                 return;
             }
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())

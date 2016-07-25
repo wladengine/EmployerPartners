@@ -38,8 +38,8 @@ namespace EmployerPartners
         public void FillControls(string TableName, int? FacultyId, int? RubricId)
         {
             btnAdd.Text = (_id.HasValue) ? "Обновить" : "Добавить";
-            ComboServ.FillCombo(cbRubric, HelpClass.GetComboListByQuery(@" select distinct  CONVERT(varchar(100), Rubric.Id) AS Id, Rubric.ShortName as Name
-                from dbo.Rubric order by ShortName"), true, false);
+            ComboServ.FillCombo(cbRubric, HelpClass.GetComboListByQuery(@" select distinct  CONVERT(varchar(100), Rubric.Id) AS Id, Rubric.Name as Name
+                from dbo.Rubric order by Name"), true, false);
             if (RubricId.HasValue)
                 ComboServ.SetComboId(cbRubric, RubricId);
                 
@@ -58,7 +58,12 @@ namespace EmployerPartners
             int? FacultyId = ComboServ.GetComboIdInt(cbName);
             if (!FacultyId.HasValue)
             { 
-                MessageBox.Show("Направление не выбрано");
+                MessageBox.Show("Не выбрано направление", "Инфо");
+                return;
+            }
+            if (!RubricId.HasValue)
+            {
+                MessageBox.Show("Не выбрана рубрика", "Инфо");
                 return;
             }
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())

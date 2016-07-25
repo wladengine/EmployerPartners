@@ -279,3 +279,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+EmployerPartners/App.config
+EmployerPartners/EmpoyerPartners.Designer.cs

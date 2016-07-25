@@ -12,14 +12,14 @@ namespace EmployerPartners
     using System;
     using System.Collections.Generic;
     
-    public partial class dtproperties
+    public partial class HelpFiles
     {
-        public int id { get; set; }
-        public Nullable<int> objectid { get; set; }
-        public string property { get; set; }
-        public string value { get; set; }
-        public string uvalue { get; set; }
-        public byte[] lvalue { get; set; }
-        public int version { get; set; }
+        public int Id { get; set; }
+        public string FileText { get; set; }
+        public string FileName { get; set; }
+        public string FileType { get; set; }
+        public byte[] FileData { get; set; }
+        public System.DateTime DateLoad { get; set; }
+        public double FileSizeKBytes { get; set; }
     }
 }

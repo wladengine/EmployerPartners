@@ -92,14 +92,27 @@ namespace EmployerPartners
         {
             return IsRoleMember("db_administrator") || IsDeveloper();
         }
+
+        public static bool IsDBOwner()
+        {
+            return IsRoleMember("db_owner") || IsRoleMember("db_administrator");
+        }
+		
         public static bool IsRoleMember(string roleName)
         {
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
                 ObjectParameter entId = new ObjectParameter("result", typeof(bool));
                 context.RoleMember(roleName, entId);
-
-                return Convert.ToBoolean(entId.Value);
+                if (entId.Value is DBNull)
+                {
+                    return Convert.ToBoolean(0);
+                }
+                else
+                {
+                    return Convert.ToBoolean(entId.Value);
+                }
+                //return Convert.ToBoolean(entId.Value);
             }
         }
         public static bool IsDeveloper()
