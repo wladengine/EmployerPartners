@@ -453,6 +453,89 @@
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="Practice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PracticeYear" Type="int" Nullable="false" />
+          <Property Name="FacultyId" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PracticeLP">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PracticeId" Type="int" Nullable="false" />
+          <Property Name="LicenseProgramId" Type="int" Nullable="false" />
+          <Property Name="PracticeTypeId" Type="int" />
+          <Property Name="DateStart" Type="datetime" />
+          <Property Name="DateEnd" Type="datetime" />
+          <Property Name="OrderDoc" Type="nvarchar" MaxLength="500" />
+          <Property Name="OrderNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="OrderAuthor" Type="nvarchar" MaxLength="255" />
+          <Property Name="InstructionDoc" Type="nvarchar" MaxLength="500" />
+          <Property Name="InstructionNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="InstructionDate" Type="datetime" />
+          <Property Name="InstructionAuthor" Type="nvarchar" MaxLength="255" />
+          <Property Name="Supervisor" Type="nvarchar" MaxLength="255" />
+          <Property Name="AdvanceHolder" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PracticeLPOP">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PracticeLPId" Type="int" Nullable="false" />
+          <Property Name="ObrazProgramId" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PracticeLPOrganization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PracticeLPId" Type="int" Nullable="false" />
+          <Property Name="OrganizationId" Type="int" Nullable="false" />
+          <Property Name="DateStart" Type="datetime" />
+          <Property Name="DateEnd" Type="datetime" />
+          <Property Name="OrganizationName" Type="nvarchar" MaxLength="500" />
+          <Property Name="OrganizationAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PracticeStudent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PracticeId" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="OrganizationId" Type="int" />
+          <Property Name="PracticeLPOrganizationId" Type="int" />
+          <Property Name="StudentFIO" Type="nvarchar" MaxLength="300" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PracticeType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Sorting" Type="int" />
+        </EntityType>
         <EntityType Name="ProgramMode">
           <Key>
             <PropertyRef Name="Id" />
@@ -565,6 +648,25 @@
           <Property Name="Holder" Type="nvarchar" MaxLength="100" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="SecondName" Type="nvarchar" MaxLength="100" />
+          <Property Name="BirthDate" Type="datetime" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="1" />
+          <Property Name="Course" Type="int" />
+          <Property Name="LicenseProgramId" Type="int" Nullable="false" />
+          <Property Name="TeacherId" Type="int" />
+          <Property Name="ChairId" Type="int" />
+          <Property Name="FacultyId" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" />
         </EntityType>
         <EntityType Name="StudyLevel">
           <Key>
@@ -1236,6 +1338,152 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Practice_Faculty">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+          <End Role="Practice" Type="Self.Practice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Practice">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLP_LicenseProgram">
+          <End Role="LicenseProgram" Type="Self.LicenseProgram" Multiplicity="1" />
+          <End Role="PracticeLP" Type="Self.PracticeLP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LicenseProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLP">
+              <PropertyRef Name="LicenseProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLP_Practice">
+          <End Role="Practice" Type="Self.Practice" Multiplicity="1" />
+          <End Role="PracticeLP" Type="Self.PracticeLP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Practice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLP">
+              <PropertyRef Name="PracticeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLP_PracticeType">
+          <End Role="PracticeType" Type="Self.PracticeType" Multiplicity="0..1" />
+          <End Role="PracticeLP" Type="Self.PracticeLP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLP">
+              <PropertyRef Name="PracticeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOP_ObrazProgram">
+          <End Role="ObrazProgram" Type="Self.ObrazProgram" Multiplicity="1" />
+          <End Role="PracticeLPOP" Type="Self.PracticeLPOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOP">
+              <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOP_PracticeLP">
+          <End Role="PracticeLP" Type="Self.PracticeLP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PracticeLPOP" Type="Self.PracticeLPOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOP">
+              <PropertyRef Name="PracticeLPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOrganization_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="PracticeLPOrganization" Type="Self.PracticeLPOrganization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOrganization">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOrganization_PracticeLP">
+          <End Role="PracticeLP" Type="Self.PracticeLP" Multiplicity="1" />
+          <End Role="PracticeLPOrganization" Type="Self.PracticeLPOrganization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOrganization">
+              <PropertyRef Name="PracticeLPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeStudent_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="PracticeStudent" Type="Self.PracticeStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeStudent">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeStudent_Practice">
+          <End Role="Practice" Type="Self.Practice" Multiplicity="1" />
+          <End Role="PracticeStudent" Type="Self.PracticeStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Practice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeStudent">
+              <PropertyRef Name="PracticeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeStudent_PracticeLPOrganization">
+          <End Role="PracticeLPOrganization" Type="Self.PracticeLPOrganization" Multiplicity="0..1" />
+          <End Role="PracticeStudent" Type="Self.PracticeStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLPOrganization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeStudent">
+              <PropertyRef Name="PracticeLPOrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeStudent_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="PracticeStudent" Type="Self.PracticeStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeStudent">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProgramMode_ProgramType">
           <End Role="ProgramType" Type="Self.ProgramType" Multiplicity="0..1" />
           <End Role="ProgramMode" Type="Self.ProgramMode" Multiplicity="*" />
@@ -1257,6 +1505,30 @@
             </Principal>
             <Dependent Role="ProgramMode">
               <PropertyRef Name="StudyLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Faculty">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_LicenseProgram">
+          <End Role="LicenseProgram" Type="Self.LicenseProgram" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LicenseProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="LicenseProgramId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1357,6 +1629,12 @@
           <EntitySet Name="PartnerPersonFaculty" EntityType="Self.PartnerPersonFaculty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PartnerPersonLP" EntityType="Self.PartnerPersonLP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PartnerPersonRubric" EntityType="Self.PartnerPersonRubric" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Practice" EntityType="Self.Practice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PracticeLP" EntityType="Self.PracticeLP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PracticeLPOP" EntityType="Self.PracticeLPOP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PracticeLPOrganization" EntityType="Self.PracticeLPOrganization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PracticeStudent" EntityType="Self.PracticeStudent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PracticeType" EntityType="Self.PracticeType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProgramMode" EntityType="Self.ProgramMode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProgramStatus" EntityType="Self.ProgramStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProgramType" EntityType="Self.ProgramType" Schema="dbo" store:Type="Tables" />
@@ -1365,6 +1643,7 @@
           <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rubric" EntityType="Self.Rubric" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specialist" EntityType="Self.Specialist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudyLevel" EntityType="Self.StudyLevel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudyLevelGroup" EntityType="Self.StudyLevelGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudyPlanPrintFormType" EntityType="Self.StudyPlanPrintFormType" Schema="dbo" store:Type="Tables" />
@@ -1562,6 +1841,54 @@
             <End Role="Rubric" EntitySet="Rubric" />
             <End Role="PartnerPersonRubric" EntitySet="PartnerPersonRubric" />
           </AssociationSet>
+          <AssociationSet Name="FK_Practice_Faculty" Association="Self.FK_Practice_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="Practice" EntitySet="Practice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLP_LicenseProgram" Association="Self.FK_PracticeLP_LicenseProgram">
+            <End Role="LicenseProgram" EntitySet="LicenseProgram" />
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLP_Practice" Association="Self.FK_PracticeLP_Practice">
+            <End Role="Practice" EntitySet="Practice" />
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLP_PracticeType" Association="Self.FK_PracticeLP_PracticeType">
+            <End Role="PracticeType" EntitySet="PracticeType" />
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOP_ObrazProgram" Association="Self.FK_PracticeLPOP_ObrazProgram">
+            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="PracticeLPOP" EntitySet="PracticeLPOP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOP_PracticeLP" Association="Self.FK_PracticeLPOP_PracticeLP">
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+            <End Role="PracticeLPOP" EntitySet="PracticeLPOP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOrganization_Organization" Association="Self.FK_PracticeLPOrganization_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOrganization_PracticeLP" Association="Self.FK_PracticeLPOrganization_PracticeLP">
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+            <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeStudent_Organization" Association="Self.FK_PracticeStudent_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="PracticeStudent" EntitySet="PracticeStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeStudent_Practice" Association="Self.FK_PracticeStudent_Practice">
+            <End Role="Practice" EntitySet="Practice" />
+            <End Role="PracticeStudent" EntitySet="PracticeStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeStudent_PracticeLPOrganization" Association="Self.FK_PracticeStudent_PracticeLPOrganization">
+            <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+            <End Role="PracticeStudent" EntitySet="PracticeStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeStudent_Student" Association="Self.FK_PracticeStudent_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="PracticeStudent" EntitySet="PracticeStudent" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProgramMode_ProgramType" Association="Self.FK_ProgramMode_ProgramType">
             <End Role="ProgramType" EntitySet="ProgramType" />
             <End Role="ProgramMode" EntitySet="ProgramMode" />
@@ -1569,6 +1896,14 @@
           <AssociationSet Name="FK_ProgramMode_StudyLevel" Association="Self.FK_ProgramMode_StudyLevel">
             <End Role="StudyLevel" EntitySet="StudyLevel" />
             <End Role="ProgramMode" EntitySet="ProgramMode" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Faculty" Association="Self.FK_Student_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_LicenseProgram" Association="Self.FK_Student_LicenseProgram">
+            <End Role="LicenseProgram" EntitySet="LicenseProgram" />
+            <End Role="Student" EntitySet="Student" />
           </AssociationSet>
           <AssociationSet Name="FK_StudyLevel_EducationDocument" Association="Self.FK_StudyLevel_EducationDocument">
             <End Role="EducationDocument" EntitySet="EducationDocument" />
@@ -1720,6 +2055,8 @@
           <NavigationProperty Name="ObrazProgram" Relationship="Self.FK_ObrazProgram_Faculty" FromRole="Faculty" ToRole="ObrazProgram" />
           <NavigationProperty Name="OrganizationFaculty" Relationship="Self.FK_OrganizationFaculty_Faculty" FromRole="Faculty" ToRole="OrganizationFaculty" />
           <NavigationProperty Name="PartnerPersonFaculty" Relationship="EmployerPartnersModel.FK_PartnerPersonFaculty_Faculty" FromRole="Faculty" ToRole="PartnerPersonFaculty" />
+          <NavigationProperty Name="Practice" Relationship="EmployerPartnersModel.FK_Practice_Faculty" FromRole="Faculty" ToRole="Practice" />
+          <NavigationProperty Name="Student" Relationship="EmployerPartnersModel.FK_Student_Faculty" FromRole="Faculty" ToRole="Student" />
         </EntityType>
         <EntityType Name="InboxMessage">
           <Key>
@@ -1798,6 +2135,8 @@
           <NavigationProperty Name="ObrazProgram" Relationship="Self.FK_ObrazProgram_LicenseProgram" FromRole="LicenseProgram" ToRole="ObrazProgram" />
           <NavigationProperty Name="OrganizationLP" Relationship="Self.FK_OrganizationLP_LicenseProgram" FromRole="LicenseProgram" ToRole="OrganizationLP" />
           <NavigationProperty Name="PartnerPersonLP" Relationship="EmployerPartnersModel.FK_PartnerPersonLP_LicenseProgram" FromRole="LicenseProgram" ToRole="PartnerPersonLP" />
+          <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLP_LicenseProgram" FromRole="LicenseProgram" ToRole="PracticeLP" />
+          <NavigationProperty Name="Student" Relationship="EmployerPartnersModel.FK_Student_LicenseProgram" FromRole="LicenseProgram" ToRole="Student" />
         </EntityType>
         <EntityType Name="MobilityType">
           <Key>
@@ -1855,6 +2194,7 @@
           <NavigationProperty Name="ProgramMode" Relationship="Self.FK_ObrazProgram_ProgramMode" FromRole="ObrazProgram" ToRole="ProgramMode" />
           <NavigationProperty Name="ProgramStatus" Relationship="Self.FK_ObrazProgram_ProgramStatus" FromRole="ObrazProgram" ToRole="ProgramStatus" />
           <NavigationProperty Name="Specialist" Relationship="Self.FK_ObrazProgram_Specialist" FromRole="ObrazProgram" ToRole="Specialist" />
+          <NavigationProperty Name="PracticeLPOP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram" FromRole="ObrazProgram" ToRole="PracticeLPOP" />
         </EntityType>
         <EntityType Name="OkvedType">
           <Key>
@@ -1915,6 +2255,8 @@
           <NavigationProperty Name="OrganizationPerson" Relationship="Self.FK_OrganizationPerson_Organization" FromRole="Organization" ToRole="OrganizationPerson" />
           <NavigationProperty Name="OrganizationRubric" Relationship="Self.FK_OrganizationRubric_Organization" FromRole="Organization" ToRole="OrganizationRubric" />
           <Property Name="Apartment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_Organization" FromRole="Organization" ToRole="PracticeLPOrganization" />
+          <NavigationProperty Name="PracticeStudent" Relationship="EmployerPartnersModel.FK_PracticeStudent_Organization" FromRole="Organization" ToRole="PracticeStudent" />
         </EntityType>
         <EntityType Name="OrganizationActivityArea">
           <Key>
@@ -3052,7 +3394,70 @@
           </AssociationSet>
           <EntitySet Name="HelpFiles" EntityType="EmployerPartnersModel.HelpFiles" />
           <EntitySet Name="Templates" EntityType="EmployerPartnersModel.Templates" />
-        </EntityContainer>
+          <EntitySet Name="Practice" EntityType="EmployerPartnersModel.Practice" />
+          <EntitySet Name="PracticeLP" EntityType="EmployerPartnersModel.PracticeLP" />
+          <EntitySet Name="PracticeLPOP" EntityType="EmployerPartnersModel.PracticeLPOP" />
+          <EntitySet Name="PracticeLPOrganization" EntityType="EmployerPartnersModel.PracticeLPOrganization" />
+          <EntitySet Name="PracticeType" EntityType="EmployerPartnersModel.PracticeType" />
+          <AssociationSet Name="FK_Practice_Faculty" Association="EmployerPartnersModel.FK_Practice_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="Practice" EntitySet="Practice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLP_LicenseProgram" Association="EmployerPartnersModel.FK_PracticeLP_LicenseProgram">
+            <End Role="LicenseProgram" EntitySet="LicenseProgram" />
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOP_ObrazProgram" Association="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram">
+            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="PracticeLPOP" EntitySet="PracticeLPOP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOrganization_Organization" Association="EmployerPartnersModel.FK_PracticeLPOrganization_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLP_Practice" Association="EmployerPartnersModel.FK_PracticeLP_Practice">
+            <End Role="Practice" EntitySet="Practice" />
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLP_PracticeType" Association="EmployerPartnersModel.FK_PracticeLP_PracticeType">
+            <End Role="PracticeType" EntitySet="PracticeType" />
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOP_PracticeLP" Association="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP">
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+            <End Role="PracticeLPOP" EntitySet="PracticeLPOP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOrganization_PracticeLP" Association="EmployerPartnersModel.FK_PracticeLPOrganization_PracticeLP">
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+            <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+          </AssociationSet>
+          <EntitySet Name="PracticeStudent" EntityType="EmployerPartnersModel.PracticeStudent" />
+          <EntitySet Name="Student" EntityType="EmployerPartnersModel.Student" />
+          <AssociationSet Name="FK_Student_Faculty" Association="EmployerPartnersModel.FK_Student_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_LicenseProgram" Association="EmployerPartnersModel.FK_Student_LicenseProgram">
+            <End Role="LicenseProgram" EntitySet="LicenseProgram" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeStudent_Organization" Association="EmployerPartnersModel.FK_PracticeStudent_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="PracticeStudent" EntitySet="PracticeStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeStudent_Practice" Association="EmployerPartnersModel.FK_PracticeStudent_Practice">
+            <End Role="Practice" EntitySet="Practice" />
+            <End Role="PracticeStudent" EntitySet="PracticeStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeStudent_PracticeLPOrganization" Association="EmployerPartnersModel.FK_PracticeStudent_PracticeLPOrganization">
+            <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+            <End Role="PracticeStudent" EntitySet="PracticeStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeStudent_Student" Association="EmployerPartnersModel.FK_PracticeStudent_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="PracticeStudent" EntitySet="PracticeStudent" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="PartnerPersonActivityArea">
           <Key>
             <PropertyRef Name="Id" />
@@ -3281,7 +3686,300 @@
           <Property Name="DateLoad" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FileSizeKBytes" Type="Double" Nullable="false" />
         </EntityType>
-      </Schema>
+        <EntityType Name="Practice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PracticeYear" Type="Int32" Nullable="false" />
+          <Property Name="FacultyId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Faculty" Relationship="EmployerPartnersModel.FK_Practice_Faculty" FromRole="Practice" ToRole="Faculty" />
+          <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLP_Practice" FromRole="Practice" ToRole="PracticeLP" />
+          <NavigationProperty Name="PracticeStudent" Relationship="EmployerPartnersModel.FK_PracticeStudent_Practice" FromRole="Practice" ToRole="PracticeStudent" />
+        </EntityType>
+        <EntityType Name="PracticeLP">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PracticeId" Type="Int32" Nullable="false" />
+          <Property Name="LicenseProgramId" Type="Int32" Nullable="false" />
+          <Property Name="PracticeTypeId" Type="Int32" />
+          <Property Name="DateStart" Type="DateTime" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <Property Name="OrderDoc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="OrderNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderAuthor" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="InstructionDoc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="InstructionNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InstructionDate" Type="DateTime" Precision="3" />
+          <Property Name="InstructionAuthor" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Supervisor" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AdvanceHolder" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="LicenseProgram" Relationship="EmployerPartnersModel.FK_PracticeLP_LicenseProgram" FromRole="PracticeLP" ToRole="LicenseProgram" />
+          <NavigationProperty Name="Practice" Relationship="EmployerPartnersModel.FK_PracticeLP_Practice" FromRole="PracticeLP" ToRole="Practice" />
+          <NavigationProperty Name="PracticeType" Relationship="EmployerPartnersModel.FK_PracticeLP_PracticeType" FromRole="PracticeLP" ToRole="PracticeType" />
+          <NavigationProperty Name="PracticeLPOP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP" FromRole="PracticeLP" ToRole="PracticeLPOP" />
+          <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_PracticeLP" FromRole="PracticeLP" ToRole="PracticeLPOrganization" />
+        </EntityType>
+        <EntityType Name="PracticeLPOP">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PracticeLPId" Type="Int32" Nullable="false" />
+          <Property Name="ObrazProgramId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ObrazProgram" Relationship="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram" FromRole="PracticeLPOP" ToRole="ObrazProgram" />
+          <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP" FromRole="PracticeLPOP" ToRole="PracticeLP" />
+        </EntityType>
+        <EntityType Name="PracticeLPOrganization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PracticeLPId" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationId" Type="Int32" Nullable="false" />
+          <Property Name="DateStart" Type="DateTime" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <Property Name="OrganizationName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="OrganizationAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Organization" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_Organization" FromRole="PracticeLPOrganization" ToRole="Organization" />
+          <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_PracticeLP" FromRole="PracticeLPOrganization" ToRole="PracticeLP" />
+          <NavigationProperty Name="PracticeStudent" Relationship="EmployerPartnersModel.FK_PracticeStudent_PracticeLPOrganization" FromRole="PracticeLPOrganization" ToRole="PracticeStudent" />
+        </EntityType>
+        <EntityType Name="PracticeType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Sorting" Type="Int32" />
+          <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLP_PracticeType" FromRole="PracticeType" ToRole="PracticeLP" />
+        </EntityType>
+        <Association Name="FK_Practice_Faculty">
+          <End Type="EmployerPartnersModel.Faculty" Role="Faculty" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.Practice" Role="Practice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Practice">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLP_LicenseProgram">
+          <End Type="EmployerPartnersModel.LicenseProgram" Role="LicenseProgram" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeLP" Role="PracticeLP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LicenseProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLP">
+              <PropertyRef Name="LicenseProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOP_ObrazProgram">
+          <End Type="EmployerPartnersModel.ObrazProgram" Role="ObrazProgram" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeLPOP" Role="PracticeLPOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOP">
+              <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOrganization_Organization">
+          <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeLPOrganization" Role="PracticeLPOrganization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOrganization">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLP_Practice">
+          <End Type="EmployerPartnersModel.Practice" Role="Practice" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeLP" Role="PracticeLP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Practice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLP">
+              <PropertyRef Name="PracticeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLP_PracticeType">
+          <End Type="EmployerPartnersModel.PracticeType" Role="PracticeType" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.PracticeLP" Role="PracticeLP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLP">
+              <PropertyRef Name="PracticeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOP_PracticeLP">
+          <End Type="EmployerPartnersModel.PracticeLP" Role="PracticeLP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EmployerPartnersModel.PracticeLPOP" Role="PracticeLPOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOP">
+              <PropertyRef Name="PracticeLPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOrganization_PracticeLP">
+          <End Type="EmployerPartnersModel.PracticeLP" Role="PracticeLP" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeLPOrganization" Role="PracticeLPOrganization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOrganization">
+              <PropertyRef Name="PracticeLPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PracticeStudent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PracticeId" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationId" Type="Int32" />
+          <Property Name="PracticeLPOrganizationId" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Organization" Relationship="EmployerPartnersModel.FK_PracticeStudent_Organization" FromRole="PracticeStudent" ToRole="Organization" />
+          <NavigationProperty Name="Practice" Relationship="EmployerPartnersModel.FK_PracticeStudent_Practice" FromRole="PracticeStudent" ToRole="Practice" />
+          <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeStudent_PracticeLPOrganization" FromRole="PracticeStudent" ToRole="PracticeLPOrganization" />
+          <NavigationProperty Name="Student" Relationship="EmployerPartnersModel.FK_PracticeStudent_Student" FromRole="PracticeStudent" ToRole="Student" />
+          <Property Name="StudentFIO" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SecondName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Course" Type="Int32" />
+          <Property Name="LicenseProgramId" Type="Int32" Nullable="false" />
+          <Property Name="TeacherId" Type="Int32" />
+          <Property Name="ChairId" Type="Int32" />
+          <Property Name="FacultyId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Faculty" Relationship="EmployerPartnersModel.FK_Student_Faculty" FromRole="Student" ToRole="Faculty" />
+          <NavigationProperty Name="LicenseProgram" Relationship="EmployerPartnersModel.FK_Student_LicenseProgram" FromRole="Student" ToRole="LicenseProgram" />
+          <NavigationProperty Name="PracticeStudent" Relationship="EmployerPartnersModel.FK_PracticeStudent_Student" FromRole="Student" ToRole="PracticeStudent" />
+        </EntityType>
+        <Association Name="FK_Student_Faculty">
+          <End Type="EmployerPartnersModel.Faculty" Role="Faculty" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_LicenseProgram">
+          <End Type="EmployerPartnersModel.LicenseProgram" Role="LicenseProgram" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LicenseProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="LicenseProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeStudent_Organization">
+          <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.PracticeStudent" Role="PracticeStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeStudent">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeStudent_Practice">
+          <End Type="EmployerPartnersModel.Practice" Role="Practice" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeStudent" Role="PracticeStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Practice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeStudent">
+              <PropertyRef Name="PracticeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeStudent_PracticeLPOrganization">
+          <End Type="EmployerPartnersModel.PracticeLPOrganization" Role="PracticeLPOrganization" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.PracticeStudent" Role="PracticeStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLPOrganization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeStudent">
+              <PropertyRef Name="PracticeLPOrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeStudent_Student">
+          <End Type="EmployerPartnersModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeStudent" Role="PracticeStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeStudent">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -3963,6 +4661,115 @@
                 <ScalarProperty Name="FileType" ColumnName="FileType" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="TemplateName" ColumnName="TemplateName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Practice">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.Practice">
+              <MappingFragment StoreEntitySet="Practice">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="PracticeYear" ColumnName="PracticeYear" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PracticeLP">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeLP">
+              <MappingFragment StoreEntitySet="PracticeLP">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="AdvanceHolder" ColumnName="AdvanceHolder" />
+                <ScalarProperty Name="Supervisor" ColumnName="Supervisor" />
+                <ScalarProperty Name="InstructionAuthor" ColumnName="InstructionAuthor" />
+                <ScalarProperty Name="InstructionDate" ColumnName="InstructionDate" />
+                <ScalarProperty Name="InstructionNumber" ColumnName="InstructionNumber" />
+                <ScalarProperty Name="InstructionDoc" ColumnName="InstructionDoc" />
+                <ScalarProperty Name="OrderAuthor" ColumnName="OrderAuthor" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="OrderDoc" ColumnName="OrderDoc" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="PracticeTypeId" ColumnName="PracticeTypeId" />
+                <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
+                <ScalarProperty Name="PracticeId" ColumnName="PracticeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PracticeLPOP">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeLPOP">
+              <MappingFragment StoreEntitySet="PracticeLPOP">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ObrazProgramId" ColumnName="ObrazProgramId" />
+                <ScalarProperty Name="PracticeLPId" ColumnName="PracticeLPId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PracticeLPOrganization">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeLPOrganization">
+              <MappingFragment StoreEntitySet="PracticeLPOrganization">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="OrganizationAddress" ColumnName="OrganizationAddress" />
+                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="PracticeLPId" ColumnName="PracticeLPId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PracticeType">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeType">
+              <MappingFragment StoreEntitySet="PracticeType">
+                <ScalarProperty Name="Sorting" ColumnName="Sorting" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PracticeStudent">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeStudent">
+              <MappingFragment StoreEntitySet="PracticeStudent">
+                <ScalarProperty Name="StudentFIO" ColumnName="StudentFIO" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="PracticeLPOrganizationId" ColumnName="PracticeLPOrganizationId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="PracticeId" ColumnName="PracticeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="ChairId" ColumnName="ChairId" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

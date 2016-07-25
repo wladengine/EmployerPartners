@@ -14,6 +14,12 @@ namespace EmployerPartners
     
     public partial class ObrazProgram
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ObrazProgram()
+        {
+            this.PracticeLPOP = new HashSet<PracticeLPOP>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public string NameEng { get; set; }
@@ -45,5 +51,7 @@ namespace EmployerPartners
         public virtual ProgramMode ProgramMode { get; set; }
         public virtual ProgramStatus ProgramStatus { get; set; }
         public virtual Specialist Specialist { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PracticeLPOP> PracticeLPOP { get; set; }
     }
 }

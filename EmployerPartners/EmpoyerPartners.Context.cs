@@ -72,6 +72,13 @@ namespace EmployerPartners
         public virtual DbSet<PartnerPersonRubric> PartnerPersonRubric { get; set; }
         public virtual DbSet<HelpFiles> HelpFiles { get; set; }
         public virtual DbSet<Templates> Templates { get; set; }
+        public virtual DbSet<Practice> Practice { get; set; }
+        public virtual DbSet<PracticeLP> PracticeLP { get; set; }
+        public virtual DbSet<PracticeLPOP> PracticeLPOP { get; set; }
+        public virtual DbSet<PracticeLPOrganization> PracticeLPOrganization { get; set; }
+        public virtual DbSet<PracticeType> PracticeType { get; set; }
+        public virtual DbSet<PracticeStudent> PracticeStudent { get; set; }
+        public virtual DbSet<Student> Student { get; set; }
     
         public virtual int RoleMember(string roleName, ObjectParameter result)
         {

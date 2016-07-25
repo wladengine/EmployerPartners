@@ -400,6 +400,54 @@
     <Compile Include="PartnerPersonRubric.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="Practice.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PracticeStudent.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Practice\PracticeStudentCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Practice\PracticeStudentCard.Designer.cs">
+      <DependentUpon>PracticeStudentCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Practice\PracticeOrgCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Practice\PracticeOrgCard.Designer.cs">
+      <DependentUpon>PracticeOrgCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Practice\PracticeOrg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Practice\PracticeOrg.Designer.cs">
+      <DependentUpon>PracticeOrg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Practice\PracticeCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Practice\PracticeCard.Designer.cs">
+      <DependentUpon>PracticeCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PracticeLP.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PracticeLPOP.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PracticeLPOrganization.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PracticeType.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Practice\PracticeMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Practice\PracticeMain.Designer.cs">
+      <DependentUpon>PracticeMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProgramMode.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
@@ -424,6 +472,9 @@
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="Specialist.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Student.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="StudyLevel.cs">
@@ -529,6 +580,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Options\Templates.resx">
       <DependentUpon>Templates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Practice\PracticeOrgCard.resx">
+      <DependentUpon>PracticeOrgCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Practice\PracticeCard.resx">
+      <DependentUpon>PracticeCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Practice\PracticeMain.resx">
+      <DependentUpon>PracticeMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Practice\PracticeOrg.resx">
+      <DependentUpon>PracticeOrg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Practice\PracticeStudentCard.resx">
+      <DependentUpon>PracticeStudentCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

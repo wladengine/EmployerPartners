@@ -61,6 +61,10 @@
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnXLS = new System.Windows.Forms.Button();
+            this.cbRubric = new System.Windows.Forms.ComboBox();
+            this.cbFaculty = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -361,11 +365,52 @@
             this.btnXLS.UseVisualStyleBackColor = true;
             this.btnXLS.Click += new System.EventHandler(this.btnXLS_Click);
             // 
+            // cbRubric
+            // 
+            this.cbRubric.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRubric.FormattingEnabled = true;
+            this.cbRubric.Location = new System.Drawing.Point(623, 60);
+            this.cbRubric.Name = "cbRubric";
+            this.cbRubric.Size = new System.Drawing.Size(179, 21);
+            this.cbRubric.TabIndex = 8;
+            // 
+            // cbFaculty
+            // 
+            this.cbFaculty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFaculty.FormattingEnabled = true;
+            this.cbFaculty.Location = new System.Drawing.Point(623, 87);
+            this.cbFaculty.Name = "cbFaculty";
+            this.cbFaculty.Size = new System.Drawing.Size(179, 21);
+            this.cbFaculty.TabIndex = 9;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(571, 63);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(52, 13);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Рубрика:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(545, 90);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(78, 13);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "Направление:";
+            // 
             // ListOrganizations
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1133, 556);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.cbFaculty);
+            this.Controls.Add(this.cbRubric);
             this.Controls.Add(this.btnXLS);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.label7);
@@ -387,6 +432,7 @@
             this.Controls.Add(this.dgv);
             this.Name = "ListOrganizations";
             this.Text = "ListOrganizations";
+            this.Load += new System.EventHandler(this.ListOrganizations_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
@@ -430,5 +476,9 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.Button btnXLS;
+        private System.Windows.Forms.ComboBox cbRubric;
+        private System.Windows.Forms.ComboBox cbFaculty;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
     }
 }

@@ -153,6 +153,7 @@ namespace EmployerPartners
                     Street = Partner.Street;
                     lbStreet.Visible = false;
                     House = Partner.House;
+                    Apartment = Partner.Apartment;
                     lbHouse.Visible = false;
                     Code = Partner.Code;
                     Comment = Partner.Comment;
