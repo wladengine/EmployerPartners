@@ -281,3 +281,6 @@ $RECYCLE.BIN/
 *.lnk
 EmployerPartners/App.config
 EmployerPartners/EmpoyerPartners.Designer.cs
+EmployerPartners/EmployerPartners.csproj
+EmployerPartners/App.config
+EmployerPartners/EmpoyerPartners.Designer.cs
