@@ -20,6 +20,8 @@ namespace EmployerPartners
             this.ObrazProgram = new HashSet<ObrazProgram>();
             this.OrganizationLP = new HashSet<OrganizationLP>();
             this.PartnerPersonLP = new HashSet<PartnerPersonLP>();
+            this.PracticeLP = new HashSet<PracticeLP>();
+            this.Student = new HashSet<Student>();
         }
     
         public int Id { get; set; }
@@ -52,5 +54,9 @@ namespace EmployerPartners
         public virtual ICollection<OrganizationLP> OrganizationLP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PartnerPersonLP> PartnerPersonLP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PracticeLP> PracticeLP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Student> Student { get; set; }
     }
 }

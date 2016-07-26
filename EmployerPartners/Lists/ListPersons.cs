@@ -40,6 +40,16 @@ namespace EmployerPartners
             get { return ComboServ.GetComboIdInt(cbRegion); }
             set { ComboServ.SetComboId(cbRegion, value); }
         }
+        public int? RubricId
+        {
+            get { return ComboServ.GetComboIdInt(cbRubric); }
+            set { ComboServ.SetComboId(cbRubric, value); }
+        }
+        public int? FacultyId
+        {
+            get { return ComboServ.GetComboIdInt(cbFaculty); }
+            set { ComboServ.SetComboId(cbFaculty, value); }
+        }
 
         public ListPersons()
         {
@@ -57,6 +67,8 @@ namespace EmployerPartners
             ComboServ.FillCombo(cbActivityArea, HelpClass.GetComboListByTable("dbo.ActivityArea"), false, true);
             ComboServ.FillCombo(cbCountry, HelpClass.GetComboListByTable("dbo.Country"), false, true);
             ComboServ.FillCombo(cbRegion, HelpClass.GetComboListByTable("dbo.Region"), false, true);
+            ComboServ.FillCombo(cbRubric, HelpClass.GetComboListByTable("dbo.Rubric"), false, true);
+            ComboServ.FillCombo(cbFaculty, HelpClass.GetComboListByTable("dbo.Faculty"), false, true);
         }
         private void FillGrid()
         {
@@ -68,12 +80,18 @@ namespace EmployerPartners
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
                 var lst = (from org in context.PartnerPerson
+                           join r in context.PartnerPersonRubric on org.Id equals r.PartnerPersonId into _r
+                           from or in _r.DefaultIfEmpty()
+                           join f in context.PartnerPersonFaculty on org.Id equals f.PartnerPersonId into _f
+                           from of in _f.DefaultIfEmpty()
                            where 
                            (DegreeId.HasValue ? org.DegreeId == DegreeId : true) &&
                            (RankId.HasValue ? org.RankId == RankId : true) &&
                            (ActivityAreaId.HasValue ? org.ActivityAreaId == ActivityAreaId : true) &&
                            (CountryId.HasValue ? org.CountryId == CountryId : true) &&
-                           (RegionId.HasValue ? org.RegionId == RegionId : true)
+                           (RegionId.HasValue ? org.RegionId == RegionId : true) &&
+                           (RubricId.HasValue ? or.RubricId == RubricId : true) &&
+                           (FacultyId.HasValue ? of.FacultyId == FacultyId : true)
                            orderby org.Name 
                            select new
                            {
@@ -253,6 +271,24 @@ namespace EmployerPartners
                 System.Diagnostics.Process.Start(filename);
             }
             catch
+            {
+            }
+        }
+
+        private void ListPersons_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.Parent.Width > this.Width + 30 + this.Left)
+                {
+                    this.Width = this.Parent.Width - 30 - this.Left;
+                }
+                if (this.Parent.Height > this.Height + 30 + this.Top)
+                {
+                    this.Height = this.Parent.Height - 30 - this.Top;
+                }
+            }
+            catch (Exception)
             {
             }
         }

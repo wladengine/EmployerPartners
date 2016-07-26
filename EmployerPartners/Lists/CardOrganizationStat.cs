@@ -170,17 +170,18 @@ namespace EmployerPartners
                        }).Distinct().ToList();
             int cnt = lst.Select(x => x.OrganizationId).Distinct().Count();
             lblFaculty.Text = cnt.ToString() + "/" + (_Count - cnt).ToString();
-            
-            var gr = (from l in lst
-                      group l by l.Id into l
+
+            var ggr = lst.GroupBy(x => new { x.RubricName, x.Name })
+                .ToList();
+
+
+            var gr = (from l in ggr
                       select new
                       {
                           Рубрика = l.First().RubricName,
                           Направление = l.First().Name,
                           Кол__во_организаций = l.Count(),
-                      }).OrderByDescending(x => x.Кол__во_организаций).ToList();
-            
-            
+                      }).OrderByDescending(x => x.Направление).ThenByDescending(x => x.Кол__во_организаций).ToList();
             
             dgvFaculty.DataSource = gr;
             foreach (DataGridViewColumn col in dgvFaculty.Columns)

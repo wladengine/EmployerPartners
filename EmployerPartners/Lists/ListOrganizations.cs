@@ -45,6 +45,16 @@ namespace EmployerPartners
             get { return ComboServ.GetComboIdInt(cbRegion); }
             set { ComboServ.SetComboId(cbRegion, value); }
         }
+        public int? RubricId
+        {
+            get { return ComboServ.GetComboIdInt(cbRubric); }
+            set { ComboServ.SetComboId(cbRubric, value); }
+        }
+        public int? FacultyId
+        {
+            get { return ComboServ.GetComboIdInt(cbFaculty); }
+            set { ComboServ.SetComboId(cbFaculty, value); }
+        }
 
         public ListOrganizations()
         {
@@ -63,6 +73,8 @@ namespace EmployerPartners
             ComboServ.FillCombo(cbNationalityAffilation, HelpClass.GetComboListByTable("dbo.NationalAffiliation"), false, true);
             ComboServ.FillCombo(cbCountry, HelpClass.GetComboListByTable("dbo.Country"), false, true);
             ComboServ.FillCombo(cbRegion, HelpClass.GetComboListByTable("dbo.Region"), false, true);
+            ComboServ.FillCombo(cbRubric, HelpClass.GetComboListByTable("dbo.Rubric"), false, true);
+            ComboServ.FillCombo(cbFaculty, HelpClass.GetComboListByTable("dbo.Faculty"), false, true);
 
         }
         private void FillGrid()
@@ -74,18 +86,75 @@ namespace EmployerPartners
         {
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
+                /*//////
+                string sqlOrg = "SELECT Organization.*, ActivityArea.Name AS ActivityArea, ActivityGoal.Name AS ActivityGoal, NationalAffiliation.Name AS NationalAffiliation, OwnershipType.Name AS OwnershipType, Country.Name AS Country, Region.Name AS Region " +
+                    " FROM Region RIGHT JOIN (Country RIGHT JOIN (OwnershipType RIGHT JOIN (NationalAffiliation RIGHT JOIN (ActivityGoal RIGHT JOIN (ActivityArea RIGHT JOIN Organization ON ActivityArea.Id = Organization.ActivityAreaId) ON ActivityGoal.Id = Organization.ActivityGoalId) ON NationalAffiliation.Id = Organization.NationalAffiliationId) ON OwnershipType.Id = Organization.OwnershipTypeId) ON Country.Id = Organization.CountryId) ON Region.Id = Organization.RegionId ";
+                    
+                string sqlWhere = ((RubricId.HasValue) ? (" Organization.Id in (select OrganizationId from OrganizationRubric where RubricId = " + RubricId + ")") : "");
+                string sqlOrderBy = " ORDER BY Organization.Name";
+                sqlWhere = (sqlWhere == "") ? "" : (" where " + sqlWhere);
+                sqlOrg = sqlOrg + sqlWhere + sqlOrderBy;
+
+                var OrgTable = context.Database.SqlQuery<Organization>(sqlOrg);
+
+                var lst = (from org in OrgTable
+                           select new
+                           {
+                               Полное_наименование = org.Name,
+                               org.Id,
+                               Среднее_наименование = org.MiddleName,
+                               Краткое_наименование = org.ShortName,
+                               Наименование_англ = org.NameEng,
+                               Краткое_наименование_англ = org.ShortNameEng,
+                               Источник = org.Source,
+                               ОКВЭД = org.Okved,
+                               Форма_собственности = org.OwnershipType,
+                               Цель_деятельности = org.ActivityGoal,
+                               Национальная_принадлежность = org.NationalAffiliation,
+                               Основная_сфера_деятельности = org.ActivityArea,
+
+                               ИНН = org.INN,
+                               org.Email,
+                               Телефон = org.Phone,
+                               Мобильный_телефон = org.Mobiles,
+                               Факс = org.Fax,
+                               Web_сайт = org.WebSite,
+                               Страна = org.Country,
+                               Регион = org.Region,
+                               Город = org.City,
+                               Улица = org.Street,
+                               Дом = org.House,
+                               Помещение = org.Apartment,
+                               Комментарий = org.Comment,
+                           }).ToList();
+                //////*/
+
+                //var lstr = context.OrganizationRubric.Where(x => x.RubricId == RubricId);
+                /*List<int> lstr = (from or in context.OrganizationRubric
+                            where or.RubricId == RubricId
+                            select or.OrganizationId
+                            ).ToList();*/
+                           
+
                 var lst = (from org in context.Organization
+                           join r in context.OrganizationRubric on org.Id equals r.OrganizationId into _r
+                           from or in _r.DefaultIfEmpty()
+                           join f in context.OrganizationFaculty on org.Id equals f.OrganizationId into _f
+                           from of in _f.DefaultIfEmpty()
                            where 
                            (OwnershipTypeId.HasValue ? org.OwnershipTypeId == OwnershipTypeId : true) &&
                            (ActivityGoalId.HasValue ? org.ActivityGoalId == ActivityGoalId : true) &&
                            (NationalAffiliationId.HasValue ? org.NationalAffiliationId == NationalAffiliationId : true) &&
                            (ActivityAreaId.HasValue ? org.ActivityAreaId == ActivityAreaId : true) &&
                            (CountryId.HasValue ? org.CountryId == CountryId : true) &&
-                           (RegionId.HasValue ? org.RegionId == RegionId : true)
+                           (RegionId.HasValue ? org.RegionId == RegionId : true) &&
+                           (RubricId.HasValue ? or.RubricId == RubricId : true) &&
+                           (FacultyId.HasValue ? of.FacultyId == FacultyId : true)
+                           //lstr.Contains(org.Id) 
                            orderby org.Name
                            select new
                            {
-
+                               
                                Полное_наименование = org.Name,
                                org.Id,
                                Среднее_наименование = org.MiddleName,
@@ -113,7 +182,7 @@ namespace EmployerPartners
                                Помещение = org.Apartment,
                                Комментарий = org.Comment,
 
-                           }).ToList();
+                           }).Distinct().OrderBy(x => x.Полное_наименование).ToList();
                 
                 //dgv.DataSource = lst;
                 bindingSource1.DataSource = lst;
@@ -182,6 +251,7 @@ namespace EmployerPartners
                     id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
                 }
             FillGrid(id);
+            //FillGrid(null);
         }
 
         private void bindingNavigator1_RefreshItems(object sender, EventArgs e)
@@ -282,6 +352,24 @@ namespace EmployerPartners
                 System.Diagnostics.Process.Start(filename);
             }
             catch
+            {
+            }
+        }
+
+        private void ListOrganizations_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.Parent.Width > this.Width + 30 + this.Left)
+                {
+                    this.Width = this.Parent.Width - 30 - this.Left;
+                }
+                if (this.Parent.Height > this.Height + 30 + this.Top)
+                {
+                    this.Height = this.Parent.Height - 30 - this.Top;
+                }
+            }
+            catch (Exception)
             {
             }
         }

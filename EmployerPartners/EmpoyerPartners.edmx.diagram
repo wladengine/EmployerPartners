@@ -105,7 +105,28 @@
         <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPersonLP_Rubric" />
         <EntityTypeShape EntityType="EmployerPartnersModel.HelpFiles" Width="1.5" PointX="8.375" PointY="0.75" />
         <EntityTypeShape EntityType="EmployerPartnersModel.Templates" Width="1.5" PointX="8.375" PointY="4.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="EmployerPartnersModel.Practice" Width="1.5" PointX="8.25" PointY="29.375" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PracticeLP" Width="1.5" PointX="13.5" PointY="37.375" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PracticeLPOP" Width="1.5" PointX="16.5" PointY="26.125" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PracticeLPOrganization" Width="1.5" PointX="5.25" PointY="58" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PracticeType" Width="1.5" PointX="11.25" PointY="39.125" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_Practice_Faculty" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLP_LicenseProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOrganization_Organization" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLP_Practice" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLP_PracticeType" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOrganization_PracticeLP" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PracticeStudent" Width="1.5" PointX="19.5" PointY="36.375" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.Student" Width="1.5" PointX="17.25" PointY="20.375" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_Student_Faculty" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_Student_LicenseProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeStudent_Organization" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeStudent_Practice" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeStudent_PracticeLPOrganization" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeStudent_Student" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -143,7 +143,7 @@ namespace EmployerPartners
         public string Apartment
         {
             get { return tbApartment.Text.Trim(); }
-            set { tbHouse.Text = value; }
+            set { tbApartment.Text = value; }
         }
         public string Code
         {

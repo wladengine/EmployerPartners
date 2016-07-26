@@ -33,9 +33,10 @@
             this.smiOrganizationList = new System.Windows.Forms.ToolStripMenuItem();
             this.smiPersonList = new System.Windows.Forms.ToolStripMenuItem();
             this.smiOrganizationStat = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiPractice = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiPracticeMain = new System.Windows.Forms.ToolStripMenuItem();
             this.smiSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.smiEmailSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.образовательныеСоветыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.кадровыеСоветыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справочникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smiDegree = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,8 +56,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.организацииToolStripMenuItem,
+            this.smiPractice,
             this.smiSettings,
-            this.образовательныеСоветыToolStripMenuItem,
             this.кадровыеСоветыToolStripMenuItem,
             this.справочникиToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -97,6 +98,21 @@
             this.smiOrganizationStat.Text = "Статистика по организациям";
             this.smiOrganizationStat.Click += new System.EventHandler(this.smiOrganizationStat_Click);
             // 
+            // smiPractice
+            // 
+            this.smiPractice.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.smiPracticeMain});
+            this.smiPractice.Name = "smiPractice";
+            this.smiPractice.Size = new System.Drawing.Size(66, 20);
+            this.smiPractice.Text = "Рубрики";
+            // 
+            // smiPracticeMain
+            // 
+            this.smiPracticeMain.Name = "smiPracticeMain";
+            this.smiPracticeMain.Size = new System.Drawing.Size(211, 22);
+            this.smiPracticeMain.Text = "Практика (главное окно)";
+            this.smiPracticeMain.Click += new System.EventHandler(this.smiPracticeMain_Click);
+            // 
             // smiSettings
             // 
             this.smiSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -112,13 +128,6 @@
             this.smiEmailSettings.Size = new System.Drawing.Size(209, 22);
             this.smiEmailSettings.Text = "Логин/Пароль для email";
             this.smiEmailSettings.Click += new System.EventHandler(this.smiEmailSettings_Click);
-            // 
-            // образовательныеСоветыToolStripMenuItem
-            // 
-            this.образовательныеСоветыToolStripMenuItem.Name = "образовательныеСоветыToolStripMenuItem";
-            this.образовательныеСоветыToolStripMenuItem.Size = new System.Drawing.Size(160, 20);
-            this.образовательныеСоветыToolStripMenuItem.Text = "Образовательные советы";
-            this.образовательныеСоветыToolStripMenuItem.Visible = false;
             // 
             // кадровыеСоветыToolStripMenuItem
             // 
@@ -195,14 +204,14 @@
             // helpShowToolStripMenuItem
             // 
             this.helpShowToolStripMenuItem.Name = "helpShowToolStripMenuItem";
-            this.helpShowToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.helpShowToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.helpShowToolStripMenuItem.Text = "Справка по программе";
             this.helpShowToolStripMenuItem.Click += new System.EventHandler(this.helpShowToolStripMenuItem_Click);
             // 
             // helpEditToolStripMenuItem
             // 
             this.helpEditToolStripMenuItem.Name = "helpEditToolStripMenuItem";
-            this.helpEditToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.helpEditToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.helpEditToolStripMenuItem.Text = "Справка (загрузка в БД)";
             this.helpEditToolStripMenuItem.Visible = false;
             this.helpEditToolStripMenuItem.Click += new System.EventHandler(this.helpEditToolStripMenuItem_Click);
@@ -240,7 +249,7 @@
         private System.Windows.Forms.ToolStripMenuItem smiOrganizationList;
         private System.Windows.Forms.ToolStripMenuItem smiSettings;
         private System.Windows.Forms.ToolStripMenuItem smiEmailSettings;
-        private System.Windows.Forms.ToolStripMenuItem образовательныеСоветыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smiPractice;
         private System.Windows.Forms.ToolStripMenuItem кадровыеСоветыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem smiPersonList;
         private System.Windows.Forms.ToolStripMenuItem справочникиToolStripMenuItem;
@@ -255,5 +264,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpShowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpEditToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tmplToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smiPracticeMain;
     }
 }

@@ -40,6 +40,18 @@ namespace EmployerPartners
 
         private void smiOrganizationList_Click(object sender, EventArgs e)
         {
+            try
+            {
+                foreach (Form frm in Application.OpenForms)
+                    if (frm is ListOrganizations)
+                    {
+                        frm.Activate();
+                        return;
+                    }
+            }
+            catch (Exception)
+            {
+            } 
             new ListOrganizations().Show();
         }
 
@@ -50,6 +62,18 @@ namespace EmployerPartners
 
         private void smiPersonList_Click(object sender, EventArgs e)
         {
+            try
+            {
+                foreach (Form frm in Application.OpenForms)
+                    if (frm is ListPersons)
+                    {
+                        frm.Activate();
+                        return;
+                    }
+            }
+            catch (Exception)
+            {
+            } 
             new ListPersons().Show();
         }
 
@@ -222,6 +246,23 @@ namespace EmployerPartners
             Templates template = new Templates();
             template.MdiParent = this;
             template.Show();
+        }
+
+        private void smiPracticeMain_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (Form frm in Application.OpenForms)
+                    if (frm is PracticeMain)
+                    {
+                        frm.Activate();
+                        return;
+                    }
+            }
+            catch (Exception)
+            {
+            }
+            new PracticeMain().Show();
         }
     }
 }
