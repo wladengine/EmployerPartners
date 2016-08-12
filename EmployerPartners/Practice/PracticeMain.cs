@@ -61,7 +61,7 @@ namespace EmployerPartners
         {
             ComboServ.FillCombo(cbPracticeList, HelpClass.GetComboListByQuery(@" SELECT CONVERT(varchar(100), Practice.Id) AS Id, 
                 CONVERT(varchar(100), PracticeYear) + '   [ ' + Faculty.Name + '  ]' as Name 
-                FROM Faculty INNER JOIN Practice ON Faculty.Id = Practice.FacultyId 
+                FROM Practice  INNER JOIN Faculty ON Practice.FacultyId = Faculty.Id 
                 WHERE Practice.PracticeYear = " + ((PracticeYear.HasValue) ? (PracticeYear.ToString()) : ("null"))  + " ORDER BY Faculty.Name"), false, true);
         }
         private void FillPracticeFacultyList_()
@@ -90,18 +90,21 @@ namespace EmployerPartners
 
         private void FillLPList(int? id)
         {
-            string Faculty = (id.HasValue) ? ("WHERE FacultyId in (SELECT FacultyId FROM Practice WHERE Id = " + id.ToString() + ")") : "";
+            string Faculty = (id.HasValue) ? (" WHERE FacultyId in (SELECT FacultyId FROM Practice WHERE Id = " + id.ToString() + ")") : "";
+            string Where = (id.HasValue) ? ( "WHERE   dbo.LicenseProgram.Id in (SELECT LicenseProgramId FROM ObrazProgram " + Faculty + ") " +
+                                                    "OR dbo.LicenseProgram.Id in (SELECT SecondLicenseProgramId FROM ObrazProgram " + Faculty + ") ") : "";
 
             ComboServ.FillCombo(cbLP, HelpClass.GetComboListByQuery(@" SELECT CONVERT(varchar(100), dbo.LicenseProgram.Id) AS Id, 
                 CASE ISNULL(dbo.LicenseProgram.Code, N'""') 
-                        WHEN '""' THEN '""' ELSE dbo.LicenseProgram.Code + N' ' END + dbo.StudyLevel.Name + N' ' + dbo.LicenseProgram.Name + N' [' + dbo.ProgramType.Name + N']' + N' [' + dbo.Qualification.Name +
+                        WHEN '""' THEN '""' ELSE dbo.LicenseProgram.Code + N' ' END + dbo.StudyLevel.Name + N' ' + dbo.LicenseProgram.Name + 
+                        N' [' + dbo.ProgramType.Name + N']' + N' [' + CASE ISNULL(dbo.Qualification.Name, N'""') WHEN '""' THEN '""' ELSE dbo.Qualification.Name + N' ' END +
                          N']' AS Name
                 FROM    dbo.LicenseProgram INNER JOIN
                         dbo.ProgramType ON dbo.LicenseProgram.ProgramTypeId = dbo.ProgramType.Id INNER JOIN
-                        dbo.StudyLevel ON dbo.LicenseProgram.StudyLevelId = dbo.StudyLevel.Id INNER JOIN
-                        dbo.Qualification ON dbo.LicenseProgram.QualificationId = dbo.Qualification.Id 
-                WHERE   dbo.LicenseProgram.Id in (SELECT LicenseProgramId FROM ObrazProgram " + Faculty + ") " +
-                "ORDER BY dbo.LicenseProgram.Code, dbo.StudyLevel.Name, dbo.ProgramType.Id"), false, true);
+                        dbo.StudyLevel ON dbo.LicenseProgram.StudyLevelId = dbo.StudyLevel.Id LEFT OUTER JOIN
+                        dbo.Qualification ON dbo.LicenseProgram.QualificationId = dbo.Qualification.Id "
+                + Where +
+                " ORDER BY dbo.LicenseProgram.Code, dbo.StudyLevel.Name, dbo.ProgramType.Id"), false, true);
         }
 
         private void FillGrid()
@@ -115,6 +118,7 @@ namespace EmployerPartners
             {
                 var lst = (from plp in context.PracticeLP
                            join p in context.Practice on plp.PracticeId equals p.Id
+                           join fac in context.Faculty on p.FacultyId equals fac.Id
                            join ptype in context.PracticeType on plp.PracticeTypeId equals ptype.Id into _ptype
                            from ptype in _ptype.DefaultIfEmpty()
                            join lp in context.LicenseProgram on plp.LicenseProgramId equals lp.Id 
@@ -122,10 +126,10 @@ namespace EmployerPartners
                            join progt in context.ProgramType on lp.ProgramTypeId equals progt.Id
                            join q in context.Qualification on lp.QualificationId equals q.Id
                            where (id.HasValue ? plp.PracticeId == id : true) && (PracticeYear.HasValue ? p.PracticeYear == PracticeYear : false)
-                           orderby lp.Code, st.Name, progt.Id 
+                           orderby fac.Name, lp.Code, st.Name, progt.Id 
                            select new
                            {
-                               Направление = lp.Code + "  " + st.Name + "  " + lp.Name + " [" + progt.Name + "]" + " [" + q.Name + "]",
+                               Направление = "[ " + fac.Name + " ] " + lp.Code + "  " + st.Name + "  " + lp.Name + " [" + progt.Name + "]" + " [" + q.Name + "]",
                                plp.Id,
                                plp.PracticeId,
                                plp.LicenseProgramId,
@@ -146,7 +150,9 @@ namespace EmployerPartners
 
                            }).ToList();
 
-                bindingSource1.DataSource = lst;
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                bindingSource1.DataSource = dt;
                 dgv.DataSource = bindingSource1;
 
                 List<string> Cols = new List<string>() { "Id", "PracticeId", "LicenseProgramId" };
@@ -159,7 +165,7 @@ namespace EmployerPartners
                 try
                 {
                     dgv.Columns["Направление"].Frozen = true;
-                    dgv.Columns["Направление"].Width = 350;
+                    dgv.Columns["Направление"].Width = 600;
                     dgv.Columns["Тип_практики"].Width = 150;
                     dgv.Columns["Приказ"].Width = 150;
                     dgv.Columns["Распоряжение"].Width = 150;
@@ -213,8 +219,11 @@ namespace EmployerPartners
                                }).ToList().Count();
                     if (lst > 0)
                     {
-                        MessageBox.Show("Такое направление подготовки уже добавлено", "Инфо");
-                        return;
+                        //MessageBox.Show("Такое направление подготовки уже добавлено", "Инфо");
+                        //return;
+                        if (MessageBox.Show("Такое направление подготовки уже добавлено.\r\n" +
+                            "Продолжить тем не менее?", "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                        { return; }
                     }
                 }
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
@@ -398,14 +407,16 @@ namespace EmployerPartners
                             break;
                     }
 
-                    var lst = (from x in context.PracticeStudent
+                    /*var lst = (from x in context.PracticeStudent
                                join p in context.Practice on x.PracticeId equals p.Id
+                               join fac in context.Faculty on x.FacultyId equals fac.Id
                                join plpo in context.PracticeLPOrganization on x.PracticeLPOrganizationId equals plpo.Id
                                join plp in context.PracticeLP on plpo.PracticeLPId equals plp.Id
                                join o in context.Organization on plpo.OrganizationId equals o.Id
                                //join o in context.Organization on x.OrganizationId equals o.Id   //into _r from r in _r.DefaultIfEmpty()
-                               join stud in context.Student on x.StudentId equals stud.Id
-                               join lp in context.LicenseProgram on stud.LicenseProgramId equals lp.Id
+                               //join stud in context.Student on x.StudentId equals stud.Id
+                               //join lp in context.LicenseProgram on stud.LicenseProgramId equals lp.Id
+                               join lp in context.LicenseProgram on x.LicenseProgramId equals lp.Id
                                join st in context.StudyLevel on lp.StudyLevelId equals st.Id
                                join progt in context.ProgramType on lp.ProgramTypeId equals progt.Id
                                join q in context.Qualification on lp.QualificationId equals q.Id
@@ -417,13 +428,41 @@ namespace EmployerPartners
                                {
                                    orgName = o.Name,
                                    o.SPbGU,
-                                   stud.LicenseProgramId,
-                                   lpName = lp.Code + "  " + st.Name + "  " + lp.Name + " [" + progt.Name + "]" + " [" + q.Name + "]",
+                                   //stud.LicenseProgramId,
+                                   x.FacultyId,
+                                   facName = fac.Name,
+                                   x.LicenseProgramId,
+                                   lpName ="[" + fac.Name + "] " + lp.Code + "  " + st.Name + "  " + lp.Name + " [" + progt.Name + "]" + " [" + q.Name + "]",
+                                   p.PracticeYear,
+                               }).ToList(); */
+
+                    var lst = (from x in context.PracticeLPStudent
+                               join plp in context.PracticeLP on x.PracticeLPId equals plp.Id
+                               join p in context.Practice on plp.PracticeId equals p.Id
+                               join fac in context.Faculty on x.FacultyId equals fac.Id
+                               join plpo in context.PracticeLPOrganization on x.PracticeLPOrganizationId equals plpo.Id
+                               join o in context.Organization on plpo.OrganizationId equals o.Id
+                               join lp in context.LicenseProgram on x.LicenseProgramId equals lp.Id
+                               join st in context.StudyLevel on lp.StudyLevelId equals st.Id
+                               join progt in context.ProgramType on lp.ProgramTypeId equals progt.Id
+                               join q in context.Qualification on lp.QualificationId equals q.Id
+                               where
+                                   (x.PracticeLPOrganizationId != null) &&
+                                   (PracticeYear.HasValue ? p.PracticeYear == PracticeYear : false) &&
+                                   (plp.DateStart >= DateStart) && (plp.DateStart <= DateEnd)
+                               select new
+                               {
+                                   orgName = o.Name,
+                                   o.SPbGU,
+                                   x.FacultyId,
+                                   facName = fac.Name,
+                                   //x.LicenseProgramId,
+                                   plp.LicenseProgramId,
+                                   lpName = "[" + fac.Name + "] " + lp.Code + "  " + st.Name + "  " + lp.Name + " [" + progt.Name + "]" + " [" + q.Name + "]",
                                    p.PracticeYear,
                                }).ToList();
-                               //}).Distinct().ToList();
 
-                    var ggr = lst.GroupBy(x => new { x.orgName, x.SPbGU, x.PracticeYear, x.LicenseProgramId, x.lpName }).ToList();
+                    var ggr = lst.GroupBy(x => new { x.orgName, x.SPbGU, x.PracticeYear, x.FacultyId, x.LicenseProgramId, x.facName, x.lpName }).ToList();
 
                     var gr = (from l in ggr
                               select new
@@ -443,8 +482,54 @@ namespace EmployerPartners
                                   l.First().SPbGU,
                               }).OrderByDescending(x => x.SPbGU).ThenBy(x => x.Организация).ThenBy(x => x.Направление).ToList();
 
-                    //List<string> lplist = gr.Select(x => x.Направление).Distinct().ToList();
-                
+                    var ggr2 = lst.GroupBy(x => new { x.orgName, x.SPbGU, x.PracticeYear}).ToList();
+
+                    var orglist = (from l in ggr2
+                                 select new
+                                 {
+                                     Организация = l.First().orgName,
+                                     Кол__во_студентов = l.Count(),
+                                     l.First().SPbGU,
+                                 }).OrderByDescending(x => x.SPbGU).ThenBy(x => x.Организация).ToList();
+
+                    var ggr3 = lst.GroupBy(x => new { x.orgName, x.PracticeYear }).ToList();
+                    var orgcount = ggr3.Count();
+
+                    var ggr4 = lst.GroupBy(x => new { x.LicenseProgramId, x.PracticeYear, }).ToList();
+                    var lpcount = ggr4.Count();
+
+                    /*var lst2 = (from x in context.PracticeStudent
+                                join plpo in context.PracticeLPOrganization on x.PracticeLPOrganizationId equals plpo.Id
+                                join plp in context.PracticeLP on plpo.PracticeLPId equals plp.Id
+                                where
+                                (PracticeYear.HasValue ? p.PracticeYear == PracticeYear : false) &&
+                                (plp.DateStart >= DateStart) && (plp.DateStart <= DateEnd)
+                                select new
+                                {
+                                    x.StudentFIO,
+                                    x.DR
+                                }).ToList();
+                    var ggr5 = lst2.GroupBy(x => new { x.StudentFIO, x.DR }).ToList();
+                    var stcount = ggr5.Count();*/
+
+                    var stcount = lst.Count();
+
+                    var ggr5 = lst.GroupBy(x => new { x.PracticeYear, x.lpName }).ToList();
+                    var lplist = (from l in ggr5
+                                   select new
+                                   {
+                                       Направление_подготовки = l.First().lpName,
+                                       Кол__во_студентов = l.Count(),
+                                   }).OrderBy(x => x.Направление_подготовки).ToList();
+
+                    var ggr6 = lst.GroupBy(x => new {x.PracticeYear, x.facName}).ToList();
+                    var faclist = (from l in ggr6
+                                   select new
+                                   {
+                                       Направление_образования = l.First().facName,
+                                       Кол__во_студентов = l.Count(),
+                                   }).OrderBy(x => x.Направление_образования).ToList();
+
                 using (ExcelPackage doc = new ExcelPackage(newFile))
                 {
                     //лист по направлениям подготовки
@@ -456,6 +541,9 @@ namespace EmployerPartners
 
                     Color lightGray = Color.FromName("LightGray");
                     Color darkGray = Color.FromName("DarkGray");
+                    Color gainsboro = Color.FromName("Gainsboro");
+                    Color ghostWhite = Color.FromName("GhostWhite");
+
 
                     int colind = 0;
                     int rowshift = 2;
@@ -571,12 +659,12 @@ namespace EmployerPartners
                             ws.Column(++clmnInd).AutoFit();
                     }
 
-                    //лист по организациям
+                    //лист по организациям (в разрезе направлений)
                     dgvXLS.DataSource = orggr;
                     foreach (DataGridViewColumn col in dgvXLS.Columns)
                         col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
 
-                    ws = doc.Workbook.Worksheets.Add("Организации");
+                    ws = doc.Workbook.Worksheets.Add("Организации-направления");
 
                     colind = 0;
                     rowshift = 2;
@@ -624,6 +712,7 @@ namespace EmployerPartners
                                     rowshift++;
                                     OrgName = cell.Value.ToString();
                                     ws.Cells[rwInd + rowshift, colInd + 1].Value = cell.Value;
+                                    ws.Cells[rwInd + rowshift, colInd + 1].Style.Font.Italic = true;
                                     rowshift++;
                                     colind++;
                                     foreach (DataGridViewColumn cl in dgvXLS.Columns)
@@ -633,7 +722,7 @@ namespace EmployerPartners
                                             ws.Cells[rwInd + rowshift, ++colind].Value = cl.HeaderText.ToString();
                                             ws.Cells[rwInd + rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
                                             ws.Cells[rwInd + rowshift, colind].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                                            ws.Cells[rwInd + rowshift, colind].Style.Fill.BackgroundColor.SetColor(lightGray);
+                                            ws.Cells[rwInd + rowshift, colind].Style.Fill.BackgroundColor.SetColor(ghostWhite);
                                         }
                                     }
                                     lnum_start = rwInd + rowshift;
@@ -691,6 +780,197 @@ namespace EmployerPartners
                         else
                             ws.Column(++clmnInd).AutoFit();
                     }
+                    // конец лист по организациям в разрезе направлений
+
+                    //лист по организациям (список)
+                    dgvXLS.DataSource = orglist;
+
+                    foreach (DataGridViewColumn col in dgvXLS.Columns)
+                        col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
+                    ws = doc.Workbook.Worksheets.Add("Организации-список");
+
+                    ws.Cells[1, 1].Value = "Практика " + xlsPeriod + " " + PYear;
+                    //ws.Cells[1,1].Style.Font.Bold = true;
+
+                    rowshift = 2;
+                    colind = 0;
+                    int ln = 0;
+
+                    ws.Cells[1 + rowshift, ++colind].Value = "№ п/п";
+                    ws.Cells[1 + rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                    ws.Cells[1 + rowshift, colind].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    ws.Cells[1 + rowshift, colind].Style.Fill.BackgroundColor.SetColor(lightGray);
+                    //ws.Column(1).AutoFit();
+
+                    foreach (DataGridViewColumn cl in dgvXLS.Columns)
+                    {
+                        if (cl.HeaderText.ToString() != "SPbGU")
+                        {
+                            ws.Cells[1 + rowshift, ++colind].Value = cl.HeaderText.ToString();
+                            ws.Cells[1 + rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                            ws.Cells[1 + rowshift, colind].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                            ws.Cells[1 + rowshift, colind].Style.Fill.BackgroundColor.SetColor(gainsboro);
+                        }
+                    }
+
+                    for (int rwInd = 0; rwInd < dgvXLS.Rows.Count; rwInd++)
+                    {
+                        int colInd = 1;
+                        ln++;
+                        ws.Cells[rwInd + 2 + rowshift, colInd].Value = ln;
+                        ws.Cells[rwInd + 2 + rowshift, colInd].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                        
+                        DataGridViewRow rw = dgvXLS.Rows[rwInd];
+                        
+                        foreach (DataGridViewCell cell in rw.Cells)
+                        {
+                            if (dgvXLS.Columns[cell.ColumnIndex].HeaderText.ToString() != "SPbGU")
+                            {
+                                if (cell.Value == null)
+                                {
+                                    ws.Cells[rwInd + 2 + rowshift, colInd + 1].Value = "";
+                                }
+                                else
+                                {
+                                    ws.Cells[rwInd + 2 + rowshift, colInd + 1].Value = cell.Value;
+                                }
+                                ws.Cells[rwInd + 2 + rowshift, colInd + 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                                colInd++;
+                            }
+                        }
+                    }
+                    //форматирование
+                    clmnInd = 1;
+                    //ws.Column(clmnInd).AutoFit();
+                    foreach (DataGridViewColumn clmn in dgvXLS.Columns)
+                    {
+                        if (clmn.HeaderText.ToString() == "Организация")
+                            ws.Column(++clmnInd).Width = 150;
+                        else if (clmn.HeaderText.ToString() == "SPbGU")
+                            ++clmnInd;
+                        else
+                            ws.Column(++clmnInd).AutoFit();
+                    }
+                    // конец лист по организациям (список)
+
+                    // лист статистика
+                    ws = doc.Workbook.Worksheets.Add("Статистика");
+
+                    ws.Cells[1, 1].Value = "Практика " + xlsPeriod + " " + PYear;
+                    //ws.Cells[1,1].Style.Font.Bold = true;
+
+                    rowshift = 3;
+                    ws.Cells[rowshift, 1].Value = "Общая статистика";
+                    ws.Cells[rowshift, 1].Style.Font.Italic = true;
+
+                    colind = 0;
+                    ws.Cells[++rowshift, ++colind].Value = "Количество организаций-партнеров, в которых проходила практика: ";
+                    ws.Cells[rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                    ws.Cells[rowshift, ++colind].Value = orgcount;
+                    ws.Cells[rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                    colind = 0;
+                    ws.Cells[++rowshift, ++colind].Value = "Количество направлений подготовки, по которым проходила практика: ";
+                    ws.Cells[rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                    ws.Cells[rowshift, ++colind].Value = lpcount;
+                    ws.Cells[rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                    colind = 0;
+                    ws.Cells[++rowshift, ++colind].Value = "Общее количество студентов, которые проходили практику: ";
+                    ws.Cells[rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                    ws.Cells[rowshift, ++colind].Value = stcount;
+                    ws.Cells[rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                    rowshift++;
+                    //форматирование
+                    clmnInd = 1;
+                    ws.Column(clmnInd).AutoFit();
+
+                    dgvXLS.DataSource = faclist;
+
+                    rowshift++;
+                    ws.Cells[rowshift, 1].Value = "Статистика по направлениям образования";
+                    ws.Cells[rowshift, 1].Style.Font.Italic = true;
+
+                    foreach (DataGridViewColumn col in dgvXLS.Columns)
+                        col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
+                    colind = 0;
+                    rowshift++;
+                    foreach (DataGridViewColumn cl in dgvXLS.Columns)
+                    {
+                        ws.Cells[rowshift, ++colind].Value = cl.HeaderText.ToString();
+                        ws.Cells[rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                        ws.Cells[rowshift, colind].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        ws.Cells[rowshift, colind].Style.Fill.BackgroundColor.SetColor(lightGray);
+                    }
+                    for (int rwInd = 0; rwInd < dgvXLS.Rows.Count; rwInd++)
+                    {
+                        rowshift++;
+                        int colInd = 0;
+                        DataGridViewRow rw = dgvXLS.Rows[rwInd];
+                        foreach (DataGridViewCell cell in rw.Cells)
+                        {
+                            if (cell.Value == null)
+                            {
+                                ws.Cells[rowshift, colInd + 1].Value = "";
+                            }
+                            else
+                            {
+                                ws.Cells[rowshift, colInd + 1].Value = cell.Value;
+                            }
+                            ws.Cells[rowshift, colInd + 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                            colInd++;
+                        }
+                    }
+                    rowshift++;
+                    //форматирование
+                    clmnInd = 0;
+                    foreach (DataGridViewColumn clmn in dgvXLS.Columns)
+                    {
+                        ws.Column(++clmnInd).AutoFit();
+                    }
+
+                    dgvXLS.DataSource = lplist;
+
+                    rowshift++;
+                    ws.Cells[rowshift, 1].Value = "Статистика по направлениям подготовки";
+                    ws.Cells[rowshift, 1].Style.Font.Italic = true;
+
+                    foreach (DataGridViewColumn col in dgvXLS.Columns)
+                        col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
+                    rowshift++;
+                    colind = 0;
+                    foreach (DataGridViewColumn cl in dgvXLS.Columns)
+                    {
+                        ws.Cells[rowshift, ++colind].Value = cl.HeaderText.ToString();
+                        ws.Cells[rowshift, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                        ws.Cells[rowshift, colind].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        ws.Cells[rowshift, colind].Style.Fill.BackgroundColor.SetColor(lightGray);
+                    }
+                    for (int rwInd = 0; rwInd < dgvXLS.Rows.Count; rwInd++)
+                    {
+                        rowshift++;
+                        int colInd = 0;
+                        DataGridViewRow rw = dgvXLS.Rows[rwInd];
+                        foreach (DataGridViewCell cell in rw.Cells)
+                        {
+                            if (cell.Value == null)
+                            {
+                                ws.Cells[rowshift, colInd + 1].Value = "";
+                            }
+                            else
+                            {
+                                ws.Cells[rowshift, colInd + 1].Value = cell.Value;
+                            }
+                            ws.Cells[rowshift, colInd + 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                            colInd++;
+                        }
+                    }
+                    rowshift++;
+                    //форматирование
+                    clmnInd = 0;
+                    foreach (DataGridViewColumn clmn in dgvXLS.Columns)
+                    {
+                        ws.Column(++clmnInd).AutoFit();
+                    }
+                    // конец лист статистика
 
                     doc.Save();
                 }

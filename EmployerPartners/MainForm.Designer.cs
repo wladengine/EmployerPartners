@@ -33,22 +33,23 @@
             this.smiOrganizationList = new System.Windows.Forms.ToolStripMenuItem();
             this.smiPersonList = new System.Windows.Forms.ToolStripMenuItem();
             this.smiOrganizationStat = new System.Windows.Forms.ToolStripMenuItem();
-            this.smiPractice = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiRubric = new System.Windows.Forms.ToolStripMenuItem();
             this.smiPracticeMain = new System.Windows.Forms.ToolStripMenuItem();
             this.smiSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.smiEmailSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.кадровыеСоветыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.справочникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiTables = new System.Windows.Forms.ToolStripMenuItem();
             this.smiDegree = new System.Windows.Forms.ToolStripMenuItem();
             this.smiRank = new System.Windows.Forms.ToolStripMenuItem();
             this.smiActivityArea = new System.Windows.Forms.ToolStripMenuItem();
             this.smiOwnership = new System.Windows.Forms.ToolStripMenuItem();
             this.smiActivityGoal = new System.Windows.Forms.ToolStripMenuItem();
-            this.ationalityAffiliation = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiNationalAffiliation = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiLPOP = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpShowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tmplToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,10 +57,9 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.организацииToolStripMenuItem,
-            this.smiPractice,
+            this.smiRubric,
             this.smiSettings,
-            this.кадровыеСоветыToolStripMenuItem,
-            this.справочникиToolStripMenuItem,
+            this.smiTables,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -98,19 +98,20 @@
             this.smiOrganizationStat.Text = "Статистика по организациям";
             this.smiOrganizationStat.Click += new System.EventHandler(this.smiOrganizationStat_Click);
             // 
-            // smiPractice
+            // smiRubric
             // 
-            this.smiPractice.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.smiRubric.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.smiPracticeMain});
-            this.smiPractice.Name = "smiPractice";
-            this.smiPractice.Size = new System.Drawing.Size(66, 20);
-            this.smiPractice.Text = "Рубрики";
+            this.smiRubric.Name = "smiRubric";
+            this.smiRubric.Size = new System.Drawing.Size(66, 20);
+            this.smiRubric.Text = "Рубрики";
             // 
             // smiPracticeMain
             // 
             this.smiPracticeMain.Name = "smiPracticeMain";
             this.smiPracticeMain.Size = new System.Drawing.Size(211, 22);
             this.smiPracticeMain.Text = "Практика (главное окно)";
+            this.smiPracticeMain.Visible = false;
             this.smiPracticeMain.Click += new System.EventHandler(this.smiPracticeMain_Click);
             // 
             // smiSettings
@@ -129,25 +130,20 @@
             this.smiEmailSettings.Text = "Логин/Пароль для email";
             this.smiEmailSettings.Click += new System.EventHandler(this.smiEmailSettings_Click);
             // 
-            // кадровыеСоветыToolStripMenuItem
+            // smiTables
             // 
-            this.кадровыеСоветыToolStripMenuItem.Name = "кадровыеСоветыToolStripMenuItem";
-            this.кадровыеСоветыToolStripMenuItem.Size = new System.Drawing.Size(115, 20);
-            this.кадровыеСоветыToolStripMenuItem.Text = "Кадровые советы";
-            this.кадровыеСоветыToolStripMenuItem.Visible = false;
-            // 
-            // справочникиToolStripMenuItem
-            // 
-            this.справочникиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.smiTables.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.smiDegree,
             this.smiRank,
             this.smiActivityArea,
             this.smiOwnership,
             this.smiActivityGoal,
-            this.ationalityAffiliation});
-            this.справочникиToolStripMenuItem.Name = "справочникиToolStripMenuItem";
-            this.справочникиToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
-            this.справочникиToolStripMenuItem.Text = "Справочники";
+            this.smiNationalAffiliation,
+            this.toolStripSeparator1,
+            this.smiLPOP});
+            this.smiTables.Name = "smiTables";
+            this.smiTables.Size = new System.Drawing.Size(94, 20);
+            this.smiTables.Text = "Справочники";
             // 
             // smiDegree
             // 
@@ -184,12 +180,20 @@
             this.smiActivityGoal.Text = "Цель деятельности";
             this.smiActivityGoal.Click += new System.EventHandler(this.smiActivityGoal_Click);
             // 
-            // ationalityAffiliation
+            // smiNationalAffiliation
             // 
-            this.ationalityAffiliation.Name = "ationalityAffiliation";
-            this.ationalityAffiliation.Size = new System.Drawing.Size(255, 22);
-            this.ationalityAffiliation.Text = "Национальные принадлежности";
-            this.ationalityAffiliation.Click += new System.EventHandler(this.ationalityAffiliation_Click);
+            this.smiNationalAffiliation.Name = "smiNationalAffiliation";
+            this.smiNationalAffiliation.Size = new System.Drawing.Size(255, 22);
+            this.smiNationalAffiliation.Text = "Национальные принадлежности";
+            this.smiNationalAffiliation.Click += new System.EventHandler(this.ationalityAffiliation_Click);
+            // 
+            // smiLPOP
+            // 
+            this.smiLPOP.Name = "smiLPOP";
+            this.smiLPOP.Size = new System.Drawing.Size(255, 22);
+            this.smiLPOP.Text = "Направления, ОП, Студенты";
+            this.smiLPOP.Visible = false;
+            this.smiLPOP.Click += new System.EventHandler(this.smiLPOP_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -224,6 +228,11 @@
             this.tmplToolStripMenuItem.Visible = false;
             this.tmplToolStripMenuItem.Click += new System.EventHandler(this.tmplToolStripMenuItem_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(252, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -249,21 +258,22 @@
         private System.Windows.Forms.ToolStripMenuItem smiOrganizationList;
         private System.Windows.Forms.ToolStripMenuItem smiSettings;
         private System.Windows.Forms.ToolStripMenuItem smiEmailSettings;
-        private System.Windows.Forms.ToolStripMenuItem smiPractice;
-        private System.Windows.Forms.ToolStripMenuItem кадровыеСоветыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smiRubric;
         private System.Windows.Forms.ToolStripMenuItem smiPersonList;
-        private System.Windows.Forms.ToolStripMenuItem справочникиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smiTables;
         private System.Windows.Forms.ToolStripMenuItem smiDegree;
         private System.Windows.Forms.ToolStripMenuItem smiRank;
         private System.Windows.Forms.ToolStripMenuItem smiActivityArea;
         private System.Windows.Forms.ToolStripMenuItem smiOwnership;
         private System.Windows.Forms.ToolStripMenuItem smiActivityGoal;
-        private System.Windows.Forms.ToolStripMenuItem ationalityAffiliation;
+        private System.Windows.Forms.ToolStripMenuItem smiNationalAffiliation;
         private System.Windows.Forms.ToolStripMenuItem smiOrganizationStat;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpShowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpEditToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tmplToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem smiPracticeMain;
+        private System.Windows.Forms.ToolStripMenuItem smiLPOP;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

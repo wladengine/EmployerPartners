@@ -12,21 +12,13 @@ namespace EmployerPartners
     using System;
     using System.Collections.Generic;
     
-    public partial class PracticeType
+    public partial class StudyPlanData
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PracticeType()
-        {
-            this.PracticeLP = new HashSet<PracticeLP>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> Sorting { get; set; }
-        public string RodName { get; set; }
-        public string AccName { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PracticeLP> PracticeLP { get; set; }
+        public string StudyPlanNumber { get; set; }
+        public string PlanYear { get; set; }
+        public Nullable<int> ObrazProgramId { get; set; }
+        public Nullable<int> LicenseProgramId { get; set; }
+        public Nullable<int> FacultyId { get; set; }
     }
 }

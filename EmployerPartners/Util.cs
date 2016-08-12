@@ -95,7 +95,17 @@ namespace EmployerPartners
 
         public static bool IsDBOwner()
         {
-            return IsRoleMember("db_owner") || IsRoleMember("db_administrator");
+            return IsRoleMember("db_owner");
+        }
+
+        public static bool IsPractice()
+        {
+            return IsRoleMember("Practice");
+        }
+
+        public static bool IsReadOnlyAll()
+        {
+            return IsRoleMember("ReadOnlyAll"); 
         }
 		
         public static bool IsRoleMember(string roleName)

@@ -245,6 +245,7 @@
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdate" Type="datetime" Nullable="false" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SecondLicenseProgramId" Type="int" />
         </EntityType>
         <EntityType Name="OkvedType">
           <Key>
@@ -472,6 +473,7 @@
           <Property Name="PracticeId" Type="int" Nullable="false" />
           <Property Name="LicenseProgramId" Type="int" Nullable="false" />
           <Property Name="PracticeTypeId" Type="int" />
+          <Property Name="OutSPb" Type="bit" />
           <Property Name="DateStart" Type="datetime" />
           <Property Name="DateEnd" Type="datetime" />
           <Property Name="OrderDoc" Type="nvarchar" MaxLength="500" />
@@ -514,16 +516,54 @@
           <Property Name="Author" Type="nvarchar" MaxLength="150" />
           <Property Name="DateCreated" Type="datetime" />
         </EntityType>
+        <EntityType Name="PracticeLPStudent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PracticeLPId" Type="int" Nullable="false" />
+          <Property Name="PracticeLPOrganizationId" Type="int" />
+          <Property Name="StudentFIO" Type="nvarchar" MaxLength="300" />
+          <Property Name="DR" Type="varchar" MaxLength="10" />
+          <Property Name="Course" Type="nvarchar" MaxLength="128" />
+          <Property Name="RegNomWP" Type="nvarchar" MaxLength="255" />
+          <Property Name="Department" Type="varchar" MaxLength="50" />
+          <Property Name="StudyBasis" Type="varchar" MaxLength="50" />
+          <Property Name="StatusName" Type="varchar" MaxLength="10" />
+          <Property Name="Accout" Type="varchar" MaxLength="128" />
+          <Property Name="DegreeName" Type="varchar" MaxLength="50" />
+          <Property Name="SpecNumber" Type="nvarchar" MaxLength="128" />
+          <Property Name="SpecName" Type="nvarchar" MaxLength="128" />
+          <Property Name="FacultyName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LicenseProgramId" Type="int" Nullable="false" />
+          <Property Name="FacultyId" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
         <EntityType Name="PracticeStudent">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PracticeId" Type="int" Nullable="false" />
-          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" />
           <Property Name="OrganizationId" Type="int" />
           <Property Name="PracticeLPOrganizationId" Type="int" />
           <Property Name="StudentFIO" Type="nvarchar" MaxLength="300" />
+          <Property Name="DR" Type="varchar" MaxLength="10" />
+          <Property Name="Course" Type="nvarchar" MaxLength="128" />
+          <Property Name="RegNomWP" Type="nvarchar" MaxLength="255" />
+          <Property Name="Department" Type="varchar" MaxLength="50" />
+          <Property Name="StudyBasis" Type="varchar" MaxLength="50" />
+          <Property Name="StatusName" Type="varchar" MaxLength="10" />
+          <Property Name="Accout" Type="varchar" MaxLength="128" />
+          <Property Name="DegreeName" Type="varchar" MaxLength="50" />
+          <Property Name="SpecNumber" Type="nvarchar" MaxLength="128" />
+          <Property Name="SpecName" Type="nvarchar" MaxLength="128" />
+          <Property Name="FacultyName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LicenseProgramId" Type="int" Nullable="false" />
+          <Property Name="FacultyId" Type="int" Nullable="false" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" />
           <Property Name="DateCreated" Type="datetime" />
@@ -534,6 +574,8 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="RodName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="AccName" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Sorting" Type="int" />
         </EntityType>
         <EntityType Name="ProgramMode">
@@ -668,6 +710,63 @@
           <Property Name="Author" Type="nvarchar" MaxLength="150" />
           <Property Name="DateCreated" Type="datetime" />
         </EntityType>
+        <EntityType Name="StudentData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudDataId" Type="int" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="255" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="128" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
+          <Property Name="SecondName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Course" Type="nvarchar" MaxLength="128" />
+          <Property Name="WorkPlan" Type="nvarchar" MaxLength="255" />
+          <Property Name="RegNomWP" Type="nvarchar" MaxLength="255" />
+          <Property Name="Department" Type="varchar" MaxLength="50" />
+          <Property Name="StudyBasis" Type="varchar" MaxLength="50" />
+          <Property Name="DegreeName" Type="varchar" MaxLength="50" />
+          <Property Name="Accout" Type="varchar" MaxLength="128" />
+          <Property Name="MailBox" Type="varchar" MaxLength="128" />
+          <Property Name="FacultyName" Type="nvarchar" MaxLength="255" />
+          <Property Name="DR" Type="varchar" MaxLength="10" />
+          <Property Name="PersNumber" Type="nvarchar" MaxLength="128" />
+          <Property Name="SpecNumber" Type="nvarchar" MaxLength="128" />
+          <Property Name="SpecName" Type="nvarchar" MaxLength="128" />
+          <Property Name="StatusName" Type="varchar" MaxLength="10" />
+          <Property Name="StudyingName" Type="varchar" MaxLength="50" />
+          <Property Name="StudyPlanNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="PlanYear" Type="nvarchar" MaxLength="20" />
+          <Property Name="ObrazProgramId" Type="int" />
+          <Property Name="LicenseProgramId" Type="int" />
+          <Property Name="FacultyId" Type="int" />
+        </EntityType>
+        <EntityType Name="StudentDVZ">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudDataId" Type="int" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="255" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="128" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
+          <Property Name="SecondName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Course" Type="nvarchar" MaxLength="128" />
+          <Property Name="WorkPlan" Type="nvarchar" MaxLength="255" />
+          <Property Name="RegNomWP" Type="nvarchar" MaxLength="255" />
+          <Property Name="Department" Type="varchar" MaxLength="50" />
+          <Property Name="StudyBasis" Type="varchar" MaxLength="50" />
+          <Property Name="DegreeName" Type="varchar" MaxLength="50" />
+          <Property Name="Accout" Type="varchar" MaxLength="128" />
+          <Property Name="MailBox" Type="varchar" MaxLength="128" />
+          <Property Name="FacultyName" Type="nvarchar" MaxLength="255" />
+          <Property Name="DR" Type="varchar" MaxLength="10" />
+          <Property Name="PersNumber" Type="nvarchar" MaxLength="128" />
+          <Property Name="SpecNumber" Type="nvarchar" MaxLength="128" />
+          <Property Name="SpecName" Type="nvarchar" MaxLength="128" />
+          <Property Name="StatusName" Type="varchar" MaxLength="10" />
+          <Property Name="StudyingName" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="StudyLevel">
           <Key>
             <PropertyRef Name="Id" />
@@ -705,6 +804,17 @@
           <Property Name="Holder" Type="nvarchar" MaxLength="100" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudyPlanData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudyPlanNumber" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="PlanYear" Type="nvarchar" MaxLength="20" />
+          <Property Name="ObrazProgramId" Type="int" />
+          <Property Name="LicenseProgramId" Type="int" />
+          <Property Name="FacultyId" Type="int" />
         </EntityType>
         <EntityType Name="StudyPlanPrintFormType">
           <Key>
@@ -1436,6 +1546,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PracticeLPStudent_PracticeLP">
+          <End Role="PracticeLP" Type="Self.PracticeLP" Multiplicity="1" />
+          <End Role="PracticeLPStudent" Type="Self.PracticeLPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPStudent">
+              <PropertyRef Name="PracticeLPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPStudent_PracticeLPOrganization">
+          <End Role="PracticeLPOrganization" Type="Self.PracticeLPOrganization" Multiplicity="0..1" />
+          <End Role="PracticeLPStudent" Type="Self.PracticeLPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLPOrganization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPStudent">
+              <PropertyRef Name="PracticeLPOrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PracticeStudent_Organization">
           <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
           <End Role="PracticeStudent" Type="Self.PracticeStudent" Multiplicity="*" />
@@ -1473,7 +1607,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PracticeStudent_Student">
-          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
           <End Role="PracticeStudent" Type="Self.PracticeStudent" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Student">
@@ -1596,6 +1730,18 @@
           <Parameter Name="roleName" Type="nvarchar" Mode="In" />
           <Parameter Name="result" Type="bit" Mode="InOut" />
         </Function>
+        <Function Name="UpDateLicenseProgram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="result" Type="bit" Mode="InOut" />
+        </Function>
+        <Function Name="UpDateObrazProgram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="result" Type="bit" Mode="InOut" />
+        </Function>
+        <Function Name="UpDateStudentData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="result" Type="bit" Mode="InOut" />
+        </Function>
+        <Function Name="UpDateStudyPlanData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="result" Type="bit" Mode="InOut" />
+        </Function>
         <EntityContainer Name="EmployerPartnersModelStoreContainer">
           <EntitySet Name="_AppSettings" EntityType="Self._AppSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ActivityArea" EntityType="Self.ActivityArea" Schema="dbo" store:Type="Tables" />
@@ -1633,6 +1779,7 @@
           <EntitySet Name="PracticeLP" EntityType="Self.PracticeLP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PracticeLPOP" EntityType="Self.PracticeLPOP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PracticeLPOrganization" EntityType="Self.PracticeLPOrganization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PracticeLPStudent" EntityType="Self.PracticeLPStudent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PracticeStudent" EntityType="Self.PracticeStudent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PracticeType" EntityType="Self.PracticeType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProgramMode" EntityType="Self.ProgramMode" Schema="dbo" store:Type="Tables" />
@@ -1644,8 +1791,11 @@
           <EntitySet Name="Rubric" EntityType="Self.Rubric" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specialist" EntityType="Self.Specialist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentData" EntityType="Self.StudentData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentDVZ" EntityType="Self.StudentDVZ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudyLevel" EntityType="Self.StudyLevel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudyLevelGroup" EntityType="Self.StudyLevelGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudyPlanData" EntityType="Self.StudyPlanData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudyPlanPrintFormType" EntityType="Self.StudyPlanPrintFormType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Templates" EntityType="Self.Templates" Schema="dbo" store:Type="Tables" />
@@ -1872,6 +2022,14 @@
           <AssociationSet Name="FK_PracticeLPOrganization_PracticeLP" Association="Self.FK_PracticeLPOrganization_PracticeLP">
             <End Role="PracticeLP" EntitySet="PracticeLP" />
             <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPStudent_PracticeLP" Association="Self.FK_PracticeLPStudent_PracticeLP">
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+            <End Role="PracticeLPStudent" EntitySet="PracticeLPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPStudent_PracticeLPOrganization" Association="Self.FK_PracticeLPStudent_PracticeLPOrganization">
+            <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+            <End Role="PracticeLPStudent" EntitySet="PracticeLPStudent" />
           </AssociationSet>
           <AssociationSet Name="FK_PracticeStudent_Organization" Association="Self.FK_PracticeStudent_Organization">
             <End Role="Organization" EntitySet="Organization" />
@@ -2195,6 +2353,7 @@
           <NavigationProperty Name="ProgramStatus" Relationship="Self.FK_ObrazProgram_ProgramStatus" FromRole="ObrazProgram" ToRole="ProgramStatus" />
           <NavigationProperty Name="Specialist" Relationship="Self.FK_ObrazProgram_Specialist" FromRole="ObrazProgram" ToRole="Specialist" />
           <NavigationProperty Name="PracticeLPOP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram" FromRole="ObrazProgram" ToRole="PracticeLPOP" />
+          <Property Name="SecondLicenseProgramId" Type="Int32" />
         </EntityType>
         <EntityType Name="OkvedType">
           <Key>
@@ -3457,6 +3616,30 @@
             <End Role="Student" EntitySet="Student" />
             <End Role="PracticeStudent" EntitySet="PracticeStudent" />
           </AssociationSet>
+          <FunctionImport Name="UpDateLicenseProgram">
+          <Parameter Name="result" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="UpDateObrazProgram">
+          <Parameter Name="result" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <EntitySet Name="StudentData" EntityType="EmployerPartnersModel.StudentData" />
+          <EntitySet Name="StudyPlanData" EntityType="EmployerPartnersModel.StudyPlanData" />
+          <EntitySet Name="StudentDVZ" EntityType="EmployerPartnersModel.StudentDVZ" />
+          <FunctionImport Name="UpDateStudentData">
+          <Parameter Name="result" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="UpDateStudyPlanData">
+          <Parameter Name="result" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <EntitySet Name="PracticeLPStudent" EntityType="EmployerPartnersModel.PracticeLPStudent" />
+          <AssociationSet Name="FK_PracticeLPStudent_PracticeLP" Association="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLP">
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+            <End Role="PracticeLPStudent" EntitySet="PracticeLPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPStudent_PracticeLPOrganization" Association="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLPOrganization">
+            <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+            <End Role="PracticeLPStudent" EntitySet="PracticeLPStudent" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PartnerPersonActivityArea">
           <Key>
@@ -3728,6 +3911,8 @@
           <NavigationProperty Name="PracticeType" Relationship="EmployerPartnersModel.FK_PracticeLP_PracticeType" FromRole="PracticeLP" ToRole="PracticeType" />
           <NavigationProperty Name="PracticeLPOP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP" FromRole="PracticeLP" ToRole="PracticeLPOP" />
           <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_PracticeLP" FromRole="PracticeLP" ToRole="PracticeLPOrganization" />
+          <NavigationProperty Name="PracticeLPStudent" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLP" FromRole="PracticeLP" ToRole="PracticeLPStudent" />
+          <Property Name="OutSPb" Type="Boolean" />
         </EntityType>
         <EntityType Name="PracticeLPOP">
           <Key>
@@ -3759,6 +3944,7 @@
           <NavigationProperty Name="Organization" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_Organization" FromRole="PracticeLPOrganization" ToRole="Organization" />
           <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_PracticeLP" FromRole="PracticeLPOrganization" ToRole="PracticeLP" />
           <NavigationProperty Name="PracticeStudent" Relationship="EmployerPartnersModel.FK_PracticeStudent_PracticeLPOrganization" FromRole="PracticeLPOrganization" ToRole="PracticeStudent" />
+          <NavigationProperty Name="PracticeLPStudent" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLPOrganization" FromRole="PracticeLPOrganization" ToRole="PracticeLPStudent" />
         </EntityType>
         <EntityType Name="PracticeType">
           <Key>
@@ -3768,6 +3954,8 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Sorting" Type="Int32" />
           <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLP_PracticeType" FromRole="PracticeType" ToRole="PracticeLP" />
+          <Property Name="RodName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AccName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Practice_Faculty">
           <End Type="EmployerPartnersModel.Faculty" Role="Faculty" Multiplicity="1" />
@@ -3873,7 +4061,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="PracticeId" Type="Int32" Nullable="false" />
-          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" />
           <Property Name="OrganizationId" Type="Int32" />
           <Property Name="PracticeLPOrganizationId" Type="Int32" />
           <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -3884,6 +4072,19 @@
           <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeStudent_PracticeLPOrganization" FromRole="PracticeStudent" ToRole="PracticeLPOrganization" />
           <NavigationProperty Name="Student" Relationship="EmployerPartnersModel.FK_PracticeStudent_Student" FromRole="PracticeStudent" ToRole="Student" />
           <Property Name="StudentFIO" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="DR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Course" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RegNomWP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StudyBasis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StatusName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Accout" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FacultyName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseProgramId" Type="Int32" Nullable="false" />
+          <Property Name="FacultyId" Type="Int32" Nullable="false" />
+          <Property Name="DegreeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SpecNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SpecName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -3968,7 +4169,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PracticeStudent_Student">
-          <End Type="EmployerPartnersModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.Student" Role="Student" Multiplicity="0..1" />
           <End Type="EmployerPartnersModel.PracticeStudent" Role="PracticeStudent" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Student">
@@ -3976,6 +4177,125 @@
             </Principal>
             <Dependent Role="PracticeStudent">
               <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StudentData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StudDataId" Type="Int32" />
+          <Property Name="FIO" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SecondName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Course" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="WorkPlan" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RegNomWP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StudyBasis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DegreeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Accout" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="MailBox" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FacultyName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PersNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SpecNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SpecName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StatusName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StudyingName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StudyPlanNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PlanYear" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ObrazProgramId" Type="Int32" />
+          <Property Name="LicenseProgramId" Type="Int32" />
+          <Property Name="FacultyId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="StudyPlanData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudyPlanNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PlanYear" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ObrazProgramId" Type="Int32" />
+          <Property Name="LicenseProgramId" Type="Int32" />
+          <Property Name="FacultyId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="StudentDVZ">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudDataId" Type="Int32" />
+          <Property Name="FIO" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SecondName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Course" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="WorkPlan" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RegNomWP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StudyBasis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DegreeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Accout" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="MailBox" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FacultyName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PersNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SpecNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SpecName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StatusName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StudyingName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PracticeLPStudent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PracticeLPId" Type="Int32" Nullable="false" />
+          <Property Name="PracticeLPOrganizationId" Type="Int32" />
+          <Property Name="StudentFIO" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="DR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Course" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RegNomWP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StudyBasis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StatusName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Accout" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="DegreeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SpecNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SpecName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FacultyName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseProgramId" Type="Int32" Nullable="false" />
+          <Property Name="FacultyId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLP" FromRole="PracticeLPStudent" ToRole="PracticeLP" />
+          <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLPOrganization" FromRole="PracticeLPStudent" ToRole="PracticeLPOrganization" />
+        </EntityType>
+        <Association Name="FK_PracticeLPStudent_PracticeLP">
+          <End Type="EmployerPartnersModel.PracticeLP" Role="PracticeLP" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeLPStudent" Role="PracticeLPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPStudent">
+              <PropertyRef Name="PracticeLPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPStudent_PracticeLPOrganization">
+          <End Type="EmployerPartnersModel.PracticeLPOrganization" Role="PracticeLPOrganization" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.PracticeLPStudent" Role="PracticeLPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLPOrganization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPStudent">
+              <PropertyRef Name="PracticeLPOrganizationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4202,6 +4522,7 @@
           <EntitySetMapping Name="ObrazProgram">
             <EntityTypeMapping TypeName="EmployerPartnersModel.ObrazProgram">
               <MappingFragment StoreEntitySet="ObrazProgram">
+                <ScalarProperty Name="SecondLicenseProgramId" ColumnName="SecondLicenseProgramId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="NameEng" ColumnName="NameEng" />
@@ -4680,6 +5001,7 @@
           <EntitySetMapping Name="PracticeLP">
             <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeLP">
               <MappingFragment StoreEntitySet="PracticeLP">
+                <ScalarProperty Name="OutSPb" ColumnName="OutSPb" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
@@ -4733,6 +5055,8 @@
           <EntitySetMapping Name="PracticeType">
             <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeType">
               <MappingFragment StoreEntitySet="PracticeType">
+                <ScalarProperty Name="AccName" ColumnName="AccName" />
+                <ScalarProperty Name="RodName" ColumnName="RodName" />
                 <ScalarProperty Name="Sorting" ColumnName="Sorting" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -4742,6 +5066,19 @@
           <EntitySetMapping Name="PracticeStudent">
             <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeStudent">
               <MappingFragment StoreEntitySet="PracticeStudent">
+                <ScalarProperty Name="SpecName" ColumnName="SpecName" />
+                <ScalarProperty Name="SpecNumber" ColumnName="SpecNumber" />
+                <ScalarProperty Name="DegreeName" ColumnName="DegreeName" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
+                <ScalarProperty Name="FacultyName" ColumnName="FacultyName" />
+                <ScalarProperty Name="Accout" ColumnName="Accout" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StudyBasis" ColumnName="StudyBasis" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="RegNomWP" ColumnName="RegNomWP" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="DR" ColumnName="DR" />
                 <ScalarProperty Name="StudentFIO" ColumnName="StudentFIO" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
@@ -4770,6 +5107,107 @@
                 <ScalarProperty Name="SecondName" ColumnName="SecondName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpDateLicenseProgram" FunctionName="EmployerPartnersModel.Store.UpDateLicenseProgram" />
+          <FunctionImportMapping FunctionImportName="UpDateObrazProgram" FunctionName="EmployerPartnersModel.Store.UpDateObrazProgram" />
+          <EntitySetMapping Name="StudentData">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.StudentData">
+              <MappingFragment StoreEntitySet="StudentData">
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
+                <ScalarProperty Name="ObrazProgramId" ColumnName="ObrazProgramId" />
+                <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
+                <ScalarProperty Name="StudyPlanNumber" ColumnName="StudyPlanNumber" />
+                <ScalarProperty Name="StudyingName" ColumnName="StudyingName" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="SpecName" ColumnName="SpecName" />
+                <ScalarProperty Name="SpecNumber" ColumnName="SpecNumber" />
+                <ScalarProperty Name="PersNumber" ColumnName="PersNumber" />
+                <ScalarProperty Name="DR" ColumnName="DR" />
+                <ScalarProperty Name="FacultyName" ColumnName="FacultyName" />
+                <ScalarProperty Name="MailBox" ColumnName="MailBox" />
+                <ScalarProperty Name="Accout" ColumnName="Accout" />
+                <ScalarProperty Name="DegreeName" ColumnName="DegreeName" />
+                <ScalarProperty Name="StudyBasis" ColumnName="StudyBasis" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="RegNomWP" ColumnName="RegNomWP" />
+                <ScalarProperty Name="WorkPlan" ColumnName="WorkPlan" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="StudDataId" ColumnName="StudDataId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudyPlanData">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.StudyPlanData">
+              <MappingFragment StoreEntitySet="StudyPlanData">
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
+                <ScalarProperty Name="ObrazProgramId" ColumnName="ObrazProgramId" />
+                <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
+                <ScalarProperty Name="StudyPlanNumber" ColumnName="StudyPlanNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentDVZ">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.StudentDVZ">
+              <MappingFragment StoreEntitySet="StudentDVZ">
+                <ScalarProperty Name="StudyingName" ColumnName="StudyingName" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="SpecName" ColumnName="SpecName" />
+                <ScalarProperty Name="SpecNumber" ColumnName="SpecNumber" />
+                <ScalarProperty Name="PersNumber" ColumnName="PersNumber" />
+                <ScalarProperty Name="DR" ColumnName="DR" />
+                <ScalarProperty Name="FacultyName" ColumnName="FacultyName" />
+                <ScalarProperty Name="MailBox" ColumnName="MailBox" />
+                <ScalarProperty Name="Accout" ColumnName="Accout" />
+                <ScalarProperty Name="DegreeName" ColumnName="DegreeName" />
+                <ScalarProperty Name="StudyBasis" ColumnName="StudyBasis" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="RegNomWP" ColumnName="RegNomWP" />
+                <ScalarProperty Name="WorkPlan" ColumnName="WorkPlan" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="StudDataId" ColumnName="StudDataId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpDateStudentData" FunctionName="EmployerPartnersModel.Store.UpDateStudentData" />
+          <FunctionImportMapping FunctionImportName="UpDateStudyPlanData" FunctionName="EmployerPartnersModel.Store.UpDateStudyPlanData" />
+          <EntitySetMapping Name="PracticeLPStudent">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeLPStudent">
+              <MappingFragment StoreEntitySet="PracticeLPStudent">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
+                <ScalarProperty Name="FacultyName" ColumnName="FacultyName" />
+                <ScalarProperty Name="SpecName" ColumnName="SpecName" />
+                <ScalarProperty Name="SpecNumber" ColumnName="SpecNumber" />
+                <ScalarProperty Name="DegreeName" ColumnName="DegreeName" />
+                <ScalarProperty Name="Accout" ColumnName="Accout" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StudyBasis" ColumnName="StudyBasis" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="RegNomWP" ColumnName="RegNomWP" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="DR" ColumnName="DR" />
+                <ScalarProperty Name="StudentFIO" ColumnName="StudentFIO" />
+                <ScalarProperty Name="PracticeLPOrganizationId" ColumnName="PracticeLPOrganizationId" />
+                <ScalarProperty Name="PracticeLPId" ColumnName="PracticeLPId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

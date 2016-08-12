@@ -66,9 +66,10 @@ namespace EmployerPartners
                           Кол__во_организаций = l.Count(),
                       }).ToList();
                       //}).OrderByDescending(x => x.Кол__во_организаций).ToList();
-                      
-            
-            dgvActivityArea.DataSource = gr;
+
+            DataTable dt = new DataTable();
+            dt = Utilities.ConvertToDataTable(gr);
+            dgvActivityArea.DataSource = dt;
             foreach (DataGridViewColumn col in dgvActivityArea.Columns)
                 col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
         }
@@ -92,10 +93,11 @@ namespace EmployerPartners
                           Форма_собственности = l.First().Name,
                           Кол__во_организаций = l.Count(),
                       }).OrderByDescending(x => x.Кол__во_организаций).ToList();
-            
-            
-            
-            dgvOwner.DataSource = gr;
+
+
+            DataTable dt = new DataTable();
+            dt = Utilities.ConvertToDataTable(gr);
+            dgvOwner.DataSource = dt;
 
             foreach (DataGridViewColumn col in dgvOwner.Columns)
                 col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
@@ -120,10 +122,11 @@ namespace EmployerPartners
                           Цель_деятельности = l.First().Name,
                           Кол__во_организаций = l.Count(),
                       }).OrderByDescending(x => x.Кол__во_организаций).ToList();
-            
-            
-            
-            dgvActivityGoal.DataSource = gr;
+
+
+            DataTable dt = new DataTable();
+            dt = Utilities.ConvertToDataTable(gr);
+            dgvActivityGoal.DataSource = dt;
             foreach (DataGridViewColumn col in dgvActivityGoal.Columns)
                 col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
         }
@@ -147,10 +150,11 @@ namespace EmployerPartners
                           Рубрика = l.First().Name,
                           Кол__во_организаций = l.Count(),
                       }).OrderByDescending(x => x.Кол__во_организаций).ToList();
-            
-            
-            
-            dgvRubrics.DataSource = gr;
+
+
+            DataTable dt = new DataTable();
+            dt = Utilities.ConvertToDataTable(gr);
+            dgvRubrics.DataSource = dt;
             foreach (DataGridViewColumn col in dgvRubrics.Columns)
                 col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
         }
@@ -182,8 +186,10 @@ namespace EmployerPartners
                           Направление = l.First().Name,
                           Кол__во_организаций = l.Count(),
                       }).OrderByDescending(x => x.Направление).ThenByDescending(x => x.Кол__во_организаций).ToList();
-            
-            dgvFaculty.DataSource = gr;
+
+            DataTable dt = new DataTable();
+            dt = Utilities.ConvertToDataTable(gr);
+            dgvFaculty.DataSource = dt;
             foreach (DataGridViewColumn col in dgvFaculty.Columns)
                 col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
         }
@@ -207,10 +213,11 @@ namespace EmployerPartners
                           Национальная_принадлежность = l.First().Name,
                           Кол__во_организаций = l.Count(),
                       }).OrderByDescending(x => x.Кол__во_организаций).ToList();
-            
-           
-            
-            dgvNatAffil.DataSource =  gr;
+
+
+            DataTable dt = new DataTable();
+            dt = Utilities.ConvertToDataTable(gr);
+            dgvNatAffil.DataSource =  dt;
             foreach (DataGridViewColumn col in dgvNatAffil.Columns)
                 col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
         }
@@ -234,8 +241,10 @@ namespace EmployerPartners
                           Страна = l.First().Name,
                           Кол__во_организаций = l.Count(),
                       }).OrderByDescending(x => x.Кол__во_организаций).ToList();
-            
-            dgvCountry.DataSource = gr;
+
+            DataTable dt = new DataTable();
+            dt = Utilities.ConvertToDataTable(gr);
+            dgvCountry.DataSource = dt;
             foreach (DataGridViewColumn col in dgvCountry.Columns)
                 col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
         }
@@ -272,8 +281,10 @@ namespace EmployerPartners
                           Квалификация = l.First().Qual,
                           Кол__во_организаций = l.Count(),
                       }).OrderByDescending(x => x.Кол__во_организаций).ToList();
-            
-            dgvLP.DataSource = gr;
+
+            DataTable dt = new DataTable();
+            dt = Utilities.ConvertToDataTable(gr);
+            dgvLP.DataSource = dt;
             foreach (DataGridViewColumn col in dgvLP.Columns)
                 col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
         }

@@ -171,8 +171,8 @@ namespace EmployerPartners
         }
         private void FillComboStudent()
         {
-            ComboServ.FillCombo(cbCourse, HelpClass.GetComboListByQuery(@" select distinct  CONVERT(varchar(100), Student.Course) AS Id, CONVERT(varchar(100), Student.Course) as Name
-                from dbo.Student order by Id"), false, true);
+            ComboServ.FillCombo(cbCourse, HelpClass.GetComboListByQuery(@" select distinct  CONVERT(varchar(100), StudentData.Course) AS Id, CONVERT(varchar(100), StudentData.Course) as Name
+                from dbo.StudentData order by Id"), false, true);
         }
         private void FillComboOrgStudent()
         {
@@ -211,6 +211,7 @@ namespace EmployerPartners
                                     where x.Id == _Id
                                     select x).First();
                     PracticeTypeId = Practice.PracticeTypeId;
+                    checkBoxOutSPb.Checked = Practice.OutSPb.HasValue ? (bool) Practice.OutSPb : false;
                     DateStart = (Practice.DateStart.HasValue) ? Practice.DateStart.Value.Date.ToString("dd.MM.yyyy") : "";
                     DateEnd = (Practice.DateEnd.HasValue) ? Practice.DateEnd.Value.Date.ToString("dd.MM.yyyy") : "";
                     OrderDoc = Practice.OrderDoc;
@@ -238,7 +239,8 @@ namespace EmployerPartners
                         '[ ' + dbo.ObrazProgram.Number + ' ] ' + dbo.ObrazProgram.Name +  ' [ ' + dbo.ProgramStatus.Name + ' ]'  AS Name 
                 FROM    dbo.ObrazProgram INNER JOIN
                         dbo.ProgramStatus ON dbo.ObrazProgram.ProgramStatusId = dbo.ProgramStatus.Id 
-                WHERE   dbo.ObrazProgram.LicenseProgramId = " + _LPId.ToString()), true, false);
+                WHERE   dbo.ObrazProgram.LicenseProgramId = " + _LPId.ToString() +
+                        "or dbo.ObrazProgram.SecondLicenseProgramId = " + _LPId.ToString()), true, false);
         }
 
         private void FillOP()
@@ -261,7 +263,9 @@ namespace EmployerPartners
                                //Комментарий = x.Comment,
                            }).ToList();
 
-                dgvOP.DataSource = lst;
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                dgvOP.DataSource = dt;
 
                 List<string> Cols = new List<string>() { "Id", "ObrazProgramId" };
 
@@ -306,7 +310,9 @@ namespace EmployerPartners
                                    Комментарий = x.Comment,
                                }).ToList();
 
-                    bindingSource1.DataSource = lst;
+                    DataTable dt = new DataTable();
+                    dt = Utilities.ConvertToDataTable(lst);
+                    bindingSource1.DataSource = dt;
                     dgvOrg.DataSource = bindingSource1;
 
                     List<string> Cols = new List<string>() { "Id", "OrganizationId" };
@@ -406,7 +412,9 @@ namespace EmployerPartners
 
                            }).ToList();
 
-                bindingSource2.DataSource = lst;
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                bindingSource2.DataSource = dt;
                 dgv.DataSource = bindingSource2;
 
                 List<string> Cols = new List<string>() { "Id" };
@@ -448,7 +456,7 @@ namespace EmployerPartners
                 MessageBox.Show("Не удалось обработать данные...", "Сообщение");
             }
         }
-
+        
         private void FillStudent()
         {
             FillStudent(null);
@@ -458,13 +466,14 @@ namespace EmployerPartners
             if (_Id.HasValue)
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    var lst = (from x in context.PracticeStudent
-                               join stud in context.Student on x.StudentId equals stud.Id
+                    var lst = (from x in context.PracticeLPStudent       //context.PracticeStudent
+                               //join stud in context.Student on x.StudentId equals stud.Id
                                join plporg in context.PracticeLPOrganization on x.PracticeLPOrganizationId equals plporg.Id into _plporg
                                from plporg in _plporg.DefaultIfEmpty()
                                join org in context.Organization on plporg.OrganizationId equals org.Id into _org
                                from org in _org.DefaultIfEmpty()
-                               where (x.PracticeId == _PId ) && (stud.LicenseProgramId == _LPId)
+                               //where (x.PracticeId == _PId ) && (x.LicenseProgramId == _LPId)       
+                               where x.PracticeLPId == _Id    
                                orderby x.StudentFIO //stud.LastName, stud.FirstName
                                select new
                                {
@@ -473,22 +482,30 @@ namespace EmployerPartners
                                    //Студент = stud.LastName + " " + stud.FirstName + " " + stud.SecondName,
                                    Студент = x.StudentFIO,
                                    x.Id,
-                                   x.StudentId,
-                                   x.OrganizationId,
-                                   Дата_рожд = stud.BirthDate, 
-                                   Курс = stud.Course,
+                                   //x.StudentId,
+                                   //x.OrganizationId,
+                                   Дата_рожд = x.DR, 
+                                   Курс = x.Course,
                                    Организация = org.Name,
                                    Начало_практики = plporg.DateStart,
                                    Окончание_практики = plporg.DateEnd,
                                    По_адресу = plporg.OrganizationAddress,
-                                   Студент_ФИО_печать = x.StudentFIO,
+                                   Форма_обуч = x.Department,
+                                   Основа_обуч = x.StudyBasis,
+                                   Статус = x.StatusName,
+                                   Уровень = x.DegreeName,
+                                   Код_направления = x.SpecNumber,
+                                   Направление_подготовки = x.SpecName,
+                                   Направление = x.FacultyName,
                                    Комментарий = x.Comment,
                                }).ToList();
 
-                    bindingSource3.DataSource = lst;
+                    DataTable dt = new DataTable();
+                    dt = Utilities.ConvertToDataTable(lst);
+                    bindingSource3.DataSource = dt;
                     dgvStudent.DataSource = bindingSource3;
 
-                    List<string> Cols = new List<string>() { "Id", "StudentId", "OrganizationId" };
+                    List<string> Cols = new List<string>() { "Id" }; //{ "Id", "OrganizationId" };
 
                     foreach (string s in Cols)
                         if (dgvStudent.Columns.Contains(s))
@@ -519,11 +536,100 @@ namespace EmployerPartners
                         dgvStudent.Columns["ColumnDelStudent"].Width = 70;
                         dgvStudent.Columns["ColumnEditStudent"].Width = 70;
                         dgvStudent.Columns["Студент"].Frozen = true;
-                        dgvStudent.Columns["Студент"].Width = 250;
+                        dgvStudent.Columns["Студент"].Width = 200;
                         dgvStudent.Columns["Курс"].Width = 65;
                         dgvStudent.Columns["Организация"].Width = 250;
                         dgvStudent.Columns["По_адресу"].Width = 300;
-                        dgvStudent.Columns["Студент_ФИО_печать"].Width = 250;
+                        dgvStudent.Columns["Направление_подготовки"].Width = 300;
+                        dgvStudent.Columns["Направление"].Width = 200;
+                        dgvStudent.Columns["Комментарий"].Width = 200;
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+        }
+
+        private void FillStudent_old(int? id)
+        {
+            if (_Id.HasValue)
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = (from x in context.PracticeStudent
+                               //join stud in context.Student on x.StudentId equals stud.Id
+                               join plporg in context.PracticeLPOrganization on x.PracticeLPOrganizationId equals plporg.Id into _plporg
+                               from plporg in _plporg.DefaultIfEmpty()
+                               join org in context.Organization on plporg.OrganizationId equals org.Id into _org
+                               from org in _org.DefaultIfEmpty()
+                               where (x.PracticeId == _PId) && (x.LicenseProgramId == _LPId)       //(stud.LicenseProgramId == _LPId)
+                               orderby x.StudentFIO //stud.LastName, stud.FirstName
+                               select new
+                               {
+                                   /*Студент = stud.LastName + (!String.IsNullOrEmpty(stud.FirstName) ? " " + stud.FirstName : "") +
+                                                (!String.IsNullOrEmpty(stud.SecondName) ? " " + stud.SecondName : ""),*/
+                                   //Студент = stud.LastName + " " + stud.FirstName + " " + stud.SecondName,
+                                   Студент = x.StudentFIO,
+                                   x.Id,
+                                   //x.StudentId,
+                                   x.OrganizationId,
+                                   Дата_рожд = x.DR,
+                                   Курс = x.Course,
+                                   Организация = org.Name,
+                                   Начало_практики = plporg.DateStart,
+                                   Окончание_практики = plporg.DateEnd,
+                                   По_адресу = plporg.OrganizationAddress,
+                                   Форма_обуч = x.Department,
+                                   Основа_обуч = x.StudyBasis,
+                                   Статус = x.StatusName,
+                                   Уровень = x.DegreeName,
+                                   Код_направления = x.SpecNumber,
+                                   Направление_подготовки = x.SpecName,
+                                   Направление = x.FacultyName,
+                                   Комментарий = x.Comment,
+                               }).ToList();
+
+                    DataTable dt = new DataTable();
+                    dt = Utilities.ConvertToDataTable(lst);
+                    bindingSource3.DataSource = dt;
+                    dgvStudent.DataSource = bindingSource3;
+
+                    List<string> Cols = new List<string>() { "Id", "OrganizationId" }; //{ "Id", "StudentId", "OrganizationId" };
+
+                    foreach (string s in Cols)
+                        if (dgvStudent.Columns.Contains(s))
+                            dgvStudent.Columns[s].Visible = false;
+                    foreach (DataGridViewColumn col in dgvStudent.Columns)
+                    {
+                        col.HeaderText = col.Name.Replace("_", " ");
+                        if (col.Name == "ColumnDelStudent")
+                        {
+                            col.HeaderText = "Действие";
+                        }
+                        if (col.Name == "ColumnEditStudent")
+                        {
+                            col.HeaderText = "Действие";
+                        }
+                        if (col.Name == "ColumnSetOrgStudent")
+                        {
+                            col.HeaderText = "Действие";
+                        }
+                        if (col.Name == "ColumnDiv3")
+                        {
+                            col.HeaderText = "";
+                        }
+                    }
+                    try
+                    {
+                        dgvStudent.Columns["ColumnDiv3"].Width = 6;
+                        dgvStudent.Columns["ColumnDelStudent"].Width = 70;
+                        dgvStudent.Columns["ColumnEditStudent"].Width = 70;
+                        dgvStudent.Columns["Студент"].Frozen = true;
+                        dgvStudent.Columns["Студент"].Width = 200;
+                        dgvStudent.Columns["Курс"].Width = 65;
+                        dgvStudent.Columns["Организация"].Width = 250;
+                        dgvStudent.Columns["По_адресу"].Width = 300;
+                        dgvStudent.Columns["Направление_подготовки"].Width = 300;
+                        dgvStudent.Columns["Направление"].Width = 200;
                         dgvStudent.Columns["Комментарий"].Width = 200;
                     }
                     catch (Exception)
@@ -542,39 +648,49 @@ namespace EmployerPartners
             {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    string sqlStudent = "SELECT * FROM Student ";
+                    string sqlStudent = "SELECT * FROM StudentData ";
                     string sqlWhere = " ";
-                    string sqlOrderBy = " order by LastName, FirstName, SecondName";
+                    string sqlOrderBy = " order by FIO"; //" order by LastName, FirstName, SecondName";
                     if (Course.HasValue)
                     {
-                        sqlWhere = "where LicenseProgramId = " + _LPId.ToString()  + " and Course = " + Course.ToString() + 
-                            " and Id not in (select StudentId from PracticeStudent)" ;
+                        sqlWhere = "where LicenseProgramId = " + _LPId.ToString() + " and Course = " + Course.ToString() + " ";
+                            //" and Id not in (select StudentId from PracticeStudent)" ;
                     }
                     else
                     {
-                        sqlWhere = "where LicenseProgramId = " + _LPId.ToString() +
-                            " and Id not in (select StudentId from PracticeStudent)"; 
+                        sqlWhere = "where LicenseProgramId = " + _LPId.ToString() + " ";
+                            //" and Id not in (select StudentId from PracticeStudent)"; 
                     }
                     sqlWhere = sqlWhere + " and FacultyId in (select FacultyId from Practice where Id = " + _PId +")";
                     sqlStudent = sqlStudent + sqlWhere + sqlOrderBy;
 
-                    var StudentTable = context.Database.SqlQuery<Student>(sqlStudent);
+                    //var StudentTable = context.Database.SqlQuery<Student>(sqlStudent);
+                    var StudentTable = context.Database.SqlQuery<StudentData>(sqlStudent);
 
-                    var lst = (from stud in StudentTable
+                    var lst = (from x in StudentTable
                                select new
                                {
-                                   Студент = stud.LastName + " " + stud.FirstName + " " + stud.SecondName,
-                                   stud.Id,
-                                   stud.LicenseProgramId,
-                                   Дата_рожд = stud.BirthDate,
-                                   Курс = stud.Course,
-                                   Комментарий = stud.Comment,
+                                   Студент = x.FIO,  //stud.LastName + " " + stud.FirstName + " " + stud.SecondName,
+                                   x.Id,
+                                   x.LicenseProgramId,
+                                   x.FacultyId,
+                                   Дата_рожд = x.DR,
+                                   Курс = x.Course,
+                                   Форма_обуч = x.Department,
+                                   Основа_обуч = x.StudyBasis,
+                                   Статус = x.StatusName,
+                                   Уровень = x.DegreeName,
+                                   Код_направления = x.SpecNumber,
+                                   Направление_подготовки = x.SpecName,
+                                   Направление = x.FacultyName,
                                }).ToList();
 
-                    bindingSource4.DataSource = lst;
+                    DataTable dt = new DataTable();
+                    dt = Utilities.ConvertToDataTable(lst);
+                    bindingSource4.DataSource = dt;
                     dgvStudentNew.DataSource = bindingSource4;
 
-                    List<string> Cols = new List<string>() { "Id", "LicenseProgramId" };
+                    List<string> Cols = new List<string>() { "Id", "LicenseProgramId", "FacultyId" };
 
                     foreach (string s in Cols)
                         if (dgvStudentNew.Columns.Contains(s))
@@ -597,9 +713,96 @@ namespace EmployerPartners
                         dgvStudentNew.Columns["ColumnDiv4"].Width = 6;
                         dgvStudentNew.Columns["ColumnAddStudent"].Width = 120;
                         dgvStudentNew.Columns["Студент"].Frozen = true;
-                        dgvStudentNew.Columns["Студент"].Width = 250;
-                        dgvStudentNew.Columns["Комментарий"].Width = 200;
-                        
+                        dgvStudentNew.Columns["Студент"].Width = 200;
+                        dgvStudentNew.Columns["Направление_подготовки"].Width = 300;
+                        dgvStudentNew.Columns["Направление"].Width = 200;
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось обработать данные...", "Сообщение");
+            }
+        }
+
+        private void FillStudentNewList_old(int? Course)
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    //string sqlStudent = "SELECT * FROM Student ";
+                    string sqlStudent = "SELECT * FROM StudentData ";
+                    string sqlWhere = " ";
+                    string sqlOrderBy = " order by FIO"; //" order by LastName, FirstName, SecondName";
+                    if (Course.HasValue)
+                    {
+                        sqlWhere = "where LicenseProgramId = " + _LPId.ToString() + " and Course = " + Course.ToString() + " ";
+                        //" and Id not in (select StudentId from PracticeStudent)" ;
+                    }
+                    else
+                    {
+                        sqlWhere = "where LicenseProgramId = " + _LPId.ToString() + " ";
+                        //" and Id not in (select StudentId from PracticeStudent)"; 
+                    }
+                    sqlWhere = sqlWhere + " and FacultyId in (select FacultyId from Practice where Id = " + _PId + ")";
+                    sqlStudent = sqlStudent + sqlWhere + sqlOrderBy;
+
+                    //var StudentTable = context.Database.SqlQuery<Student>(sqlStudent);
+                    var StudentTable = context.Database.SqlQuery<StudentData>(sqlStudent);
+
+                    var lst = (from x in StudentTable
+                               select new
+                               {
+                                   Студент = x.FIO,  //stud.LastName + " " + stud.FirstName + " " + stud.SecondName,
+                                   x.Id,
+                                   x.LicenseProgramId,
+                                   x.FacultyId,
+                                   Дата_рожд = x.DR,
+                                   Курс = x.Course,
+                                   Форма_обуч = x.Department,
+                                   Основа_обуч = x.StudyBasis,
+                                   Статус = x.StatusName,
+                                   Уровень = x.DegreeName,
+                                   Код_направления = x.SpecNumber,
+                                   Направление_подготовки = x.SpecName,
+                                   Направление = x.FacultyName,
+                               }).ToList();
+
+                    DataTable dt = new DataTable();
+                    dt = Utilities.ConvertToDataTable(lst);
+                    bindingSource4.DataSource = dt;
+                    dgvStudentNew.DataSource = bindingSource4;
+
+                    List<string> Cols = new List<string>() { "Id", "LicenseProgramId", "FacultyId" };
+
+                    foreach (string s in Cols)
+                        if (dgvStudentNew.Columns.Contains(s))
+                            dgvStudentNew.Columns[s].Visible = false;
+                    foreach (DataGridViewColumn col in dgvStudentNew.Columns)
+                    {
+                        col.HeaderText = col.Name.Replace("_", " ");
+                        if (col.Name == "ColumnAddStudent")
+                        {
+                            col.HeaderText = "Действие";
+                        }
+                        if (col.Name == "ColumnDiv4")
+                        {
+                            col.HeaderText = "";
+                        }
+                    }
+
+                    try
+                    {
+                        dgvStudentNew.Columns["ColumnDiv4"].Width = 6;
+                        dgvStudentNew.Columns["ColumnAddStudent"].Width = 120;
+                        dgvStudentNew.Columns["Студент"].Frozen = true;
+                        dgvStudentNew.Columns["Студент"].Width = 200;
+                        dgvStudentNew.Columns["Направление_подготовки"].Width = 300;
+                        dgvStudentNew.Columns["Направление"].Width = 200;
                     }
                     catch (Exception)
                     {
@@ -727,7 +930,7 @@ namespace EmployerPartners
             {
                 if (!DateTime.TryParse(DateStart, out res))
                 {
-                    MessageBox.Show("Неправильный формат даты в поле 'Начало практики'", "Инфо");
+                    MessageBox.Show("Неправильный формат даты в поле 'Начало практики' \r\n" + "Образец: 01.12.2016", "Инфо");
                     return false;
                 }
             }
@@ -735,7 +938,7 @@ namespace EmployerPartners
             {
                 if (!DateTime.TryParse(DateEnd, out res))
                 {
-                    MessageBox.Show("Неправильный формат даты в поле 'Окончание практики'", "Инфо");
+                    MessageBox.Show("Неправильный формат даты в поле 'Окончание практики' \r\n" + "Образец: 01.12.2016", "Инфо");
                     return false;
                 }
             }
@@ -743,7 +946,7 @@ namespace EmployerPartners
             {
                 if (!DateTime.TryParse(OrderDate, out res))
                 {
-                    MessageBox.Show("Неправильный формат даты в поле 'Дата приказа'", "Инфо");
+                    MessageBox.Show("Неправильный формат даты в поле 'Дата приказа' \r\n" + "Образец: 01.12.2016", "Инфо");
                     tabControl1.SelectedTab = tabPage1;
                     return false;
                 }
@@ -752,7 +955,7 @@ namespace EmployerPartners
             {
                 if (!DateTime.TryParse(InstructionDate, out res))
                 {
-                    MessageBox.Show("Неправильный формат даты в поле 'Дата распоряжения'", "Инфо");
+                    MessageBox.Show("Неправильный формат даты в поле 'Дата распоряжения' \r\n" + "Образец: 01.12.2016", "Инфо");
                     tabControl1.SelectedTab = tabPage2;
                     return false;
                 }
@@ -775,6 +978,8 @@ namespace EmployerPartners
                     var plp = context.PracticeLP.Where(x => x.Id == _Id).First();
                     
                     plp.PracticeTypeId = PracticeTypeId;
+                    plp.OutSPb = checkBoxOutSPb.Checked ? true : false;   
+                    
                     if (!String.IsNullOrEmpty(DateStart))
                     { 
                         plp.DateStart = DateTime.Parse(DateStart);
@@ -846,7 +1051,16 @@ namespace EmployerPartners
             string type;
             string name;
             string nameshort;
-            string templatename = "Приказ_практика";
+            string templatename = ""; 
+
+            if (!checkBoxOutSPb.Checked)
+            {
+                templatename = "Приказ_практика";
+            }
+            else
+            {
+                templatename = "Приказ_практика_выезд";
+            }
 
             try
             {
@@ -943,7 +1157,35 @@ namespace EmployerPartners
                     wd.SetFields("LPName", LPName);
                     //FieldDoc field = wd.Fields["LPName"];
                     //field.Text = LPName;
-                    
+
+                    string OPName;
+                    var opn = (from x in context.PracticeLPOP
+                               join op in context.ObrazProgram on x.ObrazProgramId equals op.Id
+                               where x.PracticeLPId == _Id
+                               select new
+                               {
+                                   //OP = " " + op.Number + "  " + op.Name,
+                                   op.Name
+                               }).ToList();
+                    if (opn.Count > 0)
+                    {
+                        OPName = opn.First().Name;
+                        wd.SetFields("OPName", OPName);
+                    }
+
+                    string PracticeType;
+                    var ptype = (from x in context.PracticeLP
+                                 join pt in context.PracticeType on x.PracticeTypeId equals pt.Id into _pt
+                                 from pt in _pt.DefaultIfEmpty()
+                                 where x.Id == _Id
+                                 select new 
+                                 { 
+                                    PTName=pt.AccName,
+                                 }).First();
+                    PracticeType = (!String.IsNullOrEmpty(ptype.PTName)) ? ptype.PTName : "___________________";
+
+                    wd.SetFields("PracticeType", PracticeType);
+
                     string DateStart_ ="";
                     string DateEnd_ = "";
                     string Supervisor_ = "";
@@ -959,6 +1201,10 @@ namespace EmployerPartners
                     wd.SetFields("DateStart", DateStart_);
                     wd.SetFields("DateEnd", DateEnd_);
                     wd.SetFields("Supervisor", Supervisor_);
+                    if (checkBoxOutSPb.Checked && templatename == "Приказ_практика_выезд")
+                    {
+                        wd.SetFields("AdvanceHolder", AdvanceHolder_);
+                    }
 
                     string OrgList = "";
                     var orglist = (from x in context.PracticeLPOrganization
@@ -1036,21 +1282,55 @@ namespace EmployerPartners
 
         private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            /*try
-            {
-                if (DateStart == "" || DateEnd == "")
-                {
-                    MessageBox.Show("Не введены данные в поля 'Начало практики' и 'Окончание практики'", "Сообщение");
-                }
-            }
-            catch (Exception)
-            {
-            }*/
-            
             if (dgv.CurrentCell != null)
                 if (dgv.CurrentRow.Index >= 0)
                     if (dgv.CurrentCell.ColumnIndex == 1)
                     {
+                        try
+                        {
+                            if (DateStart == "" || DateEnd == "")
+                            {
+                                //MessageBox.Show("Не введены данные в поля 'Начало практики' и 'Окончание практики'", "Сообщение");
+                                if (MessageBox.Show("Не введены данные в поля 'Начало практики' и 'Окончание практики' \r\n" +                                        
+                                                    "В этом случае придется вводить эти данные для каждой новой организации отдельно \r\n" +
+                                                    "Продожить тем не менее? ", 
+                                                    "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                                                { return; }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        //проверка наличия организации в списке на практику
+                        try
+                        {
+                            int Orgid = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                            string OrgName = (dgv.CurrentRow.Cells["Полное_наименование"].Value != null) ? dgv.CurrentRow.Cells["Полное_наименование"].Value.ToString() : "";
+                            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                            {
+                                var lst = (from x in context.PracticeLPOrganization
+                                           where (x.PracticeLPId == _Id) && (x.OrganizationId == Orgid) 
+                                           select new
+                                           {
+                                               PrLPOrgId = x.Id,
+                                           }).ToList().Count();
+                                if (lst > 0)
+                                {
+                                    if (MessageBox.Show("Организация \r\n" + OrgName + "\r\n" + 
+                                        "уже находится в списке на практику. \r\n" +
+                                        "Повторное включение организации в список производится \r\n" +
+                                        "в случае, когда в рамках одной практики организация \r\n" +
+                                        "принимает студентов по разным адресам.",
+                                        "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                                    { return; }
+                                }
+                            }
+                        }
+                        catch (Exception ec)
+                        {
+                            //MessageBox.Show(ec.Message);
+                        }
+                        //собственно добавление
                         try 
 	                    {	        
                             int Orgid = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
@@ -1073,7 +1353,7 @@ namespace EmployerPartners
                                         org.DateStart = DateTime.Parse(DateStart);
                                 if (!String.IsNullOrEmpty(DateEnd))
                                     if (DateTime.TryParse(DateEnd, out res))
-                                        org.DateEnd = DateTime.Parse(DateStart);
+                                        org.DateEnd = DateTime.Parse(DateEnd);
 
                                 context.PracticeLPOrganization.Add(org);
                                 context.SaveChanges();
@@ -1105,7 +1385,15 @@ namespace EmployerPartners
                 {
                     if (dgvOrg.CurrentCell.ColumnIndex == 1)
                     {
-                        int id = int.Parse(dgvOrg.CurrentRow.Cells["Id"].Value.ToString());
+                        int id;
+                        try
+                        {
+                            id = int.Parse(dgvOrg.CurrentRow.Cells["Id"].Value.ToString());
+                        }
+                        catch (Exception)
+                        {
+                            return;
+                        }
                         string OrgName = "";
                         try
                         {
@@ -1136,8 +1424,14 @@ namespace EmployerPartners
                     }
                     if (dgvOrg.CurrentCell.ColumnIndex == 2)
                     {
-                        int id = int.Parse(dgvOrg.CurrentRow.Cells["Id"].Value.ToString());
-                        new PracticeOrgCard(id, new UpdateVoidHandler(FillOrg)).Show();
+                        try
+                        {
+                            int id = int.Parse(dgvOrg.CurrentRow.Cells["Id"].Value.ToString());
+                            new PracticeOrgCard(id, new UpdateVoidHandler(FillOrg)).Show();
+                        }
+                        catch (Exception)
+                        {
+                        }
                     }
                 }
         }
@@ -1154,6 +1448,27 @@ namespace EmployerPartners
 
         private void btnMakeInstruction_Click(object sender, EventArgs e)
         {
+            //проверка установки организаций для всех студентов
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = (from x in context.PracticeLPStudent
+                               where x.PracticeLPOrganizationId == null
+                               select x.Id).Count();
+                    if (lst > 0)
+                    {
+                        if (MessageBox.Show("Не для всех студентов установлена организация.\r\n" +
+                            "Такие студенты не попадут в распоряжение.\r\n " +
+                            "Продолжить тем не менее?", "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                            return;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+
             ToDOCInstruction();
         }
         public void ToDOCInstruction()
@@ -1261,8 +1576,34 @@ namespace EmployerPartners
 
                     wd.SetFields("LPName", LPName);
                     wd.SetFields("LPCode", LPCode);
-                    //FieldDoc field = wd.Fields["LPName"];
-                    //field.Text = LPName;
+
+                    string OPName;
+                    var opn = (from x in context.PracticeLPOP
+                               join op in context.ObrazProgram on x.ObrazProgramId equals op.Id
+                               where x.PracticeLPId == _Id
+                               select new
+                               {
+                                   //OP = " " + op.Number + "  " + op.Name,
+                                   op.Name
+                               }).ToList();
+                    if (opn.Count > 0)
+                    {
+                        OPName = opn.First().Name;
+                        wd.SetFields("OPName", OPName);
+                    }
+
+                    string PracticeType;
+                    var ptype = (from x in context.PracticeLP
+                                 join pt in context.PracticeType on x.PracticeTypeId equals pt.Id into _pt
+                                 from pt in _pt.DefaultIfEmpty()
+                                 where x.Id == _Id
+                                 select new
+                                 {
+                                     PTName = pt.RodName,
+                                 }).First();
+                    PracticeType = (!String.IsNullOrEmpty(ptype.PTName)) ? ptype.PTName : "___________________";
+
+                    wd.SetFields("PracticeType", PracticeType);
 
                     string DateStart_ = "";
                     string DateEnd_ = "";
@@ -1280,7 +1621,7 @@ namespace EmployerPartners
                     wd.SetFields("DateEnd", DateEnd_);
 
                     string OrgStudentList = "";
-                    var orgstudentlist = (from x in context.PracticeStudent
+                    var orgstudentlist = (from x in context.PracticeLPStudent            //context.PracticeStudent
                                           //join stud in context.Student on x.StudentId equals stud.Id
                                           join plporg in context.PracticeLPOrganization on x.PracticeLPOrganizationId equals plporg.Id 
                                           join prlp in context.PracticeLP on plporg.PracticeLPId equals prlp.Id 
@@ -1372,7 +1713,7 @@ namespace EmployerPartners
                 cbCourse.Visible = false;
                 lbl_cbCourse.Visible = false;
                 bindingNavigator4.Visible = false;
-                btnAddStudent.Text = "Добавить организации";
+                btnAddStudent.Text = "Добавить студентов";
             }
         }
 
@@ -1387,36 +1728,85 @@ namespace EmployerPartners
                 if (dgvStudentNew.CurrentRow.Index >= 0)
                     if (dgvStudentNew.CurrentCell.ColumnIndex == 1)
                     {
-                        
-
                         try
                         {
-                            int StudentId = int.Parse(dgvStudentNew.CurrentRow.Cells["Id"].Value.ToString());
+                            //int StudentId = int.Parse(dgvStudentNew.CurrentRow.Cells["Id"].Value.ToString());
+                            //using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                            //{
+                            //    var lst = (from x in context.PracticeStudent
+                            //               where x.PracticeId == _PId
+                            //               && x.StudentId == StudentId
+                            //               select new
+                            //               {
+                            //                   PrStId = x.Id,
+                            //               }).ToList().Count();
+                            //    if (lst > 0)
+                            //    {
+                            //        MessageBox.Show("Студент уже добавлен в список практики", "Инфо");
+                            //        return;
+                            //    }
+                            //}
+
+                            string FIO = (dgvStudentNew.CurrentRow.Cells["Студент"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Студент"].Value.ToString() : "";
+                            string DR = (dgvStudentNew.CurrentRow.Cells["Дата_рожд"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Дата_рожд"].Value.ToString() : "";
+
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                             {
-                                var lst = (from x in context.PracticeStudent
-                                           where x.PracticeId == _PId
-                                           && x.StudentId == StudentId
+                                //var lst = (from x in context.PracticeStudent
+                                //           where (x.PracticeId == _PId) && (x.StudentFIO == FIO) && (x.DR == DR)
+                                //           select new
+                                //           {
+                                //               PrStId = x.Id,
+                                //           }).ToList().Count();
+                                var lst = (from x in context.PracticeLPStudent
+                                           where (x.PracticeLPId == _Id) && (x.StudentFIO == FIO) && (x.DR == DR)
                                            select new
                                            {
                                                PrStId = x.Id,
                                            }).ToList().Count();
                                 if (lst > 0)
                                 {
-                                    MessageBox.Show("Студент уже добавлен в список практики", "Инфо");
-                                    return;
+                                    if (MessageBox.Show("Студент " + FIO + " (дата рожд. " + DR +")" + "\r\n" + 
+                                        "уже находится в списке на практику " + "\r\n" +
+                                        "Однако, поскольку теоретически возможно совпадение \r\n" +
+                                        "ФИО и даты рождения требуется подтверждение на добавление.", 
+                                        "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                                    { return; }
                                 }
                             }
+                            //добавление студента в практику
+                            string Course = (dgvStudentNew.CurrentRow.Cells["Курс"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Курс"].Value.ToString() : "";
+                            string Department = (dgvStudentNew.CurrentRow.Cells["Форма_обуч"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Форма_обуч"].Value.ToString() : "";
+                            string StudyBasis = (dgvStudentNew.CurrentRow.Cells["Основа_обуч"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Основа_обуч"].Value.ToString() : "";
+                            string StatusName = (dgvStudentNew.CurrentRow.Cells["Статус"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Статус"].Value.ToString() : "";
+                            string DegreeName = (dgvStudentNew.CurrentRow.Cells["Уровень"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Уровень"].Value.ToString() : "";
+                            string SpecNumber = (dgvStudentNew.CurrentRow.Cells["Код_направления"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Код_направления"].Value.ToString() : "";
+                            string SpecName = (dgvStudentNew.CurrentRow.Cells["Направление_подготовки"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Направление_подготовки"].Value.ToString() : "";
+                            string FacultyName = (dgvStudentNew.CurrentRow.Cells["Направление"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Направление"].Value.ToString() : "";
 
-                            string FIO = (dgvStudentNew.CurrentRow.Cells["Студент"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Студент"].Value.ToString() : "";
+                            int LicenseProgramId = int.Parse(dgvStudentNew.CurrentRow.Cells["LicenseProgramId"].Value.ToString());
+                            int FacultyId = int.Parse(dgvStudentNew.CurrentRow.Cells["FacultyId"].Value.ToString());
 
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                             {
-                                PracticeStudent pst = new PracticeStudent();
-                                pst.StudentId = StudentId;
-                                pst.PracticeId = (int)_PId;
+                                //PracticeStudent pst = new PracticeStudent();
+                                PracticeLPStudent pst = new PracticeLPStudent();
+                                //pst.PracticeId = (int)_PId;
+                                pst.PracticeLPId = (int)_Id;
                                 pst.StudentFIO = FIO;
-                                context.PracticeStudent.Add(pst);
+                                pst.DR = DR;
+                                pst.Course = Course;
+                                pst.Department = Department;
+                                pst.StudyBasis = StudyBasis;
+                                pst.StatusName = StatusName;
+                                pst.DegreeName = DegreeName;
+                                pst.SpecNumber = SpecNumber;
+                                pst.SpecName = SpecName;
+                                pst.FacultyName = FacultyName;
+                                pst.LicenseProgramId = LicenseProgramId;
+                                pst.FacultyId = FacultyId;
+                                //context.PracticeStudent.Add(pst);
+                                context.PracticeLPStudent.Add(pst);
                                 context.SaveChanges();
                                 FillStudent();
                             }
@@ -1436,7 +1826,16 @@ namespace EmployerPartners
                 {
                     if (dgvStudent.CurrentCell.ColumnIndex == 1)
                     {
-                        int id = int.Parse(dgvStudent.CurrentRow.Cells["Id"].Value.ToString());
+                        int id;
+                        try
+                        {
+                            id = int.Parse(dgvStudent.CurrentRow.Cells["Id"].Value.ToString());
+                        }
+                        catch (Exception)
+                        {
+                            return;   
+                        }
+                        
                         string StudentName = "";
                         try
                         {
@@ -1451,7 +1850,8 @@ namespace EmployerPartners
                             {
                                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                                 {
-                                    context.PracticeStudent.RemoveRange(context.PracticeStudent.Where(x => x.Id == id));
+                                    //context.PracticeStudent.RemoveRange(context.PracticeStudent.Where(x => x.Id == id));
+                                    context.PracticeLPStudent.RemoveRange(context.PracticeLPStudent.Where(x => x.Id == id));
                                     context.SaveChanges();
                                 }
                             }
@@ -1471,8 +1871,15 @@ namespace EmployerPartners
                     }
                     if (dgvStudent.CurrentCell.ColumnIndex == 2)
                     {
-                        int id = int.Parse(dgvStudent.CurrentRow.Cells["Id"].Value.ToString());
-                        new PracticeStudentCard(id, new UpdateVoidHandler(FillStudent)).Show();
+                        try
+                        {
+                            int id = int.Parse(dgvStudent.CurrentRow.Cells["Id"].Value.ToString());
+                            new PracticeStudentCard(id, new UpdateVoidHandler(FillStudent)).Show();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        
                     }
                     if (dgvStudent.CurrentCell.ColumnIndex == 3)
                     {
@@ -1492,7 +1899,8 @@ namespace EmployerPartners
                             int id = int.Parse(dgvStudent.CurrentRow.Cells["Id"].Value.ToString());
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                             {
-                                var pst = context.PracticeStudent.Where(x => x.Id == id).First();
+                                //var pst = context.PracticeStudent.Where(x => x.Id == id).First();
+                                var pst = context.PracticeLPStudent.Where(x => x.Id == id).First();
 
                                 //pst.OrganizationId = OrgStudent;
                                 pst.PracticeLPOrganizationId = OrgStudent;
@@ -1518,12 +1926,23 @@ namespace EmployerPartners
                 cbOrgStudent.Visible = !cbOrgStudent.Visible;
                 lbl_cbOrgStudent.Visible = !lbl_cbOrgStudent.Visible;
                 btnSetOrgStudent.Text = (cbOrgStudent.Visible) ? "Убрать распределение студентов по орг-циям" : "Распределение студентов по организациям";
+
+                
             }
             catch (Exception)
             {
                 cbOrgStudent.Visible = false;
                 lbl_cbOrgStudent.Visible = false;
                 btnSetOrgStudent.Text = "Распределение студентов по организациям";
+            }
+            finally
+            {
+                dgvStudentNew.Visible = false;
+                lbl_dgvStudentNew.Visible = false;
+                cbCourse.Visible = false;
+                lbl_cbCourse.Visible = false;
+                bindingNavigator4.Visible = false;
+                btnAddStudent.Text = (dgvStudentNew.Visible) ? "Убрать добавление" : "Добавить студентов";
             }
         }
 

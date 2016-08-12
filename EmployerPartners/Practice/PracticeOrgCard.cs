@@ -77,7 +77,7 @@ namespace EmployerPartners
             {
                 if (!DateTime.TryParse(DateStart, out res))
                 {
-                    MessageBox.Show("Неправильный формат даты в поле 'Начало практики' \r\n" + "Образец: '01.12.2016'", "Инфо");
+                    MessageBox.Show("Неправильный формат даты в поле 'Начало практики' \r\n" + "Образец: 01.12.2016", "Инфо");
                     return false;
                 }
             }
@@ -85,7 +85,7 @@ namespace EmployerPartners
             {
                 if (!DateTime.TryParse(DateEnd, out res))
                 {
-                    MessageBox.Show("Неправильный формат даты в поле 'Окончание практики'\r\n" + "Образец: '01.12.2016'", "Инфо");
+                    MessageBox.Show("Неправильный формат даты в поле 'Окончание практики'\r\n" + "Образец: 01.12.2016", "Инфо");
                     return false;
                 }
             }

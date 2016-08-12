@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f8fd0f54a3c44cac9815de3b200570a7" Name="Diagram1" ZoomLevel="90">
+      <Diagram DiagramId="f8fd0f54a3c44cac9815de3b200570a7" Name="Diagram1" ZoomLevel="100">
         <EntityTypeShape EntityType="EmployerPartnersModel.C_AppSettings" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EmployerPartnersModel.ActivityArea" Width="1.5" PointX="0.75" PointY="18.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EmployerPartnersModel.ActivityGoal" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
@@ -126,6 +126,12 @@
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeStudent_Practice" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeStudent_PracticeLPOrganization" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeStudent_Student" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.StudentData" Width="1.5" PointX="11.375" PointY="3.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.StudyPlanData" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.StudentDVZ" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PracticeLPStudent" Width="1.5" PointX="15.75" PointY="46.875" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLP" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLPOrganization" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

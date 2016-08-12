@@ -58,6 +58,11 @@ namespace EmployerPartners
             this.Text = "Список физических лиц";
             FillCard();
             FillGrid();
+
+            if (Util.IsReadOnlyAll())
+            {
+                btnAddPartner.Enabled = false;
+            }
         }
 
         private void FillCard()
@@ -113,8 +118,9 @@ namespace EmployerPartners
                                Комментарий = org.Comment,
                            }).ToList();
 
-                //dgv.DataSource = lst;
-                bindingSource1.DataSource = lst;
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                bindingSource1.DataSource = dt;
                 dgv.DataSource = bindingSource1;
 
                 List<string> Cols = new List<string>() { "Id" };

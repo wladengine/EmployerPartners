@@ -44,6 +44,7 @@ namespace EmployerPartners
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateUpdate { get; set; }
         public string Author { get; set; }
+        public Nullable<int> SecondLicenseProgramId { get; set; }
     
         public virtual Faculty Faculty { get; set; }
         public virtual LicenseProgram LicenseProgram { get; set; }
