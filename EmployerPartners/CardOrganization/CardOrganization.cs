@@ -33,6 +33,25 @@ namespace EmployerPartners
             FillCard();
             InitControls(this);
             this.MdiParent = Util.mainform;
+
+            if (Util.IsReadOnlyAll())
+            {
+                btnSave.Enabled = false;
+                btnDelete.Enabled = false;
+                BtnContactEdit.Enabled = false;
+                btnDeleteContact.Enabled = false;
+                btnContactAdd.Enabled = false;
+                btnRublrikAdd.Enabled = false;
+                btnRubricDelete.Enabled = false;
+                btnFacultyAdd.Enabled = false;
+                btnFacultyDelete.Enabled = false;
+                btnActivityAreaAdd.Enabled = false;
+                btnActivityAreaDelete.Enabled = false;
+                btnLPAdd.Enabled = false;
+                btnLPDelete.Enabled = false;
+                btnAddOkved.Enabled = false;
+                btnDelOkved.Enabled = false;
+            }
         }
         public void InitControls(Control obj)
         {
@@ -176,11 +195,12 @@ namespace EmployerPartners
                                x.Id,
                                Название = a.Name,
                            }).ToList();
-                
-                
-                
-                dgvArea.DataSource = lst;
-                dgvActivityArea.DataSource = lst;
+
+
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                dgvArea.DataSource = dt;
+                dgvActivityArea.DataSource = dt;
 
                 foreach (string s in new List<string>() { "Id" })
                 {
@@ -218,8 +238,10 @@ namespace EmployerPartners
                            }).ToList();
 
 
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                dgvOkvedCodes.DataSource = dt;
 
-                dgvOkvedCodes.DataSource = lst;
                 foreach (string s in new List<string>() { "Id" })
                     if (dgvOkvedCodes.Columns.Contains(s))
                         dgvOkvedCodes.Columns[s].Visible = false;
@@ -256,7 +278,11 @@ namespace EmployerPartners
                                Телефон = p.Phone,
                                Мобильный = p.Mobiles,
                            }).ToList();
-                dgvContacts.DataSource = lst;
+
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                dgvContacts.DataSource = dt;
+
                 foreach (string s in new List<string>() { "Id", "PersonId" })
                     if (dgvContacts.Columns.Contains(s))
                         dgvContacts.Columns[s].Visible = false;
@@ -848,6 +874,9 @@ namespace EmployerPartners
         }
         private void dgvOkvedCodes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (Util.IsReadOnlyAll())
+                return;
+
             if (_Id.HasValue)
                 if (dgvOkvedCodes.CurrentCell != null)
                     if (dgvOkvedCodes.CurrentRow.Index >= 0)
@@ -870,6 +899,9 @@ namespace EmployerPartners
         }
         private void dgvContacts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (Util.IsReadOnlyAll())
+                return;
+                
             if (_Id.HasValue)
                 if (dgvContacts.CurrentCell != null)
                     if (dgvContacts.CurrentRow.Index >= 0)
@@ -920,6 +952,9 @@ namespace EmployerPartners
         }
         private void dgvActivityArea_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (Util.IsReadOnlyAll())
+                return;
+
             DataGridView dgv = (DataGridView)sender;
             if (_Id.HasValue)
                 if (dgv.CurrentCell != null)
@@ -974,8 +1009,10 @@ namespace EmployerPartners
                            }).ToList();
 
 
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                dgvRubric.DataSource = dt;
 
-                dgvRubric.DataSource = lst;
                 foreach (string s in new List<string>() { "Id" })
                     if (dgvRubric.Columns.Contains(s))
                         dgvRubric.Columns[s].Visible = false;
@@ -1027,6 +1064,9 @@ namespace EmployerPartners
         }
         private void dgvRubric_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (Util.IsReadOnlyAll())
+                return;
+
             if (_Id.HasValue)
                 if (dgvRubric.CurrentCell != null)
                     if (dgvRubric.CurrentRow.Index >= 0)
@@ -1060,7 +1100,11 @@ namespace EmployerPartners
                                Рубрика = r.ShortName,
                                Направление = f.Name
                            }).ToList();
-                dgvFaculty.DataSource = lst;
+
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                dgvFaculty.DataSource = dt;
+
                 foreach (string s in new List<string>() { "Id" })
                     if (dgvFaculty.Columns.Contains(s))
                         dgvFaculty.Columns[s].Visible = false;
@@ -1121,6 +1165,9 @@ namespace EmployerPartners
         }
         private void dgvFaculty_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (Util.IsReadOnlyAll())
+                return;
+
             if (_Id.HasValue)
                 if (dgvFaculty.CurrentCell != null)
                     if (dgvFaculty.CurrentRow.Index >= 0)
@@ -1155,7 +1202,11 @@ namespace EmployerPartners
                                Тип_программы = f.ProgramType.Name,
                                Квалификация = f.Qualification.Name,
                            }).ToList();
-                dgvLP.DataSource = lst;
+
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                dgvLP.DataSource = dt;
+
                 foreach (string s in new List<string>() { "Id" })
                     if (dgvLP.Columns.Contains(s))
                         dgvLP.Columns[s].Visible = false;
@@ -1226,6 +1277,9 @@ namespace EmployerPartners
         }
         private void dgvLP_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (Util.IsReadOnlyAll())
+                return;
+
             if (_Id.HasValue)
                 if (dgvLP.CurrentCell != null)
                     if (dgvLP.CurrentRow.Index >= 0)

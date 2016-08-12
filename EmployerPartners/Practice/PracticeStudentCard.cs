@@ -42,7 +42,7 @@ namespace EmployerPartners
             if (_Id.HasValue)
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    var stud = (from x in context.PracticeStudent
+                    var stud = (from x in context.PracticeLPStudent      //context.PracticeStudent
                                where x.Id == _Id
                                select x).First();
                     FIO = stud.StudentFIO;
@@ -63,7 +63,8 @@ namespace EmployerPartners
             {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    var pst = context.PracticeStudent.Where(x => x.Id == _Id).First();
+                    //var pst = context.PracticeStudent.Where(x => x.Id == _Id).First();
+                    var pst = context.PracticeLPStudent.Where(x => x.Id == _Id).First();
 
                     pst.StudentFIO = FIO;
                     pst.Comment = Comment;

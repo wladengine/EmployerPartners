@@ -12,16 +12,11 @@ namespace EmployerPartners
     using System;
     using System.Collections.Generic;
     
-    public partial class PracticeStudent
+    public partial class PracticeLPStudent
     {
         public int Id { get; set; }
-        public int PracticeId { get; set; }
-        public Nullable<int> StudentId { get; set; }
-        public Nullable<int> OrganizationId { get; set; }
+        public int PracticeLPId { get; set; }
         public Nullable<int> PracticeLPOrganizationId { get; set; }
-        public string Comment { get; set; }
-        public string Author { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
         public string StudentFIO { get; set; }
         public string DR { get; set; }
         public string Course { get; set; }
@@ -30,16 +25,17 @@ namespace EmployerPartners
         public string StudyBasis { get; set; }
         public string StatusName { get; set; }
         public string Accout { get; set; }
-        public string FacultyName { get; set; }
-        public int LicenseProgramId { get; set; }
-        public int FacultyId { get; set; }
         public string DegreeName { get; set; }
         public string SpecNumber { get; set; }
         public string SpecName { get; set; }
+        public string FacultyName { get; set; }
+        public int LicenseProgramId { get; set; }
+        public int FacultyId { get; set; }
+        public string Comment { get; set; }
+        public string Author { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
     
-        public virtual Organization Organization { get; set; }
-        public virtual Practice Practice { get; set; }
+        public virtual PracticeLP PracticeLP { get; set; }
         public virtual PracticeLPOrganization PracticeLPOrganization { get; set; }
-        public virtual Student Student { get; set; }
     }
 }

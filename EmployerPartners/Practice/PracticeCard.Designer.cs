@@ -94,9 +94,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.tbOrderDoc = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cbOrgStudent = new System.Windows.Forms.ComboBox();
             this.lbl_cbOrgStudent = new System.Windows.Forms.Label();
             this.btnSetOrgStudent = new System.Windows.Forms.Button();
-            this.cbOrgStudent = new System.Windows.Forms.ComboBox();
             this.bindingNavigator4 = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem3 = new System.Windows.Forms.ToolStripButton();
             this.bindingSource4 = new System.Windows.Forms.BindingSource(this.components);
@@ -162,6 +162,8 @@
             this.btnDelOP = new System.Windows.Forms.Button();
             this.btnDelPractice = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.checkBoxOutSPb = new System.Windows.Forms.CheckBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator2)).BeginInit();
@@ -363,7 +365,7 @@
             this.bindingNavigatorSeparator5,
             this.bindingNavigatorAddNewItem1,
             this.bindingNavigatorDeleteItem1});
-            this.bindingNavigator2.Location = new System.Drawing.Point(522, 389);
+            this.bindingNavigator2.Location = new System.Drawing.Point(669, 389);
             this.bindingNavigator2.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
             this.bindingNavigator2.MoveLastItem = this.bindingNavigatorMoveLastItem1;
             this.bindingNavigator2.MoveNextItem = this.bindingNavigatorMoveNextItem1;
@@ -464,6 +466,8 @@
             // 
             // dgv
             // 
+            this.dgv.AllowUserToAddRows = false;
+            this.dgv.AllowUserToDeleteRows = false;
             this.dgv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -471,9 +475,10 @@
             this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnDiv,
             this.Column1});
-            this.dgv.Location = new System.Drawing.Point(523, 179);
+            this.dgv.Location = new System.Drawing.Point(669, 179);
             this.dgv.Name = "dgv";
-            this.dgv.Size = new System.Drawing.Size(681, 205);
+            this.dgv.ReadOnly = true;
+            this.dgv.Size = new System.Drawing.Size(535, 205);
             this.dgv.TabIndex = 23;
             this.dgv.Visible = false;
             this.dgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
@@ -492,6 +497,7 @@
             this.Column1.Frozen = true;
             this.Column1.HeaderText = "Действие";
             this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
             this.Column1.Text = "Добавить в практику";
             this.Column1.UseColumnTextForButtonValue = true;
             // 
@@ -682,6 +688,8 @@
             // 
             // dgvOrg
             // 
+            this.dgvOrg.AllowUserToAddRows = false;
+            this.dgvOrg.AllowUserToDeleteRows = false;
             this.dgvOrg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -692,6 +700,7 @@
             this.ColumnEditOrg});
             this.dgvOrg.Location = new System.Drawing.Point(17, 178);
             this.dgvOrg.Name = "dgvOrg";
+            this.dgvOrg.ReadOnly = true;
             this.dgvOrg.Size = new System.Drawing.Size(1187, 206);
             this.dgvOrg.TabIndex = 14;
             this.dgvOrg.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrg_CellClick);
@@ -710,6 +719,7 @@
             this.ColumnDelOrg.Frozen = true;
             this.ColumnDelOrg.HeaderText = "Действие";
             this.ColumnDelOrg.Name = "ColumnDelOrg";
+            this.ColumnDelOrg.ReadOnly = true;
             this.ColumnDelOrg.Text = "Удалить";
             this.ColumnDelOrg.UseColumnTextForButtonValue = true;
             // 
@@ -718,6 +728,7 @@
             this.ColumnEditOrg.Frozen = true;
             this.ColumnEditOrg.HeaderText = "Действие";
             this.ColumnEditOrg.Name = "ColumnEditOrg";
+            this.ColumnEditOrg.ReadOnly = true;
             this.ColumnEditOrg.Text = "Изменить";
             this.ColumnEditOrg.UseColumnTextForButtonValue = true;
             // 
@@ -805,9 +816,9 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.cbOrgStudent);
             this.tabPage2.Controls.Add(this.lbl_cbOrgStudent);
             this.tabPage2.Controls.Add(this.btnSetOrgStudent);
-            this.tabPage2.Controls.Add(this.cbOrgStudent);
             this.tabPage2.Controls.Add(this.bindingNavigator4);
             this.tabPage2.Controls.Add(this.lbl_cbCourse);
             this.tabPage2.Controls.Add(this.cbCourse);
@@ -837,10 +848,22 @@
             this.tabPage2.Text = "Распоряжение";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // cbOrgStudent
+            // 
+            this.cbOrgStudent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbOrgStudent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbOrgStudent.FormattingEnabled = true;
+            this.cbOrgStudent.Location = new System.Drawing.Point(669, 153);
+            this.cbOrgStudent.Name = "cbOrgStudent";
+            this.cbOrgStudent.Size = new System.Drawing.Size(535, 21);
+            this.cbOrgStudent.TabIndex = 37;
+            this.cbOrgStudent.Visible = false;
+            // 
             // lbl_cbOrgStudent
             // 
             this.lbl_cbOrgStudent.AutoSize = true;
-            this.lbl_cbOrgStudent.Location = new System.Drawing.Point(280, 156);
+            this.lbl_cbOrgStudent.Location = new System.Drawing.Point(445, 157);
             this.lbl_cbOrgStudent.Name = "lbl_cbOrgStudent";
             this.lbl_cbOrgStudent.Size = new System.Drawing.Size(215, 13);
             this.lbl_cbOrgStudent.TabIndex = 39;
@@ -850,25 +873,13 @@
             // btnSetOrgStudent
             // 
             this.btnSetOrgStudent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSetOrgStudent.Location = new System.Drawing.Point(312, 389);
+            this.btnSetOrgStudent.Location = new System.Drawing.Point(330, 390);
             this.btnSetOrgStudent.Name = "btnSetOrgStudent";
-            this.btnSetOrgStudent.Size = new System.Drawing.Size(271, 23);
+            this.btnSetOrgStudent.Size = new System.Drawing.Size(256, 23);
             this.btnSetOrgStudent.TabIndex = 38;
             this.btnSetOrgStudent.Text = "Распределение студентов по организациям";
             this.btnSetOrgStudent.UseVisualStyleBackColor = true;
             this.btnSetOrgStudent.Click += new System.EventHandler(this.btnSetOrgStudent_Click);
-            // 
-            // cbOrgStudent
-            // 
-            this.cbOrgStudent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbOrgStudent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbOrgStudent.FormattingEnabled = true;
-            this.cbOrgStudent.Location = new System.Drawing.Point(522, 153);
-            this.cbOrgStudent.Name = "cbOrgStudent";
-            this.cbOrgStudent.Size = new System.Drawing.Size(682, 21);
-            this.cbOrgStudent.TabIndex = 37;
-            this.cbOrgStudent.Visible = false;
             // 
             // bindingNavigator4
             // 
@@ -891,7 +902,7 @@
             this.bindingNavigatorSeparator11,
             this.bindingNavigatorAddNewItem3,
             this.bindingNavigatorDeleteItem3});
-            this.bindingNavigator4.Location = new System.Drawing.Point(523, 389);
+            this.bindingNavigator4.Location = new System.Drawing.Point(669, 389);
             this.bindingNavigator4.MoveFirstItem = this.bindingNavigatorMoveFirstItem3;
             this.bindingNavigator4.MoveLastItem = this.bindingNavigatorMoveLastItem3;
             this.bindingNavigator4.MoveNextItem = this.bindingNavigatorMoveNextItem3;
@@ -993,7 +1004,7 @@
             // lbl_cbCourse
             // 
             this.lbl_cbCourse.AutoSize = true;
-            this.lbl_cbCourse.Location = new System.Drawing.Point(697, 156);
+            this.lbl_cbCourse.Location = new System.Drawing.Point(838, 156);
             this.lbl_cbCourse.Name = "lbl_cbCourse";
             this.lbl_cbCourse.Size = new System.Drawing.Size(31, 13);
             this.lbl_cbCourse.TabIndex = 35;
@@ -1004,7 +1015,7 @@
             // 
             this.cbCourse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCourse.FormattingEnabled = true;
-            this.cbCourse.Location = new System.Drawing.Point(754, 153);
+            this.cbCourse.Location = new System.Drawing.Point(895, 153);
             this.cbCourse.Name = "cbCourse";
             this.cbCourse.Size = new System.Drawing.Size(99, 21);
             this.cbCourse.TabIndex = 34;
@@ -1014,7 +1025,7 @@
             // lbl_dgvStudentNew
             // 
             this.lbl_dgvStudentNew.AutoSize = true;
-            this.lbl_dgvStudentNew.Location = new System.Drawing.Point(527, 157);
+            this.lbl_dgvStudentNew.Location = new System.Drawing.Point(666, 156);
             this.lbl_dgvStudentNew.Name = "lbl_dgvStudentNew";
             this.lbl_dgvStudentNew.Size = new System.Drawing.Size(98, 13);
             this.lbl_dgvStudentNew.TabIndex = 33;
@@ -1034,6 +1045,8 @@
             // 
             // dgvStudentNew
             // 
+            this.dgvStudentNew.AllowUserToAddRows = false;
+            this.dgvStudentNew.AllowUserToDeleteRows = false;
             this.dgvStudentNew.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -1041,9 +1054,10 @@
             this.dgvStudentNew.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnDiv4,
             this.ColumnAddStudent});
-            this.dgvStudentNew.Location = new System.Drawing.Point(523, 179);
+            this.dgvStudentNew.Location = new System.Drawing.Point(669, 179);
             this.dgvStudentNew.Name = "dgvStudentNew";
-            this.dgvStudentNew.Size = new System.Drawing.Size(681, 205);
+            this.dgvStudentNew.ReadOnly = true;
+            this.dgvStudentNew.Size = new System.Drawing.Size(535, 205);
             this.dgvStudentNew.TabIndex = 31;
             this.dgvStudentNew.Visible = false;
             this.dgvStudentNew.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStudentNew_CellClick);
@@ -1109,7 +1123,7 @@
             this.bindingNavigatorSeparator8,
             this.bindingNavigatorAddNewItem2,
             this.bindingNavigatorDeleteItem2});
-            this.bindingNavigator3.Location = new System.Drawing.Point(13, 386);
+            this.bindingNavigator3.Location = new System.Drawing.Point(13, 389);
             this.bindingNavigator3.MoveFirstItem = this.bindingNavigatorMoveFirstItem2;
             this.bindingNavigator3.MoveLastItem = this.bindingNavigatorMoveLastItem2;
             this.bindingNavigator3.MoveNextItem = this.bindingNavigatorMoveNextItem2;
@@ -1218,6 +1232,8 @@
             // 
             // dgvStudent
             // 
+            this.dgvStudent.AllowUserToAddRows = false;
+            this.dgvStudent.AllowUserToDeleteRows = false;
             this.dgvStudent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -1229,6 +1245,7 @@
             this.ColumnSetOrgStudent});
             this.dgvStudent.Location = new System.Drawing.Point(17, 178);
             this.dgvStudent.Name = "dgvStudent";
+            this.dgvStudent.ReadOnly = true;
             this.dgvStudent.Size = new System.Drawing.Size(1187, 206);
             this.dgvStudent.TabIndex = 26;
             this.dgvStudent.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStudent_CellClick);
@@ -1256,6 +1273,7 @@
             this.ColumnEditStudent.Frozen = true;
             this.ColumnEditStudent.HeaderText = "Действие";
             this.ColumnEditStudent.Name = "ColumnEditStudent";
+            this.ColumnEditStudent.ReadOnly = true;
             this.ColumnEditStudent.Text = "Изменить";
             this.ColumnEditStudent.UseColumnTextForButtonValue = true;
             // 
@@ -1264,6 +1282,7 @@
             this.ColumnSetOrgStudent.Frozen = true;
             this.ColumnSetOrgStudent.HeaderText = "Действие";
             this.ColumnSetOrgStudent.Name = "ColumnSetOrgStudent";
+            this.ColumnSetOrgStudent.ReadOnly = true;
             this.ColumnSetOrgStudent.Text = "Выбор орг-ции";
             this.ColumnSetOrgStudent.UseColumnTextForButtonValue = true;
             // 
@@ -1399,9 +1418,12 @@
             // 
             // dgvOP
             // 
+            this.dgvOP.AllowUserToAddRows = false;
+            this.dgvOP.AllowUserToDeleteRows = false;
             this.dgvOP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOP.Location = new System.Drawing.Point(120, 70);
             this.dgvOP.Name = "dgvOP";
+            this.dgvOP.ReadOnly = true;
             this.dgvOP.Size = new System.Drawing.Size(921, 64);
             this.dgvOP.TabIndex = 7;
             // 
@@ -1472,12 +1494,33 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // checkBoxOutSPb
+            // 
+            this.checkBoxOutSPb.AutoSize = true;
+            this.checkBoxOutSPb.Location = new System.Drawing.Point(579, 185);
+            this.checkBoxOutSPb.Name = "checkBoxOutSPb";
+            this.checkBoxOutSPb.Size = new System.Drawing.Size(126, 17);
+            this.checkBoxOutSPb.TabIndex = 17;
+            this.checkBoxOutSPb.Text = "выездная практика";
+            this.checkBoxOutSPb.UseVisualStyleBackColor = true;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(579, 205);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(289, 13);
+            this.label22.TabIndex = 18;
+            this.label22.Text = "(хотя бы одна организация связана с выездом из СПб)";
+            // 
             // PracticeCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1264, 682);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.checkBoxOutSPb);
             this.Controls.Add(this.btnDelPractice);
             this.Controls.Add(this.btnDelOP);
             this.Controls.Add(this.btnAddOP);
@@ -1666,5 +1709,7 @@
         private System.Windows.Forms.DataGridViewButtonColumn ColumnDelStudent;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnEditStudent;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnSetOrgStudent;
+        private System.Windows.Forms.CheckBox checkBoxOutSPb;
+        private System.Windows.Forms.Label label22;
     }
 }

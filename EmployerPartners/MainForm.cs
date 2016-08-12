@@ -25,14 +25,23 @@ namespace EmployerPartners
                 smiSettings.Visible = true;
             }
             else
+            {
                 smiSettings.Visible = false;
-            if (Util.IsDBOwner())
+            }
+            if (Util.IsDBOwner() || Util.IsAdministrator())
             {
                 helpEditToolStripMenuItem.Visible = true;
                 tmplToolStripMenuItem.Visible = true;
+                smiLPOP.Visible = true;
             }
-            else
+            if (Util.IsPractice())
             {
+                smiPracticeMain.Visible = true;
+                smiLPOP.Visible = true;
+            }
+            if (Util.IsReadOnlyAll())
+            {
+                smiTables.Visible = false;
                 helpEditToolStripMenuItem.Visible = false;
                 tmplToolStripMenuItem.Visible = false;
             }
@@ -263,6 +272,13 @@ namespace EmployerPartners
             {
             }
             new PracticeMain().Show();
+        }
+
+        private void smiLPOP_Click(object sender, EventArgs e)
+        {
+            UpdateFromSrv updateform = new UpdateFromSrv();
+            updateform.MdiParent = this;
+            updateform.Show();
         }
     }
 }

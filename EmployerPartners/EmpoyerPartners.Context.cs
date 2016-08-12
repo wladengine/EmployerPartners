@@ -79,6 +79,10 @@ namespace EmployerPartners
         public virtual DbSet<PracticeType> PracticeType { get; set; }
         public virtual DbSet<PracticeStudent> PracticeStudent { get; set; }
         public virtual DbSet<Student> Student { get; set; }
+        public virtual DbSet<StudentData> StudentData { get; set; }
+        public virtual DbSet<StudyPlanData> StudyPlanData { get; set; }
+        public virtual DbSet<StudentDVZ> StudentDVZ { get; set; }
+        public virtual DbSet<PracticeLPStudent> PracticeLPStudent { get; set; }
     
         public virtual int RoleMember(string roleName, ObjectParameter result)
         {
@@ -87,6 +91,26 @@ namespace EmployerPartners
                 new ObjectParameter("roleName", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RoleMember", roleNameParameter, result);
+        }
+    
+        public virtual int UpDateLicenseProgram(ObjectParameter result)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpDateLicenseProgram", result);
+        }
+    
+        public virtual int UpDateObrazProgram(ObjectParameter result)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpDateObrazProgram", result);
+        }
+    
+        public virtual int UpDateStudentData(ObjectParameter result)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpDateStudentData", result);
+        }
+    
+        public virtual int UpDateStudyPlanData(ObjectParameter result)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpDateStudyPlanData", result);
         }
     }
 }

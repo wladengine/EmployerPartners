@@ -19,6 +19,7 @@ namespace EmployerPartners
         {
             this.PracticeLPOP = new HashSet<PracticeLPOP>();
             this.PracticeLPOrganization = new HashSet<PracticeLPOrganization>();
+            this.PracticeLPStudent = new HashSet<PracticeLPStudent>();
         }
     
         public int Id { get; set; }
@@ -40,6 +41,7 @@ namespace EmployerPartners
         public string Comment { get; set; }
         public string Author { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
+        public Nullable<bool> OutSPb { get; set; }
     
         public virtual LicenseProgram LicenseProgram { get; set; }
         public virtual Practice Practice { get; set; }
@@ -48,5 +50,7 @@ namespace EmployerPartners
         public virtual ICollection<PracticeLPOP> PracticeLPOP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PracticeLPOrganization> PracticeLPOrganization { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PracticeLPStudent> PracticeLPStudent { get; set; }
     }
 }

@@ -35,6 +35,7 @@
             this.err = new System.Windows.Forms.ErrorProvider(this.components);
             this.SaveSuccess = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label30 = new System.Windows.Forms.Label();
             this.cbArea = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.lbHouse = new System.Windows.Forms.ListBox();
@@ -95,6 +96,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.tbApartment = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.BtnContactEdit = new System.Windows.Forms.Button();
@@ -128,8 +130,6 @@
             this.label25 = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.tbApartment = new System.Windows.Forms.TextBox();
-            this.label30 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.err)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SaveSuccess)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -252,6 +252,15 @@
             this.tabPage1.Text = "Основные сведения";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(57, 533);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(114, 13);
+            this.label30.TabIndex = 32;
+            this.label30.Text = "Помещение (оффис):";
+            // 
             // cbArea
             // 
             this.cbArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -350,6 +359,7 @@
             // dgvArea
             // 
             this.dgvArea.AllowUserToAddRows = false;
+            this.dgvArea.AllowUserToDeleteRows = false;
             this.dgvArea.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvArea.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvArea.Location = new System.Drawing.Point(524, 181);
@@ -788,6 +798,13 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Полное наименование:";
             // 
+            // tbApartment
+            // 
+            this.tbApartment.Location = new System.Drawing.Point(182, 530);
+            this.tbApartment.Name = "tbApartment";
+            this.tbApartment.Size = new System.Drawing.Size(324, 20);
+            this.tbApartment.TabIndex = 25;
+            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1183,22 +1200,6 @@
             this.btnDelete.Text = "Удалить карточку";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // tbApartment
-            // 
-            this.tbApartment.Location = new System.Drawing.Point(182, 530);
-            this.tbApartment.Name = "tbApartment";
-            this.tbApartment.Size = new System.Drawing.Size(324, 20);
-            this.tbApartment.TabIndex = 25;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(57, 533);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(114, 13);
-            this.label30.TabIndex = 32;
-            this.label30.Text = "Помещение (оффис):";
             // 
             // CardOrganization
             // 

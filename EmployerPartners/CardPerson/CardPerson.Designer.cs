@@ -73,6 +73,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnEditContact = new System.Windows.Forms.Button();
             this.btnDeleteContact = new System.Windows.Forms.Button();
             this.btnOrganizationCardOpen = new System.Windows.Forms.Button();
             this.btnContactAdd = new System.Windows.Forms.Button();
@@ -95,7 +96,6 @@
             this.btnRublrikAdd = new System.Windows.Forms.Button();
             this.dgvRubric = new System.Windows.Forms.DataGridView();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.btnEditContact = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.err)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SaveSuccess)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -243,6 +243,7 @@
             // dgvArea
             // 
             this.dgvArea.AllowUserToAddRows = false;
+            this.dgvArea.AllowUserToDeleteRows = false;
             this.dgvArea.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvArea.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvArea.Location = new System.Drawing.Point(523, 156);
@@ -539,6 +540,17 @@
             this.tabPage2.Text = "Организации";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnEditContact
+            // 
+            this.btnEditContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditContact.Location = new System.Drawing.Point(6, 485);
+            this.btnEditContact.Name = "btnEditContact";
+            this.btnEditContact.Size = new System.Drawing.Size(233, 23);
+            this.btnEditContact.TabIndex = 6;
+            this.btnEditContact.Text = "Редактировать контакт с организацией";
+            this.btnEditContact.UseVisualStyleBackColor = true;
+            this.btnEditContact.Click += new System.EventHandler(this.btnEditContact_Click);
+            // 
             // btnDeleteContact
             // 
             this.btnDeleteContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -810,17 +822,6 @@
             this.btnDelete.Text = "Удалить карточчку";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // btnEditContact
-            // 
-            this.btnEditContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditContact.Location = new System.Drawing.Point(6, 485);
-            this.btnEditContact.Name = "btnEditContact";
-            this.btnEditContact.Size = new System.Drawing.Size(233, 23);
-            this.btnEditContact.TabIndex = 6;
-            this.btnEditContact.Text = "Редактировать контакт с организацией";
-            this.btnEditContact.UseVisualStyleBackColor = true;
-            this.btnEditContact.Click += new System.EventHandler(this.btnEditContact_Click);
             // 
             // CardPerson
             // 
