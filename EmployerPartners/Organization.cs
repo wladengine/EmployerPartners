@@ -27,6 +27,7 @@ namespace EmployerPartners
             this.OrganizationRubric = new HashSet<OrganizationRubric>();
             this.PracticeLPOrganization = new HashSet<PracticeLPOrganization>();
             this.PracticeStudent = new HashSet<PracticeStudent>();
+            this.OrganizationDogovor = new HashSet<OrganizationDogovor>();
         }
     
         public int Id { get; set; }
@@ -89,5 +90,7 @@ namespace EmployerPartners
         public virtual ICollection<PracticeLPOrganization> PracticeLPOrganization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PracticeStudent> PracticeStudent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrganizationDogovor> OrganizationDogovor { get; set; }
     }
 }

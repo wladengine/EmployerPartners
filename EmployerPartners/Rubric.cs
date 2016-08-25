@@ -23,6 +23,7 @@ namespace EmployerPartners
             this.OrganizationLP = new HashSet<OrganizationLP>();
             this.PartnerPersonFaculty = new HashSet<PartnerPersonFaculty>();
             this.PartnerPersonLP = new HashSet<PartnerPersonLP>();
+            this.OrganizationDogovor = new HashSet<OrganizationDogovor>();
         }
     
         public int Id { get; set; }
@@ -44,5 +45,7 @@ namespace EmployerPartners
         public virtual ICollection<PartnerPersonFaculty> PartnerPersonFaculty { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PartnerPersonLP> PartnerPersonLP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrganizationDogovor> OrganizationDogovor { get; set; }
     }
 }

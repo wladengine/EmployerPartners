@@ -55,6 +55,26 @@
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="DocType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocumentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="NameEng" Type="nvarchar" MaxLength="150" />
+          <Property Name="Acronym" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsOpen" Type="bit" />
+          <Property Name="Holder" Type="nvarchar" MaxLength="150" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
         <EntityType Name="dtproperties">
           <Key>
             <PropertyRef Name="id" />
@@ -247,6 +267,23 @@
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="SecondLicenseProgramId" Type="int" />
         </EntityType>
+        <EntityType Name="ObrazProgramInYear">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ObrazProgramInYearId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ObrazProgramId" Type="int" Nullable="false" />
+          <Property Name="YearId" Type="int" Nullable="false" />
+          <Property Name="Year" Type="nvarchar" MaxLength="20" />
+          <Property Name="LicenseProgramId" Type="int" Nullable="false" />
+          <Property Name="SecondLicenseProgramId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Number" Type="nvarchar" MaxLength="50" />
+          <Property Name="ObrazProgramCrypt" Type="nvarchar" MaxLength="100" />
+          <Property Name="StudyLevelName" Type="nvarchar" MaxLength="100" />
+          <Property Name="FacultyId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="OkvedType">
           <Key>
             <PropertyRef Name="Id" />
@@ -317,6 +354,40 @@
           <Property Name="Comment" Type="nvarchar" MaxLength="500" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="OrganizationDogovor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrganizationId" Type="int" Nullable="false" />
+          <Property Name="RubricId" Type="int" Nullable="false" />
+          <Property Name="DocumentTypeId" Type="int" Nullable="false" />
+          <Property Name="Document" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="DocumentStart" Type="date" />
+          <Property Name="DocumentFinish" Type="date" />
+          <Property Name="Permanent" Type="bit" />
+          <Property Name="DocumentNumber" Type="nvarchar" MaxLength="150" />
+          <Property Name="DocumentDate" Type="date" />
+          <Property Name="PartTime" Type="nvarchar" MaxLength="100" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsActual" Type="bit" StoreGeneratedPattern="None" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="OrganizationDogovorFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrganizationDogovorId" Type="int" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FileType" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="FileData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="DateLoad" Type="datetime" Nullable="false" />
+          <Property Name="FileSizeKBytes" Type="float" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="OrganizationFaculty">
           <Key>
@@ -487,8 +558,23 @@
           <Property Name="Supervisor" Type="nvarchar" MaxLength="255" />
           <Property Name="AdvanceHolder" Type="nvarchar" MaxLength="255" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
-          <Property Name="Author" Type="nvarchar" MaxLength="150" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="PracticeLPFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PracticeLPId" Type="int" Nullable="false" />
+          <Property Name="DocTypeId" Type="int" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FileType" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="FileData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="DateLoad" Type="datetime" Nullable="false" />
+          <Property Name="FileSizeKBytes" Type="float" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="PracticeLPOP">
           <Key>
@@ -497,6 +583,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PracticeLPId" Type="int" Nullable="false" />
           <Property Name="ObrazProgramId" Type="int" Nullable="false" />
+          <Property Name="ObrazProgramInYearId" Type="int" Nullable="false" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" />
           <Property Name="DateCreated" Type="datetime" />
@@ -508,13 +595,14 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PracticeLPId" Type="int" Nullable="false" />
           <Property Name="OrganizationId" Type="int" Nullable="false" />
+          <Property Name="OrganizationDogovorId" Type="int" />
           <Property Name="DateStart" Type="datetime" />
           <Property Name="DateEnd" Type="datetime" />
           <Property Name="OrganizationName" Type="nvarchar" MaxLength="500" />
           <Property Name="OrganizationAddress" Type="nvarchar" MaxLength="500" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
-          <Property Name="Author" Type="nvarchar" MaxLength="150" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="PracticeLPStudent">
           <Key>
@@ -523,6 +611,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PracticeLPId" Type="int" Nullable="false" />
           <Property Name="PracticeLPOrganizationId" Type="int" />
+          <Property Name="StudDataId" Type="int" />
           <Property Name="StudentFIO" Type="nvarchar" MaxLength="300" />
           <Property Name="DR" Type="varchar" MaxLength="10" />
           <Property Name="Course" Type="nvarchar" MaxLength="128" />
@@ -537,9 +626,10 @@
           <Property Name="FacultyName" Type="nvarchar" MaxLength="255" />
           <Property Name="LicenseProgramId" Type="int" Nullable="false" />
           <Property Name="FacultyId" Type="int" Nullable="false" />
+          <Property Name="ObrazProgramCrypt" Type="nvarchar" MaxLength="100" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
-          <Property Name="Author" Type="nvarchar" MaxLength="150" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="PracticeStudent">
           <Key>
@@ -577,6 +667,30 @@
           <Property Name="RodName" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="AccName" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Sorting" Type="int" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="1000" />
+          <Property Name="NameEng" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Acronym" Type="nvarchar" MaxLength="100" />
+          <Property Name="AcronymEng" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsOpen" Type="bit" Nullable="false" />
+          <Property Name="Holder" Type="nvarchar" MaxLength="100" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProfileInObrazProgramInYear">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ObrazProgramInYearId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProfileId" Type="int" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" />
         </EntityType>
         <EntityType Name="ProgramMode">
           <Key>
@@ -740,6 +854,8 @@
           <Property Name="ObrazProgramId" Type="int" />
           <Property Name="LicenseProgramId" Type="int" />
           <Property Name="FacultyId" Type="int" />
+          <Property Name="ObrazProgramCrypt" Type="nvarchar" MaxLength="100" />
+          <Property Name="ObrazProgramInYearId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="StudentDVZ">
           <Key>
@@ -815,6 +931,8 @@
           <Property Name="ObrazProgramId" Type="int" />
           <Property Name="LicenseProgramId" Type="int" />
           <Property Name="FacultyId" Type="int" />
+          <Property Name="ObrazProgramCrypt" Type="nvarchar" MaxLength="100" />
+          <Property Name="ObrazProgramInYearId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="StudyPlanPrintFormType">
           <Key>
@@ -851,6 +969,22 @@
           <Property Name="FileData" Type="varbinary(max)" Nullable="false" />
           <Property Name="DateLoad" Type="datetime" Nullable="false" />
           <Property Name="FileSizeKBytes" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Year">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="NameEng" Type="nvarchar" MaxLength="20" />
+          <Property Name="Acronym" Type="nvarchar" MaxLength="20" />
+          <Property Name="IntValue" Type="int" Nullable="false" />
+          <Property Name="IsIntercalaryYear" Type="bit" Nullable="false" />
+          <Property Name="IsOpen" Type="bit" Nullable="false" />
+          <Property Name="Holder" Type="nvarchar" MaxLength="100" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_InboxMessage_Organization">
           <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
@@ -998,6 +1132,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ObrazProgramInYear_Faculty">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+          <End Role="ObrazProgramInYear" Type="Self.ObrazProgramInYear" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ObrazProgramInYear">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ObrazProgramInYear_LicenseProgram">
+          <End Role="LicenseProgram" Type="Self.LicenseProgram" Multiplicity="1" />
+          <End Role="ObrazProgramInYear" Type="Self.ObrazProgramInYear" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LicenseProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ObrazProgramInYear">
+              <PropertyRef Name="LicenseProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ObrazProgramInYear_ObrazProgram">
+          <End Role="ObrazProgram" Type="Self.ObrazProgram" Multiplicity="1" />
+          <End Role="ObrazProgramInYear" Type="Self.ObrazProgramInYear" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ObrazProgramInYear">
+              <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ObrazProgramInYear_Year">
+          <End Role="Year" Type="Self.Year" Multiplicity="1" />
+          <End Role="ObrazProgramInYear" Type="Self.ObrazProgramInYear" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Year">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ObrazProgramInYear">
+              <PropertyRef Name="YearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Organization_ActivityArea">
           <End Role="ActivityArea" Type="Self.ActivityArea" Multiplicity="0..1" />
           <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
@@ -1105,6 +1287,54 @@
             </Principal>
             <Dependent Role="OrganizationContacts">
               <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationDogovor_DocumentType">
+          <End Role="DocumentType" Type="Self.DocumentType" Multiplicity="1" />
+          <End Role="OrganizationDogovor" Type="Self.OrganizationDogovor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationDogovor">
+              <PropertyRef Name="DocumentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationDogovor_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="OrganizationDogovor" Type="Self.OrganizationDogovor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationDogovor">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationDogovor_Rubric">
+          <End Role="Rubric" Type="Self.Rubric" Multiplicity="1" />
+          <End Role="OrganizationDogovor" Type="Self.OrganizationDogovor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationDogovor">
+              <PropertyRef Name="RubricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationDogovorFile_OrganizationDogovor">
+          <End Role="OrganizationDogovor" Type="Self.OrganizationDogovor" Multiplicity="1" />
+          <End Role="OrganizationDogovorFile" Type="Self.OrganizationDogovorFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationDogovor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationDogovorFile">
+              <PropertyRef Name="OrganizationDogovorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1460,39 +1690,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PracticeLP_LicenseProgram">
-          <End Role="LicenseProgram" Type="Self.LicenseProgram" Multiplicity="1" />
-          <End Role="PracticeLP" Type="Self.PracticeLP" Multiplicity="*" />
+        <Association Name="FK_PracticeLPFile_DocType">
+          <End Role="DocType" Type="Self.DocType" Multiplicity="1" />
+          <End Role="PracticeLPFile" Type="Self.PracticeLPFile" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="LicenseProgram">
+            <Principal Role="DocType">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PracticeLP">
-              <PropertyRef Name="LicenseProgramId" />
+            <Dependent Role="PracticeLPFile">
+              <PropertyRef Name="DocTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PracticeLP_Practice">
-          <End Role="Practice" Type="Self.Practice" Multiplicity="1" />
-          <End Role="PracticeLP" Type="Self.PracticeLP" Multiplicity="*" />
+        <Association Name="FK_PracticeLPFile_PracticeLP">
+          <End Role="PracticeLP" Type="Self.PracticeLP" Multiplicity="1" />
+          <End Role="PracticeLPFile" Type="Self.PracticeLPFile" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Practice">
+            <Principal Role="PracticeLP">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="PracticeLP">
-              <PropertyRef Name="PracticeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PracticeLP_PracticeType">
-          <End Role="PracticeType" Type="Self.PracticeType" Multiplicity="0..1" />
-          <End Role="PracticeLP" Type="Self.PracticeLP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PracticeType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PracticeLP">
-              <PropertyRef Name="PracticeTypeId" />
+            <Dependent Role="PracticeLPFile">
+              <PropertyRef Name="PracticeLPId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1505,6 +1723,18 @@
             </Principal>
             <Dependent Role="PracticeLPOP">
               <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOP_ObrazProgramInYear">
+          <End Role="ObrazProgramInYear" Type="Self.ObrazProgramInYear" Multiplicity="1" />
+          <End Role="PracticeLPOP" Type="Self.PracticeLPOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgramInYear">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOP">
+              <PropertyRef Name="ObrazProgramInYearId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1531,6 +1761,18 @@
             </Principal>
             <Dependent Role="PracticeLPOrganization">
               <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOrganization_OrganizationDogovor">
+          <End Role="OrganizationDogovor" Type="Self.OrganizationDogovor" Multiplicity="0..1" />
+          <End Role="PracticeLPOrganization" Type="Self.PracticeLPOrganization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationDogovor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOrganization">
+              <PropertyRef Name="OrganizationDogovorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1748,6 +1990,8 @@
           <EntitySet Name="ActivityGoal" EntityType="Self.ActivityGoal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Degree" EntityType="Self.Degree" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocType" EntityType="Self.DocType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentType" EntityType="Self.DocumentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="dtproperties" EntityType="Self.dtproperties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EducationDocument" EntityType="Self.EducationDocument" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EducationPermit" EntityType="Self.EducationPermit" Schema="dbo" store:Type="Tables" />
@@ -1760,10 +2004,13 @@
           <EntitySet Name="MobilityType" EntityType="Self.MobilityType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NationalAffiliation" EntityType="Self.NationalAffiliation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ObrazProgram" EntityType="Self.ObrazProgram" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ObrazProgramInYear" EntityType="Self.ObrazProgramInYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OkvedType" EntityType="Self.OkvedType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationActivityArea" EntityType="Self.OrganizationActivityArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationContacts" EntityType="Self.OrganizationContacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrganizationDogovor" EntityType="Self.OrganizationDogovor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrganizationDogovorFile" EntityType="Self.OrganizationDogovorFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationFaculty" EntityType="Self.OrganizationFaculty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationLP" EntityType="Self.OrganizationLP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationOkved" EntityType="Self.OrganizationOkved" Schema="dbo" store:Type="Tables" />
@@ -1777,11 +2024,14 @@
           <EntitySet Name="PartnerPersonRubric" EntityType="Self.PartnerPersonRubric" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Practice" EntityType="Self.Practice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PracticeLP" EntityType="Self.PracticeLP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PracticeLPFile" EntityType="Self.PracticeLPFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PracticeLPOP" EntityType="Self.PracticeLPOP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PracticeLPOrganization" EntityType="Self.PracticeLPOrganization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PracticeLPStudent" EntityType="Self.PracticeLPStudent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PracticeStudent" EntityType="Self.PracticeStudent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PracticeType" EntityType="Self.PracticeType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProfileInObrazProgramInYear" EntityType="Self.ProfileInObrazProgramInYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProgramMode" EntityType="Self.ProgramMode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProgramStatus" EntityType="Self.ProgramStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProgramType" EntityType="Self.ProgramType" Schema="dbo" store:Type="Tables" />
@@ -1799,6 +2049,7 @@
           <EntitySet Name="StudyPlanPrintFormType" EntityType="Self.StudyPlanPrintFormType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Templates" EntityType="Self.Templates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Year" EntityType="Self.Year" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_InboxMessage_Organization" Association="Self.FK_InboxMessage_Organization">
             <End Role="Organization" EntitySet="Organization" />
             <End Role="InboxMessage" EntitySet="InboxMessage" />
@@ -1847,6 +2098,22 @@
             <End Role="Specialist" EntitySet="Specialist" />
             <End Role="ObrazProgram" EntitySet="ObrazProgram" />
           </AssociationSet>
+          <AssociationSet Name="FK_ObrazProgramInYear_Faculty" Association="Self.FK_ObrazProgramInYear_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ObrazProgramInYear_LicenseProgram" Association="Self.FK_ObrazProgramInYear_LicenseProgram">
+            <End Role="LicenseProgram" EntitySet="LicenseProgram" />
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ObrazProgramInYear_ObrazProgram" Association="Self.FK_ObrazProgramInYear_ObrazProgram">
+            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ObrazProgramInYear_Year" Association="Self.FK_ObrazProgramInYear_Year">
+            <End Role="Year" EntitySet="Year" />
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
+          </AssociationSet>
           <AssociationSet Name="FK_Organization_ActivityArea" Association="Self.FK_Organization_ActivityArea">
             <End Role="ActivityArea" EntitySet="ActivityArea" />
             <End Role="Organization" EntitySet="Organization" />
@@ -1882,6 +2149,22 @@
           <AssociationSet Name="FK_OrganizationContacts_Organization" Association="Self.FK_OrganizationContacts_Organization">
             <End Role="Organization" EntitySet="Organization" />
             <End Role="OrganizationContacts" EntitySet="OrganizationContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationDogovor_DocumentType" Association="Self.FK_OrganizationDogovor_DocumentType">
+            <End Role="DocumentType" EntitySet="DocumentType" />
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationDogovor_Organization" Association="Self.FK_OrganizationDogovor_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationDogovor_Rubric" Association="Self.FK_OrganizationDogovor_Rubric">
+            <End Role="Rubric" EntitySet="Rubric" />
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationDogovorFile_OrganizationDogovor" Association="Self.FK_OrganizationDogovorFile_OrganizationDogovor">
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
+            <End Role="OrganizationDogovorFile" EntitySet="OrganizationDogovorFile" />
           </AssociationSet>
           <AssociationSet Name="FK_OrganizationFaculty_Faculty" Association="Self.FK_OrganizationFaculty_Faculty">
             <End Role="Faculty" EntitySet="Faculty" />
@@ -1995,20 +2278,20 @@
             <End Role="Faculty" EntitySet="Faculty" />
             <End Role="Practice" EntitySet="Practice" />
           </AssociationSet>
-          <AssociationSet Name="FK_PracticeLP_LicenseProgram" Association="Self.FK_PracticeLP_LicenseProgram">
-            <End Role="LicenseProgram" EntitySet="LicenseProgram" />
-            <End Role="PracticeLP" EntitySet="PracticeLP" />
+          <AssociationSet Name="FK_PracticeLPFile_DocType" Association="Self.FK_PracticeLPFile_DocType">
+            <End Role="DocType" EntitySet="DocType" />
+            <End Role="PracticeLPFile" EntitySet="PracticeLPFile" />
           </AssociationSet>
-          <AssociationSet Name="FK_PracticeLP_Practice" Association="Self.FK_PracticeLP_Practice">
-            <End Role="Practice" EntitySet="Practice" />
+          <AssociationSet Name="FK_PracticeLPFile_PracticeLP" Association="Self.FK_PracticeLPFile_PracticeLP">
             <End Role="PracticeLP" EntitySet="PracticeLP" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PracticeLP_PracticeType" Association="Self.FK_PracticeLP_PracticeType">
-            <End Role="PracticeType" EntitySet="PracticeType" />
-            <End Role="PracticeLP" EntitySet="PracticeLP" />
+            <End Role="PracticeLPFile" EntitySet="PracticeLPFile" />
           </AssociationSet>
           <AssociationSet Name="FK_PracticeLPOP_ObrazProgram" Association="Self.FK_PracticeLPOP_ObrazProgram">
             <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="PracticeLPOP" EntitySet="PracticeLPOP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOP_ObrazProgramInYear" Association="Self.FK_PracticeLPOP_ObrazProgramInYear">
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
             <End Role="PracticeLPOP" EntitySet="PracticeLPOP" />
           </AssociationSet>
           <AssociationSet Name="FK_PracticeLPOP_PracticeLP" Association="Self.FK_PracticeLPOP_PracticeLP">
@@ -2017,6 +2300,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_PracticeLPOrganization_Organization" Association="Self.FK_PracticeLPOrganization_Organization">
             <End Role="Organization" EntitySet="Organization" />
+            <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOrganization_OrganizationDogovor" Association="Self.FK_PracticeLPOrganization_OrganizationDogovor">
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
             <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
           </AssociationSet>
           <AssociationSet Name="FK_PracticeLPOrganization_PracticeLP" Association="Self.FK_PracticeLPOrganization_PracticeLP">
@@ -2215,6 +2502,7 @@
           <NavigationProperty Name="PartnerPersonFaculty" Relationship="EmployerPartnersModel.FK_PartnerPersonFaculty_Faculty" FromRole="Faculty" ToRole="PartnerPersonFaculty" />
           <NavigationProperty Name="Practice" Relationship="EmployerPartnersModel.FK_Practice_Faculty" FromRole="Faculty" ToRole="Practice" />
           <NavigationProperty Name="Student" Relationship="EmployerPartnersModel.FK_Student_Faculty" FromRole="Faculty" ToRole="Student" />
+          <NavigationProperty Name="ObrazProgramInYear" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_Faculty" FromRole="Faculty" ToRole="ObrazProgramInYear" />
         </EntityType>
         <EntityType Name="InboxMessage">
           <Key>
@@ -2295,6 +2583,7 @@
           <NavigationProperty Name="PartnerPersonLP" Relationship="EmployerPartnersModel.FK_PartnerPersonLP_LicenseProgram" FromRole="LicenseProgram" ToRole="PartnerPersonLP" />
           <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLP_LicenseProgram" FromRole="LicenseProgram" ToRole="PracticeLP" />
           <NavigationProperty Name="Student" Relationship="EmployerPartnersModel.FK_Student_LicenseProgram" FromRole="LicenseProgram" ToRole="Student" />
+          <NavigationProperty Name="ObrazProgramInYear" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_LicenseProgram" FromRole="LicenseProgram" ToRole="ObrazProgramInYear" />
         </EntityType>
         <EntityType Name="MobilityType">
           <Key>
@@ -2352,8 +2641,9 @@
           <NavigationProperty Name="ProgramMode" Relationship="Self.FK_ObrazProgram_ProgramMode" FromRole="ObrazProgram" ToRole="ProgramMode" />
           <NavigationProperty Name="ProgramStatus" Relationship="Self.FK_ObrazProgram_ProgramStatus" FromRole="ObrazProgram" ToRole="ProgramStatus" />
           <NavigationProperty Name="Specialist" Relationship="Self.FK_ObrazProgram_Specialist" FromRole="ObrazProgram" ToRole="Specialist" />
-          <NavigationProperty Name="PracticeLPOP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram" FromRole="ObrazProgram" ToRole="PracticeLPOP" />
           <Property Name="SecondLicenseProgramId" Type="Int32" />
+          <NavigationProperty Name="ObrazProgramInYear" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_ObrazProgram" FromRole="ObrazProgram" ToRole="ObrazProgramInYear" />
+          <NavigationProperty Name="PracticeLPOP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram" FromRole="ObrazProgram" ToRole="PracticeLPOP" />
         </EntityType>
         <EntityType Name="OkvedType">
           <Key>
@@ -2416,6 +2706,7 @@
           <Property Name="Apartment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_Organization" FromRole="Organization" ToRole="PracticeLPOrganization" />
           <NavigationProperty Name="PracticeStudent" Relationship="EmployerPartnersModel.FK_PracticeStudent_Organization" FromRole="Organization" ToRole="PracticeStudent" />
+          <NavigationProperty Name="OrganizationDogovor" Relationship="EmployerPartnersModel.FK_OrganizationDogovor_Organization" FromRole="Organization" ToRole="OrganizationDogovor" />
         </EntityType>
         <EntityType Name="OrganizationActivityArea">
           <Key>
@@ -2677,6 +2968,7 @@
           <NavigationProperty Name="OrganizationLP" Relationship="EmployerPartnersModel.FK_OrganizationLP_Rubric" FromRole="Rubric" ToRole="OrganizationLP" />
           <NavigationProperty Name="PartnerPersonFaculty" Relationship="EmployerPartnersModel.FK_PartnerPersonFaculty_Rubric" FromRole="Rubric" ToRole="PartnerPersonFaculty" />
           <NavigationProperty Name="PartnerPersonLP" Relationship="EmployerPartnersModel.FK_PartnerPersonLP_Rubric" FromRole="Rubric" ToRole="PartnerPersonLP" />
+          <NavigationProperty Name="OrganizationDogovor" Relationship="EmployerPartnersModel.FK_OrganizationDogovor_Rubric" FromRole="Rubric" ToRole="OrganizationDogovor" />
         </EntityType>
         <EntityType Name="Specialist">
           <Key>
@@ -3555,7 +3847,6 @@
           <EntitySet Name="Templates" EntityType="EmployerPartnersModel.Templates" />
           <EntitySet Name="Practice" EntityType="EmployerPartnersModel.Practice" />
           <EntitySet Name="PracticeLP" EntityType="EmployerPartnersModel.PracticeLP" />
-          <EntitySet Name="PracticeLPOP" EntityType="EmployerPartnersModel.PracticeLPOP" />
           <EntitySet Name="PracticeLPOrganization" EntityType="EmployerPartnersModel.PracticeLPOrganization" />
           <EntitySet Name="PracticeType" EntityType="EmployerPartnersModel.PracticeType" />
           <AssociationSet Name="FK_Practice_Faculty" Association="EmployerPartnersModel.FK_Practice_Faculty">
@@ -3565,10 +3856,6 @@
           <AssociationSet Name="FK_PracticeLP_LicenseProgram" Association="EmployerPartnersModel.FK_PracticeLP_LicenseProgram">
             <End Role="LicenseProgram" EntitySet="LicenseProgram" />
             <End Role="PracticeLP" EntitySet="PracticeLP" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PracticeLPOP_ObrazProgram" Association="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram">
-            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
-            <End Role="PracticeLPOP" EntitySet="PracticeLPOP" />
           </AssociationSet>
           <AssociationSet Name="FK_PracticeLPOrganization_Organization" Association="EmployerPartnersModel.FK_PracticeLPOrganization_Organization">
             <End Role="Organization" EntitySet="Organization" />
@@ -3581,10 +3868,6 @@
           <AssociationSet Name="FK_PracticeLP_PracticeType" Association="EmployerPartnersModel.FK_PracticeLP_PracticeType">
             <End Role="PracticeType" EntitySet="PracticeType" />
             <End Role="PracticeLP" EntitySet="PracticeLP" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PracticeLPOP_PracticeLP" Association="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP">
-            <End Role="PracticeLP" EntitySet="PracticeLP" />
-            <End Role="PracticeLPOP" EntitySet="PracticeLPOP" />
           </AssociationSet>
           <AssociationSet Name="FK_PracticeLPOrganization_PracticeLP" Association="EmployerPartnersModel.FK_PracticeLPOrganization_PracticeLP">
             <End Role="PracticeLP" EntitySet="PracticeLP" />
@@ -3639,6 +3922,72 @@
           <AssociationSet Name="FK_PracticeLPStudent_PracticeLPOrganization" Association="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLPOrganization">
             <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
             <End Role="PracticeLPStudent" EntitySet="PracticeLPStudent" />
+          </AssociationSet>
+          <EntitySet Name="DocType" EntityType="EmployerPartnersModel.DocType" />
+          <EntitySet Name="PracticeLPFile" EntityType="EmployerPartnersModel.PracticeLPFile" />
+          <AssociationSet Name="FK_PracticeLPFile_DocType" Association="EmployerPartnersModel.FK_PracticeLPFile_DocType">
+            <End Role="DocType" EntitySet="DocType" />
+            <End Role="PracticeLPFile" EntitySet="PracticeLPFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPFile_PracticeLP" Association="EmployerPartnersModel.FK_PracticeLPFile_PracticeLP">
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+            <End Role="PracticeLPFile" EntitySet="PracticeLPFile" />
+          </AssociationSet>
+          <EntitySet Name="Year" EntityType="EmployerPartnersModel.Year" />
+          <EntitySet Name="ObrazProgramInYear" EntityType="EmployerPartnersModel.ObrazProgramInYear" />
+          <AssociationSet Name="FK_ObrazProgramInYear_Faculty" Association="EmployerPartnersModel.FK_ObrazProgramInYear_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ObrazProgramInYear_LicenseProgram" Association="EmployerPartnersModel.FK_ObrazProgramInYear_LicenseProgram">
+            <End Role="LicenseProgram" EntitySet="LicenseProgram" />
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ObrazProgramInYear_ObrazProgram" Association="EmployerPartnersModel.FK_ObrazProgramInYear_ObrazProgram">
+            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ObrazProgramInYear_Year" Association="EmployerPartnersModel.FK_ObrazProgramInYear_Year">
+            <End Role="Year" EntitySet="Year" />
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
+          </AssociationSet>
+          <EntitySet Name="PracticeLPOP" EntityType="EmployerPartnersModel.PracticeLPOP" />
+          <AssociationSet Name="FK_PracticeLPOP_ObrazProgram" Association="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram">
+            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="PracticeLPOP" EntitySet="PracticeLPOP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOP_ObrazProgramInYear" Association="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgramInYear">
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
+            <End Role="PracticeLPOP" EntitySet="PracticeLPOP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOP_PracticeLP" Association="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP">
+            <End Role="PracticeLP" EntitySet="PracticeLP" />
+            <End Role="PracticeLPOP" EntitySet="PracticeLPOP" />
+          </AssociationSet>
+          <EntitySet Name="Profile" EntityType="EmployerPartnersModel.Profile" />
+          <EntitySet Name="ProfileInObrazProgramInYear" EntityType="EmployerPartnersModel.ProfileInObrazProgramInYear" />
+          <EntitySet Name="DocumentType" EntityType="EmployerPartnersModel.DocumentType" />
+          <EntitySet Name="OrganizationDogovor" EntityType="EmployerPartnersModel.OrganizationDogovor" />
+          <AssociationSet Name="FK_OrganizationDogovor_DocumentType" Association="EmployerPartnersModel.FK_OrganizationDogovor_DocumentType">
+            <End Role="DocumentType" EntitySet="DocumentType" />
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationDogovor_Organization" Association="EmployerPartnersModel.FK_OrganizationDogovor_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationDogovor_Rubric" Association="EmployerPartnersModel.FK_OrganizationDogovor_Rubric">
+            <End Role="Rubric" EntitySet="Rubric" />
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPOrganization_OrganizationDogovor" Association="EmployerPartnersModel.FK_PracticeLPOrganization_OrganizationDogovor">
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
+            <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+          </AssociationSet>
+          <EntitySet Name="OrganizationDogovorFile" EntityType="EmployerPartnersModel.OrganizationDogovorFile" />
+          <AssociationSet Name="FK_OrganizationDogovorFile_OrganizationDogovor" Association="EmployerPartnersModel.FK_OrganizationDogovorFile_OrganizationDogovor">
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
+            <End Role="OrganizationDogovorFile" EntitySet="OrganizationDogovorFile" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="PartnerPersonActivityArea">
@@ -3904,28 +4253,16 @@
           <Property Name="Supervisor" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="AdvanceHolder" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="LicenseProgram" Relationship="EmployerPartnersModel.FK_PracticeLP_LicenseProgram" FromRole="PracticeLP" ToRole="LicenseProgram" />
           <NavigationProperty Name="Practice" Relationship="EmployerPartnersModel.FK_PracticeLP_Practice" FromRole="PracticeLP" ToRole="Practice" />
           <NavigationProperty Name="PracticeType" Relationship="EmployerPartnersModel.FK_PracticeLP_PracticeType" FromRole="PracticeLP" ToRole="PracticeType" />
-          <NavigationProperty Name="PracticeLPOP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP" FromRole="PracticeLP" ToRole="PracticeLPOP" />
           <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_PracticeLP" FromRole="PracticeLP" ToRole="PracticeLPOrganization" />
           <NavigationProperty Name="PracticeLPStudent" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLP" FromRole="PracticeLP" ToRole="PracticeLPStudent" />
           <Property Name="OutSPb" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="PracticeLPOP">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PracticeLPId" Type="Int32" Nullable="false" />
-          <Property Name="ObrazProgramId" Type="Int32" Nullable="false" />
-          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ObrazProgram" Relationship="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram" FromRole="PracticeLPOP" ToRole="ObrazProgram" />
-          <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP" FromRole="PracticeLPOP" ToRole="PracticeLP" />
+          <NavigationProperty Name="PracticeLPFile" Relationship="EmployerPartnersModel.FK_PracticeLPFile_PracticeLP" FromRole="PracticeLP" ToRole="PracticeLPFile" />
+          <NavigationProperty Name="PracticeLPOP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP" FromRole="PracticeLP" ToRole="PracticeLPOP" />
         </EntityType>
         <EntityType Name="PracticeLPOrganization">
           <Key>
@@ -3939,12 +4276,14 @@
           <Property Name="OrganizationName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="OrganizationAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Organization" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_Organization" FromRole="PracticeLPOrganization" ToRole="Organization" />
           <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_PracticeLP" FromRole="PracticeLPOrganization" ToRole="PracticeLP" />
           <NavigationProperty Name="PracticeStudent" Relationship="EmployerPartnersModel.FK_PracticeStudent_PracticeLPOrganization" FromRole="PracticeLPOrganization" ToRole="PracticeStudent" />
           <NavigationProperty Name="PracticeLPStudent" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLPOrganization" FromRole="PracticeLPOrganization" ToRole="PracticeLPStudent" />
+          <Property Name="OrganizationDogovorId" Type="Int32" />
+          <NavigationProperty Name="OrganizationDogovor" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_OrganizationDogovor" FromRole="PracticeLPOrganization" ToRole="OrganizationDogovor" />
         </EntityType>
         <EntityType Name="PracticeType">
           <Key>
@@ -3981,18 +4320,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PracticeLPOP_ObrazProgram">
-          <End Type="EmployerPartnersModel.ObrazProgram" Role="ObrazProgram" Multiplicity="1" />
-          <End Type="EmployerPartnersModel.PracticeLPOP" Role="PracticeLPOP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ObrazProgram">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PracticeLPOP">
-              <PropertyRef Name="ObrazProgramId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PracticeLPOrganization_Organization">
           <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="1" />
           <End Type="EmployerPartnersModel.PracticeLPOrganization" Role="PracticeLPOrganization" Multiplicity="*" />
@@ -4026,20 +4353,6 @@
             </Principal>
             <Dependent Role="PracticeLP">
               <PropertyRef Name="PracticeTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PracticeLPOP_PracticeLP">
-          <End Type="EmployerPartnersModel.PracticeLP" Role="PracticeLP" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="EmployerPartnersModel.PracticeLPOP" Role="PracticeLPOP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PracticeLP">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PracticeLPOP">
-              <PropertyRef Name="PracticeLPId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4210,6 +4523,8 @@
           <Property Name="ObrazProgramId" Type="Int32" />
           <Property Name="LicenseProgramId" Type="Int32" />
           <Property Name="FacultyId" Type="Int32" />
+          <Property Name="ObrazProgramCrypt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ObrazProgramInYearId" Type="Guid" />
         </EntityType>
         <EntityType Name="StudyPlanData">
           <Key>
@@ -4221,6 +4536,8 @@
           <Property Name="ObrazProgramId" Type="Int32" />
           <Property Name="LicenseProgramId" Type="Int32" />
           <Property Name="FacultyId" Type="Int32" />
+          <Property Name="ObrazProgramCrypt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ObrazProgramInYearId" Type="Guid" />
         </EntityType>
         <EntityType Name="StudentDVZ">
           <Key>
@@ -4270,10 +4587,12 @@
           <Property Name="LicenseProgramId" Type="Int32" Nullable="false" />
           <Property Name="FacultyId" Type="Int32" Nullable="false" />
           <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLP" FromRole="PracticeLPStudent" ToRole="PracticeLP" />
           <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLPOrganization" FromRole="PracticeLPStudent" ToRole="PracticeLPOrganization" />
+          <Property Name="ObrazProgramCrypt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StudDataId" Type="Int32" />
         </EntityType>
         <Association Name="FK_PracticeLPStudent_PracticeLP">
           <End Type="EmployerPartnersModel.PracticeLP" Role="PracticeLP" Multiplicity="1" />
@@ -4296,6 +4615,333 @@
             </Principal>
             <Dependent Role="PracticeLPStudent">
               <PropertyRef Name="PracticeLPOrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DocType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PracticeLPFile" Relationship="EmployerPartnersModel.FK_PracticeLPFile_DocType" FromRole="DocType" ToRole="PracticeLPFile" />
+        </EntityType>
+        <EntityType Name="PracticeLPFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PracticeLPId" Type="Int32" Nullable="false" />
+          <Property Name="DocTypeId" Type="Int32" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FileType" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="FileData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateLoad" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FileSizeKBytes" Type="Double" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="DocType" Relationship="EmployerPartnersModel.FK_PracticeLPFile_DocType" FromRole="PracticeLPFile" ToRole="DocType" />
+          <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLPFile_PracticeLP" FromRole="PracticeLPFile" ToRole="PracticeLP" />
+        </EntityType>
+        <Association Name="FK_PracticeLPFile_DocType">
+          <End Type="EmployerPartnersModel.DocType" Role="DocType" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeLPFile" Role="PracticeLPFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPFile">
+              <PropertyRef Name="DocTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPFile_PracticeLP">
+          <End Type="EmployerPartnersModel.PracticeLP" Role="PracticeLP" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeLPFile" Role="PracticeLPFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPFile">
+              <PropertyRef Name="PracticeLPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Year">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="NameEng" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Acronym" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IntValue" Type="Int32" Nullable="false" />
+          <Property Name="IsIntercalaryYear" Type="Boolean" Nullable="false" />
+          <Property Name="IsOpen" Type="Boolean" Nullable="false" />
+          <Property Name="Holder" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ObrazProgramInYear" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_Year" FromRole="Year" ToRole="ObrazProgramInYear" />
+        </EntityType>
+        <EntityType Name="ObrazProgramInYear">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ObrazProgramInYearId" Type="Guid" Nullable="false" />
+          <Property Name="ObrazProgramId" Type="Int32" Nullable="false" />
+          <Property Name="YearId" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseProgramId" Type="Int32" Nullable="false" />
+          <Property Name="SecondLicenseProgramId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ObrazProgramCrypt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StudyLevelName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FacultyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Faculty" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_Faculty" FromRole="ObrazProgramInYear" ToRole="Faculty" />
+          <NavigationProperty Name="LicenseProgram" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_LicenseProgram" FromRole="ObrazProgramInYear" ToRole="LicenseProgram" />
+          <NavigationProperty Name="ObrazProgram" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_ObrazProgram" FromRole="ObrazProgramInYear" ToRole="ObrazProgram" />
+          <NavigationProperty Name="Year1" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_Year" FromRole="ObrazProgramInYear" ToRole="Year" />
+          <NavigationProperty Name="PracticeLPOP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgramInYear" FromRole="ObrazProgramInYear" ToRole="PracticeLPOP" />
+        </EntityType>
+        <Association Name="FK_ObrazProgramInYear_Faculty">
+          <End Type="EmployerPartnersModel.Faculty" Role="Faculty" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.ObrazProgramInYear" Role="ObrazProgramInYear" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ObrazProgramInYear">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ObrazProgramInYear_LicenseProgram">
+          <End Type="EmployerPartnersModel.LicenseProgram" Role="LicenseProgram" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.ObrazProgramInYear" Role="ObrazProgramInYear" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LicenseProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ObrazProgramInYear">
+              <PropertyRef Name="LicenseProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ObrazProgramInYear_ObrazProgram">
+          <End Type="EmployerPartnersModel.ObrazProgram" Role="ObrazProgram" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.ObrazProgramInYear" Role="ObrazProgramInYear" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ObrazProgramInYear">
+              <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ObrazProgramInYear_Year">
+          <End Type="EmployerPartnersModel.Year" Role="Year" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.ObrazProgramInYear" Role="ObrazProgramInYear" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Year">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ObrazProgramInYear">
+              <PropertyRef Name="YearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PracticeLPOP">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PracticeLPId" Type="Int32" Nullable="false" />
+          <Property Name="ObrazProgramId" Type="Int32" Nullable="false" />
+          <Property Name="ObrazProgramInYearId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ObrazProgram" Relationship="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram" FromRole="PracticeLPOP" ToRole="ObrazProgram" />
+          <NavigationProperty Name="ObrazProgramInYear" Relationship="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgramInYear" FromRole="PracticeLPOP" ToRole="ObrazProgramInYear" />
+          <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP" FromRole="PracticeLPOP" ToRole="PracticeLP" />
+        </EntityType>
+        <Association Name="FK_PracticeLPOP_ObrazProgram">
+          <End Type="EmployerPartnersModel.ObrazProgram" Role="ObrazProgram" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeLPOP" Role="PracticeLPOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOP">
+              <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOP_ObrazProgramInYear">
+          <End Type="EmployerPartnersModel.ObrazProgramInYear" Role="ObrazProgramInYear" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.PracticeLPOP" Role="PracticeLPOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgramInYear">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOP">
+              <PropertyRef Name="ObrazProgramInYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOP_PracticeLP">
+          <End Type="EmployerPartnersModel.PracticeLP" Role="PracticeLP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EmployerPartnersModel.PracticeLPOP" Role="PracticeLPOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PracticeLP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOP">
+              <PropertyRef Name="PracticeLPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="NameEng" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Acronym" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AcronymEng" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsOpen" Type="Boolean" Nullable="false" />
+          <Property Name="Holder" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ProfileInObrazProgramInYear">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ObrazProgramInYearId" Type="Guid" Nullable="false" />
+          <Property Name="ProfileId" Type="Int32" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="DocumentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NameEng" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Acronym" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsOpen" Type="Boolean" />
+          <Property Name="Holder" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OrganizationDogovor" Relationship="EmployerPartnersModel.FK_OrganizationDogovor_DocumentType" FromRole="DocumentType" ToRole="OrganizationDogovor" />
+        </EntityType>
+        <EntityType Name="OrganizationDogovor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrganizationId" Type="Int32" Nullable="false" />
+          <Property Name="RubricId" Type="Int32" Nullable="false" />
+          <Property Name="DocumentTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Document" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DocumentStart" Type="DateTime" Precision="0" />
+          <Property Name="DocumentFinish" Type="DateTime" Precision="0" />
+          <Property Name="Permanent" Type="Boolean" />
+          <Property Name="DocumentNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentDate" Type="DateTime" Precision="0" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="DocumentType" Relationship="EmployerPartnersModel.FK_OrganizationDogovor_DocumentType" FromRole="OrganizationDogovor" ToRole="DocumentType" />
+          <NavigationProperty Name="Organization" Relationship="EmployerPartnersModel.FK_OrganizationDogovor_Organization" FromRole="OrganizationDogovor" ToRole="Organization" />
+          <NavigationProperty Name="Rubric" Relationship="EmployerPartnersModel.FK_OrganizationDogovor_Rubric" FromRole="OrganizationDogovor" ToRole="Rubric" />
+          <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_OrganizationDogovor" FromRole="OrganizationDogovor" ToRole="PracticeLPOrganization" />
+          <Property Name="PartTime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrganizationDogovorFile" Relationship="EmployerPartnersModel.FK_OrganizationDogovorFile_OrganizationDogovor" FromRole="OrganizationDogovor" ToRole="OrganizationDogovorFile" />
+          <Property Name="IsActual" Type="Boolean" annotation:StoreGeneratedPattern="None" />
+        </EntityType>
+        <Association Name="FK_OrganizationDogovor_DocumentType">
+          <End Type="EmployerPartnersModel.DocumentType" Role="DocumentType" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.OrganizationDogovor" Role="OrganizationDogovor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationDogovor">
+              <PropertyRef Name="DocumentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationDogovor_Organization">
+          <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.OrganizationDogovor" Role="OrganizationDogovor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationDogovor">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationDogovor_Rubric">
+          <End Type="EmployerPartnersModel.Rubric" Role="Rubric" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.OrganizationDogovor" Role="OrganizationDogovor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationDogovor">
+              <PropertyRef Name="RubricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PracticeLPOrganization_OrganizationDogovor">
+          <End Type="EmployerPartnersModel.OrganizationDogovor" Role="OrganizationDogovor" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.PracticeLPOrganization" Role="PracticeLPOrganization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationDogovor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPOrganization">
+              <PropertyRef Name="OrganizationDogovorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrganizationDogovorFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrganizationDogovorId" Type="Int32" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FileType" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="FileData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateLoad" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FileSizeKBytes" Type="Double" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="OrganizationDogovor" Relationship="EmployerPartnersModel.FK_OrganizationDogovorFile_OrganizationDogovor" FromRole="OrganizationDogovorFile" ToRole="OrganizationDogovor" />
+        </EntityType>
+        <Association Name="FK_OrganizationDogovorFile_OrganizationDogovor">
+          <End Type="EmployerPartnersModel.OrganizationDogovor" Role="OrganizationDogovor" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.OrganizationDogovorFile" Role="OrganizationDogovorFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationDogovor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationDogovorFile">
+              <PropertyRef Name="OrganizationDogovorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5024,21 +5670,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PracticeLPOP">
-            <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeLPOP">
-              <MappingFragment StoreEntitySet="PracticeLPOP">
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Author" ColumnName="Author" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="ObrazProgramId" ColumnName="ObrazProgramId" />
-                <ScalarProperty Name="PracticeLPId" ColumnName="PracticeLPId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PracticeLPOrganization">
             <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeLPOrganization">
               <MappingFragment StoreEntitySet="PracticeLPOrganization">
+                <ScalarProperty Name="OrganizationDogovorId" ColumnName="OrganizationDogovorId" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
@@ -5116,6 +5751,8 @@
           <EntitySetMapping Name="StudentData">
             <EntityTypeMapping TypeName="EmployerPartnersModel.StudentData">
               <MappingFragment StoreEntitySet="StudentData">
+                <ScalarProperty Name="ObrazProgramInYearId" ColumnName="ObrazProgramInYearId" />
+                <ScalarProperty Name="ObrazProgramCrypt" ColumnName="ObrazProgramCrypt" />
                 <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
                 <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
                 <ScalarProperty Name="ObrazProgramId" ColumnName="ObrazProgramId" />
@@ -5148,6 +5785,8 @@
           <EntitySetMapping Name="StudyPlanData">
             <EntityTypeMapping TypeName="EmployerPartnersModel.StudyPlanData">
               <MappingFragment StoreEntitySet="StudyPlanData">
+                <ScalarProperty Name="ObrazProgramInYearId" ColumnName="ObrazProgramInYearId" />
+                <ScalarProperty Name="ObrazProgramCrypt" ColumnName="ObrazProgramCrypt" />
                 <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
                 <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
                 <ScalarProperty Name="ObrazProgramId" ColumnName="ObrazProgramId" />
@@ -5189,6 +5828,8 @@
           <EntitySetMapping Name="PracticeLPStudent">
             <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeLPStudent">
               <MappingFragment StoreEntitySet="PracticeLPStudent">
+                <ScalarProperty Name="StudDataId" ColumnName="StudDataId" />
+                <ScalarProperty Name="ObrazProgramCrypt" ColumnName="ObrazProgramCrypt" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
@@ -5208,6 +5849,154 @@
                 <ScalarProperty Name="StudentFIO" ColumnName="StudentFIO" />
                 <ScalarProperty Name="PracticeLPOrganizationId" ColumnName="PracticeLPOrganizationId" />
                 <ScalarProperty Name="PracticeLPId" ColumnName="PracticeLPId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocType">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.DocType">
+              <MappingFragment StoreEntitySet="DocType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PracticeLPFile">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeLPFile">
+              <MappingFragment StoreEntitySet="PracticeLPFile">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="FileSizeKBytes" ColumnName="FileSizeKBytes" />
+                <ScalarProperty Name="DateLoad" ColumnName="DateLoad" />
+                <ScalarProperty Name="FileData" ColumnName="FileData" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="DocTypeId" ColumnName="DocTypeId" />
+                <ScalarProperty Name="PracticeLPId" ColumnName="PracticeLPId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Year">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.Year">
+              <MappingFragment StoreEntitySet="Year">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Holder" ColumnName="Holder" />
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+                <ScalarProperty Name="IsIntercalaryYear" ColumnName="IsIntercalaryYear" />
+                <ScalarProperty Name="IntValue" ColumnName="IntValue" />
+                <ScalarProperty Name="Acronym" ColumnName="Acronym" />
+                <ScalarProperty Name="NameEng" ColumnName="NameEng" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ObrazProgramInYear">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.ObrazProgramInYear">
+              <MappingFragment StoreEntitySet="ObrazProgramInYear">
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="StudyLevelName" ColumnName="StudyLevelName" />
+                <ScalarProperty Name="ObrazProgramCrypt" ColumnName="ObrazProgramCrypt" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SecondLicenseProgramId" ColumnName="SecondLicenseProgramId" />
+                <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="YearId" ColumnName="YearId" />
+                <ScalarProperty Name="ObrazProgramId" ColumnName="ObrazProgramId" />
+                <ScalarProperty Name="ObrazProgramInYearId" ColumnName="ObrazProgramInYearId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PracticeLPOP">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeLPOP">
+              <MappingFragment StoreEntitySet="PracticeLPOP">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ObrazProgramInYearId" ColumnName="ObrazProgramInYearId" />
+                <ScalarProperty Name="ObrazProgramId" ColumnName="ObrazProgramId" />
+                <ScalarProperty Name="PracticeLPId" ColumnName="PracticeLPId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profile">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.Profile">
+              <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Holder" ColumnName="Holder" />
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+                <ScalarProperty Name="AcronymEng" ColumnName="AcronymEng" />
+                <ScalarProperty Name="Acronym" ColumnName="Acronym" />
+                <ScalarProperty Name="NameEng" ColumnName="NameEng" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProfileInObrazProgramInYear">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.ProfileInObrazProgramInYear">
+              <MappingFragment StoreEntitySet="ProfileInObrazProgramInYear">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+                <ScalarProperty Name="ObrazProgramInYearId" ColumnName="ObrazProgramInYearId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentType">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.DocumentType">
+              <MappingFragment StoreEntitySet="DocumentType">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Holder" ColumnName="Holder" />
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+                <ScalarProperty Name="Acronym" ColumnName="Acronym" />
+                <ScalarProperty Name="NameEng" ColumnName="NameEng" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrganizationDogovor">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.OrganizationDogovor">
+              <MappingFragment StoreEntitySet="OrganizationDogovor">
+                <ScalarProperty Name="IsActual" ColumnName="IsActual" />
+                <ScalarProperty Name="PartTime" ColumnName="PartTime" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+                <ScalarProperty Name="Permanent" ColumnName="Permanent" />
+                <ScalarProperty Name="DocumentFinish" ColumnName="DocumentFinish" />
+                <ScalarProperty Name="DocumentStart" ColumnName="DocumentStart" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+                <ScalarProperty Name="DocumentTypeId" ColumnName="DocumentTypeId" />
+                <ScalarProperty Name="RubricId" ColumnName="RubricId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrganizationDogovorFile">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.OrganizationDogovorFile">
+              <MappingFragment StoreEntitySet="OrganizationDogovorFile">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="FileSizeKBytes" ColumnName="FileSizeKBytes" />
+                <ScalarProperty Name="DateLoad" ColumnName="DateLoad" />
+                <ScalarProperty Name="FileData" ColumnName="FileData" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="OrganizationDogovorId" ColumnName="OrganizationDogovorId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

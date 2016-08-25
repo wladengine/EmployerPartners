@@ -45,12 +45,18 @@ namespace EmployerPartners
             get;
             set;
         }
+        private int _OrgId
+        {
+            get;
+            set;
+        }
         UpdateVoidHandler _hndl;
 
-        public PracticeOrgCard(int? id, UpdateVoidHandler _hdl)
+        public PracticeOrgCard(int? id, int orgid, UpdateVoidHandler _hdl)
         {
             InitializeComponent();
             _Id = id;
+            _OrgId = orgid;
             _hndl = _hdl;
             FillCard();
             this.MdiParent = Util.mainform;
@@ -68,6 +74,16 @@ namespace EmployerPartners
                     DateStart = (org.DateStart.HasValue) ? org.DateStart.Value.Date.ToString("dd.MM.yyyy") : "";
                     DateEnd = (org.DateEnd.HasValue) ? org.DateEnd.Value.Date.ToString("dd.MM.yyyy") : "";
                     Comment = org.Comment;
+                    try
+                    {
+                        if (!String.IsNullOrEmpty(OrgName))
+                        {
+                            this.Text = "Практика: " + OrgName;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
         }
         private bool CheckFields()
@@ -143,6 +159,11 @@ namespace EmployerPartners
             {
                 MessageBox.Show("Не удалось сохранить данные...\r\n" + ex.Message, "Сообщение");
             }
+        }
+
+        private void btnOrgCard_Click(object sender, EventArgs e)
+        {
+            new CardOrganization(_OrgId, null).Show();
         }
     }
 }

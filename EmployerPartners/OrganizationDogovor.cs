@@ -12,33 +12,37 @@ namespace EmployerPartners
     using System;
     using System.Collections.Generic;
     
-    public partial class PracticeLPOrganization
+    public partial class OrganizationDogovor
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PracticeLPOrganization()
+        public OrganizationDogovor()
         {
-            this.PracticeStudent = new HashSet<PracticeStudent>();
-            this.PracticeLPStudent = new HashSet<PracticeLPStudent>();
+            this.PracticeLPOrganization = new HashSet<PracticeLPOrganization>();
+            this.OrganizationDogovorFile = new HashSet<OrganizationDogovorFile>();
         }
     
         public int Id { get; set; }
-        public int PracticeLPId { get; set; }
         public int OrganizationId { get; set; }
-        public Nullable<System.DateTime> DateStart { get; set; }
-        public Nullable<System.DateTime> DateEnd { get; set; }
-        public string OrganizationName { get; set; }
-        public string OrganizationAddress { get; set; }
+        public int RubricId { get; set; }
+        public int DocumentTypeId { get; set; }
+        public string Document { get; set; }
+        public Nullable<System.DateTime> DocumentStart { get; set; }
+        public Nullable<System.DateTime> DocumentFinish { get; set; }
+        public Nullable<bool> Permanent { get; set; }
+        public string DocumentNumber { get; set; }
+        public Nullable<System.DateTime> DocumentDate { get; set; }
         public string Comment { get; set; }
         public string Author { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
-        public Nullable<int> OrganizationDogovorId { get; set; }
+        public string PartTime { get; set; }
+        public Nullable<bool> IsActual { get; set; }
     
+        public virtual DocumentType DocumentType { get; set; }
         public virtual Organization Organization { get; set; }
-        public virtual PracticeLP PracticeLP { get; set; }
+        public virtual Rubric Rubric { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PracticeStudent> PracticeStudent { get; set; }
+        public virtual ICollection<PracticeLPOrganization> PracticeLPOrganization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PracticeLPStudent> PracticeLPStudent { get; set; }
-        public virtual OrganizationDogovor OrganizationDogovor { get; set; }
+        public virtual ICollection<OrganizationDogovorFile> OrganizationDogovorFile { get; set; }
     }
 }

@@ -185,7 +185,7 @@
             // 
             this.cbLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLevel.FormattingEnabled = true;
-            this.cbLevel.Location = new System.Drawing.Point(104, 51);
+            this.cbLevel.Location = new System.Drawing.Point(104, 54);
             this.cbLevel.Name = "cbLevel";
             this.cbLevel.Size = new System.Drawing.Size(383, 21);
             this.cbLevel.TabIndex = 5;

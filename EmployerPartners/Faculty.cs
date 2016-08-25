@@ -22,6 +22,7 @@ namespace EmployerPartners
             this.PartnerPersonFaculty = new HashSet<PartnerPersonFaculty>();
             this.Practice = new HashSet<Practice>();
             this.Student = new HashSet<Student>();
+            this.ObrazProgramInYear = new HashSet<ObrazProgramInYear>();
         }
     
         public int Id { get; set; }
@@ -52,5 +53,7 @@ namespace EmployerPartners
         public virtual ICollection<Practice> Practice { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student> Student { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ObrazProgramInYear> ObrazProgramInYear { get; set; }
     }
 }

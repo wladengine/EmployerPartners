@@ -12,15 +12,12 @@ namespace EmployerPartners
     using System;
     using System.Collections.Generic;
     
-    public partial class StudyPlanData
+    public partial class ProfileInObrazProgramInYear
     {
-        public int Id { get; set; }
-        public string StudyPlanNumber { get; set; }
-        public string PlanYear { get; set; }
-        public Nullable<int> ObrazProgramId { get; set; }
-        public Nullable<int> LicenseProgramId { get; set; }
-        public Nullable<int> FacultyId { get; set; }
-        public string ObrazProgramCrypt { get; set; }
-        public Nullable<System.Guid> ObrazProgramInYearId { get; set; }
+        public System.Guid Id { get; set; }
+        public System.Guid ObrazProgramInYearId { get; set; }
+        public int ProfileId { get; set; }
+        public string Author { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
     }
 }

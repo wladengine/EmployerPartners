@@ -12,6 +12,21 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +46,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -82,6 +101,12 @@
     </Compile>
     <Compile Include="CardContact.Designer.cs">
       <DependentUpon>CardContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardOrganization\CardOrganizationDogovor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CardOrganization\CardOrganizationDogovor.Designer.cs">
+      <DependentUpon>CardOrganizationDogovor.cs</DependentUpon>
     </Compile>
     <Compile Include="CardOrganization\CardOrganizationFaculty.cs">
       <SubType>Form</SubType>
@@ -216,6 +241,15 @@
     <Compile Include="CardsCommon\CardDictionary.Designer.cs">
       <DependentUpon>CardDictionary.cs</DependentUpon>
     </Compile>
+    <Compile Include="Country.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="C_AppSettings.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Degree.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="Dictionary\CardDictionaryActivityArea.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -252,11 +286,41 @@
     <Compile Include="Dictionary\CardDictionaryDegree.Designer.cs">
       <DependentUpon>CardDictionaryDegree.cs</DependentUpon>
     </Compile>
+    <Compile Include="DocType.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentType.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dtproperties.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EducationDocument.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EducationPermit.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Faculty.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="Graphics\GListBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="HelpClass.cs" />
     <Compile Include="HelpFiles.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InboxMessage.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InboxMessageFile.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="License.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LicenseProgram.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="ListItem.cs" />
@@ -271,6 +335,21 @@
     </Compile>
     <Compile Include="Lists\CardOrganizationStat.Designer.cs">
       <DependentUpon>CardOrganizationStat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MobilityType.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NationalAffiliation.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ObrazProgram.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ObrazProgramInYear.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OkvedType.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="OldCards\CardPartner_old.cs">
       <SubType>Form</SubType>
@@ -287,24 +366,6 @@
     <Compile Include="Cards\CardSettingsEmail.Designer.cs">
       <DependentUpon>CardSettingsEmail.cs</DependentUpon>
     </Compile>
-    <Compile Include="Country.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="C_AppSettings.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Degree.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="dtproperties.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EducationDocument.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EducationPermit.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
     <Compile Include="EmpoyerPartners.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -320,21 +381,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EmpoyerPartners.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Faculty.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="InboxMessage.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="InboxMessageFile.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="License.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LicenseProgram.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
     <Compile Include="Lists\ListOrganizations.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -347,18 +393,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MobilityType.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="NationalAffiliation.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ObrazProgram.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OkvedType.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
     <Compile Include="Organization.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
@@ -366,6 +400,12 @@
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="OrganizationContacts.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrganizationDogovor.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrganizationDogovorFile.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="OrganizationFaculty.cs">
@@ -404,10 +444,25 @@
     <Compile Include="Practice.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="PracticeLP.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PracticeLPFile.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PracticeLPOP.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PracticeLPOrganization.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="PracticeLPStudent.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="PracticeStudent.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PracticeType.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="Practice\PracticeStudentCard.cs">
@@ -434,23 +489,17 @@
     <Compile Include="Practice\PracticeCard.Designer.cs">
       <DependentUpon>PracticeCard.cs</DependentUpon>
     </Compile>
-    <Compile Include="PracticeLP.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PracticeLPOP.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PracticeLPOrganization.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PracticeType.cs">
-      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
-    </Compile>
     <Compile Include="Practice\PracticeMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Practice\PracticeMain.Designer.cs">
       <DependentUpon>PracticeMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Profile.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProfileInObrazProgramInYear.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProgramMode.cs">
@@ -463,6 +512,18 @@
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Options\Templates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\Templates.Designer.cs">
+      <DependentUpon>Templates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options\UpdateFromSrv.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\UpdateFromSrv.Designer.cs">
+      <DependentUpon>UpdateFromSrv.cs</DependentUpon>
+    </Compile>
     <Compile Include="Qualification.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
@@ -502,26 +563,20 @@
     <Compile Include="sysdiagrams.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
-    <Compile Include="Options\Templates.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Options\Templates.Designer.cs">
-      <DependentUpon>Templates.cs</DependentUpon>
-    </Compile>
     <Compile Include="Templates.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Options\UpdateFromSrv.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Options\UpdateFromSrv.Designer.cs">
-      <DependentUpon>UpdateFromSrv.cs</DependentUpon>
-    </Compile>
     <Compile Include="Util.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Year.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CardContact.resx">
       <DependentUpon>CardContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardOrganization\CardOrganizationDogovor.resx">
+      <DependentUpon>CardOrganizationDogovor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CardOrganization\CardOrganizationFaculty.resx">
       <DependentUpon>CardOrganizationFaculty.cs</DependentUpon>
@@ -675,7 +730,26 @@
       <Name>KLADR</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="partners.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>Клиентский профиль .NET Framework 3.5 с пакетом обновления 1 %28SP1%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

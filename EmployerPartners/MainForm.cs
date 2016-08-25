@@ -117,11 +117,6 @@ namespace EmployerPartners
             new CardDictionaryOwnership().Show();
         }
 
-        private void smiOrganizationStat_Click(object sender, EventArgs e)
-        {
-            new CardOrganizationStat().Show();
-        }
-
         private void helpShowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             byte[] fileByteArray;
@@ -279,6 +274,11 @@ namespace EmployerPartners
             UpdateFromSrv updateform = new UpdateFromSrv();
             updateform.MdiParent = this;
             updateform.Show();
+        }
+
+        private void smiOrgaanizationStatistics_Click(object sender, EventArgs e)
+        {
+            new CardOrganizationStat().Show();
         }
     }
 }

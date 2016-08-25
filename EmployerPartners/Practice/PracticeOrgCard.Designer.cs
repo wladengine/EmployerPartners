@@ -42,6 +42,7 @@
             this.tbComment = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnOrgCard = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblOrg
@@ -152,11 +153,22 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // btnOrgCard
+            // 
+            this.btnOrgCard.Location = new System.Drawing.Point(494, 20);
+            this.btnOrgCard.Name = "btnOrgCard";
+            this.btnOrgCard.Size = new System.Drawing.Size(153, 24);
+            this.btnOrgCard.TabIndex = 13;
+            this.btnOrgCard.Text = "Карточка организации";
+            this.btnOrgCard.UseVisualStyleBackColor = true;
+            this.btnOrgCard.Click += new System.EventHandler(this.btnOrgCard_Click);
+            // 
             // PracticeOrgCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(963, 401);
+            this.Controls.Add(this.btnOrgCard);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tbComment);
@@ -171,7 +183,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblOrg);
             this.Name = "PracticeOrgCard";
-            this.Text = "Организация";
+            this.Text = "Практика: организация";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -192,5 +204,6 @@
         private System.Windows.Forms.TextBox tbComment;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnOrgCard;
     }
 }

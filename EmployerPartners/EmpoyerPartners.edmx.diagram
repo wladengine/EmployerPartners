@@ -107,16 +107,13 @@
         <EntityTypeShape EntityType="EmployerPartnersModel.Templates" Width="1.5" PointX="8.375" PointY="4.75" />
         <EntityTypeShape EntityType="EmployerPartnersModel.Practice" Width="1.5" PointX="8.25" PointY="29.375" />
         <EntityTypeShape EntityType="EmployerPartnersModel.PracticeLP" Width="1.5" PointX="13.5" PointY="37.375" />
-        <EntityTypeShape EntityType="EmployerPartnersModel.PracticeLPOP" Width="1.5" PointX="16.5" PointY="26.125" />
         <EntityTypeShape EntityType="EmployerPartnersModel.PracticeLPOrganization" Width="1.5" PointX="5.25" PointY="58" />
         <EntityTypeShape EntityType="EmployerPartnersModel.PracticeType" Width="1.5" PointX="11.25" PointY="39.125" />
         <AssociationConnector Association="EmployerPartnersModel.FK_Practice_Faculty" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLP_LicenseProgram" />
-        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOrganization_Organization" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLP_Practice" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLP_PracticeType" />
-        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOrganization_PracticeLP" />
         <EntityTypeShape EntityType="EmployerPartnersModel.PracticeStudent" Width="1.5" PointX="19.5" PointY="36.375" />
         <EntityTypeShape EntityType="EmployerPartnersModel.Student" Width="1.5" PointX="17.25" PointY="20.375" />
@@ -132,6 +129,30 @@
         <EntityTypeShape EntityType="EmployerPartnersModel.PracticeLPStudent" Width="1.5" PointX="15.75" PointY="46.875" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLP" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLPOrganization" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.DocType" Width="1.5" PointX="13.5" PointY="44.625" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PracticeLPFile" Width="1.5" PointX="15.75" PointY="38.875" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPFile_DocType" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPFile_PracticeLP" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.Year" Width="1.5" PointX="17.25" PointY="30" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.ObrazProgramInYear" Width="1.5" PointX="19.5" PointY="24.5" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_ObrazProgramInYear_Faculty" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_ObrazProgramInYear_LicenseProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_ObrazProgramInYear_ObrazProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_ObrazProgramInYear_Year" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PracticeLPOP" Width="1.5" PointX="21.75" PointY="32.25" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgramInYear" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOP_PracticeLP" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.Profile" Width="1.5" PointX="13.375" PointY="6.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.ProfileInObrazProgramInYear" Width="1.5" PointX="13.375" PointY="10.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.DocumentType" Width="1.5" PointX="14" PointY="53.375" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.OrganizationDogovor" Width="1.5" PointX="16.25" PointY="10.5" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationDogovor_DocumentType" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationDogovor_Organization" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationDogovor_Rubric" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOrganization_OrganizationDogovor" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.OrganizationDogovorFile" Width="1.5" PointX="18.5" PointY="11.375" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationDogovorFile_OrganizationDogovor" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

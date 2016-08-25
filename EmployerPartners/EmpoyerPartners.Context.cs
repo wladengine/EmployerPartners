@@ -74,7 +74,6 @@ namespace EmployerPartners
         public virtual DbSet<Templates> Templates { get; set; }
         public virtual DbSet<Practice> Practice { get; set; }
         public virtual DbSet<PracticeLP> PracticeLP { get; set; }
-        public virtual DbSet<PracticeLPOP> PracticeLPOP { get; set; }
         public virtual DbSet<PracticeLPOrganization> PracticeLPOrganization { get; set; }
         public virtual DbSet<PracticeType> PracticeType { get; set; }
         public virtual DbSet<PracticeStudent> PracticeStudent { get; set; }
@@ -83,6 +82,16 @@ namespace EmployerPartners
         public virtual DbSet<StudyPlanData> StudyPlanData { get; set; }
         public virtual DbSet<StudentDVZ> StudentDVZ { get; set; }
         public virtual DbSet<PracticeLPStudent> PracticeLPStudent { get; set; }
+        public virtual DbSet<DocType> DocType { get; set; }
+        public virtual DbSet<PracticeLPFile> PracticeLPFile { get; set; }
+        public virtual DbSet<Year> Year { get; set; }
+        public virtual DbSet<ObrazProgramInYear> ObrazProgramInYear { get; set; }
+        public virtual DbSet<PracticeLPOP> PracticeLPOP { get; set; }
+        public virtual DbSet<Profile> Profile { get; set; }
+        public virtual DbSet<ProfileInObrazProgramInYear> ProfileInObrazProgramInYear { get; set; }
+        public virtual DbSet<DocumentType> DocumentType { get; set; }
+        public virtual DbSet<OrganizationDogovor> OrganizationDogovor { get; set; }
+        public virtual DbSet<OrganizationDogovorFile> OrganizationDogovorFile { get; set; }
     
         public virtual int RoleMember(string roleName, ObjectParameter result)
         {

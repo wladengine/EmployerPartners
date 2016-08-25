@@ -55,10 +55,13 @@
             this.btnXLS = new System.Windows.Forms.Button();
             this.dgvXLS = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnXLS2 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.cbPeriod = new System.Windows.Forms.ComboBox();
             this.cbPracticeYear = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.cbLevel = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
@@ -234,7 +237,7 @@
             // 
             this.cbLP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLP.FormattingEnabled = true;
-            this.cbLP.Location = new System.Drawing.Point(96, 69);
+            this.cbLP.Location = new System.Drawing.Point(96, 91);
             this.cbLP.Name = "cbLP";
             this.cbLP.Size = new System.Drawing.Size(627, 21);
             this.cbLP.TabIndex = 5;
@@ -242,7 +245,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 73);
+            this.label2.Location = new System.Drawing.Point(15, 95);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(75, 13);
             this.label2.TabIndex = 6;
@@ -303,15 +306,26 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnXLS2);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.cbPeriod);
             this.groupBox1.Controls.Add(this.btnXLS);
             this.groupBox1.Location = new System.Drawing.Point(749, 9);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(320, 59);
+            this.groupBox1.Size = new System.Drawing.Size(320, 99);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Отчеты";
+            // 
+            // btnXLS2
+            // 
+            this.btnXLS2.Location = new System.Drawing.Point(194, 57);
+            this.btnXLS2.Name = "btnXLS2";
+            this.btnXLS2.Size = new System.Drawing.Size(120, 25);
+            this.btnXLS2.TabIndex = 17;
+            this.btnXLS2.Text = "Квартальный отчет";
+            this.btnXLS2.UseVisualStyleBackColor = true;
+            this.btnXLS2.Click += new System.EventHandler(this.btnXLS2_Click);
             // 
             // label4
             // 
@@ -350,11 +364,32 @@
             this.label5.TabIndex = 14;
             this.label5.Text = "Год";
             // 
+            // cbLevel
+            // 
+            this.cbLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLevel.FormattingEnabled = true;
+            this.cbLevel.Location = new System.Drawing.Point(96, 63);
+            this.cbLevel.Name = "cbLevel";
+            this.cbLevel.Size = new System.Drawing.Size(337, 21);
+            this.cbLevel.TabIndex = 15;
+            this.cbLevel.SelectedIndexChanged += new System.EventHandler(this.cbLevel_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(15, 66);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(51, 13);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "Уровень";
+            // 
             // PracticeMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1082, 563);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.cbLevel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cbPracticeYear);
             this.Controls.Add(this.groupBox1);
@@ -370,7 +405,7 @@
             this.Controls.Add(this.cbPracticeList);
             this.Controls.Add(this.label1);
             this.Name = "PracticeMain";
-            this.Text = "Практика";
+            this.Text = "Практика (главное окно)";
             this.Load += new System.EventHandler(this.PracticeMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
@@ -416,5 +451,8 @@
         private System.Windows.Forms.ComboBox cbPeriod;
         private System.Windows.Forms.ComboBox cbPracticeYear;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbLevel;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnXLS2;
     }
 }

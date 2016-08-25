@@ -20,7 +20,8 @@ namespace EmployerPartners
         {
             InitializeComponent();
             FillLP();
-            FillOP();
+            //FillOP();
+            FillOPInYear();
             FillStudent();
         }
 
@@ -147,6 +148,55 @@ namespace EmployerPartners
             }
         }
 
+        private void FillOPInYear()
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = (from op in context.ObrazProgram
+                               join opyear in context.ObrazProgramInYear on op.Id equals opyear.ObrazProgramId
+                               join lp in context.LicenseProgram on op.LicenseProgramId equals lp.Id
+                               join ps in context.ProgramStatus on op.ProgramStatusId equals ps.Id into _ps
+                               from ps in _ps.DefaultIfEmpty()
+                               orderby op.Name
+                               select new
+                               {
+                                   //Образовательная_программа = "[ " + op.Number + " ] " + op.Name  + " [ " + ps.Name + " ]",
+                                   Образовательная_программа = op.Name,
+                                   //OPInYearName = opyear.Name,
+                                   Номер = op.Number,
+                                   Урлвень = opyear.StudyLevelName,
+                                   Год = opyear.Year,
+                                   Шифр_ОП = opyear.ObrazProgramCrypt,
+                                   Статус = ps.Name,
+                                   Направление = lp.Name,
+                               }).ToList();
+
+                    DataTable dt = new DataTable();
+                    dt = Utilities.ConvertToDataTable(lst);
+                    bindingSourceOP.DataSource = dt;
+                    dgvOP.DataSource = bindingSourceOP;
+
+                    foreach (DataGridViewColumn col in dgvOP.Columns)
+                        col.HeaderText = col.Name.Replace("_", " ");
+                    try
+                    {
+                        dgvOP.Columns["Образовательная_программа"].Frozen = true;
+                        dgvOP.Columns["Образовательная_программа"].Width = 450;
+                        dgvOP.Columns["Направление"].Width = 450;
+                    }
+                    catch (Exception)
+                    {
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
         private void btnUpdateLP_Click(object sender, EventArgs e)
         {
             //Проверка наличия новых данных
@@ -239,21 +289,29 @@ namespace EmployerPartners
             {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    string sqlOP = "SELECT * FROM  SRVEDUCATION.Education.ed.SP_ObrazProgram WHERE (Id not in (SELECT Id FROM dbo.ObrazProgram))";
+                    //string sqlOP = "SELECT Id, Number, Name FROM  SRVEDUCATION.Education.ed.SP_ObrazProgram WHERE (Id not in (SELECT Id FROM dbo.ObrazProgram))";
+                    //var OPTable = context.Database.SqlQuery<OP>(sqlOP);
 
-                    var OPTable = context.Database.SqlQuery<ObrazProgram>(sqlOP);
+                    string sqlOPInYear = "SELECT ObrazProgramInYearId, Number, Name, StudyLevelName, Year, ObrazProgramCrypt FROM  SRVEDUCATION.[Education].[ed].[extObrazProgramInYear] " +
+                        "WHERE (ObrazProgramInYearId NOT IN (SELECT ObrazProgramInYearId FROM [dbo].[ObrazProgramInYear]))";
+
+                    var OPTable = context.Database.SqlQuery<OPInYear>(sqlOPInYear);
 
                     var lst = (from op in OPTable
                                select new
                                {
                                    Номер = op.Number,
                                    Образовательная_программа = op.Name,
+                                   Уровень = op.StudyLevelName,
+                                   Год = op.Year,
+                                   Шифр_ОП = op.ObrazProgramCrypt
                                }).ToList();
                     if (lst.Count() == 0)
                     {
                         MessageBox.Show("Нет новых данных для обновления", "Инфо");
                         labelOP.Text = "Список";
-                        FillOP();
+                        //FillOP();
+                        FillOPInYear();
                         return;
                     }
 
@@ -286,15 +344,21 @@ namespace EmployerPartners
             {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    string sqlOP = "SELECT * FROM  SRVEDUCATION.Education.ed.SP_ObrazProgram WHERE (Id not in (SELECT Id FROM dbo.ObrazProgram))";
+                    //string sqlOP = "SELECT Id FROM  SRVEDUCATION.Education.ed.SP_ObrazProgram WHERE (Id not in (SELECT Id FROM dbo.ObrazProgram))";
+                    //var OPTable = context.Database.SqlQuery<OP>(sqlOP);
 
-                    var OPTable = context.Database.SqlQuery<ObrazProgram>(sqlOP);
+                    string sqlOPInYear = "SELECT ObrazProgramInYearId, Number, Name, Year, ObrazProgramCrypt FROM  SRVEDUCATION.[Education].[ed].[extObrazProgramInYear] " +
+                        "WHERE (ObrazProgramInYearId NOT IN (SELECT ObrazProgramInYearId FROM [dbo].[ObrazProgramInYear]))";
+
+                    var OPTable = context.Database.SqlQuery<OPInYear>(sqlOPInYear);
+
 
                     if (OPTable.Count() == 0)
                     {
                         MessageBox.Show("Нет новых данных для обновления", "Инфо");
                         labelOP.Text = "Список";
-                        FillOP();
+                       // FillOP();
+                        FillOPInYear();
                         return;
                     }
                 }
@@ -309,7 +373,8 @@ namespace EmployerPartners
             {
                 MessageBox.Show("Данные обновлены", "Успешное завершение");
                 labelOP.Text = "Список";
-                FillOP();
+                //FillOP();
+                FillOPInYear();
                 return;
             }
             else
@@ -335,6 +400,7 @@ namespace EmployerPartners
                                    Форма_обуч = x.Department,
                                    Код_направления = x.SpecNumber,
                                    Направление_подготовки = x.SpecName,
+                                   Учебный_план = x.WorkPlan,
                                    Статус = x.StatusName,
                                    Состояние = x.StudyingName,
                                    Направление = x.FacultyName,
@@ -351,7 +417,9 @@ namespace EmployerPartners
                     {
                         dgvStudent.Columns["ФИО"].Frozen = true;
                         dgvStudent.Columns["ФИО"].Width = 250;
-                        dgvStudent.Columns["Направление_подготовки"].Width = 300;
+                        dgvStudent.Columns["Курс"].Width = 60;
+                        dgvStudent.Columns["Учебный_план"].Width = 200;
+                        dgvStudent.Columns["Направление_подготовки"].Width = 250;
                         dgvStudent.Columns["Направление"].Width = 200;
                     }
                     catch (Exception)

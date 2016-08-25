@@ -298,6 +298,35 @@ namespace EmployerPartners
             {
             }
         }
+
+        private void tbSearch_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string search = tbSearch.Text.Trim().ToUpper();
+                bool exit = false;
+                for (int i = 0; i < dgv.RowCount; i++)
+                {
+                    if (exit)
+                    { break; }
+                    for (int j = 0; j < 4 /*dgv.Columns.Count*/; j++)
+                    {
+                        if (j == 1)
+                            continue;
+                        if (dgv[j, i].Value.ToString().ToUpper().Contains(search))
+                        {
+                            //dgv[j, i].Style.BackColor = Color.White;
+                            dgv.CurrentCell = dgv[j, i];
+                            exit = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 
 }

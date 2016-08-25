@@ -190,4 +190,21 @@ namespace EmployerPartners
             return result;
         }
     }
+    public class OP
+    {
+        //используется для типизации в UpdateFromSrv
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Number { get; set; }
+    }
+    public class OPInYear
+    {
+        //используется для типизации в UpdateFromSrv
+        public int ObrazProgramId { get; set; }
+        public string Name { get; set; }
+        public string Number { get; set; }
+        public string StudyLevelName { get; set; }
+        public string Year { get; set; }
+        public string ObrazProgramCrypt { get; set; }
+    }
 }
