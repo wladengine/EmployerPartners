@@ -29,6 +29,11 @@ namespace EmployerPartners
             get { return ComboServ.GetComboIdInt(cbPracticeList); }
             set { ComboServ.SetComboId(cbPracticeList, value); }
         }
+        public int? StudyLevelId
+        {
+            get { return ComboServ.GetComboIdInt(cbLevel); }
+            set { ComboServ.SetComboId(cbLevel, value); }
+        }
         public int? Period
         {
             get { return ComboServ.GetComboIdInt(cbPeriod); }
@@ -41,6 +46,7 @@ namespace EmployerPartners
             FillPeriod();
             FillPracticeYear();
             FillPracticeFacultyList();
+            FillStudyLevel();
             FillLPList();
             FillGrid();
             this.MdiParent = Util.mainform;
@@ -82,7 +88,10 @@ namespace EmployerPartners
                 cbPracticeList.DisplayMember = "Практика";               
             }
         }
-
+        private void FillStudyLevel()
+        {
+            ComboServ.FillCombo(cbLevel, HelpClass.GetComboListByTable("dbo.StudyLevel"), false, true);
+        }
         private void FillLPList()
         {
             FillLPList(null);
@@ -91,8 +100,20 @@ namespace EmployerPartners
         private void FillLPList(int? id)
         {
             string Faculty = (id.HasValue) ? (" WHERE FacultyId in (SELECT FacultyId FROM Practice WHERE Id = " + id.ToString() + ")") : "";
-            string Where = (id.HasValue) ? ( "WHERE   dbo.LicenseProgram.Id in (SELECT LicenseProgramId FROM ObrazProgram " + Faculty + ") " +
-                                                    "OR dbo.LicenseProgram.Id in (SELECT SecondLicenseProgramId FROM ObrazProgram " + Faculty + ") ") : "";
+            string Level = (StudyLevelId.HasValue) ? (" StudyLevelId = " + StudyLevelId.ToString()) : ""; 
+            string Where = (id.HasValue) ? ( " WHERE   (dbo.LicenseProgram.Id in (SELECT LicenseProgramId FROM ObrazProgram " + Faculty + ") " +
+                                                    "OR dbo.LicenseProgram.Id in (SELECT SecondLicenseProgramId FROM ObrazProgram " + Faculty + ")) ") : " ";
+            if (StudyLevelId.HasValue)
+            {
+                if (id.HasValue)
+                {
+                    Where += " AND " + Level;
+                }
+                else
+                {
+                    Where += " WHERE " + Level;
+                }
+            }
 
             ComboServ.FillCombo(cbLP, HelpClass.GetComboListByQuery(@" SELECT CONVERT(varchar(100), dbo.LicenseProgram.Id) AS Id, 
                 CASE ISNULL(dbo.LicenseProgram.Code, N'""') 
@@ -121,11 +142,17 @@ namespace EmployerPartners
                            join fac in context.Faculty on p.FacultyId equals fac.Id
                            join ptype in context.PracticeType on plp.PracticeTypeId equals ptype.Id into _ptype
                            from ptype in _ptype.DefaultIfEmpty()
+
+                           join lpop in context.PracticeLPOP on plp.Id equals lpop.PracticeLPId into _lpop
+                           from lpop in _lpop.DefaultIfEmpty()
+                           join opyear in context.ObrazProgramInYear on lpop.ObrazProgramInYearId equals opyear.Id
+
                            join lp in context.LicenseProgram on plp.LicenseProgramId equals lp.Id 
                            join st in context.StudyLevel on lp.StudyLevelId equals st.Id
                            join progt in context.ProgramType on lp.ProgramTypeId equals progt.Id
                            join q in context.Qualification on lp.QualificationId equals q.Id
-                           where (id.HasValue ? plp.PracticeId == id : true) && (PracticeYear.HasValue ? p.PracticeYear == PracticeYear : false)
+                           where (id.HasValue ? plp.PracticeId == id : true) && (PracticeYear.HasValue ? p.PracticeYear == PracticeYear : false) &&
+                                    (StudyLevelId.HasValue ? lp.StudyLevelId == StudyLevelId : true)
                            orderby fac.Name, lp.Code, st.Name, progt.Id 
                            select new
                            {
@@ -133,6 +160,7 @@ namespace EmployerPartners
                                plp.Id,
                                plp.PracticeId,
                                plp.LicenseProgramId,
+                               Шифр_ОП = opyear.ObrazProgramCrypt,
                                Тип_практики = ptype.Name,
                                Начало_практики = plp.DateStart,
                                Окончание_практики = plp.DateEnd,
@@ -188,6 +216,11 @@ namespace EmployerPartners
         }
 
         private void cbPracticeList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillLPList(PracticeId);
+            FillGrid(PracticeId);
+        }
+        private void cbLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
             FillLPList(PracticeId);
             FillGrid(PracticeId);
@@ -284,6 +317,7 @@ namespace EmployerPartners
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             FillPracticeFacultyList();
+            FillStudyLevel();
             FillLPList();
             FillGrid();
         }
@@ -986,6 +1020,294 @@ namespace EmployerPartners
         private void cbPracticeYear_SelectedIndexChanged(object sender, EventArgs e)
         {
             FillPracticeFacultyList();
+        }
+
+        private bool CheckXLS2Data()
+        {
+            if (!PracticeYear.HasValue)
+            {
+                MessageBox.Show("Не выбран год!", "Сообщение");
+                return false;
+            }
+            if (!Period.HasValue)
+            {
+                MessageBox.Show("Не выбран квартал!", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cbPeriod.DroppedDown = true;
+                return false;
+            }
+            bool period = false;
+            switch (Period)
+            {
+                case 1:
+                    period = true;
+                    break;
+                case 2:
+                    period = true;
+                    break;
+                case 3:
+                    period = true;
+                    break;
+                case 4:
+                    period = true;
+                    break;
+                default:
+                    break;
+            }
+            if (period)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Не выбран квартал", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cbPeriod.DroppedDown = true;
+                return false;
+            }
+        }
+        private void btnXLS2_Click(object sender, EventArgs e)
+        {
+            if (!CheckXLS2Data())
+                return;
+
+            ToExcel2();
+        }
+        private void ToExcel2()
+        { 
+            //извлечение шаблона из БД
+            byte[] fileByteArray;
+            string type;
+            string name;
+            string nameshort;
+            string templatename = "Квартальный отчет по практикам"; 
+
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var template = (from x in context.Templates
+                                    where x.TemplateName == templatename
+                                    select x).First();
+
+                    fileByteArray = (byte[])template.FileData;
+                    type = (string)template.FileType.Trim();
+                    name = (string)template.FileName.Trim();
+                    nameshort = name.Substring(0, name.Length - type.Length);
+                }
+            }
+            catch (Exception exc)
+            {
+                if (Util.IsDBOwner())
+                {
+                    MessageBox.Show("Не удалось получить данные...\r\n" + exc.Message, "Сообщение");
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось получить данные...", "Сообщение");
+                }
+                return;
+            }
+            string TempFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\EmployerPartners_TempFiles\";
+            try
+            {
+                if (!Directory.Exists(TempFilesFolder))
+                    Directory.CreateDirectory(TempFilesFolder);
+            }
+            catch (Exception ex)
+            {
+                if (Util.IsDBOwner())
+                {
+                    MessageBox.Show("Не удалось создать директорию.\r\n" + ex.Message, "Сообщение");
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось открыть файл...", "Сообщение");
+                }
+                return;
+            }
+
+            string filePath = TempFilesFolder + name;
+            string[] fileList = Directory.GetFiles(TempFilesFolder, nameshort + "*" + type);
+            int suffix;
+            Random rnd = new Random();
+            suffix = rnd.Next();
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    File.Delete(filePath);
+                    foreach (string f in fileList)
+                    {
+                        File.Delete(f);
+                    }
+                }
+                catch (Exception)
+                {
+                    filePath = TempFilesFolder + nameshort + " " + suffix + type;
+                }
+            }
+            //Запись на диск
+            try
+            {
+                FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
+                BinaryWriter binWriter = new BinaryWriter(fileStream);
+                binWriter.Write(fileByteArray);
+                binWriter.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось открыть файл...", "Сообщение");
+                return;
+            }
+
+            System.IO.FileInfo newFile = new System.IO.FileInfo(filePath);
+            //if (newFile.Exists)
+            //{
+            //    newFile.Delete();  // ensures we create a new workbook
+            //    newFile = new System.IO.FileInfo(filePath);
+            //}
+            //////
+
+            //заполнение шаблона
+            //try
+            //{
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    //диапазон дат
+                    DateTime DateStart;
+                    DateTime DateEnd;
+                    string PYear = (PracticeYear.HasValue) ? PracticeYear.ToString() : DateTime.Now.Year.ToString();
+                    DateStart = DateTime.Parse("01.01." + PYear);
+                    DateEnd = DateTime.Parse("31.12." + PYear);
+                    string xlsPeriod = (Period.HasValue) ? cbPeriod.Text : "";
+
+                    switch (Period)
+                    {
+                        case 1:
+                            //xlsPeriod = cbPeriod.DisplayMember.ToString(); //"1-й квартал"
+                            DateStart = DateTime.Parse("01.01." + PYear);
+                            DateEnd = DateTime.Parse("31.03." + PYear);
+                            break;
+                        case 2:
+                            DateStart = DateTime.Parse("01.04." + PYear);
+                            DateEnd = DateTime.Parse("30.06." + PYear);
+                            break;
+                        case 3:
+                            DateStart = DateTime.Parse("01.07." + PYear);
+                            DateEnd = DateTime.Parse("30.09." + PYear);
+                            break;
+                        case 4:
+                            DateStart = DateTime.Parse("01.10." + PYear);
+                            DateEnd = DateTime.Parse("31.12." + PYear);
+                            break;
+                        case 5:
+                            DateStart = DateTime.Parse("01.01." + PYear);
+                            DateEnd = DateTime.Parse("30.06." + PYear);
+                            break;
+                        case 6:
+                            DateStart = DateTime.Parse("01.07." + PYear);
+                            DateEnd = DateTime.Parse("31.12." + PYear);
+                            break;
+                        case 7:
+                            DateStart = DateTime.Parse("01.01." + PYear);
+                            DateEnd = DateTime.Parse("31.12." + PYear);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    var lst = (from x in context.PracticeLPStudent
+                               join plp in context.PracticeLP on x.PracticeLPId equals plp.Id
+                               join prtype in context.PracticeType on plp.PracticeTypeId equals prtype.Id into _prtype
+                                 from prtype in _prtype.DefaultIfEmpty()
+
+                               join lpop in context.PracticeLPOP on plp.Id equals lpop.PracticeLPId
+                               
+                               join op in context.ObrazProgram on lpop.ObrazProgramId equals op.Id
+                               join opinyear in context.ObrazProgramInYear on lpop.ObrazProgramInYearId equals opinyear.Id
+                               
+                               join p in context.Practice on plp.PracticeId equals p.Id
+                               join fac in context.Faculty on x.FacultyId equals fac.Id
+                               join plpo in context.PracticeLPOrganization on x.PracticeLPOrganizationId equals plpo.Id
+                               join o in context.Organization on plpo.OrganizationId equals o.Id
+                               join lp in context.LicenseProgram on x.LicenseProgramId equals lp.Id
+                               join st in context.StudyLevel on lp.StudyLevelId equals st.Id
+                               join progt in context.ProgramType on lp.ProgramTypeId equals progt.Id
+                               //join q in context.Qualification on lp.QualificationId equals q.Id
+                               where
+                                   (x.PracticeLPOrganizationId != null) &&
+                                   (PracticeYear.HasValue ? p.PracticeYear == PracticeYear : false) &&
+                                   (plp.DateStart >= DateStart) && (plp.DateStart <= DateEnd)
+                               orderby lp.Name, x.StudentFIO
+                               select new
+                               {
+                                   FIO = x.StudentFIO,
+                                   LPOP = "ОП " + opinyear.ObrazProgramCrypt + " Направление: " + lp.Code,
+                                   RegNomWP = x.RegNomWP,
+                                   StudyForm = x.Department,
+                                   StudyLevel = st.Name,
+                                   Course = x.Course,
+                                   PracticeType = prtype.Name,
+                                   PracticeLength = "",
+                                   DateStart = plpo.DateStart,
+                                   DateEnd = plpo.DateEnd,
+                                   //Period = plpo.DateStart,
+                                   Organization = o.Name,
+                                   City = o.City,
+                                   OrderNumber = plp.OrderNumber,
+                                   OrderDate = plp.OrderDate,
+                                   InstructionNumber = plp.InstructionNumber,
+                                   InstructionDate = plp.InstructionDate,
+                               }).ToArray();
+
+                    var lst2 = (from x in lst
+                                select new
+                                {
+                                    x.FIO,
+                                    x.LPOP,
+                                    x.RegNomWP,
+                                    x.StudyForm,
+                                    x.StudyLevel,
+                                    x.Course,
+                                    x.PracticeType,
+                                    x.PracticeLength,
+                                    Period = ((x.DateStart.HasValue) ? x.DateStart.Value.Date.ToString("dd.MM.yyyy") : "") + " - " + ((x.DateEnd.HasValue) ? x.DateEnd.Value.Date.ToString("dd.MM.yyyy") : ""),
+                                    x.Organization,
+                                    x.City,
+                                    x.OrderNumber,
+                                    OrderDate = (x.OrderDate.HasValue) ? x.OrderDate.Value.Date.ToString("dd.MM.yyyy") : "",
+                                    x.InstructionNumber,
+                                    InstructionDate = (x.InstructionDate.HasValue) ? x.InstructionDate.Value.Date.ToString("dd.MM.yyyy") : "",
+                                }).ToList();
+
+                    using (ExcelPackage doc = new ExcelPackage(newFile))
+                    {
+                        dgvXLS.DataSource = lst2;
+                        ExcelWorksheet ws = doc.Workbook.Worksheets[1];
+                        int num = 0;
+
+                        for (int rwInd = 0; rwInd < dgvXLS.Rows.Count; rwInd++)
+                        {
+                            num += 1;
+                            ws.Cells[rwInd + 7, 1].Value = num;
+                            DataGridViewRow rw = dgvXLS.Rows[rwInd];
+                            int colInd = 1;
+                            foreach (DataGridViewCell cell in rw.Cells)
+                            {
+                                colInd += 1;
+                                ws.Cells[rwInd + 7, colInd].Value = cell.Value;
+                            }
+                        }
+
+                        doc.Save();
+                    }
+                } //end using context
+
+                System.Diagnostics.Process.Start(filePath);
+            //}
+            //catch (Exception exc)
+            //{
+            //    MessageBox.Show("Не удалось подготовить отчет...\r\n" + exc.Message, "Сообщение");
+            //}
         }
     }
 }

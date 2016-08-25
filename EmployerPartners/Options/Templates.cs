@@ -62,7 +62,7 @@ namespace EmployerPartners
                 string type = Path.GetExtension(filePath);
                 byte[] fileByteArray = File.ReadAllBytes(filePath);
                 double kbSize = Math.Round(Convert.ToDouble(fileByteArray.Length) / 1024, 2);
-                int dbFileID = 1;
+                //int dbFileID = 1;
                 //Запись в БД
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {

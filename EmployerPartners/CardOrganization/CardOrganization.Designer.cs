@@ -121,6 +121,9 @@
             this.btnRubricDelete = new System.Windows.Forms.Button();
             this.btnRublrikAdd = new System.Windows.Forms.Button();
             this.dgvRubric = new System.Windows.Forms.DataGridView();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.btnAddDogovor = new System.Windows.Forms.Button();
+            this.dgvDogovor = new System.Windows.Forms.DataGridView();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
             this.btnDelOkved = new System.Windows.Forms.Button();
@@ -130,6 +133,9 @@
             this.label25 = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.ColumnDiv1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDelDogovor = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColumnEditDogovor = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.err)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SaveSuccess)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -146,6 +152,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvActivityArea)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRubric)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDogovor)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOkvedCodes)).BeginInit();
             this.tabPage5.SuspendLayout();
@@ -813,6 +821,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Location = new System.Drawing.Point(10, 48);
@@ -1104,6 +1113,44 @@
             this.dgvRubric.TabIndex = 0;
             this.dgvRubric.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRubric_CellDoubleClick);
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.btnAddDogovor);
+            this.tabPage6.Controls.Add(this.dgvDogovor);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(893, 628);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Договоры";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // btnAddDogovor
+            // 
+            this.btnAddDogovor.Location = new System.Drawing.Point(717, 19);
+            this.btnAddDogovor.Name = "btnAddDogovor";
+            this.btnAddDogovor.Size = new System.Drawing.Size(158, 25);
+            this.btnAddDogovor.TabIndex = 1;
+            this.btnAddDogovor.Text = "Добавить договор";
+            this.btnAddDogovor.UseVisualStyleBackColor = true;
+            this.btnAddDogovor.Click += new System.EventHandler(this.btnAddDogovor_Click);
+            // 
+            // dgvDogovor
+            // 
+            this.dgvDogovor.AllowUserToAddRows = false;
+            this.dgvDogovor.AllowUserToDeleteRows = false;
+            this.dgvDogovor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDogovor.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnDiv1,
+            this.ColumnDelDogovor,
+            this.ColumnEditDogovor});
+            this.dgvDogovor.Location = new System.Drawing.Point(18, 54);
+            this.dgvDogovor.Name = "dgvDogovor";
+            this.dgvDogovor.ReadOnly = true;
+            this.dgvDogovor.Size = new System.Drawing.Size(857, 523);
+            this.dgvDogovor.TabIndex = 0;
+            this.dgvDogovor.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDogovor_CellClick);
+            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.label29);
@@ -1201,6 +1248,32 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // ColumnDiv1
+            // 
+            this.ColumnDiv1.Frozen = true;
+            this.ColumnDiv1.HeaderText = "";
+            this.ColumnDiv1.Name = "ColumnDiv1";
+            this.ColumnDiv1.ReadOnly = true;
+            this.ColumnDiv1.Width = 5;
+            // 
+            // ColumnDelDogovor
+            // 
+            this.ColumnDelDogovor.Frozen = true;
+            this.ColumnDelDogovor.HeaderText = "Действие";
+            this.ColumnDelDogovor.Name = "ColumnDelDogovor";
+            this.ColumnDelDogovor.ReadOnly = true;
+            this.ColumnDelDogovor.Text = "Удалить";
+            this.ColumnDelDogovor.UseColumnTextForButtonValue = true;
+            // 
+            // ColumnEditDogovor
+            // 
+            this.ColumnEditDogovor.Frozen = true;
+            this.ColumnEditDogovor.HeaderText = "Действие";
+            this.ColumnEditDogovor.Name = "ColumnEditDogovor";
+            this.ColumnEditDogovor.ReadOnly = true;
+            this.ColumnEditDogovor.Text = "Просмотр/Ред.";
+            this.ColumnEditDogovor.UseColumnTextForButtonValue = true;
+            // 
             // CardOrganization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1231,6 +1304,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvActivityArea)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRubric)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDogovor)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOkvedCodes)).EndInit();
@@ -1342,6 +1417,12 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.TextBox tbApartment;
         private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.Button btnAddDogovor;
+        private System.Windows.Forms.DataGridView dgvDogovor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv1;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnDelDogovor;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnEditDogovor;
     }
 }
 

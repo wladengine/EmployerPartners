@@ -65,6 +65,8 @@
             this.cbFaculty = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.tbSearch = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -231,7 +233,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(542, 530);
+            this.label7.Location = new System.Drawing.Point(676, 530);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(260, 13);
             this.label7.TabIndex = 5;
@@ -404,12 +406,33 @@
             this.label9.TabIndex = 11;
             this.label9.Text = "Направление:";
             // 
+            // tbSearch
+            // 
+            this.tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbSearch.Location = new System.Drawing.Point(523, 527);
+            this.tbSearch.Name = "tbSearch";
+            this.tbSearch.Size = new System.Drawing.Size(100, 20);
+            this.tbSearch.TabIndex = 12;
+            this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged_1);
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(340, 530);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(175, 13);
+            this.label10.TabIndex = 13;
+            this.label10.Text = "Поиск (по всем видам названий)";
+            // 
             // ListOrganizations
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1133, 556);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.tbSearch);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.cbFaculty);
@@ -483,5 +506,7 @@
         private System.Windows.Forms.ComboBox cbFaculty;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox tbSearch;
+        private System.Windows.Forms.Label label10;
     }
 }

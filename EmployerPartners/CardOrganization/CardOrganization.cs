@@ -129,6 +129,7 @@ namespace EmployerPartners
             FillRubrics();
             FillFaculty();
             FillLP();
+            FillDogovor();
             ExtraInit(true);
         }
         private void FillPartnerInfo()
@@ -176,7 +177,91 @@ namespace EmployerPartners
                     lbHouse.Visible = false;
                     Code = Partner.Code;
                     Comment = Partner.Comment;
+
+                    this.Text = "Карточка: " + ((String.IsNullOrEmpty(ShortName)) ? ((String.IsNullOrEmpty(MiddleName)) ? OrgName : MiddleName) : ShortName);
                 }
+        }
+        private void FillDogovor()
+        {
+            FillDogovor(null);
+        }
+        private void FillDogovor(int? Id)
+        {
+            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            {
+                try
+                {
+                    var lst = (from x in context.OrganizationDogovor
+                               join r in context.Rubric on x.RubricId equals r.Id
+                               join dtype in context.DocumentType on x.DocumentTypeId equals dtype.Id
+                               where x.OrganizationId == _Id.Value
+                               orderby r.Id, x.Permanent descending, x.DocumentFinish descending
+                               select new
+                               {
+                                   Рубрика = r.Name,
+                                   x.Id,
+                                   x.OrganizationId,
+                                   Тип_документа = dtype.Name,
+                                   Договор = x.Document,
+                                   Дата_начала = x.DocumentStart,
+                                   Дата_окончания = x.DocumentFinish,
+                                   Бессрочный = x.Permanent,
+                                   Номер_договора = x.DocumentNumber,
+                                   Дата_подписания = x.DocumentDate,
+                                   Примечание = x.Comment,
+                                   Действующий = x.IsActual
+                               }).ToList();
+
+                    DataTable dt = new DataTable();
+                    dt = Utilities.ConvertToDataTable(lst);
+                    dgvDogovor.DataSource = dt;
+
+                    foreach (string s in new List<string>() { "Id", "OrganizationId" })
+                        if (dgvDogovor.Columns.Contains(s))
+                            dgvDogovor.Columns[s].Visible = false;
+                    foreach (DataGridViewColumn col in dgvDogovor.Columns)
+                    {
+                        col.HeaderText = col.Name.Replace("_", " ");
+                        if (col.Name == "ColumnDelDogovor")
+                        {
+                            col.HeaderText = "Действие";
+                        }
+                        if (col.Name == "ColumnEditDogovor")
+                        {
+                            col.HeaderText = "Действие";
+                        }
+                        if (col.Name == "ColumnDiv1")
+                        {
+                            col.HeaderText = "";
+                        }
+                    }
+                    try
+                    {
+                        dgvDogovor.Columns["ColumnDiv1"].Width = 6;
+                        dgvDogovor.Columns["ColumnDelDogovor"].Width = 70;
+                        dgvDogovor.Columns["ColumnEditDogovor"].Width = 100;
+                        dgvDogovor.Columns["Рубрика"].Frozen = true;
+                        dgvDogovor.Columns["Тип_документа"].Width = 80;
+                        dgvDogovor.Columns["Рубрика"].Width = 150;
+                        dgvDogovor.Columns["Договор"].Width = 300;
+                        dgvDogovor.Columns["Бессрочный"].Width = 80;
+                        dgvDogovor.Columns["Примечание"].Width = 200;
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    //if (id.HasValue)
+                    //    foreach (DataGridViewRow rw in dgvDogovor.Rows)
+                    //        if (rw.Cells[0].Value.ToString() == id.Value.ToString())
+                    //        {
+                    //            dgvDogovor.CurrentCell = rw.Cells["Рубрика"];
+                    //            break;
+                    //        }
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
         private void FillOrganizationArea()
         {
@@ -1346,6 +1431,99 @@ namespace EmployerPartners
                         }
                         FillOkvedCode();
                     }
+        }
+
+        private void btnAddDogovor_Click(object sender, EventArgs e)
+        {
+            new CardOrganizationDogovor(null, (int)_Id, new UpdateVoidHandler(FillDogovor)).Show();
+        }
+
+        private void dgvDogovor_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (dgvDogovor.CurrentCell != null)
+                if (dgvDogovor.CurrentRow.Index >= 0)
+                {
+                    if (dgvDogovor.CurrentCell.ColumnIndex == 1)
+                    {
+                        try
+                        {
+                            dgvDogovor.CurrentCell = dgvDogovor.CurrentRow.Cells["Рубрика"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        ///
+                        int id;
+                        try
+                        {
+                            id = int.Parse(dgvDogovor.CurrentRow.Cells["Id"].Value.ToString());
+                        }
+                        catch (Exception)
+                        {
+                            return;
+                        }
+                        string Rubric = "";
+                        try
+                        {
+                            Rubric = dgvDogovor.CurrentRow.Cells["Рубрика"].Value.ToString();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        string Dogovor = "";
+                        try
+                        {
+                            Dogovor = dgvDogovor.CurrentRow.Cells["Договор"].Value.ToString();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        Dogovor = ((Rubric == "") ? "" : (Rubric + "\r\n")) + Dogovor;
+                        if (MessageBox.Show("Удалить выбранный договор из списка? \r\n" + Dogovor, "Запрос на подтверждение", 
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes)
+                        {
+                            try
+                            {
+                                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                                {
+                                    context.OrganizationDogovor.RemoveRange(context.OrganizationDogovor.Where(x => x.Id == id));
+                                    context.SaveChanges();
+                                }
+                            }
+                            catch (Exception ec)
+                            {
+                                MessageBox.Show("Не удалось удалить запись...\r\n" + "Причина: " + ec.Message + "\r\n" +
+                                    "Примечание: \r\n" + "обычно это связано с наличием связанных записей в других таблицах.\r\n" + 
+                                    "Если для данного договора загружен файл договора,\r\n" + 
+                                    "то сначала необходимо удалить файл из БД (кнопка 'Просмотр/Ред.')", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            FillDogovor();
+                            return;
+                        }
+                        else
+                            return;
+                    }
+                    if (dgvDogovor.CurrentCell.ColumnIndex == 2)
+                    {
+                        try
+                        {
+                            dgvDogovor.CurrentCell = dgvDogovor.CurrentRow.Cells["Рубрика"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        ///
+                        try
+                        {
+                            int id = int.Parse(dgvDogovor.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardOrganizationDogovor(id, (int)_Id, new UpdateVoidHandler(FillDogovor)).Show();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
+                }
         }
     }
 }

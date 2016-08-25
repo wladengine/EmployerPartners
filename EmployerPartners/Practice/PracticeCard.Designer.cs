@@ -36,6 +36,12 @@
             this.tbLP = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnOrderLoad = new System.Windows.Forms.Button();
+            this.label23 = new System.Windows.Forms.Label();
+            this.dgvOrder = new System.Windows.Forms.DataGridView();
+            this.ColumnDiv5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDelOrder = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColumnViewOrder = new System.Windows.Forms.DataGridViewButtonColumn();
             this.btnOrgUpdate = new System.Windows.Forms.Button();
             this.btnOrgEdit = new System.Windows.Forms.Button();
             this.lbl_cbRubric = new System.Windows.Forms.Label();
@@ -44,10 +50,8 @@
             this.cbFaculty = new System.Windows.Forms.ComboBox();
             this.lbl_dgv = new System.Windows.Forms.Label();
             this.bindingNavigator2 = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorAddNewItem1 = new System.Windows.Forms.ToolStripButton();
             this.bindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem1 = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorDeleteItem1 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem1 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem1 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -57,8 +61,6 @@
             this.bindingNavigatorMoveLastItem1 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.dgv = new System.Windows.Forms.DataGridView();
-            this.ColumnDiv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.btnAddOrg = new System.Windows.Forms.Button();
             this.btnMakeOrder = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
@@ -66,10 +68,8 @@
             this.label20 = new System.Windows.Forms.Label();
             this.tbSupervisor = new System.Windows.Forms.TextBox();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
@@ -94,14 +94,19 @@
             this.label6 = new System.Windows.Forms.Label();
             this.tbOrderDoc = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnAddAllStudentToPractice = new System.Windows.Forms.Button();
+            this.btnInstructionLoad = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
+            this.dgvInstruction = new System.Windows.Forms.DataGridView();
+            this.ColumnDiv6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDelInstruction = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColumnViewInstruction = new System.Windows.Forms.DataGridViewButtonColumn();
             this.cbOrgStudent = new System.Windows.Forms.ComboBox();
             this.lbl_cbOrgStudent = new System.Windows.Forms.Label();
             this.btnSetOrgStudent = new System.Windows.Forms.Button();
             this.bindingNavigator4 = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorAddNewItem3 = new System.Windows.Forms.ToolStripButton();
             this.bindingSource4 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem3 = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorDeleteItem3 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem3 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem3 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator9 = new System.Windows.Forms.ToolStripSeparator();
@@ -120,10 +125,8 @@
             this.btnStudentUpdate = new System.Windows.Forms.Button();
             this.btnMakeInstruction = new System.Windows.Forms.Button();
             this.bindingNavigator3 = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorAddNewItem2 = new System.Windows.Forms.ToolStripButton();
             this.bindingSource3 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorCountItem2 = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorDeleteItem2 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem2 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem2 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -148,6 +151,8 @@
             this.tbInstructionNumber = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.tbInstructionDoc = new System.Windows.Forms.TextBox();
+            this.checkBoxStudentOP = new System.Windows.Forms.CheckBox();
+            this.btnStudentNewUpdate = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.tbDateStart = new System.Windows.Forms.TextBox();
             this.cbPracticeType = new System.Windows.Forms.ComboBox();
@@ -164,8 +169,14 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.checkBoxOutSPb = new System.Windows.Forms.CheckBox();
             this.label22 = new System.Windows.Forms.Label();
+            this.tbSearch = new System.Windows.Forms.TextBox();
+            this.lbl_tbSearch = new System.Windows.Forms.Label();
+            this.ColumnDiv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColumnCard = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator2)).BeginInit();
             this.bindingNavigator2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).BeginInit();
@@ -175,6 +186,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrg)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInstruction)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator4)).BeginInit();
             this.bindingNavigator4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource4)).BeginInit();
@@ -235,6 +247,11 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.lbl_tbSearch);
+            this.tabPage1.Controls.Add(this.tbSearch);
+            this.tabPage1.Controls.Add(this.btnOrderLoad);
+            this.tabPage1.Controls.Add(this.label23);
+            this.tabPage1.Controls.Add(this.dgvOrder);
             this.tabPage1.Controls.Add(this.btnOrgUpdate);
             this.tabPage1.Controls.Add(this.btnOrgEdit);
             this.tabPage1.Controls.Add(this.lbl_cbRubric);
@@ -270,6 +287,66 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Приказ";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnOrderLoad
+            // 
+            this.btnOrderLoad.Location = new System.Drawing.Point(646, 63);
+            this.btnOrderLoad.Name = "btnOrderLoad";
+            this.btnOrderLoad.Size = new System.Drawing.Size(231, 24);
+            this.btnOrderLoad.TabIndex = 35;
+            this.btnOrderLoad.Text = "Загрузить подписанный приказ в БД";
+            this.btnOrderLoad.UseVisualStyleBackColor = true;
+            this.btnOrderLoad.Click += new System.EventHandler(this.btnOrderLoad_Click);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(762, 19);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(115, 13);
+            this.label23.TabIndex = 34;
+            this.label23.Text = "Загруженный приказ";
+            // 
+            // dgvOrder
+            // 
+            this.dgvOrder.AllowUserToAddRows = false;
+            this.dgvOrder.AllowUserToDeleteRows = false;
+            this.dgvOrder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOrder.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnDiv5,
+            this.ColumnDelOrder,
+            this.ColumnViewOrder});
+            this.dgvOrder.Location = new System.Drawing.Point(893, 6);
+            this.dgvOrder.Name = "dgvOrder";
+            this.dgvOrder.Size = new System.Drawing.Size(309, 84);
+            this.dgvOrder.TabIndex = 33;
+            this.dgvOrder.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrder_CellClick);
+            // 
+            // ColumnDiv5
+            // 
+            this.ColumnDiv5.Frozen = true;
+            this.ColumnDiv5.HeaderText = "";
+            this.ColumnDiv5.Name = "ColumnDiv5";
+            this.ColumnDiv5.ReadOnly = true;
+            this.ColumnDiv5.Width = 5;
+            // 
+            // ColumnDelOrder
+            // 
+            this.ColumnDelOrder.Frozen = true;
+            this.ColumnDelOrder.HeaderText = "Действие";
+            this.ColumnDelOrder.Name = "ColumnDelOrder";
+            this.ColumnDelOrder.Text = "Удалить";
+            this.ColumnDelOrder.UseColumnTextForButtonValue = true;
+            // 
+            // ColumnViewOrder
+            // 
+            this.ColumnViewOrder.Frozen = true;
+            this.ColumnViewOrder.HeaderText = "Действие";
+            this.ColumnViewOrder.Name = "ColumnViewOrder";
+            this.ColumnViewOrder.Text = "Просмотр";
+            this.ColumnViewOrder.UseColumnTextForButtonValue = true;
             // 
             // btnOrgUpdate
             // 
@@ -346,12 +423,12 @@
             // 
             // bindingNavigator2
             // 
-            this.bindingNavigator2.AddNewItem = this.bindingNavigatorAddNewItem1;
+            this.bindingNavigator2.AddNewItem = null;
             this.bindingNavigator2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.bindingNavigator2.BindingSource = this.bindingSource2;
             this.bindingNavigator2.CountItem = this.bindingNavigatorCountItem1;
             this.bindingNavigator2.CountItemFormat = "из {0}";
-            this.bindingNavigator2.DeleteItem = this.bindingNavigatorDeleteItem1;
+            this.bindingNavigator2.DeleteItem = null;
             this.bindingNavigator2.Dock = System.Windows.Forms.DockStyle.None;
             this.bindingNavigator2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem1,
@@ -362,9 +439,7 @@
             this.bindingNavigatorSeparator4,
             this.bindingNavigatorMoveNextItem1,
             this.bindingNavigatorMoveLastItem1,
-            this.bindingNavigatorSeparator5,
-            this.bindingNavigatorAddNewItem1,
-            this.bindingNavigatorDeleteItem1});
+            this.bindingNavigatorSeparator5});
             this.bindingNavigator2.Location = new System.Drawing.Point(669, 389);
             this.bindingNavigator2.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
             this.bindingNavigator2.MoveLastItem = this.bindingNavigatorMoveLastItem1;
@@ -372,20 +447,10 @@
             this.bindingNavigator2.MovePreviousItem = this.bindingNavigatorMovePreviousItem1;
             this.bindingNavigator2.Name = "bindingNavigator2";
             this.bindingNavigator2.PositionItem = this.bindingNavigatorPositionItem1;
-            this.bindingNavigator2.Size = new System.Drawing.Size(256, 25);
+            this.bindingNavigator2.Size = new System.Drawing.Size(210, 25);
             this.bindingNavigator2.TabIndex = 24;
             this.bindingNavigator2.Text = "bindingNavigator2";
             this.bindingNavigator2.Visible = false;
-            // 
-            // bindingNavigatorAddNewItem1
-            // 
-            this.bindingNavigatorAddNewItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem1.Enabled = false;
-            this.bindingNavigatorAddNewItem1.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem1.Image")));
-            this.bindingNavigatorAddNewItem1.Name = "bindingNavigatorAddNewItem1";
-            this.bindingNavigatorAddNewItem1.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem1.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorAddNewItem1.Text = "Добавить";
             // 
             // bindingNavigatorCountItem1
             // 
@@ -393,16 +458,6 @@
             this.bindingNavigatorCountItem1.Size = new System.Drawing.Size(36, 22);
             this.bindingNavigatorCountItem1.Text = "из {0}";
             this.bindingNavigatorCountItem1.ToolTipText = "Общее число элементов";
-            // 
-            // bindingNavigatorDeleteItem1
-            // 
-            this.bindingNavigatorDeleteItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorDeleteItem1.Enabled = false;
-            this.bindingNavigatorDeleteItem1.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem1.Image")));
-            this.bindingNavigatorDeleteItem1.Name = "bindingNavigatorDeleteItem1";
-            this.bindingNavigatorDeleteItem1.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem1.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorDeleteItem1.Text = "Удалить";
             // 
             // bindingNavigatorMoveFirstItem1
             // 
@@ -474,7 +529,8 @@
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnDiv,
-            this.Column1});
+            this.Column1,
+            this.ColumnCard});
             this.dgv.Location = new System.Drawing.Point(669, 179);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
@@ -483,28 +539,10 @@
             this.dgv.Visible = false;
             this.dgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
             // 
-            // ColumnDiv
-            // 
-            this.ColumnDiv.Frozen = true;
-            this.ColumnDiv.HeaderText = "";
-            this.ColumnDiv.Name = "ColumnDiv";
-            this.ColumnDiv.ReadOnly = true;
-            this.ColumnDiv.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColumnDiv.Width = 10;
-            // 
-            // Column1
-            // 
-            this.Column1.Frozen = true;
-            this.Column1.HeaderText = "Действие";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Text = "Добавить в практику";
-            this.Column1.UseColumnTextForButtonValue = true;
-            // 
             // btnAddOrg
             // 
             this.btnAddOrg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddOrg.Location = new System.Drawing.Point(1057, 389);
+            this.btnAddOrg.Location = new System.Drawing.Point(1057, 390);
             this.btnAddOrg.Name = "btnAddOrg";
             this.btnAddOrg.Size = new System.Drawing.Size(147, 23);
             this.btnAddOrg.TabIndex = 22;
@@ -525,7 +563,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(479, 104);
+            this.label21.Location = new System.Drawing.Point(479, 130);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(99, 13);
             this.label21.TabIndex = 20;
@@ -535,7 +573,7 @@
             // 
             this.tbAdvanceHolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbAdvanceHolder.Location = new System.Drawing.Point(584, 101);
+            this.tbAdvanceHolder.Location = new System.Drawing.Point(584, 127);
             this.tbAdvanceHolder.Name = "tbAdvanceHolder";
             this.tbAdvanceHolder.Size = new System.Drawing.Size(618, 20);
             this.tbAdvanceHolder.TabIndex = 19;
@@ -543,7 +581,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(450, 78);
+            this.label20.Location = new System.Drawing.Point(450, 104);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(128, 13);
             this.label20.TabIndex = 18;
@@ -553,19 +591,19 @@
             // 
             this.tbSupervisor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSupervisor.Location = new System.Drawing.Point(584, 75);
+            this.tbSupervisor.Location = new System.Drawing.Point(584, 101);
             this.tbSupervisor.Name = "tbSupervisor";
             this.tbSupervisor.Size = new System.Drawing.Size(618, 20);
             this.tbSupervisor.TabIndex = 17;
             // 
             // bindingNavigator1
             // 
-            this.bindingNavigator1.AddNewItem = this.bindingNavigatorAddNewItem;
+            this.bindingNavigator1.AddNewItem = null;
             this.bindingNavigator1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.bindingNavigator1.BindingSource = this.bindingSource1;
             this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem;
             this.bindingNavigator1.CountItemFormat = "из {0}";
-            this.bindingNavigator1.DeleteItem = this.bindingNavigatorDeleteItem;
+            this.bindingNavigator1.DeleteItem = null;
             this.bindingNavigator1.Dock = System.Windows.Forms.DockStyle.None;
             this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
@@ -576,9 +614,7 @@
             this.bindingNavigatorSeparator1,
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
-            this.bindingNavigatorSeparator2,
-            this.bindingNavigatorAddNewItem,
-            this.bindingNavigatorDeleteItem});
+            this.bindingNavigatorSeparator2});
             this.bindingNavigator1.Location = new System.Drawing.Point(17, 387);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
@@ -586,19 +622,9 @@
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(256, 25);
+            this.bindingNavigator1.Size = new System.Drawing.Size(210, 25);
             this.bindingNavigator1.TabIndex = 10;
             this.bindingNavigator1.Text = "bindingNavigator1";
-            // 
-            // bindingNavigatorAddNewItem
-            // 
-            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem.Enabled = false;
-            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorAddNewItem.Text = "Добавить";
             // 
             // bindingNavigatorCountItem
             // 
@@ -606,16 +632,6 @@
             this.bindingNavigatorCountItem.Size = new System.Drawing.Size(36, 22);
             this.bindingNavigatorCountItem.Text = "из {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Общее число элементов";
-            // 
-            // bindingNavigatorDeleteItem
-            // 
-            this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorDeleteItem.Enabled = false;
-            this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
-            this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
-            this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorDeleteItem.Text = "Удалить";
             // 
             // bindingNavigatorMoveFirstItem
             // 
@@ -743,11 +759,9 @@
             // 
             // tbComment
             // 
-            this.tbComment.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbComment.Location = new System.Drawing.Point(131, 127);
             this.tbComment.Name = "tbComment";
-            this.tbComment.Size = new System.Drawing.Size(1073, 20);
+            this.tbComment.Size = new System.Drawing.Size(313, 20);
             this.tbComment.TabIndex = 12;
             // 
             // label9
@@ -811,11 +825,15 @@
             // 
             this.tbOrderDoc.Location = new System.Drawing.Point(131, 23);
             this.tbOrderDoc.Name = "tbOrderDoc";
-            this.tbOrderDoc.Size = new System.Drawing.Size(891, 20);
+            this.tbOrderDoc.Size = new System.Drawing.Size(509, 20);
             this.tbOrderDoc.TabIndex = 4;
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnAddAllStudentToPractice);
+            this.tabPage2.Controls.Add(this.btnInstructionLoad);
+            this.tabPage2.Controls.Add(this.label24);
+            this.tabPage2.Controls.Add(this.dgvInstruction);
             this.tabPage2.Controls.Add(this.cbOrgStudent);
             this.tabPage2.Controls.Add(this.lbl_cbOrgStudent);
             this.tabPage2.Controls.Add(this.btnSetOrgStudent);
@@ -840,6 +858,8 @@
             this.tabPage2.Controls.Add(this.tbInstructionNumber);
             this.tabPage2.Controls.Add(this.label18);
             this.tabPage2.Controls.Add(this.tbInstructionDoc);
+            this.tabPage2.Controls.Add(this.checkBoxStudentOP);
+            this.tabPage2.Controls.Add(this.btnStudentNewUpdate);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -847,6 +867,77 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Распоряжение";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnAddAllStudentToPractice
+            // 
+            this.btnAddAllStudentToPractice.Location = new System.Drawing.Point(669, 123);
+            this.btnAddAllStudentToPractice.Name = "btnAddAllStudentToPractice";
+            this.btnAddAllStudentToPractice.Size = new System.Drawing.Size(209, 23);
+            this.btnAddAllStudentToPractice.TabIndex = 45;
+            this.btnAddAllStudentToPractice.Text = "Добавить всех студентов в практику";
+            this.btnAddAllStudentToPractice.UseVisualStyleBackColor = true;
+            this.btnAddAllStudentToPractice.Visible = false;
+            this.btnAddAllStudentToPractice.Click += new System.EventHandler(this.btnAddAllStudentToPractice_Click);
+            // 
+            // btnInstructionLoad
+            // 
+            this.btnInstructionLoad.Location = new System.Drawing.Point(628, 63);
+            this.btnInstructionLoad.Name = "btnInstructionLoad";
+            this.btnInstructionLoad.Size = new System.Drawing.Size(249, 24);
+            this.btnInstructionLoad.TabIndex = 42;
+            this.btnInstructionLoad.Text = "Загрузить подписанное распоряжение в БД";
+            this.btnInstructionLoad.UseVisualStyleBackColor = true;
+            this.btnInstructionLoad.Click += new System.EventHandler(this.btnInstructionLoad_Click);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(727, 19);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(151, 13);
+            this.label24.TabIndex = 41;
+            this.label24.Text = "Загруженное распоряжение";
+            // 
+            // dgvInstruction
+            // 
+            this.dgvInstruction.AllowUserToAddRows = false;
+            this.dgvInstruction.AllowUserToDeleteRows = false;
+            this.dgvInstruction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvInstruction.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvInstruction.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnDiv6,
+            this.ColumnDelInstruction,
+            this.ColumnViewInstruction});
+            this.dgvInstruction.Location = new System.Drawing.Point(893, 6);
+            this.dgvInstruction.Name = "dgvInstruction";
+            this.dgvInstruction.Size = new System.Drawing.Size(309, 84);
+            this.dgvInstruction.TabIndex = 40;
+            this.dgvInstruction.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInstruction_CellClick);
+            // 
+            // ColumnDiv6
+            // 
+            this.ColumnDiv6.Frozen = true;
+            this.ColumnDiv6.HeaderText = "";
+            this.ColumnDiv6.Name = "ColumnDiv6";
+            this.ColumnDiv6.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnDiv6.Width = 5;
+            // 
+            // ColumnDelInstruction
+            // 
+            this.ColumnDelInstruction.Frozen = true;
+            this.ColumnDelInstruction.HeaderText = "Действие";
+            this.ColumnDelInstruction.Name = "ColumnDelInstruction";
+            this.ColumnDelInstruction.Text = "Удалить";
+            this.ColumnDelInstruction.UseColumnTextForButtonValue = true;
+            // 
+            // ColumnViewInstruction
+            // 
+            this.ColumnViewInstruction.Frozen = true;
+            this.ColumnViewInstruction.HeaderText = "Действие";
+            this.ColumnViewInstruction.Name = "ColumnViewInstruction";
+            this.ColumnViewInstruction.Text = "Просмотр";
+            this.ColumnViewInstruction.UseColumnTextForButtonValue = true;
             // 
             // cbOrgStudent
             // 
@@ -856,7 +947,7 @@
             this.cbOrgStudent.FormattingEnabled = true;
             this.cbOrgStudent.Location = new System.Drawing.Point(669, 153);
             this.cbOrgStudent.Name = "cbOrgStudent";
-            this.cbOrgStudent.Size = new System.Drawing.Size(535, 21);
+            this.cbOrgStudent.Size = new System.Drawing.Size(533, 21);
             this.cbOrgStudent.TabIndex = 37;
             this.cbOrgStudent.Visible = false;
             // 
@@ -883,12 +974,12 @@
             // 
             // bindingNavigator4
             // 
-            this.bindingNavigator4.AddNewItem = this.bindingNavigatorAddNewItem3;
+            this.bindingNavigator4.AddNewItem = null;
             this.bindingNavigator4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.bindingNavigator4.BindingSource = this.bindingSource4;
             this.bindingNavigator4.CountItem = this.bindingNavigatorCountItem3;
             this.bindingNavigator4.CountItemFormat = "из {0}";
-            this.bindingNavigator4.DeleteItem = this.bindingNavigatorDeleteItem3;
+            this.bindingNavigator4.DeleteItem = null;
             this.bindingNavigator4.Dock = System.Windows.Forms.DockStyle.None;
             this.bindingNavigator4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem3,
@@ -899,9 +990,7 @@
             this.bindingNavigatorSeparator10,
             this.bindingNavigatorMoveNextItem3,
             this.bindingNavigatorMoveLastItem3,
-            this.bindingNavigatorSeparator11,
-            this.bindingNavigatorAddNewItem3,
-            this.bindingNavigatorDeleteItem3});
+            this.bindingNavigatorSeparator11});
             this.bindingNavigator4.Location = new System.Drawing.Point(669, 389);
             this.bindingNavigator4.MoveFirstItem = this.bindingNavigatorMoveFirstItem3;
             this.bindingNavigator4.MoveLastItem = this.bindingNavigatorMoveLastItem3;
@@ -909,20 +998,10 @@
             this.bindingNavigator4.MovePreviousItem = this.bindingNavigatorMovePreviousItem3;
             this.bindingNavigator4.Name = "bindingNavigator4";
             this.bindingNavigator4.PositionItem = this.bindingNavigatorPositionItem3;
-            this.bindingNavigator4.Size = new System.Drawing.Size(256, 25);
+            this.bindingNavigator4.Size = new System.Drawing.Size(210, 25);
             this.bindingNavigator4.TabIndex = 36;
             this.bindingNavigator4.Text = "bindingNavigator4";
             this.bindingNavigator4.Visible = false;
-            // 
-            // bindingNavigatorAddNewItem3
-            // 
-            this.bindingNavigatorAddNewItem3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem3.Enabled = false;
-            this.bindingNavigatorAddNewItem3.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem3.Image")));
-            this.bindingNavigatorAddNewItem3.Name = "bindingNavigatorAddNewItem3";
-            this.bindingNavigatorAddNewItem3.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem3.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorAddNewItem3.Text = "Добавить";
             // 
             // bindingNavigatorCountItem3
             // 
@@ -930,16 +1009,6 @@
             this.bindingNavigatorCountItem3.Size = new System.Drawing.Size(36, 22);
             this.bindingNavigatorCountItem3.Text = "из {0}";
             this.bindingNavigatorCountItem3.ToolTipText = "Общее число элементов";
-            // 
-            // bindingNavigatorDeleteItem3
-            // 
-            this.bindingNavigatorDeleteItem3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorDeleteItem3.Enabled = false;
-            this.bindingNavigatorDeleteItem3.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem3.Image")));
-            this.bindingNavigatorDeleteItem3.Name = "bindingNavigatorDeleteItem3";
-            this.bindingNavigatorDeleteItem3.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem3.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorDeleteItem3.Text = "Удалить";
             // 
             // bindingNavigatorMoveFirstItem3
             // 
@@ -1004,7 +1073,7 @@
             // lbl_cbCourse
             // 
             this.lbl_cbCourse.AutoSize = true;
-            this.lbl_cbCourse.Location = new System.Drawing.Point(838, 156);
+            this.lbl_cbCourse.Location = new System.Drawing.Point(901, 156);
             this.lbl_cbCourse.Name = "lbl_cbCourse";
             this.lbl_cbCourse.Size = new System.Drawing.Size(31, 13);
             this.lbl_cbCourse.TabIndex = 35;
@@ -1015,9 +1084,9 @@
             // 
             this.cbCourse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCourse.FormattingEnabled = true;
-            this.cbCourse.Location = new System.Drawing.Point(895, 153);
+            this.cbCourse.Location = new System.Drawing.Point(945, 153);
             this.cbCourse.Name = "cbCourse";
-            this.cbCourse.Size = new System.Drawing.Size(99, 21);
+            this.cbCourse.Size = new System.Drawing.Size(60, 21);
             this.cbCourse.TabIndex = 34;
             this.cbCourse.Visible = false;
             this.cbCourse.SelectedIndexChanged += new System.EventHandler(this.cbCourse_SelectedIndexChanged);
@@ -1027,9 +1096,9 @@
             this.lbl_dgvStudentNew.AutoSize = true;
             this.lbl_dgvStudentNew.Location = new System.Drawing.Point(666, 156);
             this.lbl_dgvStudentNew.Name = "lbl_dgvStudentNew";
-            this.lbl_dgvStudentNew.Size = new System.Drawing.Size(98, 13);
+            this.lbl_dgvStudentNew.Size = new System.Drawing.Size(121, 13);
             this.lbl_dgvStudentNew.TabIndex = 33;
-            this.lbl_dgvStudentNew.Text = "Список студентов";
+            this.lbl_dgvStudentNew.Text = "Справочник студентов";
             this.lbl_dgvStudentNew.Visible = false;
             // 
             // btnAddStudent
@@ -1084,9 +1153,9 @@
             // 
             // btnStudentUpdate
             // 
-            this.btnStudentUpdate.Location = new System.Drawing.Point(131, 151);
+            this.btnStudentUpdate.Location = new System.Drawing.Point(131, 152);
             this.btnStudentUpdate.Name = "btnStudentUpdate";
-            this.btnStudentUpdate.Size = new System.Drawing.Size(96, 25);
+            this.btnStudentUpdate.Size = new System.Drawing.Size(96, 23);
             this.btnStudentUpdate.TabIndex = 30;
             this.btnStudentUpdate.Text = "обновить";
             this.btnStudentUpdate.UseVisualStyleBackColor = true;
@@ -1104,12 +1173,12 @@
             // 
             // bindingNavigator3
             // 
-            this.bindingNavigator3.AddNewItem = this.bindingNavigatorAddNewItem2;
+            this.bindingNavigator3.AddNewItem = null;
             this.bindingNavigator3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.bindingNavigator3.BindingSource = this.bindingSource3;
             this.bindingNavigator3.CountItem = this.bindingNavigatorCountItem2;
             this.bindingNavigator3.CountItemFormat = "из {0}";
-            this.bindingNavigator3.DeleteItem = this.bindingNavigatorDeleteItem2;
+            this.bindingNavigator3.DeleteItem = null;
             this.bindingNavigator3.Dock = System.Windows.Forms.DockStyle.None;
             this.bindingNavigator3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem2,
@@ -1120,9 +1189,7 @@
             this.bindingNavigatorSeparator7,
             this.bindingNavigatorMoveNextItem2,
             this.bindingNavigatorMoveLastItem2,
-            this.bindingNavigatorSeparator8,
-            this.bindingNavigatorAddNewItem2,
-            this.bindingNavigatorDeleteItem2});
+            this.bindingNavigatorSeparator8});
             this.bindingNavigator3.Location = new System.Drawing.Point(13, 389);
             this.bindingNavigator3.MoveFirstItem = this.bindingNavigatorMoveFirstItem2;
             this.bindingNavigator3.MoveLastItem = this.bindingNavigatorMoveLastItem2;
@@ -1130,19 +1197,9 @@
             this.bindingNavigator3.MovePreviousItem = this.bindingNavigatorMovePreviousItem2;
             this.bindingNavigator3.Name = "bindingNavigator3";
             this.bindingNavigator3.PositionItem = this.bindingNavigatorPositionItem2;
-            this.bindingNavigator3.Size = new System.Drawing.Size(256, 25);
+            this.bindingNavigator3.Size = new System.Drawing.Size(210, 25);
             this.bindingNavigator3.TabIndex = 28;
             this.bindingNavigator3.Text = "bindingNavigator3";
-            // 
-            // bindingNavigatorAddNewItem2
-            // 
-            this.bindingNavigatorAddNewItem2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem2.Enabled = false;
-            this.bindingNavigatorAddNewItem2.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem2.Image")));
-            this.bindingNavigatorAddNewItem2.Name = "bindingNavigatorAddNewItem2";
-            this.bindingNavigatorAddNewItem2.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem2.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorAddNewItem2.Text = "Добавить";
             // 
             // bindingNavigatorCountItem2
             // 
@@ -1150,16 +1207,6 @@
             this.bindingNavigatorCountItem2.Size = new System.Drawing.Size(36, 22);
             this.bindingNavigatorCountItem2.Text = "из {0}";
             this.bindingNavigatorCountItem2.ToolTipText = "Общее число элементов";
-            // 
-            // bindingNavigatorDeleteItem2
-            // 
-            this.bindingNavigatorDeleteItem2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorDeleteItem2.Enabled = false;
-            this.bindingNavigatorDeleteItem2.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem2.Image")));
-            this.bindingNavigatorDeleteItem2.Name = "bindingNavigatorDeleteItem2";
-            this.bindingNavigatorDeleteItem2.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem2.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorDeleteItem2.Text = "Удалить";
             // 
             // bindingNavigatorMoveFirstItem2
             // 
@@ -1299,7 +1346,7 @@
             // 
             this.tbComment1.Location = new System.Drawing.Point(130, 126);
             this.tbComment1.Name = "tbComment1";
-            this.tbComment1.Size = new System.Drawing.Size(866, 20);
+            this.tbComment1.Size = new System.Drawing.Size(447, 20);
             this.tbComment1.TabIndex = 24;
             // 
             // label15
@@ -1363,8 +1410,31 @@
             // 
             this.tbInstructionDoc.Location = new System.Drawing.Point(130, 22);
             this.tbInstructionDoc.Name = "tbInstructionDoc";
-            this.tbInstructionDoc.Size = new System.Drawing.Size(864, 20);
+            this.tbInstructionDoc.Size = new System.Drawing.Size(496, 20);
             this.tbInstructionDoc.TabIndex = 16;
+            // 
+            // checkBoxStudentOP
+            // 
+            this.checkBoxStudentOP.AutoSize = true;
+            this.checkBoxStudentOP.Location = new System.Drawing.Point(1032, 155);
+            this.checkBoxStudentOP.Name = "checkBoxStudentOP";
+            this.checkBoxStudentOP.Size = new System.Drawing.Size(154, 17);
+            this.checkBoxStudentOP.TabIndex = 43;
+            this.checkBoxStudentOP.Text = "только по выбранной ОП";
+            this.checkBoxStudentOP.UseVisualStyleBackColor = true;
+            this.checkBoxStudentOP.Visible = false;
+            this.checkBoxStudentOP.CheckedChanged += new System.EventHandler(this.checkBoxStudentOP_CheckedChanged);
+            // 
+            // btnStudentNewUpdate
+            // 
+            this.btnStudentNewUpdate.Location = new System.Drawing.Point(793, 152);
+            this.btnStudentNewUpdate.Name = "btnStudentNewUpdate";
+            this.btnStudentNewUpdate.Size = new System.Drawing.Size(85, 23);
+            this.btnStudentNewUpdate.TabIndex = 44;
+            this.btnStudentNewUpdate.Text = "Обновить";
+            this.btnStudentNewUpdate.UseVisualStyleBackColor = true;
+            this.btnStudentNewUpdate.Visible = false;
+            this.btnStudentNewUpdate.Click += new System.EventHandler(this.btnStudentNewUpdate_Click);
             // 
             // label3
             // 
@@ -1513,6 +1583,54 @@
             this.label22.TabIndex = 18;
             this.label22.Text = "(хотя бы одна организация связана с выездом из СПб)";
             // 
+            // tbSearch
+            // 
+            this.tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbSearch.Location = new System.Drawing.Point(951, 393);
+            this.tbSearch.Name = "tbSearch";
+            this.tbSearch.Size = new System.Drawing.Size(100, 20);
+            this.tbSearch.TabIndex = 36;
+            this.tbSearch.Visible = false;
+            this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
+            // 
+            // lbl_tbSearch
+            // 
+            this.lbl_tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbl_tbSearch.AutoSize = true;
+            this.lbl_tbSearch.Location = new System.Drawing.Point(904, 396);
+            this.lbl_tbSearch.Name = "lbl_tbSearch";
+            this.lbl_tbSearch.Size = new System.Drawing.Size(39, 13);
+            this.lbl_tbSearch.TabIndex = 37;
+            this.lbl_tbSearch.Text = "Поиск";
+            this.lbl_tbSearch.Visible = false;
+            // 
+            // ColumnDiv
+            // 
+            this.ColumnDiv.Frozen = true;
+            this.ColumnDiv.HeaderText = "";
+            this.ColumnDiv.Name = "ColumnDiv";
+            this.ColumnDiv.ReadOnly = true;
+            this.ColumnDiv.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnDiv.Width = 10;
+            // 
+            // Column1
+            // 
+            this.Column1.Frozen = true;
+            this.Column1.HeaderText = "Действие";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Text = "Добавить в практику";
+            this.Column1.UseColumnTextForButtonValue = true;
+            // 
+            // ColumnCard
+            // 
+            this.ColumnCard.Frozen = true;
+            this.ColumnCard.HeaderText = "Действие";
+            this.ColumnCard.Name = "ColumnCard";
+            this.ColumnCard.ReadOnly = true;
+            this.ColumnCard.Text = "Карточка";
+            this.ColumnCard.UseColumnTextForButtonValue = true;
+            // 
             // PracticeCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1547,6 +1665,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator2)).EndInit();
             this.bindingNavigator2.ResumeLayout(false);
             this.bindingNavigator2.PerformLayout();
@@ -1559,6 +1678,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrg)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInstruction)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator4)).EndInit();
             this.bindingNavigator4.ResumeLayout(false);
             this.bindingNavigator4.PerformLayout();
@@ -1618,9 +1738,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.BindingNavigator bindingNavigator1;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;
@@ -1644,9 +1762,7 @@
         private System.Windows.Forms.DataGridView dgv;
         private System.Windows.Forms.BindingSource bindingSource2;
         private System.Windows.Forms.BindingNavigator bindingNavigator2;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem1;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem1;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem1;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem1;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem1;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator3;
@@ -1662,9 +1778,7 @@
         private System.Windows.Forms.ComboBox cbRubric;
         private System.Windows.Forms.Button btnOrgEdit;
         private System.Windows.Forms.BindingNavigator bindingNavigator3;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem2;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem2;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem2;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem2;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem2;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator6;
@@ -1683,10 +1797,8 @@
         private System.Windows.Forms.Label lbl_cbCourse;
         private System.Windows.Forms.ComboBox cbCourse;
         private System.Windows.Forms.BindingNavigator bindingNavigator4;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem3;
         private System.Windows.Forms.BindingSource bindingSource4;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem3;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem3;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem3;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem3;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator9;
@@ -1695,8 +1807,6 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem3;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem3;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv;
-        private System.Windows.Forms.DataGridViewButtonColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv1;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnDelOrg;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnEditOrg;
@@ -1711,5 +1821,25 @@
         private System.Windows.Forms.DataGridViewButtonColumn ColumnSetOrgStudent;
         private System.Windows.Forms.CheckBox checkBoxOutSPb;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Button btnOrderLoad;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.DataGridView dgvOrder;
+        private System.Windows.Forms.Button btnInstructionLoad;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.DataGridView dgvInstruction;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv6;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnDelInstruction;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnViewInstruction;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv5;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnDelOrder;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnViewOrder;
+        private System.Windows.Forms.CheckBox checkBoxStudentOP;
+        private System.Windows.Forms.Button btnStudentNewUpdate;
+        private System.Windows.Forms.Button btnAddAllStudentToPractice;
+        private System.Windows.Forms.Label lbl_tbSearch;
+        private System.Windows.Forms.TextBox tbSearch;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv;
+        private System.Windows.Forms.DataGridViewButtonColumn Column1;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnCard;
     }
 }

@@ -32,9 +32,10 @@
             this.организацииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smiOrganizationList = new System.Windows.Forms.ToolStripMenuItem();
             this.smiPersonList = new System.Windows.Forms.ToolStripMenuItem();
-            this.smiOrganizationStat = new System.Windows.Forms.ToolStripMenuItem();
             this.smiRubric = new System.Windows.Forms.ToolStripMenuItem();
             this.smiPracticeMain = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiStatistics = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiOrgaanizationStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.smiSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.smiEmailSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.smiTables = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,12 +45,13 @@
             this.smiOwnership = new System.Windows.Forms.ToolStripMenuItem();
             this.smiActivityGoal = new System.Windows.Forms.ToolStripMenuItem();
             this.smiNationalAffiliation = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.smiLPOP = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpShowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tmplToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,10 +60,13 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.организацииToolStripMenuItem,
             this.smiRubric,
+            this.smiStatistics,
             this.smiSettings,
             this.smiTables,
+            this.smiWindow,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.MdiWindowListItem = this.smiWindow;
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1182, 24);
             this.menuStrip1.TabIndex = 1;
@@ -71,8 +76,7 @@
             // 
             this.организацииToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.smiOrganizationList,
-            this.smiPersonList,
-            this.smiOrganizationStat});
+            this.smiPersonList});
             this.организацииToolStripMenuItem.Name = "организацииToolStripMenuItem";
             this.организацииToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.организацииToolStripMenuItem.Text = "Списки";
@@ -80,23 +84,16 @@
             // smiOrganizationList
             // 
             this.smiOrganizationList.Name = "smiOrganizationList";
-            this.smiOrganizationList.Size = new System.Drawing.Size(234, 22);
+            this.smiOrganizationList.Size = new System.Drawing.Size(207, 22);
             this.smiOrganizationList.Text = "Список организаций";
             this.smiOrganizationList.Click += new System.EventHandler(this.smiOrganizationList_Click);
             // 
             // smiPersonList
             // 
             this.smiPersonList.Name = "smiPersonList";
-            this.smiPersonList.Size = new System.Drawing.Size(234, 22);
+            this.smiPersonList.Size = new System.Drawing.Size(207, 22);
             this.smiPersonList.Text = "Список физических лиц";
             this.smiPersonList.Click += new System.EventHandler(this.smiPersonList_Click);
-            // 
-            // smiOrganizationStat
-            // 
-            this.smiOrganizationStat.Name = "smiOrganizationStat";
-            this.smiOrganizationStat.Size = new System.Drawing.Size(234, 22);
-            this.smiOrganizationStat.Text = "Статистика по организациям";
-            this.smiOrganizationStat.Click += new System.EventHandler(this.smiOrganizationStat_Click);
             // 
             // smiRubric
             // 
@@ -113,6 +110,21 @@
             this.smiPracticeMain.Text = "Практика (главное окно)";
             this.smiPracticeMain.Visible = false;
             this.smiPracticeMain.Click += new System.EventHandler(this.smiPracticeMain_Click);
+            // 
+            // smiStatistics
+            // 
+            this.smiStatistics.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.smiOrgaanizationStatistics});
+            this.smiStatistics.Name = "smiStatistics";
+            this.smiStatistics.Size = new System.Drawing.Size(80, 20);
+            this.smiStatistics.Text = "Статистика";
+            // 
+            // smiOrgaanizationStatistics
+            // 
+            this.smiOrgaanizationStatistics.Name = "smiOrgaanizationStatistics";
+            this.smiOrgaanizationStatistics.Size = new System.Drawing.Size(234, 22);
+            this.smiOrgaanizationStatistics.Text = "Статистика по организациям";
+            this.smiOrgaanizationStatistics.Click += new System.EventHandler(this.smiOrgaanizationStatistics_Click);
             // 
             // smiSettings
             // 
@@ -187,6 +199,11 @@
             this.smiNationalAffiliation.Text = "Национальные принадлежности";
             this.smiNationalAffiliation.Click += new System.EventHandler(this.ationalityAffiliation_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(252, 6);
+            // 
             // smiLPOP
             // 
             this.smiLPOP.Name = "smiLPOP";
@@ -194,6 +211,12 @@
             this.smiLPOP.Text = "Направления, ОП, Студенты";
             this.smiLPOP.Visible = false;
             this.smiLPOP.Click += new System.EventHandler(this.smiLPOP_Click);
+            // 
+            // smiWindow
+            // 
+            this.smiWindow.Name = "smiWindow";
+            this.smiWindow.Size = new System.Drawing.Size(48, 20);
+            this.smiWindow.Text = "Окно";
             // 
             // helpToolStripMenuItem
             // 
@@ -227,11 +250,6 @@
             this.tmplToolStripMenuItem.Text = "Шаблоны (редактирование)";
             this.tmplToolStripMenuItem.Visible = false;
             this.tmplToolStripMenuItem.Click += new System.EventHandler(this.tmplToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(252, 6);
             // 
             // MainForm
             // 
@@ -267,7 +285,6 @@
         private System.Windows.Forms.ToolStripMenuItem smiOwnership;
         private System.Windows.Forms.ToolStripMenuItem smiActivityGoal;
         private System.Windows.Forms.ToolStripMenuItem smiNationalAffiliation;
-        private System.Windows.Forms.ToolStripMenuItem smiOrganizationStat;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpShowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpEditToolStripMenuItem;
@@ -275,5 +292,8 @@
         private System.Windows.Forms.ToolStripMenuItem smiPracticeMain;
         private System.Windows.Forms.ToolStripMenuItem smiLPOP;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem smiStatistics;
+        private System.Windows.Forms.ToolStripMenuItem smiOrgaanizationStatistics;
+        private System.Windows.Forms.ToolStripMenuItem smiWindow;
     }
 }

@@ -12,15 +12,20 @@ namespace EmployerPartners
     using System;
     using System.Collections.Generic;
     
-    public partial class StudyPlanData
+    public partial class PracticeLPFile
     {
         public int Id { get; set; }
-        public string StudyPlanNumber { get; set; }
-        public string PlanYear { get; set; }
-        public Nullable<int> ObrazProgramId { get; set; }
-        public Nullable<int> LicenseProgramId { get; set; }
-        public Nullable<int> FacultyId { get; set; }
-        public string ObrazProgramCrypt { get; set; }
-        public Nullable<System.Guid> ObrazProgramInYearId { get; set; }
+        public int PracticeLPId { get; set; }
+        public int DocTypeId { get; set; }
+        public string FileName { get; set; }
+        public string FileType { get; set; }
+        public byte[] FileData { get; set; }
+        public System.DateTime DateLoad { get; set; }
+        public double FileSizeKBytes { get; set; }
+        public string Author { get; set; }
+        public Nullable<System.DateTime> DateCreated { get; set; }
+    
+        public virtual DocType DocType { get; set; }
+        public virtual PracticeLP PracticeLP { get; set; }
     }
 }

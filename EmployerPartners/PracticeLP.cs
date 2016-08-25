@@ -17,9 +17,10 @@ namespace EmployerPartners
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PracticeLP()
         {
-            this.PracticeLPOP = new HashSet<PracticeLPOP>();
             this.PracticeLPOrganization = new HashSet<PracticeLPOrganization>();
             this.PracticeLPStudent = new HashSet<PracticeLPStudent>();
+            this.PracticeLPFile = new HashSet<PracticeLPFile>();
+            this.PracticeLPOP = new HashSet<PracticeLPOP>();
         }
     
         public int Id { get; set; }
@@ -47,10 +48,12 @@ namespace EmployerPartners
         public virtual Practice Practice { get; set; }
         public virtual PracticeType PracticeType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PracticeLPOP> PracticeLPOP { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PracticeLPOrganization> PracticeLPOrganization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PracticeLPStudent> PracticeLPStudent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PracticeLPFile> PracticeLPFile { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PracticeLPOP> PracticeLPOP { get; set; }
     }
 }

@@ -125,6 +125,8 @@ namespace EmployerPartners
                     CountryId = Partner.CountryId;
                     FillCountry(CountryId);
                     Comment = Partner.Comment;
+
+                    this.Text = "Карточка: " + PersonName;
                 }
         }
         private void FillPersonArea()

@@ -140,6 +140,9 @@ namespace EmployerPartners
             set { ComboServ.SetComboId(cbOrgStudent, value); }
         }
 
+        bool StudentDelConfirm = true;
+        bool StudentShowDelConfirmSettings = true;
+
         UpdateVoidHandler _hndl;
 
         public PracticeCard(int id, int pid, int lpid, string lp, UpdateVoidHandler _hdl)
@@ -152,6 +155,7 @@ namespace EmployerPartners
             _hndl = _hdl;
             FillCard();
             this.MdiParent = Util.mainform;
+            this.Text = "Практика: " + LP;
         }
         private void FillCard()
         {
@@ -161,6 +165,8 @@ namespace EmployerPartners
             FillInfo();
             FillOPList();
             FillOP();
+            FillOrder();
+            FillInstruction();
             FillOrg();
             FillStudent();
         }
@@ -235,12 +241,23 @@ namespace EmployerPartners
             {
                 return;
             }
-            ComboServ.FillCombo(cbOP, HelpClass.GetComboListByQuery(@" SELECT CONVERT(varchar(100), dbo.ObrazProgram.Id) AS Id, 
-                        '[ ' + dbo.ObrazProgram.Number + ' ] ' + dbo.ObrazProgram.Name +  ' [ ' + dbo.ProgramStatus.Name + ' ]'  AS Name 
-                FROM    dbo.ObrazProgram INNER JOIN
-                        dbo.ProgramStatus ON dbo.ObrazProgram.ProgramStatusId = dbo.ProgramStatus.Id 
+//            ComboServ.FillCombo(cbOP, HelpClass.GetComboListByQuery(@" SELECT CONVERT(varchar(100), dbo.ObrazProgram.Id) AS Id, 
+//                        '[ ' + dbo.ObrazProgram.Number + ' ] ' + dbo.ObrazProgram.Name +  ' [ ' + dbo.ProgramStatus.Name + ' ]'  AS Name 
+//                FROM    dbo.ObrazProgram INNER JOIN
+//                        dbo.ProgramStatus ON dbo.ObrazProgram.ProgramStatusId = dbo.ProgramStatus.Id 
+//                WHERE   dbo.ObrazProgram.LicenseProgramId = " + _LPId.ToString() +
+//                        "or dbo.ObrazProgram.SecondLicenseProgramId = " + _LPId.ToString()), true, false);
+
+            ComboServ.FillCombo(cbOP, HelpClass.GetComboListByQuery(@" SELECT CONVERT(varchar(100), dbo.ObrazProgramInYear.Id) AS Id, 
+                        '[ ' + dbo.ObrazProgram.Number + ' ] ' + dbo.ObrazProgram.Name + ' [ ' + dbo.ObrazProgramInYear.Year + ' ]' +  
+                        ' [ Шифр: ' + dbo.ObrazProgramInYear.ObrazProgramCrypt + ' ]' + ' [ ' + dbo.ProgramStatus.Name + ' ]' + ' [ ' + dbo.ProgramMode.Name + ' ]'  AS Name 
+                FROM    dbo.ObrazProgramInYear INNER JOIN 
+                        dbo.ObrazProgram on dbo.ObrazProgramInYear.ObrazProgramId = dbo.ObrazProgram.Id 
+                        INNER JOIN dbo.ProgramStatus ON dbo.ObrazProgram.ProgramStatusId = dbo.ProgramStatus.Id 
+                        INNER JOIN dbo.ProgramMode ON dbo.ObrazProgram.ProgramModeId = dbo.ProgramMode.Id
                 WHERE   dbo.ObrazProgram.LicenseProgramId = " + _LPId.ToString() +
-                        "or dbo.ObrazProgram.SecondLicenseProgramId = " + _LPId.ToString()), true, false);
+                        "or dbo.ObrazProgram.SecondLicenseProgramId = " + _LPId.ToString() +
+                        " ORDER BY dbo.ObrazProgram.Name, dbo.ObrazProgramInYear.Year DESC"), true, false);
         }
 
         private void FillOP()
@@ -252,22 +269,26 @@ namespace EmployerPartners
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
                 var lst = (from x in context.PracticeLPOP
-                           join op in context.ObrazProgram on x.ObrazProgramId equals op.Id
-                           join ps in context.ProgramStatus on op.ProgramStatusId equals ps.Id
+                           //join op in context.ObrazProgram on x.ObrazProgramId equals op.Id
+                           //join opyear in context.ObrazProgramInYear on op.Id equals opyear.ObrazProgramId
+                           join opyear in context.ObrazProgramInYear on x.ObrazProgramInYearId equals opyear.Id
+                           join op in context.ObrazProgram on opyear.ObrazProgramId equals op.Id
+                           //join ps in context.ProgramStatus on op.ProgramStatusId equals ps.Id
+                           join pm in context.ProgramMode on op.ProgramModeId equals pm.Id
                            where x.PracticeLPId == _Id
                            select new
                            {
-                               Образовательная_программа = "[ " + op.Number + " ] " + op.Name, // + " [ " + ps.Name + " ]",
+                               Образовательная_программа = "[ " + opyear.Number + " ] " + opyear.Name + " [ Шифр: " + opyear.ObrazProgramCrypt + " ] " + 
+                                                                    " [ " + pm.Name + " ] ",          // + " [ " + ps.Name + " ]",
                                x.Id,
-                               x.ObrazProgramId,
-                               //Комментарий = x.Comment,
+                               //x.ObrazProgramId,
                            }).ToList();
 
                 DataTable dt = new DataTable();
                 dt = Utilities.ConvertToDataTable(lst);
                 dgvOP.DataSource = dt;
 
-                List<string> Cols = new List<string>() { "Id", "ObrazProgramId" };
+                List<string> Cols = new List<string>() { "Id" };  //{ "Id", "ObrazProgramId" };
 
                 foreach (string s in Cols)
                     if (dgvOP.Columns.Contains(s))
@@ -277,14 +298,130 @@ namespace EmployerPartners
                 try
                 {
                     dgvOP.Columns["Образовательная_программа"].Frozen = true;
-                    dgvOP.Columns["Образовательная_программа"].Width = 650;
-                    //dgvOP.Columns["Комментарий"].Width = 200;
+                    dgvOP.Columns["Образовательная_программа"].Width = 850;
                 }
                 catch (Exception)
                 {
                 }
             }
         }
+
+        private void FillOrder()
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = (from x in context.PracticeLPFile
+                               join dn in context.DocType on x.DocTypeId equals dn.Id
+                               where (x.PracticeLPId == _Id) && (x.DocTypeId == 1)
+                               select new
+                               {
+                                   x.Id,
+                                   //Тип_документа = dn.Name,
+                                   Файл = x.FileName,
+                                   Дата_загрузки = x.DateLoad,
+                               }).ToList();
+                    dgvOrder.DataSource = lst;
+
+                    List<string> Cols = new List<string>() { "Id" };
+
+                    foreach (string s in Cols)
+                        if (dgvOrder.Columns.Contains(s))
+                            dgvOrder.Columns[s].Visible = false;
+                    foreach (DataGridViewColumn col in dgvOrder.Columns)
+                    {
+                        col.HeaderText = col.Name.Replace("_", " ");
+                        if (col.Name == "ColumnDelOrder")
+                        {
+                            col.HeaderText = "Действие";
+                        }
+                        if (col.Name == "ColumnViewOrder")
+                        {
+                            col.HeaderText = "Действие";
+                        }
+                        if (col.Name == "ColumnDiv5")
+                        {
+                            col.HeaderText = "";
+                        }
+                    }
+                    try
+                    {
+                        dgvOrder.Columns["ColumnDiv5"].Width = 6;
+                        dgvOrder.Columns["ColumnDelOrder"].Width = 70;
+                        dgvOrder.Columns["ColumnViewOrder"].Width = 70;
+                        dgvOrder.Columns["Файл"].Frozen = true;
+                        dgvOrder.Columns["Файл"].Width = 250;
+                        dgvOrder.Columns["Дата_загрузки"].Width = 120;
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void FillInstruction()
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = (from x in context.PracticeLPFile
+                               join dn in context.DocType on x.DocTypeId equals dn.Id
+                               where (x.PracticeLPId == _Id) && (x.DocTypeId == 2)
+                               select new
+                               {
+                                   x.Id,
+                                   //Тип_документа = dn.Name,
+                                   Файл = x.FileName,
+                                   Дата_загрузки = x.DateLoad,
+                               }).ToList();
+                    dgvInstruction.DataSource = lst;
+
+                    List<string> Cols = new List<string>() { "Id" };
+
+                    foreach (string s in Cols)
+                        if (dgvInstruction.Columns.Contains(s))
+                            dgvInstruction.Columns[s].Visible = false;
+                    foreach (DataGridViewColumn col in dgvInstruction.Columns)
+                    {
+                        col.HeaderText = col.Name.Replace("_", " ");
+                        if (col.Name == "ColumnDelInstruction")
+                        {
+                            col.HeaderText = "Действие";
+                        }
+                        if (col.Name == "ColumnViewInstruction")
+                        {
+                            col.HeaderText = "Действие";
+                        }
+                        if (col.Name == "ColumnDiv6")
+                        {
+                            col.HeaderText = "";
+                        }
+                    }
+                    try
+                    {
+                        dgvInstruction.Columns["ColumnDiv6"].Width = 6;
+                        dgvInstruction.Columns["ColumnDelInstruction"].Width = 70;
+                        dgvInstruction.Columns["ColumnViewInstruction"].Width = 70;
+                        dgvInstruction.Columns["Файл"].Frozen = true;
+                        dgvInstruction.Columns["Файл"].Width = 250;
+                        dgvInstruction.Columns["Дата_загрузки"].Width = 120;
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
         private void FillOrg()
         {
             FillOrg(null);
@@ -482,6 +619,7 @@ namespace EmployerPartners
                                    //Студент = stud.LastName + " " + stud.FirstName + " " + stud.SecondName,
                                    Студент = x.StudentFIO,
                                    x.Id,
+                                   x.StudDataId,
                                    //x.StudentId,
                                    //x.OrganizationId,
                                    Дата_рожд = x.DR, 
@@ -493,6 +631,8 @@ namespace EmployerPartners
                                    Форма_обуч = x.Department,
                                    Основа_обуч = x.StudyBasis,
                                    Статус = x.StatusName,
+                                   Шифр_ОП = x.ObrazProgramCrypt,
+                                   Номер_УП = x.RegNomWP,
                                    Уровень = x.DegreeName,
                                    Код_направления = x.SpecNumber,
                                    Направление_подготовки = x.SpecName,
@@ -505,7 +645,7 @@ namespace EmployerPartners
                     bindingSource3.DataSource = dt;
                     dgvStudent.DataSource = bindingSource3;
 
-                    List<string> Cols = new List<string>() { "Id" }; //{ "Id", "OrganizationId" };
+                    List<string> Cols = new List<string>() { "Id", "StudDataId" }; //{ "Id", "OrganizationId" };
 
                     foreach (string s in Cols)
                         if (dgvStudent.Columns.Contains(s))
@@ -662,6 +802,10 @@ namespace EmployerPartners
                             //" and Id not in (select StudentId from PracticeStudent)"; 
                     }
                     sqlWhere = sqlWhere + " and FacultyId in (select FacultyId from Practice where Id = " + _PId +")";
+                    string sqlStudentOP = " and ObrazProgramInYearId in " +
+                        "(select ObrazProgramInYear.ObrazProgramInYearId from PracticeLPOP inner join ObrazProgramInYear on PracticeLPOP.ObrazProgramInYearId = ObrazProgramInYear.Id " + 
+                        " where PracticeLPId = " + _Id.ToString() + ")";
+                    sqlWhere = sqlWhere + (checkBoxStudentOP.Checked ? sqlStudentOP : ""); 
                     sqlStudent = sqlStudent + sqlWhere + sqlOrderBy;
 
                     //var StudentTable = context.Database.SqlQuery<Student>(sqlStudent);
@@ -672,10 +816,13 @@ namespace EmployerPartners
                                {
                                    Студент = x.FIO,  //stud.LastName + " " + stud.FirstName + " " + stud.SecondName,
                                    x.Id,
+                                   x.StudDataId,
                                    x.LicenseProgramId,
                                    x.FacultyId,
                                    Дата_рожд = x.DR,
                                    Курс = x.Course,
+                                   Номер_УП = x.RegNomWP,
+                                   Шифр_ОП = x.ObrazProgramCrypt,
                                    Форма_обуч = x.Department,
                                    Основа_обуч = x.StudyBasis,
                                    Статус = x.StatusName,
@@ -690,7 +837,7 @@ namespace EmployerPartners
                     bindingSource4.DataSource = dt;
                     dgvStudentNew.DataSource = bindingSource4;
 
-                    List<string> Cols = new List<string>() { "Id", "LicenseProgramId", "FacultyId" };
+                    List<string> Cols = new List<string>() { "Id", "StudDataId", "LicenseProgramId", "FacultyId" };
 
                     foreach (string s in Cols)
                         if (dgvStudentNew.Columns.Contains(s))
@@ -714,6 +861,7 @@ namespace EmployerPartners
                         dgvStudentNew.Columns["ColumnAddStudent"].Width = 120;
                         dgvStudentNew.Columns["Студент"].Frozen = true;
                         dgvStudentNew.Columns["Студент"].Width = 200;
+                        dgvStudentNew.Columns["Курс"].Width = 60;
                         dgvStudentNew.Columns["Направление_подготовки"].Width = 300;
                         dgvStudentNew.Columns["Направление"].Width = 200;
                     }
@@ -821,30 +969,46 @@ namespace EmployerPartners
             if (!OPId.HasValue)
             {
                 MessageBox.Show("Не выбрана образовательная программа", "Инфо");
+                cbOP.DroppedDown = true;
                 return;
             }
             try
             {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
+                    //Проверка наличия выбранной ОП
                     var lst = (from x in context.PracticeLPOP
                                where x.PracticeLPId == _Id
-                               && x.ObrazProgramId == OPId
+                               && x.ObrazProgramInYearId == OPId         //x.ObrazProgramId == OPId
                                select new
                                {
                                    LPOPId = x.Id,
                                }).ToList().Count();
+                               
                     if (lst > 0)
                     {
                         MessageBox.Show("Такая образовательная программа уже добавлена", "Инфо");
                         return;
                     }
+                    //Проверка наличия хотя бы одной ОП
+                    var count = context.PracticeLPOP.Where(x => x.PracticeLPId == _Id).Count();
+                    if (count > 0)
+                    {
+                        MessageBox.Show("В списке уже есть одна образовательная программа\r\n" + "В настоящей версии программы " +
+                            "приказ и распоряжение формируются \r\n" + "по одной образовательной программе.\r\n" + "Если образовательных программ несколько, \r\n" +
+                            "необходимо приказ и распоряжение сформировать\r\n" + "по каждой из них отдельно.", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
                 }
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
+                    var lp = context.ObrazProgramInYear.Where(x => x.Id == OPId).First();
+
                     PracticeLPOP p = new PracticeLPOP();
                     p.PracticeLPId = (int)_Id;
-                    p.ObrazProgramId = (int)OPId;
+                    //p.ObrazProgramId = (int)OPId;
+                    p.ObrazProgramId = lp.ObrazProgramId;
+                    p.ObrazProgramInYearId = (int)OPId;
                     context.PracticeLPOP.Add(p);
                     context.SaveChanges();
                 }
@@ -871,7 +1035,7 @@ namespace EmployerPartners
                     catch (Exception)
                     {
                     }
-                    if (MessageBox.Show("Удалить выбранную образовательную программу? \r\n" + sOP, "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                    if (MessageBox.Show("Удалить образовательную программу? \r\n" + sOP, "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                     {
                         try
                         {
@@ -910,6 +1074,7 @@ namespace EmployerPartners
                 {
                     context.PracticeLP.Remove(context.PracticeLP.Where(x => x.Id == _Id).First());
                     context.SaveChanges();
+
                     if (_hndl != null)
                         if (_PId.HasValue)
                             _hndl(_PId);
@@ -917,7 +1082,11 @@ namespace EmployerPartners
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Не удалось удалить практику...\r\n" + "Обычно это связано с тем, что у данной записи имеются связанные записи в других таблицах.", "Сообщение");
+                    MessageBox.Show("Не удалось удалить практику...\r\n" + "Обычно это связано с наличием связанных записей в других таблицах.\r\n" +
+                        "Примечание: полностью сформированная практика, \r\n" + "содержащая список организаций и студентов, \r\n" + "удаляется в следующей последовательности:\r\n" + 
+                        "1. Сначала удаляются все студенты из практики\r\n" + "2. Затем удаляются все организации из практики\r\n" +
+                        "3. Далее удаляются все загруженные документы по этой практике\r\n" + "(приказы и распоряжения)\r\n" +
+                        "4. После этого используется кнопка «Удалить практику»\r\n" + "для окончательного удаления.", "Сообщение");
                 }
 
             }
@@ -1038,9 +1207,40 @@ namespace EmployerPartners
                 MessageBox.Show("Не удалось сохранить данные...\r\n" + ex.Message, "Сообщение");
             }
         }
-
+        private bool CheckOrderData()
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = context.PracticeLPOP.Where(x => x.PracticeLPId == _Id).Count();
+                    if (lst > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+        }
         private void btnMakeOrder_Click(object sender, EventArgs e)
         {
+            //Проверка наличия выбранной ОП
+            if (!CheckOrderData())
+            {
+                if (MessageBox.Show("Не выбрана образовательная программа\r\n" + "В этом случае придется самостоятельно ввести в приказе \r\n" + "образовательную программу и профили \r\n" +
+                    "Продолжить тем не менее?", "Запрос на подтверждение",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                {
+                    return;
+                }
+            }
             ToDOC();
         }
 
@@ -1149,29 +1349,63 @@ namespace EmployerPartners
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
                     string LPName;
+                    string LPCode;
                     var lp = (from x in context.LicenseProgram
                               where x.Id == _LPId
                               select x).First();
                     LPName = lp.Name;
+                    LPCode = lp.Code;
 
                     wd.SetFields("LPName", LPName);
+                    wd.SetFields("LPCode", LPCode);
                     //FieldDoc field = wd.Fields["LPName"];
                     //field.Text = LPName;
 
                     string OPName;
+                    string OPCrypt;
                     var opn = (from x in context.PracticeLPOP
                                join op in context.ObrazProgram on x.ObrazProgramId equals op.Id
+                               join opinyear in  context.ObrazProgramInYear on x.ObrazProgramInYearId equals opinyear.Id
                                where x.PracticeLPId == _Id
                                select new
                                {
                                    //OP = " " + op.Number + "  " + op.Name,
-                                   op.Name
+                                   op.Name,
+                                   opinyear.ObrazProgramCrypt,
                                }).ToList();
                     if (opn.Count > 0)
                     {
                         OPName = opn.First().Name;
                         wd.SetFields("OPName", OPName);
+                        OPCrypt = (String.IsNullOrEmpty(opn.First().ObrazProgramCrypt)) ? "_____________" : opn.First().ObrazProgramCrypt;
+                        wd.SetFields("OPCrypt", OPCrypt);
+                        
                     }
+
+                    string Profile = "";
+                    var opp = (from x in context.PracticeLPOP
+                               join opinyear in context.ObrazProgramInYear on x.ObrazProgramInYearId equals opinyear.Id
+                               join popinyear in context.ProfileInObrazProgramInYear on opinyear.ObrazProgramInYearId equals popinyear.ObrazProgramInYearId
+                               join profile in context.Profile on popinyear.ProfileId equals profile.Id
+                               where x.PracticeLPId == _Id
+                               select new
+                               {
+                                   profile.Name
+                               }).ToList();
+
+                    int k = 0;
+                    if (opn.Count > 0)
+                    {
+                        foreach (var item in opp)
+                        {
+                            k++;
+                            Profile += (!String.IsNullOrEmpty(item.Name)) ? ((k > 1) ? ", " : "") + " \"" + item.Name.ToString() + "\"" : "";
+                        }
+                    }
+
+                    Profile = (Profile == "") ? "Профиль: ______________" : ((k > 1) ? "Профили: " : "Профиль: ") + Profile;
+
+                    wd.SetFields("Profile", Profile);
 
                     string PracticeType;
                     var ptype = (from x in context.PracticeLP
@@ -1182,7 +1416,7 @@ namespace EmployerPartners
                                  { 
                                     PTName=pt.AccName,
                                  }).First();
-                    PracticeType = (!String.IsNullOrEmpty(ptype.PTName)) ? ptype.PTName : "___________________";
+                    PracticeType = (!String.IsNullOrEmpty(ptype.PTName)) ? ptype.PTName : "______________";
 
                     wd.SetFields("PracticeType", PracticeType);
 
@@ -1263,6 +1497,8 @@ namespace EmployerPartners
                 lbl_cbRubric.Visible = !lbl_cbRubric.Visible;
                 cbFaculty.Visible = !cbFaculty.Visible;
                 lbl_cbFaculty.Visible = !lbl_cbFaculty.Visible;
+                tbSearch.Visible = !tbSearch.Visible;
+                lbl_tbSearch.Visible = !lbl_tbSearch.Visible;
                 bindingNavigator2.Visible = !bindingNavigator2.Visible;
                 btnAddOrg.Text = (dgv.Visible) ? "Убрать добавление" : "Добавить организации";
                 //new PracticeOrg().Show();
@@ -1275,6 +1511,8 @@ namespace EmployerPartners
                 lbl_cbRubric.Visible = false;
                 cbFaculty.Visible = false;
                 lbl_cbFaculty.Visible = false;
+                tbSearch.Visible = false;
+                lbl_tbSearch.Visible = false;
                 bindingNavigator2.Visible = false;
                 btnAddOrg.Text = "Добавить организации";
             }
@@ -1284,18 +1522,28 @@ namespace EmployerPartners
         {
             if (dgv.CurrentCell != null)
                 if (dgv.CurrentRow.Index >= 0)
+                {
                     if (dgv.CurrentCell.ColumnIndex == 1)
                     {
+                        try
+                        {
+                            dgv.CurrentCell = dgv.CurrentRow.Cells["Полное_наименование"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        ///
                         try
                         {
                             if (DateStart == "" || DateEnd == "")
                             {
                                 //MessageBox.Show("Не введены данные в поля 'Начало практики' и 'Окончание практики'", "Сообщение");
-                                if (MessageBox.Show("Не введены данные в поля 'Начало практики' и 'Окончание практики' \r\n" +                                        
+                                if (MessageBox.Show("Не введены данные в поля 'Начало практики' и 'Окончание практики' \r\n" +
                                                     "В этом случае придется вводить эти данные для каждой новой организации отдельно \r\n" +
-                                                    "Продожить тем не менее? ", 
-                                                    "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
-                                                { return; }
+                                                    "(после ввода дат не забудьте нажать кнопку 'Сохранить')\r\n" +
+                                                    "Продолжить тем не менее? ",
+                                                    "Запрос на подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                                { return; }
                             }
                         }
                         catch (Exception)
@@ -1309,14 +1557,14 @@ namespace EmployerPartners
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                             {
                                 var lst = (from x in context.PracticeLPOrganization
-                                           where (x.PracticeLPId == _Id) && (x.OrganizationId == Orgid) 
+                                           where (x.PracticeLPId == _Id) && (x.OrganizationId == Orgid)
                                            select new
                                            {
                                                PrLPOrgId = x.Id,
                                            }).ToList().Count();
                                 if (lst > 0)
                                 {
-                                    if (MessageBox.Show("Организация \r\n" + OrgName + "\r\n" + 
+                                    if (MessageBox.Show("Организация \r\n" + OrgName + "\r\n" +
                                         "уже находится в списке на практику. \r\n" +
                                         "Повторное включение организации в список производится \r\n" +
                                         "в случае, когда в рамках одной практики организация \r\n" +
@@ -1331,14 +1579,14 @@ namespace EmployerPartners
                             //MessageBox.Show(ec.Message);
                         }
                         //собственно добавление
-                        try 
-	                    {	        
+                        try
+                        {
                             int Orgid = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
                             string OrgName = (dgv.CurrentRow.Cells["Полное_наименование"].Value != null) ? dgv.CurrentRow.Cells["Полное_наименование"].Value.ToString() : "";
                             string OrgAddress = (dgv.CurrentRow.Cells["Город"].Value != null) ? dgv.CurrentRow.Cells["Город"].Value.ToString() : "";
                             OrgAddress += (dgv.CurrentRow.Cells["Улица"].Value != null) ? ((OrgAddress == "") ? dgv.CurrentRow.Cells["Улица"].Value.ToString() : ", " + dgv.CurrentRow.Cells["Улица"].Value.ToString()) : "";
                             OrgAddress += (dgv.CurrentRow.Cells["Дом"].Value != null) ? ((OrgAddress == "") ? dgv.CurrentRow.Cells["Дом"].Value.ToString() : ", " + dgv.CurrentRow.Cells["Дом"].Value.ToString()) : "";
-                            OrgAddress += (dgv.CurrentRow.Cells["Помещение"].Value != null) ? ((OrgAddress == "") ? dgv.CurrentRow.Cells["Помещение"].Value.ToString() : ", " + dgv.CurrentRow.Cells["Помещение"].Value.ToString()) : "";    
+                            OrgAddress += (dgv.CurrentRow.Cells["Помещение"].Value != null) ? ((OrgAddress == "") ? dgv.CurrentRow.Cells["Помещение"].Value.ToString() : ", " + dgv.CurrentRow.Cells["Помещение"].Value.ToString()) : "";
                             DateTime res;
 
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
@@ -1360,12 +1608,24 @@ namespace EmployerPartners
                                 FillOrg();
                             }
                         }
-	                    catch (Exception ex)
-	                    {
-		                    MessageBox.Show(ex.Message);
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
                             return;
-	                    }
+                        }
                     }
+                    if (dgv.CurrentCell.ColumnIndex == 2)
+                    {
+                        try
+                        {
+                            int Orgid = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardOrganization(Orgid, null).Show();
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
         }
 
         private void cbFaculty_SelectedIndexChanged(object sender, EventArgs e)
@@ -1385,6 +1645,14 @@ namespace EmployerPartners
                 {
                     if (dgvOrg.CurrentCell.ColumnIndex == 1)
                     {
+                        try
+                        {
+                            dgvOrg.CurrentCell = dgvOrg.CurrentRow.Cells["Организация"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        ///
                         int id;
                         try
                         {
@@ -1426,8 +1694,17 @@ namespace EmployerPartners
                     {
                         try
                         {
+                            dgvOrg.CurrentCell = dgvOrg.CurrentRow.Cells["Организация"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        ///
+                        try
+                        {
                             int id = int.Parse(dgvOrg.CurrentRow.Cells["Id"].Value.ToString());
-                            new PracticeOrgCard(id, new UpdateVoidHandler(FillOrg)).Show();
+                            int orgid = int.Parse(dgvOrg.CurrentRow.Cells["OrganizationId"].Value.ToString());
+                            new PracticeOrgCard(id, orgid, new UpdateVoidHandler(FillOrg)).Show();
                         }
                         catch (Exception)
                         {
@@ -1442,19 +1719,30 @@ namespace EmployerPartners
                 if (dgvOrg.CurrentCell.RowIndex >= 0)
                 {
                     int id = int.Parse(dgvOrg.CurrentRow.Cells["Id"].Value.ToString());
-                    new PracticeOrgCard(id, new UpdateVoidHandler(FillOrg)).Show();
+                    int orgid = int.Parse(dgvOrg.CurrentRow.Cells["OrganizationId"].Value.ToString());
+                    new PracticeOrgCard(id, orgid, new UpdateVoidHandler(FillOrg)).Show();
                 }
         }
 
         private void btnMakeInstruction_Click(object sender, EventArgs e)
         {
+            //Проверка наличия выбранной ОП
+            if (!CheckOrderData())
+            {
+                if (MessageBox.Show("Не выбрана образовательная программа\r\n" + "В этом случае придется самостоятельно ввести в распоряжении \r\n" + "образовательную программу и профили \r\n" +
+                    "Продолжить тем не менее?", "Запрос на подтверждение",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                {
+                    return;
+                }
+            }
             //проверка установки организаций для всех студентов
             try
             {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
                     var lst = (from x in context.PracticeLPStudent
-                               where x.PracticeLPOrganizationId == null
+                               where (x.PracticeLPId == _Id) && (x.PracticeLPOrganizationId == null)
                                select x.Id).Count();
                     if (lst > 0)
                     {
@@ -1578,19 +1866,49 @@ namespace EmployerPartners
                     wd.SetFields("LPCode", LPCode);
 
                     string OPName;
+                    string OPCrypt;
                     var opn = (from x in context.PracticeLPOP
                                join op in context.ObrazProgram on x.ObrazProgramId equals op.Id
+                               join opinyear in context.ObrazProgramInYear on x.ObrazProgramInYearId equals opinyear.Id
                                where x.PracticeLPId == _Id
                                select new
                                {
                                    //OP = " " + op.Number + "  " + op.Name,
-                                   op.Name
+                                   op.Name,
+                                   opinyear.ObrazProgramCrypt,
                                }).ToList();
                     if (opn.Count > 0)
                     {
                         OPName = opn.First().Name;
                         wd.SetFields("OPName", OPName);
+                        OPCrypt = (String.IsNullOrEmpty(opn.First().ObrazProgramCrypt)) ? "________" : opn.First().ObrazProgramCrypt;
+                        wd.SetFields("OPCrypt", OPCrypt);
                     }
+
+                    string Profile = "";
+                    var opp = (from x in context.PracticeLPOP
+                               join opinyear in context.ObrazProgramInYear on x.ObrazProgramInYearId equals opinyear.Id
+                               join popinyear in context.ProfileInObrazProgramInYear on opinyear.ObrazProgramInYearId equals popinyear.ObrazProgramInYearId
+                               join profile in context.Profile on popinyear.ProfileId equals profile.Id
+                               where x.PracticeLPId == _Id
+                               select new
+                               {
+                                   profile.Name
+                               }).ToList();
+
+                    int k = 0;
+                    if (opn.Count > 0)
+                    {
+                        foreach (var item in opp)
+                        {
+                            k++;
+                            Profile += (!String.IsNullOrEmpty(item.Name)) ? ((k > 1) ? ", " : "") + " \"" + item.Name.ToString() + "\"" : "";
+                        }
+                    }
+
+                    Profile = (Profile == "") ? "Профиль: ______________" : ((k > 1) ? "Профили: " : "Профиль: ") + Profile;
+
+                    wd.SetFields("Profile", Profile);
 
                     string PracticeType;
                     var ptype = (from x in context.PracticeLP
@@ -1701,6 +2019,9 @@ namespace EmployerPartners
                 lbl_dgvStudentNew.Visible = !lbl_dgvStudentNew.Visible;
                 cbCourse.Visible = !cbCourse.Visible;
                 lbl_cbCourse.Visible = !lbl_cbCourse.Visible;
+                checkBoxStudentOP.Visible = !checkBoxStudentOP.Visible;
+                btnAddAllStudentToPractice.Visible = !btnAddAllStudentToPractice.Visible;
+                btnStudentNewUpdate.Visible = !btnStudentNewUpdate.Visible;
                 bindingNavigator4.Visible = !bindingNavigator4.Visible;
                 btnAddStudent.Text = (dgvStudentNew.Visible) ? "Убрать добавление" : "Добавить студентов";
                 btnSetOrgStudent.Text = (cbOrgStudent.Visible) ? "Убрать распределение студентов по орг-циям" : "Распределение студентов по организациям";
@@ -1712,6 +2033,9 @@ namespace EmployerPartners
                 lbl_dgvStudentNew.Visible = false;
                 cbCourse.Visible = false;
                 lbl_cbCourse.Visible = false;
+                checkBoxStudentOP.Visible = false;
+                btnAddAllStudentToPractice.Visible = false;
+                btnStudentNewUpdate.Visible = false;
                 bindingNavigator4.Visible = false;
                 btnAddStudent.Text = "Добавить студентов";
             }
@@ -1730,52 +2054,40 @@ namespace EmployerPartners
                     {
                         try
                         {
-                            //int StudentId = int.Parse(dgvStudentNew.CurrentRow.Cells["Id"].Value.ToString());
-                            //using (EmployerPartnersEntities context = new EmployerPartnersEntities())
-                            //{
-                            //    var lst = (from x in context.PracticeStudent
-                            //               where x.PracticeId == _PId
-                            //               && x.StudentId == StudentId
-                            //               select new
-                            //               {
-                            //                   PrStId = x.Id,
-                            //               }).ToList().Count();
-                            //    if (lst > 0)
-                            //    {
-                            //        MessageBox.Show("Студент уже добавлен в список практики", "Инфо");
-                            //        return;
-                            //    }
-                            //}
-
+                            dgvStudentNew.CurrentCell = dgvStudentNew.CurrentRow.Cells["Студент"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        ///
+                        try
+                        {
                             string FIO = (dgvStudentNew.CurrentRow.Cells["Студент"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Студент"].Value.ToString() : "";
                             string DR = (dgvStudentNew.CurrentRow.Cells["Дата_рожд"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Дата_рожд"].Value.ToString() : "";
+                            int? StudDataId = null;
+                            if (dgvStudentNew.CurrentRow.Cells["StudDataId"].Value != null)
+                            {
+                                StudDataId = int.Parse(dgvStudentNew.CurrentRow.Cells["StudDataId"].Value.ToString());
+                            }
 
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                             {
-                                //var lst = (from x in context.PracticeStudent
-                                //           where (x.PracticeId == _PId) && (x.StudentFIO == FIO) && (x.DR == DR)
-                                //           select new
-                                //           {
-                                //               PrStId = x.Id,
-                                //           }).ToList().Count();
                                 var lst = (from x in context.PracticeLPStudent
-                                           where (x.PracticeLPId == _Id) && (x.StudentFIO == FIO) && (x.DR == DR)
+                                           where (x.PracticeLPId == _Id) && (x.StudentFIO == FIO) && (x.DR == DR) && (x.StudDataId == StudDataId)
                                            select new
                                            {
                                                PrStId = x.Id,
                                            }).ToList().Count();
                                 if (lst > 0)
                                 {
-                                    if (MessageBox.Show("Студент " + FIO + " (дата рожд. " + DR +")" + "\r\n" + 
-                                        "уже находится в списке на практику " + "\r\n" +
-                                        "Однако, поскольку теоретически возможно совпадение \r\n" +
-                                        "ФИО и даты рождения требуется подтверждение на добавление.", 
-                                        "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
-                                    { return; }
+                                    MessageBox.Show("Студент " + FIO + " (дата рожд. " + DR + ")" + "\r\n" + "уже находится в списке на практику ", "Инфо",
+                                        MessageBoxButtons.OK,MessageBoxIcon.Information);
+                                    return;
                                 }
                             }
                             //добавление студента в практику
                             string Course = (dgvStudentNew.CurrentRow.Cells["Курс"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Курс"].Value.ToString() : "";
+                            string RegNomWP = (dgvStudentNew.CurrentRow.Cells["Номер_УП"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Номер_УП"].Value.ToString() : "";
                             string Department = (dgvStudentNew.CurrentRow.Cells["Форма_обуч"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Форма_обуч"].Value.ToString() : "";
                             string StudyBasis = (dgvStudentNew.CurrentRow.Cells["Основа_обуч"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Основа_обуч"].Value.ToString() : "";
                             string StatusName = (dgvStudentNew.CurrentRow.Cells["Статус"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Статус"].Value.ToString() : "";
@@ -1783,6 +2095,7 @@ namespace EmployerPartners
                             string SpecNumber = (dgvStudentNew.CurrentRow.Cells["Код_направления"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Код_направления"].Value.ToString() : "";
                             string SpecName = (dgvStudentNew.CurrentRow.Cells["Направление_подготовки"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Направление_подготовки"].Value.ToString() : "";
                             string FacultyName = (dgvStudentNew.CurrentRow.Cells["Направление"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Направление"].Value.ToString() : "";
+                            string OPCrypt = (dgvStudentNew.CurrentRow.Cells["Шифр_ОП"].Value != null) ? dgvStudentNew.CurrentRow.Cells["Шифр_ОП"].Value.ToString() : "";
 
                             int LicenseProgramId = int.Parse(dgvStudentNew.CurrentRow.Cells["LicenseProgramId"].Value.ToString());
                             int FacultyId = int.Parse(dgvStudentNew.CurrentRow.Cells["FacultyId"].Value.ToString());
@@ -1793,9 +2106,11 @@ namespace EmployerPartners
                                 PracticeLPStudent pst = new PracticeLPStudent();
                                 //pst.PracticeId = (int)_PId;
                                 pst.PracticeLPId = (int)_Id;
+                                pst.StudDataId = StudDataId;
                                 pst.StudentFIO = FIO;
                                 pst.DR = DR;
                                 pst.Course = Course;
+                                pst.RegNomWP = RegNomWP;
                                 pst.Department = Department;
                                 pst.StudyBasis = StudyBasis;
                                 pst.StatusName = StatusName;
@@ -1803,6 +2118,7 @@ namespace EmployerPartners
                                 pst.SpecNumber = SpecNumber;
                                 pst.SpecName = SpecName;
                                 pst.FacultyName = FacultyName;
+                                pst.ObrazProgramCrypt = OPCrypt;
                                 pst.LicenseProgramId = LicenseProgramId;
                                 pst.FacultyId = FacultyId;
                                 //context.PracticeStudent.Add(pst);
@@ -1826,6 +2142,14 @@ namespace EmployerPartners
                 {
                     if (dgvStudent.CurrentCell.ColumnIndex == 1)
                     {
+                        try
+                        {
+                            dgvStudent.CurrentCell = dgvStudent.CurrentRow.Cells["Студент"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        ///
                         int id;
                         try
                         {
@@ -1844,8 +2168,18 @@ namespace EmployerPartners
                         catch (Exception)
                         {
                         }
-                        if (MessageBox.Show("Удалить выбранного студента из списка? \r\n" + StudentName, "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                        if (StudentDelConfirm)
+                            if (MessageBox.Show("Удалить выбранного студента из списка? \r\n" + StudentName, "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                            {return;}
+                        if (StudentShowDelConfirmSettings)
                         {
+                            StudentShowDelConfirmSettings = false;
+                            if (MessageBox.Show("По умолчанию перед удалением выводится \r\n" + "запрос на подтверждение. \r\n" +
+                                "Это подтверждение можно отменить. \r\n" + "При каждом новом открытии данного окна \r\n" +
+                                "восстанавливается вывод запроса на подтверждение. \r\n\r\n" + "Отменить вывод предупреждаещего сообщения?", "Запрос на подтверждение",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                            { StudentDelConfirm = false; }
+                        }
                             try
                             {
                                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
@@ -1865,12 +2199,20 @@ namespace EmployerPartners
                                 FillStudentNewList();
                             }
                             return;
-                        }
-                        else
-                            return;
+                        //}
+                        //else
+                        //    return;
                     }
                     if (dgvStudent.CurrentCell.ColumnIndex == 2)
                     {
+                        try
+                        {
+                            dgvStudent.CurrentCell = dgvStudent.CurrentRow.Cells["Студент"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        ///
                         try
                         {
                             int id = int.Parse(dgvStudent.CurrentRow.Cells["Id"].Value.ToString());
@@ -1883,6 +2225,14 @@ namespace EmployerPartners
                     }
                     if (dgvStudent.CurrentCell.ColumnIndex == 3)
                     {
+                        try
+                        {
+                            dgvStudent.CurrentCell = dgvStudent.CurrentRow.Cells["Студент"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        ///
                         if (cbOrgStudent.Visible == false)
                         {
                             MessageBox.Show("Не выбрана организация. \r\n" + "Воспользуйтесь кнопкой 'Распределение студентов по организациям'","Сообщение");
@@ -1941,6 +2291,9 @@ namespace EmployerPartners
                 lbl_dgvStudentNew.Visible = false;
                 cbCourse.Visible = false;
                 lbl_cbCourse.Visible = false;
+                checkBoxStudentOP.Visible = false;
+                btnAddAllStudentToPractice.Visible = false;
+                btnStudentNewUpdate.Visible = false;
                 bindingNavigator4.Visible = false;
                 btnAddStudent.Text = (dgvStudentNew.Visible) ? "Убрать добавление" : "Добавить студентов";
             }
@@ -1957,6 +2310,622 @@ namespace EmployerPartners
                 if (this.Parent.Height > this.Height + 30 + this.Top)
                 {
                     this.Height = this.Parent.Height - 30 - this.Top;
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private bool CheckOrderLoaded()
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = (from x in context.PracticeLPFile
+                               where (x.PracticeLPId == _Id) && (x.DocTypeId == 1)
+                               select new
+                               {
+                                   x.Id,
+                                   Файл = x.FileName,
+                                   Дата_загрузки = x.DateLoad,
+                               }).ToList();
+                    if (lst.Count > 0)
+                    { 
+                        return true; 
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        private bool CheckInstructionLoaded()
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = (from x in context.PracticeLPFile
+                               where (x.PracticeLPId == _Id) && (x.DocTypeId == 2)
+                               select new
+                               {
+                                   x.Id,
+                                   Файл = x.FileName,
+                                   Дата_загрузки = x.DateLoad,
+                               }).ToList();
+                    if (lst.Count > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private void btnOrderLoad_Click(object sender, EventArgs e)
+        {
+            if (CheckOrderLoaded())
+            {
+                if (MessageBox.Show("В БД уже есть загруженный приказ.\r\n" + "Если это новая версия приказа, то рекомендуется \r\n" +
+                    "предыдущую версию удалить (кнопка 'Удалить')\r\n" + "Если это дополнение к приказу, можно продолжать.\r\n" +
+                    "Выполнить загрузку документа?", "Запрос на подтверждение",
+                     MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                {return;}
+            }
+            try
+            {
+                //Чтение двоичного файла с диска
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.InitialDirectory = Application.StartupPath;
+                if (openFileDialog.ShowDialog() != DialogResult.OK) { return; }
+                string filePath = openFileDialog.FileName;
+                //Параметры файла
+                string name = Path.GetFileName(filePath);
+                string type = Path.GetExtension(filePath);
+                byte[] fileByteArray = File.ReadAllBytes(filePath);
+                double kbSize = Math.Round(Convert.ToDouble(fileByteArray.Length) / 1024, 2);
+                //int dbFileID = 1;
+                //Запись в БД
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    PracticeLPFile docfile = new PracticeLPFile();
+                    docfile.PracticeLPId = (int)_Id;
+                    docfile.DocTypeId = 1;
+                    docfile.FileName = name;
+                    docfile.FileType = type;
+                    docfile.FileData = fileByteArray;
+                    docfile.DateLoad = DateTime.Now;
+                    docfile.FileSizeKBytes = kbSize;
+                    context.PracticeLPFile.Add(docfile);
+                    context.SaveChanges();
+                }
+                MessageBox.Show("Файл успешно загружен в БД", "Сообщение");
+                FillOrder();
+            }
+            catch (Exception ec)
+            {
+
+                if (Util.IsDBOwner())
+                {
+                    MessageBox.Show("Не удалось сохранить файл в БД...\r\n" + ec.Message, "Сообщение");
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось сохранить файл в БД", "Сообщение");
+                }
+                return;
+            }
+        }
+
+        private void btnInstructionLoad_Click(object sender, EventArgs e)
+        {
+            if (CheckInstructionLoaded())
+            {
+                if (MessageBox.Show("В БД уже есть загруженный документ.\r\n" + "Если это новая версия распоряжения, то рекомендуется \r\n" +
+                    "предыдущую версию удалить (кнопка 'Удалить')\r\n" + "Если это дополнение к распоряжению, можно продолжать.\r\n" +
+                    "Выполнить загрузку документа?", "Запрос на подтверждение",
+                     MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                { return; }
+            }
+            try
+            {
+                //Чтение двоичного файла с диска
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.InitialDirectory = Application.StartupPath;
+                if (openFileDialog.ShowDialog() != DialogResult.OK) { return; }
+                string filePath = openFileDialog.FileName;
+                //Параметры файла
+                string name = Path.GetFileName(filePath);
+                string type = Path.GetExtension(filePath);
+                byte[] fileByteArray = File.ReadAllBytes(filePath);
+                double kbSize = Math.Round(Convert.ToDouble(fileByteArray.Length) / 1024, 2);
+                //int dbFileID = 1;
+                //Запись в БД
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    PracticeLPFile docfile = new PracticeLPFile();
+                    docfile.PracticeLPId = (int)_Id;
+                    docfile.DocTypeId = 2;
+                    docfile.FileName = name;
+                    docfile.FileType = type;
+                    docfile.FileData = fileByteArray;
+                    docfile.DateLoad = DateTime.Now;
+                    docfile.FileSizeKBytes = kbSize;
+                    context.PracticeLPFile.Add(docfile);
+                    context.SaveChanges();
+                }
+                MessageBox.Show("Файл успешно загружен в БД", "Сообщение");
+                FillInstruction();
+            }
+            catch (Exception ec)
+            {
+
+                if (Util.IsDBOwner())
+                {
+                    MessageBox.Show("Не удалось сохранить файл в БД...\r\n" + ec.Message, "Сообщение");
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось сохранить файл в БД", "Сообщение");
+                }
+                return;
+            }
+        }
+
+        private void dgvOrder_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvOrder.CurrentCell != null)
+                if (dgvOrder.CurrentRow.Index >= 0)
+                {
+                    if (dgvOrder.CurrentCell.ColumnIndex == 1)
+                    {
+                        try
+                        {
+                            dgvOrder.CurrentCell = dgvOrder.CurrentRow.Cells["Файл"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        ///
+                        int id;
+                        try
+                        {
+                            id = int.Parse(dgvOrder.CurrentRow.Cells["Id"].Value.ToString());
+                        }
+                        catch (Exception)
+                        {
+                            return;
+                        }
+                        string OrderName = "";
+                        try
+                        {
+                            OrderName = dgvOrder.CurrentRow.Cells["Файл"].Value.ToString();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        if (MessageBox.Show("Удалить выбранный документ из БД? \r\n" + OrderName, "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                        {
+                            try
+                            {
+                                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                                {
+                                    context.PracticeLPFile.RemoveRange(context.PracticeLPFile.Where(x => x.Id == id));
+                                    context.SaveChanges();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Не удалось удалить запись...\r\n" + ex.Message, "Сообщение");
+                            }
+                            FillOrder();
+                            return;
+                        }
+                        else
+                            return;
+                    }
+                    if (dgvOrder.CurrentCell.ColumnIndex == 2)
+                    {
+                        try
+                        {
+                            dgvOrder.CurrentCell = dgvOrder.CurrentRow.Cells["Файл"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        //////
+                        int id;
+                        try
+                        {
+                            id = int.Parse(dgvOrder.CurrentRow.Cells["Id"].Value.ToString());
+                        }
+                        catch (Exception)
+                        {
+                            return;
+                        }
+                        //извлечение файла из БД
+                        byte[] fileByteArray;
+                        string type;
+                        string name;
+                        string nameshort;
+
+                        try
+                        {
+                            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                            {
+                                var orderfile = (from x in context.PracticeLPFile
+                                                 where x.Id == id
+                                                 select x).First();
+
+                                fileByteArray = (byte[])orderfile.FileData;
+                                type = (string)orderfile.FileType.Trim();
+                                name = (string)orderfile.FileName.Trim();
+                                nameshort = name.Substring(0, name.Length - type.Length);
+                            }
+                        }
+                        catch (Exception exc)
+                        {
+                            if (Util.IsDBOwner())
+                            {
+                                MessageBox.Show("Не удалось получить данные...\r\n" + exc.Message, "Сообщение");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Не удалось получить данные...", "Сообщение");
+                            }
+                            return;
+                        }
+                        string TempFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\EmployerPartners_TempFiles\";
+                        try
+                        {
+                            if (!Directory.Exists(TempFilesFolder))
+                                Directory.CreateDirectory(TempFilesFolder);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (Util.IsDBOwner())
+                            {
+                                MessageBox.Show("Не удалось создать директорию.\r\n" + ex.Message, "Сообщение");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Не удалось открыть файл...", "Сообщение");
+                            }
+                            return;
+                        }
+
+                        string filePath = TempFilesFolder + name;
+                        string[] fileList = Directory.GetFiles(TempFilesFolder, nameshort + "*" + type);
+                        int suffix;
+                        Random rnd = new Random();
+                        suffix = rnd.Next();
+                        if (File.Exists(filePath))
+                        {
+                            try
+                            {
+                                File.Delete(filePath);
+                                foreach (string f in fileList)
+                                {
+                                    File.Delete(f);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                filePath = TempFilesFolder + nameshort + " " + suffix + type;
+                            }
+                        }
+                        //Запись на диск
+                        try
+                        {
+                            FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
+                            BinaryWriter binWriter = new BinaryWriter(fileStream);
+                            binWriter.Write(fileByteArray);
+                            binWriter.Close();
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Не удалось открыть файл...", "Сообщение");
+                            return;
+                        }
+                        //Открыть файл
+                        System.Diagnostics.Process.Start(@filePath);
+                        //////
+                    }
+                }
+        }
+
+        private void dgvInstruction_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvInstruction.CurrentCell != null)
+                if (dgvInstruction.CurrentRow.Index >= 0)
+                {
+                    if (dgvInstruction.CurrentCell.ColumnIndex == 1)
+                    {
+                        try
+                        {
+                            dgvInstruction.CurrentCell = dgvInstruction.CurrentRow.Cells["Файл"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        ///
+                        int id;
+                        try
+                        {
+                            id = int.Parse(dgvInstruction.CurrentRow.Cells["Id"].Value.ToString());
+                        }
+                        catch (Exception)
+                        {
+                            return;
+                        }
+                        string InstructionName = "";
+                        try
+                        {
+                            InstructionName = dgvInstruction.CurrentRow.Cells["Файл"].Value.ToString();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        if (MessageBox.Show("Удалить выбранный документ из БД? \r\n" + InstructionName, "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                        {
+                            try
+                            {
+                                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                                {
+                                    context.PracticeLPFile.RemoveRange(context.PracticeLPFile.Where(x => x.Id == id));
+                                    context.SaveChanges();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Не удалось удалить запись...\r\n" + ex.Message, "Сообщение");
+                            }
+                            FillInstruction();
+                            return;
+                        }
+                        else
+                            return;
+                    }
+                    if (dgvInstruction.CurrentCell.ColumnIndex == 2)
+                    {
+                        try
+                        {
+                            dgvInstruction.CurrentCell = dgvInstruction.CurrentRow.Cells["Файл"];
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        //////
+                        int id;
+                        try
+                        {
+                            id = int.Parse(dgvInstruction.CurrentRow.Cells["Id"].Value.ToString());
+                        }
+                        catch (Exception)
+                        {
+                            return;
+                        }
+                        //извлечение файла из БД
+                        byte[] fileByteArray;
+                        string type;
+                        string name;
+                        string nameshort;
+
+                        try
+                        {
+                            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                            {
+                                var instructionfile = (from x in context.PracticeLPFile
+                                                 where x.Id == id
+                                                 select x).First();
+
+                                fileByteArray = (byte[])instructionfile.FileData;
+                                type = (string)instructionfile.FileType.Trim();
+                                name = (string)instructionfile.FileName.Trim();
+                                nameshort = name.Substring(0, name.Length - type.Length);
+                            }
+                        }
+                        catch (Exception exc)
+                        {
+                            if (Util.IsDBOwner())
+                            {
+                                MessageBox.Show("Не удалось получить данные...\r\n" + exc.Message, "Сообщение");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Не удалось получить данные...", "Сообщение");
+                            }
+                            return;
+                        }
+                        string TempFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\EmployerPartners_TempFiles\";
+                        try
+                        {
+                            if (!Directory.Exists(TempFilesFolder))
+                                Directory.CreateDirectory(TempFilesFolder);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (Util.IsDBOwner())
+                            {
+                                MessageBox.Show("Не удалось создать директорию.\r\n" + ex.Message, "Сообщение");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Не удалось открыть файл...", "Сообщение");
+                            }
+                            return;
+                        }
+
+                        string filePath = TempFilesFolder + name;
+                        string[] fileList = Directory.GetFiles(TempFilesFolder, nameshort + "*" + type);
+                        int suffix;
+                        Random rnd = new Random();
+                        suffix = rnd.Next();
+                        if (File.Exists(filePath))
+                        {
+                            try
+                            {
+                                File.Delete(filePath);
+                                foreach (string f in fileList)
+                                {
+                                    File.Delete(f);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                filePath = TempFilesFolder + nameshort + " " + suffix + type;
+                            }
+                        }
+                        //Запись на диск
+                        try
+                        {
+                            FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
+                            BinaryWriter binWriter = new BinaryWriter(fileStream);
+                            binWriter.Write(fileByteArray);
+                            binWriter.Close();
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Не удалось открыть файл...", "Сообщение");
+                            return;
+                        }
+                        //Открыть файл
+                        System.Diagnostics.Process.Start(@filePath);
+                        //////
+                    }
+                }
+        }
+
+        private void checkBoxStudentOP_CheckedChanged(object sender, EventArgs e)
+        {
+            FillComboStudent();
+            FillStudentNewList();
+        }
+
+        private void btnStudentNewUpdate_Click(object sender, EventArgs e)
+        {
+            FillComboStudent();
+            FillStudentNewList();
+        }
+
+        private void btnAddAllStudentToPractice_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Добавление в практику всех студентов из справочника.\r\n" + "Будут добавлены только те студенты,\r\n" +
+                "которых еще нет в списке на практику.\r\n" + "Продолжить выполнение?", "Запрос на подтверждение",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+            {
+                return;
+            }
+            try
+            {
+                for (int rwInd = 0; rwInd < dgvStudentNew.Rows.Count; rwInd++)
+                {
+                    string FIO = (dgvStudentNew.Rows[rwInd].Cells["Студент"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Студент"].Value.ToString() : "";
+                    string DR = (dgvStudentNew.Rows[rwInd].Cells["Дата_рожд"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Дата_рожд"].Value.ToString() : "";
+                    int? StudDataId = null;
+                    if (dgvStudentNew.Rows[rwInd].Cells["StudDataId"].Value != null)
+                    {
+                        StudDataId = int.Parse(dgvStudentNew.Rows[rwInd].Cells["StudDataId"].Value.ToString());
+                    }
+
+                    using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                    {
+                        var lst = (from x in context.PracticeLPStudent
+                                   where (x.PracticeLPId == _Id) && (x.StudentFIO == FIO) && (x.DR == DR) && (x.StudDataId == StudDataId)
+                                   select new
+                                   {
+                                       PrStId = x.Id,
+                                   }).ToList().Count();
+                        if (lst > 0)
+                        {
+                            //MessageBox.Show("Студент " + FIO + " (дата рожд. " + DR + ")" + "\r\n" + "уже находится в списке на практику ", "Инфо",
+                            //    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            continue;
+                        }
+                    }
+                    //добавление студента в практику
+                    string Course = (dgvStudentNew.Rows[rwInd].Cells["Курс"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Курс"].Value.ToString() : "";
+                    string RegNomWP = (dgvStudentNew.Rows[rwInd].Cells["Номер_УП"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Номер_УП"].Value.ToString() : "";
+                    string Department = (dgvStudentNew.Rows[rwInd].Cells["Форма_обуч"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Форма_обуч"].Value.ToString() : "";
+                    string StudyBasis = (dgvStudentNew.Rows[rwInd].Cells["Основа_обуч"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Основа_обуч"].Value.ToString() : "";
+                    string StatusName = (dgvStudentNew.Rows[rwInd].Cells["Статус"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Статус"].Value.ToString() : "";
+                    string DegreeName = (dgvStudentNew.Rows[rwInd].Cells["Уровень"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Уровень"].Value.ToString() : "";
+                    string SpecNumber = (dgvStudentNew.Rows[rwInd].Cells["Код_направления"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Код_направления"].Value.ToString() : "";
+                    string SpecName = (dgvStudentNew.Rows[rwInd].Cells["Направление_подготовки"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Направление_подготовки"].Value.ToString() : "";
+                    string FacultyName = (dgvStudentNew.Rows[rwInd].Cells["Направление"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Направление"].Value.ToString() : "";
+                    string OPCrypt = (dgvStudentNew.Rows[rwInd].Cells["Шифр_ОП"].Value != null) ? dgvStudentNew.Rows[rwInd].Cells["Шифр_ОП"].Value.ToString() : "";
+
+                    int LicenseProgramId = int.Parse(dgvStudentNew.Rows[rwInd].Cells["LicenseProgramId"].Value.ToString());
+                    int FacultyId = int.Parse(dgvStudentNew.Rows[rwInd].Cells["FacultyId"].Value.ToString());
+
+                    using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                    {
+                        PracticeLPStudent pst = new PracticeLPStudent();
+                        pst.PracticeLPId = (int)_Id;
+                        pst.StudDataId = StudDataId;
+                        pst.StudentFIO = FIO;
+                        pst.DR = DR;
+                        pst.Course = Course;
+                        pst.RegNomWP = RegNomWP;
+                        pst.Department = Department;
+                        pst.StudyBasis = StudyBasis;
+                        pst.StatusName = StatusName;
+                        pst.DegreeName = DegreeName;
+                        pst.SpecNumber = SpecNumber;
+                        pst.SpecName = SpecName;
+                        pst.FacultyName = FacultyName;
+                        pst.ObrazProgramCrypt = OPCrypt;
+                        pst.LicenseProgramId = LicenseProgramId;
+                        pst.FacultyId = FacultyId;
+                        context.PracticeLPStudent.Add(pst);
+                        context.SaveChanges();
+                        FillStudent();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Операция не завершена.\r\n" + ex.Message, "Инфо");
+                return;
+            }
+        }
+
+        private void tbSearch_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string search = tbSearch.Text.Trim().ToUpper();
+                bool exit = false;
+                for (int i = 0; i < dgv.RowCount; i++)
+                {
+                    if (exit)
+                    { break; }
+                    for (int j = 0; j < 8 /*dgv.Columns.Count*/; j++)
+                    {
+                        if (j == 0 || j == 1 || j == 2 || j == 4)
+                            continue;
+                        if (dgv[j, i].Value.ToString().ToUpper().Contains(search))
+                        {
+                            //dgv[j, i].Style.BackColor = Color.White;
+                            dgv.CurrentCell = dgv[j, i];
+                            exit = true;
+                            break;
+                        }
+                    }
                 }
             }
             catch (Exception)

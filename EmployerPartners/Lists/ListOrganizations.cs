@@ -223,22 +223,36 @@ namespace EmployerPartners
 
         private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgv.CurrentCell != null)
-                if (dgv.CurrentRow.Index>=0)
-                {
-                    int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
-                    new CardOrganization(id, new UpdateVoidHandler(FillGrid)).Show();
-                }
+            try
+            {
+                if (dgv.CurrentCell != null)
+                    if (dgv.CurrentRow.Index >= 0)
+                    {
+                        int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                        new CardOrganization(id, new UpdateVoidHandler(FillGrid)).Show();
+                    }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Не удается открыть карточку.\r\r" + exc.Message, "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            if (dgv.CurrentCell != null)
-                if (dgv.CurrentCell.RowIndex >= 0)
-                {
-                    int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
-                    new CardOrganization(id, new UpdateVoidHandler(FillGrid)).Show();
-                }
+            try
+            {
+                if (dgv.CurrentCell != null)
+                    if (dgv.CurrentRow.Index >= 0)
+                    {
+                        int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                        new CardOrganization(id, new UpdateVoidHandler(FillGrid)).Show();
+                    }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Не удается открыть карточку.\r\r" + exc.Message, "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void btnAddPartner_Click(object sender, EventArgs e)
@@ -378,6 +392,37 @@ namespace EmployerPartners
             {
             }
         }
+
+        private void tbSearch_TextChanged_1(object sender, EventArgs e)
+        {
+            try
+            {
+                string search = tbSearch.Text.Trim().ToUpper();
+                bool exit = false;
+                for (int i = 0; i < dgv.RowCount; i++)
+                { 
+                    if (exit)
+                    { break; }
+                    for (int j = 0; j < 6 /*dgv.Columns.Count*/; j++)
+                    {
+                        if (j == 1)
+                            continue;
+                        if (dgv[j, i].Value.ToString().ToUpper().Contains(search))
+                        {
+                            //dgv[j, i].Style.BackColor = Color.White;
+                            dgv.CurrentCell = dgv[j, i];
+                            exit = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        
     }
 
 }

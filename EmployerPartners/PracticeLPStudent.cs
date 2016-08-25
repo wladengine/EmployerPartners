@@ -34,6 +34,8 @@ namespace EmployerPartners
         public string Comment { get; set; }
         public string Author { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
+        public string ObrazProgramCrypt { get; set; }
+        public Nullable<int> StudDataId { get; set; }
     
         public virtual PracticeLP PracticeLP { get; set; }
         public virtual PracticeLPOrganization PracticeLPOrganization { get; set; }
