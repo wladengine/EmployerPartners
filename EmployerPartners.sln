@@ -1,14 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployerPartners", "EmployerPartners\EmployerPartners.csproj", "{4355DE2E-E7A0-4DDA-9880-8E7BB3A87D34}"
 	ProjectSection(ProjectDependencies) = postProject
 		{73F34AF5-F8F4-4FC8-9364-B14E2C5EC8BA} = {73F34AF5-F8F4-4FC8-9364-B14E2C5EC8BA}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KLADR", "..\_Shared libs\KLADR\KLADR\KLADR.csproj", "{73F34AF5-F8F4-4FC8-9364-B14E2C5EC8BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KLADR", "..\KLADR\KLADR\KLADR.csproj", "{73F34AF5-F8F4-4FC8-9364-B14E2C5EC8BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
