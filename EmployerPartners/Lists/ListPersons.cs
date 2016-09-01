@@ -313,12 +313,26 @@ namespace EmployerPartners
                     {
                         if (j == 1)
                             continue;
-                        if (dgv[j, i].Value.ToString().ToUpper().Contains(search))
+                        if (dgv[j, i].ColumnIndex == 0)
                         {
-                            //dgv[j, i].Style.BackColor = Color.White;
-                            dgv.CurrentCell = dgv[j, i];
-                            exit = true;
-                            break;
+                            int length = 1;
+                            length = dgv[j, i].Value.ToString().Length;
+                            length = (length <= 15) ? length : 15;
+                            if (dgv[j, i].Value.ToString().Substring(0, length).ToUpper().Contains(search))
+                            {
+                                dgv.CurrentCell = dgv[j, i];
+                                exit = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (dgv[j, i].Value.ToString().ToUpper().Contains(search))
+                            {
+                                dgv.CurrentCell = dgv[j, i];
+                                exit = true;
+                                break;
+                            }
                         }
                     }
                 }

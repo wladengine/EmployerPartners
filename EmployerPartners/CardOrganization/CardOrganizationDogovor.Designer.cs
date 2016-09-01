@@ -51,11 +51,11 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.dgvFile = new System.Windows.Forms.DataGridView();
-            this.lblFile = new System.Windows.Forms.Label();
-            this.btnAddFile = new System.Windows.Forms.Button();
             this.ColumnDiv1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnDelFile = new System.Windows.Forms.DataGridViewButtonColumn();
             this.ColumnViewFile = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.lblFile = new System.Windows.Forms.Label();
+            this.btnAddFile = new System.Windows.Forms.Button();
             this.checkBoxIsActual = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFile)).BeginInit();
             this.SuspendLayout();
@@ -235,9 +235,9 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(20, 451);
+            this.label11.Location = new System.Drawing.Point(20, 436);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(512, 130);
+            this.label11.Size = new System.Drawing.Size(512, 143);
             this.label11.TabIndex = 22;
             this.label11.Text = resources.GetString("label11.Text");
             // 
@@ -257,27 +257,6 @@
             this.dgvFile.TabIndex = 23;
             this.dgvFile.Visible = false;
             this.dgvFile.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFile_CellClick);
-            // 
-            // lblFile
-            // 
-            this.lblFile.AutoSize = true;
-            this.lblFile.Location = new System.Drawing.Point(434, 179);
-            this.lblFile.Name = "lblFile";
-            this.lblFile.Size = new System.Drawing.Size(86, 13);
-            this.lblFile.TabIndex = 24;
-            this.lblFile.Text = "Файл договора";
-            this.lblFile.Visible = false;
-            // 
-            // btnAddFile
-            // 
-            this.btnAddFile.Location = new System.Drawing.Point(436, 308);
-            this.btnAddFile.Name = "btnAddFile";
-            this.btnAddFile.Size = new System.Drawing.Size(171, 23);
-            this.btnAddFile.TabIndex = 25;
-            this.btnAddFile.Text = "Загрузить файл договора";
-            this.btnAddFile.UseVisualStyleBackColor = true;
-            this.btnAddFile.Visible = false;
-            this.btnAddFile.Click += new System.EventHandler(this.btnAddFile_Click);
             // 
             // ColumnDiv1
             // 
@@ -306,6 +285,27 @@
             this.ColumnViewFile.Text = "Просмотр";
             this.ColumnViewFile.UseColumnTextForButtonValue = true;
             // 
+            // lblFile
+            // 
+            this.lblFile.AutoSize = true;
+            this.lblFile.Location = new System.Drawing.Point(434, 179);
+            this.lblFile.Name = "lblFile";
+            this.lblFile.Size = new System.Drawing.Size(86, 13);
+            this.lblFile.TabIndex = 24;
+            this.lblFile.Text = "Файл договора";
+            this.lblFile.Visible = false;
+            // 
+            // btnAddFile
+            // 
+            this.btnAddFile.Location = new System.Drawing.Point(436, 308);
+            this.btnAddFile.Name = "btnAddFile";
+            this.btnAddFile.Size = new System.Drawing.Size(171, 23);
+            this.btnAddFile.TabIndex = 25;
+            this.btnAddFile.Text = "Загрузить файл договора";
+            this.btnAddFile.UseVisualStyleBackColor = true;
+            this.btnAddFile.Visible = false;
+            this.btnAddFile.Click += new System.EventHandler(this.btnAddFile_Click);
+            // 
             // checkBoxIsActual
             // 
             this.checkBoxIsActual.AutoSize = true;
@@ -320,7 +320,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1005, 596);
+            this.ClientSize = new System.Drawing.Size(1005, 602);
             this.Controls.Add(this.checkBoxIsActual);
             this.Controls.Add(this.btnAddFile);
             this.Controls.Add(this.lblFile);

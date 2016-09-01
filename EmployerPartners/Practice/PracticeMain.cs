@@ -50,6 +50,14 @@ namespace EmployerPartners
             FillLPList();
             FillGrid();
             this.MdiParent = Util.mainform;
+            SetAccessRight();
+        }
+        private void SetAccessRight()
+        {
+            if (Util.IsReadOnlyAll() || Util.IsPracticeRead())
+            {
+                btnAddLP.Enabled = false;
+            }
         }
         private void FillPracticeYear()
         {
@@ -145,7 +153,8 @@ namespace EmployerPartners
 
                            join lpop in context.PracticeLPOP on plp.Id equals lpop.PracticeLPId into _lpop
                            from lpop in _lpop.DefaultIfEmpty()
-                           join opyear in context.ObrazProgramInYear on lpop.ObrazProgramInYearId equals opyear.Id
+                           join opyear in context.ObrazProgramInYear on lpop.ObrazProgramInYearId equals opyear.Id into _opyear
+                           from opyear in _opyear.DefaultIfEmpty()
 
                            join lp in context.LicenseProgram on plp.LicenseProgramId equals lp.Id 
                            join st in context.StudyLevel on lp.StudyLevelId equals st.Id
@@ -1168,8 +1177,8 @@ namespace EmployerPartners
             //////
 
             //заполнение шаблона
-            //try
-            //{
+            try
+            {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
                     //диапазон дат
@@ -1214,21 +1223,51 @@ namespace EmployerPartners
                         default:
                             break;
                     }
+                    //проверка установки организаций для всех студентов
+                    try
+                    {
+                        var count = (from x in context.PracticeLPStudent
+                                     join plp in context.PracticeLP on x.PracticeLPId equals plp.Id
+                                     join p in context.Practice on plp.PracticeId equals p.Id
+                                     where
+                                     (x.PracticeLPOrganizationId == null) &&
+                                     (PracticeYear.HasValue ? p.PracticeYear == PracticeYear : false) &&
+                                     (plp.DateStart >= DateStart) && (plp.DateStart <= DateEnd)
+                                     select x.Id).Count();
+                        if (count > 0)
+                        {
+                            if (MessageBox.Show("Не для всех студентов (" + count.ToString() + " чел.) установлена организация.\r\n" +
+                                "Такие студенты не попадут в отчет.\r\n " +
+                                "Продолжить тем не менее?", "Запрос на подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.No)
+                                return;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
 
                     var lst = (from x in context.PracticeLPStudent
                                join plp in context.PracticeLP on x.PracticeLPId equals plp.Id
                                join prtype in context.PracticeType on plp.PracticeTypeId equals prtype.Id into _prtype
                                  from prtype in _prtype.DefaultIfEmpty()
+                               
+                               join orgstdog in context.OrganizationDogovor on x.OrganizationDogovorId equals orgstdog.Id into _orgstdog
+                               from orgstdog in _orgstdog.DefaultIfEmpty()
 
                                join lpop in context.PracticeLPOP on plp.Id equals lpop.PracticeLPId
                                
                                join op in context.ObrazProgram on lpop.ObrazProgramId equals op.Id
-                               join opinyear in context.ObrazProgramInYear on lpop.ObrazProgramInYearId equals opinyear.Id
+                               join opinyear in context.ObrazProgramInYear on lpop.ObrazProgramInYearId equals opinyear.Id into _opinyear
+                               from opinyear in _opinyear.DefaultIfEmpty()
                                
                                join p in context.Practice on plp.PracticeId equals p.Id
                                join fac in context.Faculty on x.FacultyId equals fac.Id
                                join plpo in context.PracticeLPOrganization on x.PracticeLPOrganizationId equals plpo.Id
                                join o in context.Organization on plpo.OrganizationId equals o.Id
+
+                               join orgdog in context.OrganizationDogovor on plpo.OrganizationDogovorId equals orgdog.Id into _orgdog
+                               from orgdog in _orgdog.DefaultIfEmpty()
+
                                join lp in context.LicenseProgram on x.LicenseProgramId equals lp.Id
                                join st in context.StudyLevel on lp.StudyLevelId equals st.Id
                                join progt in context.ProgramType on lp.ProgramTypeId equals progt.Id
@@ -1237,7 +1276,7 @@ namespace EmployerPartners
                                    (x.PracticeLPOrganizationId != null) &&
                                    (PracticeYear.HasValue ? p.PracticeYear == PracticeYear : false) &&
                                    (plp.DateStart >= DateStart) && (plp.DateStart <= DateEnd)
-                               orderby lp.Name, x.StudentFIO
+                               orderby fac.Name, st.Name, lp.Code, lp.Name, x.StudentFIO
                                select new
                                {
                                    FIO = x.StudentFIO,
@@ -1257,6 +1296,8 @@ namespace EmployerPartners
                                    OrderDate = plp.OrderDate,
                                    InstructionNumber = plp.InstructionNumber,
                                    InstructionDate = plp.InstructionDate,
+                                   DocumentNumber = (x.OrganizationDogovorId.HasValue) ? orgstdog.DocumentNumber : ((plpo.OrganizationDogovorId.HasValue) ? orgdog.DocumentNumber : ""),
+                                   DocumentDate = (x.OrganizationDogovorId.HasValue) ? orgstdog.DocumentDate : ((plpo.OrganizationDogovorId.HasValue) ? orgdog.DocumentDate : null),
                                }).ToArray();
 
                     var lst2 = (from x in lst
@@ -1277,6 +1318,8 @@ namespace EmployerPartners
                                     OrderDate = (x.OrderDate.HasValue) ? x.OrderDate.Value.Date.ToString("dd.MM.yyyy") : "",
                                     x.InstructionNumber,
                                     InstructionDate = (x.InstructionDate.HasValue) ? x.InstructionDate.Value.Date.ToString("dd.MM.yyyy") : "",
+                                    x.DocumentNumber,
+                                    DocumentDate = (x.DocumentDate.HasValue) ? x.DocumentDate.Value.Date.ToString("dd.MM.yyyy") : "",
                                 }).ToList();
 
                     using (ExcelPackage doc = new ExcelPackage(newFile))
@@ -1303,11 +1346,11 @@ namespace EmployerPartners
                 } //end using context
 
                 System.Diagnostics.Process.Start(filePath);
-            //}
-            //catch (Exception exc)
-            //{
-            //    MessageBox.Show("Не удалось подготовить отчет...\r\n" + exc.Message, "Сообщение");
-            //}
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Не удалось подготовить отчет...\r\n" + exc.Message, "Сообщение");
+            }
         }
     }
 }

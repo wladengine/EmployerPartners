@@ -20,6 +20,11 @@ namespace EmployerPartners
             InitializeComponent();
             var x = Util.lstCountry;
             this.Text = "Организации партнеры";
+            Log();
+            SetAccessRight();
+        }
+        private void SetAccessRight()
+        {
             if (Util.IsAdministrator())
             {
                 smiSettings.Visible = true;
@@ -37,6 +42,19 @@ namespace EmployerPartners
             if (Util.IsPractice())
             {
                 smiPracticeMain.Visible = true;
+                smiPracticeMain.Enabled = true;
+                smiLPOP.Visible = true;
+            }
+            if (Util.IsPracticeRead())
+            {
+                smiPracticeMain.Visible = true;
+                smiPracticeMain.Enabled = true;
+                smiLPOP.Visible = true;
+            }
+            if (Util.IsPracticeWrite())
+            {
+                smiPracticeMain.Visible = true;
+                smiPracticeMain.Enabled = true;
                 smiLPOP.Visible = true;
             }
             if (Util.IsReadOnlyAll())
@@ -44,9 +62,26 @@ namespace EmployerPartners
                 smiTables.Visible = false;
                 helpEditToolStripMenuItem.Visible = false;
                 tmplToolStripMenuItem.Visible = false;
+                smiPracticeMain.Visible = true;
+                smiPracticeMain.Enabled = true;
             }
         }
-
+        private void Log()
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    EPLog log = new EPLog();
+                    log.ActionName = "Открытие программы";
+                    context.EPLog.Add(log);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
         private void smiOrganizationList_Click(object sender, EventArgs e)
         {
             try
@@ -271,6 +306,18 @@ namespace EmployerPartners
 
         private void smiLPOP_Click(object sender, EventArgs e)
         {
+            try
+            {
+                foreach (Form frm in Application.OpenForms)
+                    if (frm is UpdateFromSrv)
+                    {
+                        frm.Activate();
+                        return;
+                    }
+            }
+            catch (Exception)
+            {
+            }
             UpdateFromSrv updateform = new UpdateFromSrv();
             updateform.MdiParent = this;
             updateform.Show();
@@ -279,6 +326,23 @@ namespace EmployerPartners
         private void smiOrgaanizationStatistics_Click(object sender, EventArgs e)
         {
             new CardOrganizationStat().Show();
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    EPLog log = new EPLog();
+                    log.ActionName = "Закрытие программы";
+                    context.EPLog.Add(log);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

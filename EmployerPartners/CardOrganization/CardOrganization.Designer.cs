@@ -124,6 +124,9 @@
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.btnAddDogovor = new System.Windows.Forms.Button();
             this.dgvDogovor = new System.Windows.Forms.DataGridView();
+            this.ColumnDiv1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDelDogovor = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColumnEditDogovor = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
             this.btnDelOkved = new System.Windows.Forms.Button();
@@ -133,9 +136,7 @@
             this.label25 = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.ColumnDiv1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnDelDogovor = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.ColumnEditDogovor = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.label31 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.err)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SaveSuccess)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -847,9 +848,9 @@
             // 
             // BtnContactEdit
             // 
-            this.BtnContactEdit.Location = new System.Drawing.Point(6, 583);
+            this.BtnContactEdit.Location = new System.Drawing.Point(6, 590);
             this.BtnContactEdit.Name = "BtnContactEdit";
-            this.BtnContactEdit.Size = new System.Drawing.Size(158, 23);
+            this.BtnContactEdit.Size = new System.Drawing.Size(158, 24);
             this.BtnContactEdit.TabIndex = 6;
             this.BtnContactEdit.Text = "Редактировать контакт";
             this.BtnContactEdit.UseVisualStyleBackColor = true;
@@ -857,9 +858,9 @@
             // 
             // btnDeleteContact
             // 
-            this.btnDeleteContact.Location = new System.Drawing.Point(565, 6);
+            this.btnDeleteContact.Location = new System.Drawing.Point(565, 14);
             this.btnDeleteContact.Name = "btnDeleteContact";
-            this.btnDeleteContact.Size = new System.Drawing.Size(158, 23);
+            this.btnDeleteContact.Size = new System.Drawing.Size(158, 24);
             this.btnDeleteContact.TabIndex = 4;
             this.btnDeleteContact.Text = "Удалить контакт";
             this.btnDeleteContact.UseVisualStyleBackColor = true;
@@ -867,9 +868,9 @@
             // 
             // btnPersonCardOpen
             // 
-            this.btnPersonCardOpen.Location = new System.Drawing.Point(729, 583);
+            this.btnPersonCardOpen.Location = new System.Drawing.Point(729, 590);
             this.btnPersonCardOpen.Name = "btnPersonCardOpen";
-            this.btnPersonCardOpen.Size = new System.Drawing.Size(158, 23);
+            this.btnPersonCardOpen.Size = new System.Drawing.Size(158, 24);
             this.btnPersonCardOpen.TabIndex = 4;
             this.btnPersonCardOpen.Text = "Открыть карточку";
             this.btnPersonCardOpen.UseVisualStyleBackColor = true;
@@ -877,9 +878,9 @@
             // 
             // btnContactAdd
             // 
-            this.btnContactAdd.Location = new System.Drawing.Point(729, 6);
+            this.btnContactAdd.Location = new System.Drawing.Point(729, 14);
             this.btnContactAdd.Name = "btnContactAdd";
-            this.btnContactAdd.Size = new System.Drawing.Size(158, 23);
+            this.btnContactAdd.Size = new System.Drawing.Size(158, 24);
             this.btnContactAdd.TabIndex = 4;
             this.btnContactAdd.Text = "Добавить контакт";
             this.btnContactAdd.UseVisualStyleBackColor = true;
@@ -891,10 +892,10 @@
             this.dgvContacts.AllowUserToDeleteRows = false;
             this.dgvContacts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvContacts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvContacts.Location = new System.Drawing.Point(6, 34);
+            this.dgvContacts.Location = new System.Drawing.Point(6, 50);
             this.dgvContacts.Name = "dgvContacts";
             this.dgvContacts.ReadOnly = true;
-            this.dgvContacts.Size = new System.Drawing.Size(881, 543);
+            this.dgvContacts.Size = new System.Drawing.Size(881, 530);
             this.dgvContacts.TabIndex = 3;
             this.dgvContacts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvContacts_CellDoubleClick);
             // 
@@ -1127,7 +1128,7 @@
             // 
             // btnAddDogovor
             // 
-            this.btnAddDogovor.Location = new System.Drawing.Point(717, 19);
+            this.btnAddDogovor.Location = new System.Drawing.Point(717, 14);
             this.btnAddDogovor.Name = "btnAddDogovor";
             this.btnAddDogovor.Size = new System.Drawing.Size(158, 25);
             this.btnAddDogovor.TabIndex = 1;
@@ -1144,109 +1145,12 @@
             this.ColumnDiv1,
             this.ColumnDelDogovor,
             this.ColumnEditDogovor});
-            this.dgvDogovor.Location = new System.Drawing.Point(18, 54);
+            this.dgvDogovor.Location = new System.Drawing.Point(17, 50);
             this.dgvDogovor.Name = "dgvDogovor";
             this.dgvDogovor.ReadOnly = true;
-            this.dgvDogovor.Size = new System.Drawing.Size(857, 523);
+            this.dgvDogovor.Size = new System.Drawing.Size(857, 530);
             this.dgvDogovor.TabIndex = 0;
             this.dgvDogovor.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDogovor_CellClick);
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.label29);
-            this.tabPage4.Controls.Add(this.btnDelOkved);
-            this.tabPage4.Controls.Add(this.btnAddOkved);
-            this.tabPage4.Controls.Add(this.dgvOkvedCodes);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(893, 628);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Коды ОКВЭД";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // label29
-            // 
-            this.label29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(328, 588);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(297, 13);
-            this.label29.TabIndex = 6;
-            this.label29.Text = "DoubleClick в любом поле - редактирование кода ОКВЭД";
-            // 
-            // btnDelOkved
-            // 
-            this.btnDelOkved.Location = new System.Drawing.Point(6, 583);
-            this.btnDelOkved.Name = "btnDelOkved";
-            this.btnDelOkved.Size = new System.Drawing.Size(158, 23);
-            this.btnDelOkved.TabIndex = 4;
-            this.btnDelOkved.Text = "Удалить ОКВЭД";
-            this.btnDelOkved.UseVisualStyleBackColor = true;
-            this.btnDelOkved.Click += new System.EventHandler(this.btnDelOkved_Click);
-            // 
-            // btnAddOkved
-            // 
-            this.btnAddOkved.Location = new System.Drawing.Point(729, 583);
-            this.btnAddOkved.Name = "btnAddOkved";
-            this.btnAddOkved.Size = new System.Drawing.Size(158, 23);
-            this.btnAddOkved.TabIndex = 2;
-            this.btnAddOkved.Text = "Добавить ОКВЭД";
-            this.btnAddOkved.UseVisualStyleBackColor = true;
-            this.btnAddOkved.Click += new System.EventHandler(this.btnAddOkved_Click);
-            // 
-            // dgvOkvedCodes
-            // 
-            this.dgvOkvedCodes.AllowUserToAddRows = false;
-            this.dgvOkvedCodes.AllowUserToDeleteRows = false;
-            this.dgvOkvedCodes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvOkvedCodes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvOkvedCodes.Location = new System.Drawing.Point(6, 26);
-            this.dgvOkvedCodes.Name = "dgvOkvedCodes";
-            this.dgvOkvedCodes.ReadOnly = true;
-            this.dgvOkvedCodes.Size = new System.Drawing.Size(881, 551);
-            this.dgvOkvedCodes.TabIndex = 1;
-            this.dgvOkvedCodes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOkvedCodes_CellDoubleClick);
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.label25);
-            this.tabPage5.Controls.Add(this.tbDescription);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(893, 628);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Описание организации";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(6, 21);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(128, 13);
-            this.label25.TabIndex = 1;
-            this.label25.Text = "Описание организации:";
-            // 
-            // tbDescription
-            // 
-            this.tbDescription.Location = new System.Drawing.Point(9, 37);
-            this.tbDescription.Multiline = true;
-            this.tbDescription.Name = "tbDescription";
-            this.tbDescription.Size = new System.Drawing.Size(872, 585);
-            this.tbDescription.TabIndex = 0;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDelete.Location = new System.Drawing.Point(12, 711);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(134, 23);
-            this.btnDelete.TabIndex = 5;
-            this.btnDelete.Text = "Удалить карточку";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // ColumnDiv1
             // 
@@ -1273,6 +1177,113 @@
             this.ColumnEditDogovor.ReadOnly = true;
             this.ColumnEditDogovor.Text = "Просмотр/Ред.";
             this.ColumnEditDogovor.UseColumnTextForButtonValue = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.label29);
+            this.tabPage4.Controls.Add(this.btnDelOkved);
+            this.tabPage4.Controls.Add(this.btnAddOkved);
+            this.tabPage4.Controls.Add(this.dgvOkvedCodes);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(893, 628);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Коды ОКВЭД";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label29
+            // 
+            this.label29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(328, 594);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(297, 13);
+            this.label29.TabIndex = 6;
+            this.label29.Text = "DoubleClick в любом поле - редактирование кода ОКВЭД";
+            // 
+            // btnDelOkved
+            // 
+            this.btnDelOkved.Location = new System.Drawing.Point(6, 590);
+            this.btnDelOkved.Name = "btnDelOkved";
+            this.btnDelOkved.Size = new System.Drawing.Size(158, 24);
+            this.btnDelOkved.TabIndex = 4;
+            this.btnDelOkved.Text = "Удалить ОКВЭД";
+            this.btnDelOkved.UseVisualStyleBackColor = true;
+            this.btnDelOkved.Click += new System.EventHandler(this.btnDelOkved_Click);
+            // 
+            // btnAddOkved
+            // 
+            this.btnAddOkved.Location = new System.Drawing.Point(729, 590);
+            this.btnAddOkved.Name = "btnAddOkved";
+            this.btnAddOkved.Size = new System.Drawing.Size(158, 24);
+            this.btnAddOkved.TabIndex = 2;
+            this.btnAddOkved.Text = "Добавить ОКВЭД";
+            this.btnAddOkved.UseVisualStyleBackColor = true;
+            this.btnAddOkved.Click += new System.EventHandler(this.btnAddOkved_Click);
+            // 
+            // dgvOkvedCodes
+            // 
+            this.dgvOkvedCodes.AllowUserToAddRows = false;
+            this.dgvOkvedCodes.AllowUserToDeleteRows = false;
+            this.dgvOkvedCodes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvOkvedCodes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOkvedCodes.Location = new System.Drawing.Point(6, 50);
+            this.dgvOkvedCodes.Name = "dgvOkvedCodes";
+            this.dgvOkvedCodes.ReadOnly = true;
+            this.dgvOkvedCodes.Size = new System.Drawing.Size(881, 530);
+            this.dgvOkvedCodes.TabIndex = 1;
+            this.dgvOkvedCodes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOkvedCodes_CellDoubleClick);
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.label31);
+            this.tabPage5.Controls.Add(this.label25);
+            this.tabPage5.Controls.Add(this.tbDescription);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(893, 628);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Описание организации";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(6, 25);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(128, 13);
+            this.label25.TabIndex = 1;
+            this.label25.Text = "Описание организации:";
+            // 
+            // tbDescription
+            // 
+            this.tbDescription.Location = new System.Drawing.Point(9, 50);
+            this.tbDescription.Multiline = true;
+            this.tbDescription.Name = "tbDescription";
+            this.tbDescription.Size = new System.Drawing.Size(872, 530);
+            this.tbDescription.TabIndex = 0;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDelete.Location = new System.Drawing.Point(12, 711);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(134, 23);
+            this.btnDelete.TabIndex = 5;
+            this.btnDelete.Text = "Удалить карточку";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(257, 598);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(318, 13);
+            this.label31.TabIndex = 7;
+            this.label31.Text = "Текст в это поле можно вставлять из буфера обмена (Ctrl+V)";
             // 
             // CardOrganization
             // 
@@ -1423,6 +1434,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv1;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnDelDogovor;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnEditDogovor;
+        private System.Windows.Forms.Label label31;
     }
 }
 

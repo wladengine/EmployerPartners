@@ -89,6 +89,12 @@ namespace EmployerPartners
             this.MdiParent = Util.mainform;
             FillCard();
             FillFileList();
+            if (Util.IsReadOnlyAll())
+            {
+                btnSave.Enabled = false;
+                btnAddFile.Enabled = false;
+                dgvFile.Columns[1].Visible = false;
+            }
         }
         private void FillCard()
         {
@@ -117,11 +123,36 @@ namespace EmployerPartners
                     DocumentDate = (dogovor.DocumentDate.HasValue) ? dogovor.DocumentDate.Value.Date.ToString("dd.MM.yyyy") : "";
                     Comment = dogovor.Comment;
                     IsActual = (bool)dogovor.IsActual;
+
+                    try
+                    {
+                        var org = (from x in context.OrganizationDogovor
+                                   join o in context.Organization on x.OrganizationId equals o.Id
+                                   where x.Id == _Id
+                                   select o).First();
+                        this.Text = "Договор: " + org.Name;
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
             else
             {
                 lblHeader.Text = "Новый договор";
+                try
+                {
+                    using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                    {
+                        var org = (from x in context.Organization
+                                   where x.Id == _OrgId
+                                   select x).First();
+                        this.Text = "Новый договор: " + org.Name;
+                    }
+                }
+                catch (Exception)
+                {
+                }
             }
         }
         private void FillFileList()

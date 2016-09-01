@@ -103,6 +103,16 @@ namespace EmployerPartners
             return IsRoleMember("Practice");
         }
 
+        public static bool IsPracticeRead()
+        {
+            return IsRoleMember("PracticeRead");
+        }
+
+        public static bool IsPracticeWrite()
+        {
+            return IsRoleMember("PracticeWrite");
+        }
+
         public static bool IsReadOnlyAll()
         {
             return IsRoleMember("ReadOnlyAll"); 

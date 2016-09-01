@@ -167,7 +167,7 @@ namespace EmployerPartners
                                 //Успешное завершение
                                 result = true;
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 //MessageBox.Show("Не удалось обновить данные \r\n" + ex.Message);
                                 result = false;
@@ -206,5 +206,25 @@ namespace EmployerPartners
         public string StudyLevelName { get; set; }
         public string Year { get; set; }
         public string ObrazProgramCrypt { get; set; }
+    }
+    public class OrgDogovor
+    {
+        //используюется для типизации в PracticeCard
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string MiddleName { get; set; }
+        public string ShortName { get; set; }
+        public string NameEng { get; set; }
+        public string ShortNameEng { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string WebSite { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string House { get; set; }
+        public string Apartment { get; set; }
+        public string Comment { get; set; }
+        public string DocumentNumber { get; set; }
+        public DateTime DocumentDate { get; set; }
     }
 }

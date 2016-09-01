@@ -43,20 +43,24 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnOrgCard = new System.Windows.Forms.Button();
+            this.cbOrgDogovor = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.btnOrgDogovorRefresh = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblOrg
             // 
             this.lblOrg.Location = new System.Drawing.Point(26, 19);
             this.lblOrg.Name = "lblOrg";
-            this.lblOrg.Size = new System.Drawing.Size(633, 76);
+            this.lblOrg.Size = new System.Drawing.Size(462, 112);
             this.lblOrg.TabIndex = 0;
             this.lblOrg.Text = resources.GetString("lblOrg.Text");
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 123);
+            this.label1.Location = new System.Drawing.Point(26, 147);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(117, 13);
             this.label1.TabIndex = 1;
@@ -64,7 +68,7 @@
             // 
             // tbOrgName
             // 
-            this.tbOrgName.Location = new System.Drawing.Point(163, 123);
+            this.tbOrgName.Location = new System.Drawing.Point(163, 147);
             this.tbOrgName.Name = "tbOrgName";
             this.tbOrgName.Size = new System.Drawing.Size(778, 20);
             this.tbOrgName.TabIndex = 2;
@@ -72,7 +76,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 170);
+            this.label2.Location = new System.Drawing.Point(26, 194);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(94, 13);
             this.label2.TabIndex = 3;
@@ -80,7 +84,7 @@
             // 
             // tbDateStart
             // 
-            this.tbDateStart.Location = new System.Drawing.Point(163, 167);
+            this.tbDateStart.Location = new System.Drawing.Point(163, 191);
             this.tbDateStart.Name = "tbDateStart";
             this.tbDateStart.Size = new System.Drawing.Size(137, 20);
             this.tbDateStart.TabIndex = 4;
@@ -88,7 +92,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 205);
+            this.label3.Location = new System.Drawing.Point(26, 229);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(112, 13);
             this.label3.TabIndex = 5;
@@ -96,7 +100,7 @@
             // 
             // tbDateEnd
             // 
-            this.tbDateEnd.Location = new System.Drawing.Point(163, 205);
+            this.tbDateEnd.Location = new System.Drawing.Point(163, 229);
             this.tbDateEnd.Name = "tbDateEnd";
             this.tbDateEnd.Size = new System.Drawing.Size(137, 20);
             this.tbDateEnd.TabIndex = 6;
@@ -104,7 +108,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 247);
+            this.label4.Location = new System.Drawing.Point(26, 271);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 7;
@@ -112,7 +116,7 @@
             // 
             // tbOrgAddress
             // 
-            this.tbOrgAddress.Location = new System.Drawing.Point(163, 244);
+            this.tbOrgAddress.Location = new System.Drawing.Point(163, 268);
             this.tbOrgAddress.Name = "tbOrgAddress";
             this.tbOrgAddress.Size = new System.Drawing.Size(778, 20);
             this.tbOrgAddress.TabIndex = 8;
@@ -120,7 +124,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(26, 296);
+            this.label5.Location = new System.Drawing.Point(26, 388);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(77, 13);
             this.label5.TabIndex = 9;
@@ -128,7 +132,7 @@
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(163, 289);
+            this.tbComment.Location = new System.Drawing.Point(163, 381);
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(778, 20);
             this.tbComment.TabIndex = 10;
@@ -163,11 +167,52 @@
             this.btnOrgCard.UseVisualStyleBackColor = true;
             this.btnOrgCard.Click += new System.EventHandler(this.btnOrgCard_Click);
             // 
+            // cbOrgDogovor
+            // 
+            this.cbOrgDogovor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbOrgDogovor.FormattingEnabled = true;
+            this.cbOrgDogovor.Location = new System.Drawing.Point(163, 306);
+            this.cbOrgDogovor.Name = "cbOrgDogovor";
+            this.cbOrgDogovor.Size = new System.Drawing.Size(778, 21);
+            this.cbOrgDogovor.TabIndex = 9;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(26, 309);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(51, 13);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Договор";
+            // 
+            // btnOrgDogovorRefresh
+            // 
+            this.btnOrgDogovorRefresh.Location = new System.Drawing.Point(163, 339);
+            this.btnOrgDogovorRefresh.Name = "btnOrgDogovorRefresh";
+            this.btnOrgDogovorRefresh.Size = new System.Drawing.Size(175, 24);
+            this.btnOrgDogovorRefresh.TabIndex = 9;
+            this.btnOrgDogovorRefresh.Text = "Обновить список договоров";
+            this.btnOrgDogovorRefresh.UseVisualStyleBackColor = true;
+            this.btnOrgDogovorRefresh.Click += new System.EventHandler(this.btnOrgDogovorRefresh_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(408, 345);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(387, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "обновление списка договоров после добавления  в карточке организации";
+            // 
             // PracticeOrgCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(963, 401);
+            this.ClientSize = new System.Drawing.Size(963, 445);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.btnOrgDogovorRefresh);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.cbOrgDogovor);
             this.Controls.Add(this.btnOrgCard);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnSave);
@@ -205,5 +250,9 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnOrgCard;
+        private System.Windows.Forms.ComboBox cbOrgDogovor;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnOrgDogovorRefresh;
+        private System.Windows.Forms.Label label7;
     }
 }

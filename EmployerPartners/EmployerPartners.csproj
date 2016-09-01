@@ -301,6 +301,9 @@
     <Compile Include="EducationPermit.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="EPLog.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="Faculty.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>

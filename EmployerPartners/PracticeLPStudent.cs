@@ -36,8 +36,10 @@ namespace EmployerPartners
         public Nullable<System.DateTime> DateCreated { get; set; }
         public string ObrazProgramCrypt { get; set; }
         public Nullable<int> StudDataId { get; set; }
+        public Nullable<int> OrganizationDogovorId { get; set; }
     
         public virtual PracticeLP PracticeLP { get; set; }
         public virtual PracticeLPOrganization PracticeLPOrganization { get; set; }
+        public virtual OrganizationDogovor OrganizationDogovor { get; set; }
     }
 }

@@ -153,6 +153,8 @@
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPOrganization_OrganizationDogovor" />
         <EntityTypeShape EntityType="EmployerPartnersModel.OrganizationDogovorFile" Width="1.5" PointX="18.5" PointY="11.375" />
         <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationDogovorFile_OrganizationDogovor" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPStudent_OrganizationDogovor" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.EPLog" Width="1.5" PointX="15.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

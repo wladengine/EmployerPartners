@@ -51,6 +51,8 @@ namespace EmployerPartners
                 btnLPDelete.Enabled = false;
                 btnAddOkved.Enabled = false;
                 btnDelOkved.Enabled = false;
+                btnAddDogovor.Enabled = false;
+                dgvDogovor.Columns[1].Visible = false;
             }
         }
         public void InitControls(Control obj)
@@ -1496,7 +1498,9 @@ namespace EmployerPartners
                                 MessageBox.Show("Не удалось удалить запись...\r\n" + "Причина: " + ec.Message + "\r\n" +
                                     "Примечание: \r\n" + "обычно это связано с наличием связанных записей в других таблицах.\r\n" + 
                                     "Если для данного договора загружен файл договора,\r\n" + 
-                                    "то сначала необходимо удалить файл из БД (кнопка 'Просмотр/Ред.')", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    "то сначала необходимо удалить файл из БД (кнопка 'Просмотр/Ред.')\r\n" + 
+                                    "Если этот договор фигурирует в рубрике,\r\n" + 
+                                    "то сначала необходимо удалить запись о нем в рубрике.", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             FillDogovor();
                             return;
