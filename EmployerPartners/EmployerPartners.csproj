@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EmployerPartners</RootNamespace>
     <AssemblyName>EmployerPartners</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
@@ -85,7 +85,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WordOut">
-      <HintPath>..\libs\WordOut.dll</HintPath>
+      <HintPath>..\..\OlympCrypto\VKRCrypto\CryptoLib\WordOut.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -527,6 +527,11 @@
     <Compile Include="Options\UpdateFromSrv.Designer.cs">
       <DependentUpon>UpdateFromSrv.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Qualification.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
@@ -677,6 +682,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Options\UpDateFromSrv.resx">
       <DependentUpon>UpdateFromSrv.cs</DependentUpon>
@@ -728,7 +734,7 @@
     <None Include="Resources\delete-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\_Shared libs\KLADR\KLADR\KLADR.csproj">
+    <ProjectReference Include="..\..\KLADR\KLADR\KLADR.csproj">
       <Project>{73f34af5-f8f4-4fc8-9364-b14e2c5ec8ba}</Project>
       <Name>KLADR</Name>
     </ProjectReference>
