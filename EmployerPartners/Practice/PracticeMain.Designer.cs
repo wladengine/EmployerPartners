@@ -268,9 +268,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(428, 538);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(279, 13);
+            this.label3.Size = new System.Drawing.Size(339, 13);
             this.label3.TabIndex = 8;
-            this.label3.Text = "DoubleClick в любом поле - редактирование практики";
+            this.label3.Text = "DoubleClick в любом поле - просмотр / редактирование практики";
             // 
             // btnRefresh
             // 

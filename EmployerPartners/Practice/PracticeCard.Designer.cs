@@ -36,6 +36,8 @@
             this.tbLP = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lbl_tbSearch = new System.Windows.Forms.Label();
+            this.tbSearch = new System.Windows.Forms.TextBox();
             this.btnOrderLoad = new System.Windows.Forms.Button();
             this.label23 = new System.Windows.Forms.Label();
             this.dgvOrder = new System.Windows.Forms.DataGridView();
@@ -61,6 +63,9 @@
             this.bindingNavigatorMoveLastItem1 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.dgv = new System.Windows.Forms.DataGridView();
+            this.ColumnDiv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColumnCard = new System.Windows.Forms.DataGridViewButtonColumn();
             this.btnAddOrg = new System.Windows.Forms.Button();
             this.btnMakeOrder = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
@@ -169,11 +174,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.checkBoxOutSPb = new System.Windows.Forms.CheckBox();
             this.label22 = new System.Windows.Forms.Label();
-            this.tbSearch = new System.Windows.Forms.TextBox();
-            this.lbl_tbSearch = new System.Windows.Forms.Label();
-            this.ColumnDiv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.ColumnCard = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.cbStudyingName = new System.Windows.Forms.ComboBox();
+            this.Lbl_cbStudyingName = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).BeginInit();
@@ -287,6 +289,27 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Приказ";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // lbl_tbSearch
+            // 
+            this.lbl_tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbl_tbSearch.AutoSize = true;
+            this.lbl_tbSearch.Location = new System.Drawing.Point(904, 396);
+            this.lbl_tbSearch.Name = "lbl_tbSearch";
+            this.lbl_tbSearch.Size = new System.Drawing.Size(39, 13);
+            this.lbl_tbSearch.TabIndex = 37;
+            this.lbl_tbSearch.Text = "Поиск";
+            this.lbl_tbSearch.Visible = false;
+            // 
+            // tbSearch
+            // 
+            this.tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbSearch.Location = new System.Drawing.Point(951, 393);
+            this.tbSearch.Name = "tbSearch";
+            this.tbSearch.Size = new System.Drawing.Size(100, 20);
+            this.tbSearch.TabIndex = 36;
+            this.tbSearch.Visible = false;
+            this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
             // 
             // btnOrderLoad
             // 
@@ -538,6 +561,33 @@
             this.dgv.TabIndex = 23;
             this.dgv.Visible = false;
             this.dgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
+            // 
+            // ColumnDiv
+            // 
+            this.ColumnDiv.Frozen = true;
+            this.ColumnDiv.HeaderText = "";
+            this.ColumnDiv.Name = "ColumnDiv";
+            this.ColumnDiv.ReadOnly = true;
+            this.ColumnDiv.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnDiv.Width = 10;
+            // 
+            // Column1
+            // 
+            this.Column1.Frozen = true;
+            this.Column1.HeaderText = "Действие";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Text = "Добавить в практику";
+            this.Column1.UseColumnTextForButtonValue = true;
+            // 
+            // ColumnCard
+            // 
+            this.ColumnCard.Frozen = true;
+            this.ColumnCard.HeaderText = "Действие";
+            this.ColumnCard.Name = "ColumnCard";
+            this.ColumnCard.ReadOnly = true;
+            this.ColumnCard.Text = "Карточка";
+            this.ColumnCard.UseColumnTextForButtonValue = true;
             // 
             // btnAddOrg
             // 
@@ -830,6 +880,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.Lbl_cbStudyingName);
+            this.tabPage2.Controls.Add(this.cbStudyingName);
             this.tabPage2.Controls.Add(this.btnAddAllStudentToPractice);
             this.tabPage2.Controls.Add(this.btnInstructionLoad);
             this.tabPage2.Controls.Add(this.label24);
@@ -947,7 +999,7 @@
             this.cbOrgStudent.FormattingEnabled = true;
             this.cbOrgStudent.Location = new System.Drawing.Point(669, 153);
             this.cbOrgStudent.Name = "cbOrgStudent";
-            this.cbOrgStudent.Size = new System.Drawing.Size(533, 21);
+            this.cbOrgStudent.Size = new System.Drawing.Size(535, 21);
             this.cbOrgStudent.TabIndex = 37;
             this.cbOrgStudent.Visible = false;
             // 
@@ -1416,7 +1468,7 @@
             // checkBoxStudentOP
             // 
             this.checkBoxStudentOP.AutoSize = true;
-            this.checkBoxStudentOP.Location = new System.Drawing.Point(1032, 155);
+            this.checkBoxStudentOP.Location = new System.Drawing.Point(904, 126);
             this.checkBoxStudentOP.Name = "checkBoxStudentOP";
             this.checkBoxStudentOP.Size = new System.Drawing.Size(154, 17);
             this.checkBoxStudentOP.TabIndex = 43;
@@ -1583,53 +1635,26 @@
             this.label22.TabIndex = 18;
             this.label22.Text = "(хотя бы одна организация связана с выездом из СПб)";
             // 
-            // tbSearch
+            // cbStudyingName
             // 
-            this.tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tbSearch.Location = new System.Drawing.Point(951, 393);
-            this.tbSearch.Name = "tbSearch";
-            this.tbSearch.Size = new System.Drawing.Size(100, 20);
-            this.tbSearch.TabIndex = 36;
-            this.tbSearch.Visible = false;
-            this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
+            this.cbStudyingName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStudyingName.FormattingEnabled = true;
+            this.cbStudyingName.Location = new System.Drawing.Point(1083, 153);
+            this.cbStudyingName.Name = "cbStudyingName";
+            this.cbStudyingName.Size = new System.Drawing.Size(121, 21);
+            this.cbStudyingName.TabIndex = 46;
+            this.cbStudyingName.Visible = false;
+            this.cbStudyingName.SelectedIndexChanged += new System.EventHandler(this.cbStudyingName_SelectedIndexChanged);
             // 
-            // lbl_tbSearch
+            // Lbl_cbStudyingName
             // 
-            this.lbl_tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lbl_tbSearch.AutoSize = true;
-            this.lbl_tbSearch.Location = new System.Drawing.Point(904, 396);
-            this.lbl_tbSearch.Name = "lbl_tbSearch";
-            this.lbl_tbSearch.Size = new System.Drawing.Size(39, 13);
-            this.lbl_tbSearch.TabIndex = 37;
-            this.lbl_tbSearch.Text = "Поиск";
-            this.lbl_tbSearch.Visible = false;
-            // 
-            // ColumnDiv
-            // 
-            this.ColumnDiv.Frozen = true;
-            this.ColumnDiv.HeaderText = "";
-            this.ColumnDiv.Name = "ColumnDiv";
-            this.ColumnDiv.ReadOnly = true;
-            this.ColumnDiv.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColumnDiv.Width = 10;
-            // 
-            // Column1
-            // 
-            this.Column1.Frozen = true;
-            this.Column1.HeaderText = "Действие";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Text = "Добавить в практику";
-            this.Column1.UseColumnTextForButtonValue = true;
-            // 
-            // ColumnCard
-            // 
-            this.ColumnCard.Frozen = true;
-            this.ColumnCard.HeaderText = "Действие";
-            this.ColumnCard.Name = "ColumnCard";
-            this.ColumnCard.ReadOnly = true;
-            this.ColumnCard.Text = "Карточка";
-            this.ColumnCard.UseColumnTextForButtonValue = true;
+            this.Lbl_cbStudyingName.AutoSize = true;
+            this.Lbl_cbStudyingName.Location = new System.Drawing.Point(1017, 156);
+            this.Lbl_cbStudyingName.Name = "Lbl_cbStudyingName";
+            this.Lbl_cbStudyingName.Size = new System.Drawing.Size(61, 13);
+            this.Lbl_cbStudyingName.TabIndex = 47;
+            this.Lbl_cbStudyingName.Text = "Состояние";
+            this.Lbl_cbStudyingName.Visible = false;
             // 
             // PracticeCard
             // 
@@ -1841,5 +1866,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv;
         private System.Windows.Forms.DataGridViewButtonColumn Column1;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnCard;
+        private System.Windows.Forms.Label Lbl_cbStudyingName;
+        private System.Windows.Forms.ComboBox cbStudyingName;
     }
 }

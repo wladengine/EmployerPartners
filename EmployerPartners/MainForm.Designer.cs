@@ -105,10 +105,10 @@
             // 
             // smiPracticeMain
             // 
+            this.smiPracticeMain.Enabled = false;
             this.smiPracticeMain.Name = "smiPracticeMain";
             this.smiPracticeMain.Size = new System.Drawing.Size(211, 22);
             this.smiPracticeMain.Text = "Практика (главное окно)";
-            this.smiPracticeMain.Visible = false;
             this.smiPracticeMain.Click += new System.EventHandler(this.smiPracticeMain_Click);
             // 
             // smiStatistics
@@ -160,55 +160,55 @@
             // smiDegree
             // 
             this.smiDegree.Name = "smiDegree";
-            this.smiDegree.Size = new System.Drawing.Size(255, 22);
+            this.smiDegree.Size = new System.Drawing.Size(376, 22);
             this.smiDegree.Text = "Ученая степень";
             this.smiDegree.Click += new System.EventHandler(this.smiDegree_Click);
             // 
             // smiRank
             // 
             this.smiRank.Name = "smiRank";
-            this.smiRank.Size = new System.Drawing.Size(255, 22);
+            this.smiRank.Size = new System.Drawing.Size(376, 22);
             this.smiRank.Text = "Ученое звание";
             this.smiRank.Click += new System.EventHandler(this.smiRank_Click);
             // 
             // smiActivityArea
             // 
             this.smiActivityArea.Name = "smiActivityArea";
-            this.smiActivityArea.Size = new System.Drawing.Size(255, 22);
+            this.smiActivityArea.Size = new System.Drawing.Size(376, 22);
             this.smiActivityArea.Text = "Сферы деятельности";
             this.smiActivityArea.Click += new System.EventHandler(this.smiActivityArea_Click);
             // 
             // smiOwnership
             // 
             this.smiOwnership.Name = "smiOwnership";
-            this.smiOwnership.Size = new System.Drawing.Size(255, 22);
+            this.smiOwnership.Size = new System.Drawing.Size(376, 22);
             this.smiOwnership.Text = "Формы собственности";
             this.smiOwnership.Click += new System.EventHandler(this.smiOwnership_Click);
             // 
             // smiActivityGoal
             // 
             this.smiActivityGoal.Name = "smiActivityGoal";
-            this.smiActivityGoal.Size = new System.Drawing.Size(255, 22);
+            this.smiActivityGoal.Size = new System.Drawing.Size(376, 22);
             this.smiActivityGoal.Text = "Цель деятельности";
             this.smiActivityGoal.Click += new System.EventHandler(this.smiActivityGoal_Click);
             // 
             // smiNationalAffiliation
             // 
             this.smiNationalAffiliation.Name = "smiNationalAffiliation";
-            this.smiNationalAffiliation.Size = new System.Drawing.Size(255, 22);
+            this.smiNationalAffiliation.Size = new System.Drawing.Size(376, 22);
             this.smiNationalAffiliation.Text = "Национальные принадлежности";
             this.smiNationalAffiliation.Click += new System.EventHandler(this.ationalityAffiliation_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(252, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(373, 6);
             // 
             // smiLPOP
             // 
             this.smiLPOP.Name = "smiLPOP";
-            this.smiLPOP.Size = new System.Drawing.Size(255, 22);
-            this.smiLPOP.Text = "Направления, ОП, Студенты";
+            this.smiLPOP.Size = new System.Drawing.Size(376, 22);
+            this.smiLPOP.Text = "Направления, образовательные программы, студенты";
             this.smiLPOP.Visible = false;
             this.smiLPOP.Click += new System.EventHandler(this.smiLPOP_Click);
             // 
@@ -262,6 +262,7 @@
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

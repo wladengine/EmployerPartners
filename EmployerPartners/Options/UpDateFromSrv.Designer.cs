@@ -52,6 +52,8 @@
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.dgvLP = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbSearchOP = new System.Windows.Forms.TextBox();
             this.labelOP = new System.Windows.Forms.Label();
             this.btnUpdateOP = new System.Windows.Forms.Button();
             this.btnCheckOP = new System.Windows.Forms.Button();
@@ -70,6 +72,9 @@
             this.bindingNavigatorSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.dgvOP = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbSearch = new System.Windows.Forms.TextBox();
+            this.pBar1 = new System.Windows.Forms.ProgressBar();
             this.bindingNavigatorStudent = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem2 = new System.Windows.Forms.ToolStripButton();
             this.bindingSourceStudent = new System.Windows.Forms.BindingSource(this.components);
@@ -84,7 +89,7 @@
             this.bindingNavigatorMoveLastItem2 = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.dgvStudent = new System.Windows.Forms.DataGridView();
-            this.pBar1 = new System.Windows.Forms.ProgressBar();
+            this.label4 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorLP)).BeginInit();
@@ -117,11 +122,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(20, 25);
+            this.label1.Location = new System.Drawing.Point(20, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(274, 16);
+            this.label1.Size = new System.Drawing.Size(452, 16);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Обновление данных из других БД СПБГУ";
+            this.label1.Text = "Справочник направлений, образовательных программ и студентов";
             // 
             // tabControl1
             // 
@@ -315,6 +320,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label3);
+            this.tabPage2.Controls.Add(this.tbSearchOP);
             this.tabPage2.Controls.Add(this.labelOP);
             this.tabPage2.Controls.Add(this.btnUpdateOP);
             this.tabPage2.Controls.Add(this.btnCheckOP);
@@ -327,6 +334,25 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Образовательные программы";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(336, 467);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(64, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Поиск (ОП)";
+            // 
+            // tbSearchOP
+            // 
+            this.tbSearchOP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbSearchOP.Location = new System.Drawing.Point(430, 464);
+            this.tbSearchOP.Name = "tbSearchOP";
+            this.tbSearchOP.Size = new System.Drawing.Size(120, 20);
+            this.tbSearchOP.TabIndex = 9;
+            this.tbSearchOP.TextChanged += new System.EventHandler(this.tbSearchOP_TextChanged);
             // 
             // labelOP
             // 
@@ -491,6 +517,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label2);
+            this.tabPage3.Controls.Add(this.tbSearch);
             this.tabPage3.Controls.Add(this.pBar1);
             this.tabPage3.Controls.Add(this.bindingNavigatorStudent);
             this.tabPage3.Controls.Add(this.dgvStudent);
@@ -502,6 +530,33 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Студенты";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(336, 467);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(78, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Поиск (ФИО))";
+            // 
+            // tbSearch
+            // 
+            this.tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbSearch.Location = new System.Drawing.Point(430, 464);
+            this.tbSearch.Name = "tbSearch";
+            this.tbSearch.Size = new System.Drawing.Size(120, 20);
+            this.tbSearch.TabIndex = 7;
+            this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged_1);
+            // 
+            // pBar1
+            // 
+            this.pBar1.Location = new System.Drawing.Point(22, 50);
+            this.pBar1.Name = "pBar1";
+            this.pBar1.Size = new System.Drawing.Size(198, 23);
+            this.pBar1.TabIndex = 2;
+            this.pBar1.Visible = false;
             // 
             // bindingNavigatorStudent
             // 
@@ -635,23 +690,25 @@
             this.dgvStudent.Size = new System.Drawing.Size(920, 372);
             this.dgvStudent.TabIndex = 0;
             // 
-            // pBar1
+            // label4
             // 
-            this.pBar1.Location = new System.Drawing.Point(22, 50);
-            this.pBar1.Name = "pBar1";
-            this.pBar1.Size = new System.Drawing.Size(198, 23);
-            this.pBar1.TabIndex = 2;
-            this.pBar1.Visible = false;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(21, 43);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(230, 13);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "(данные обновляются из других БД СПБГУ)";
             // 
             // UpdateFromSrv
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 622);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label1);
             this.Name = "UpdateFromSrv";
-            this.Text = "Обновление данных";
+            this.Text = "Справочник направлений, ОП, и студентов";
             this.Load += new System.EventHandler(this.UpdateFromSrv_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -737,5 +794,10 @@
         private System.Windows.Forms.Button btnUpdateOP;
         private System.Windows.Forms.Button btnCheckOP;
         private System.Windows.Forms.ProgressBar pBar1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tbSearch;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tbSearchOP;
+        private System.Windows.Forms.Label label4;
     }
 }

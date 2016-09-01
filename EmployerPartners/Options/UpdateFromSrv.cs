@@ -28,25 +28,29 @@ namespace EmployerPartners
         private void btnUpdateStudent_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Операция обновления данных потребует\r\n" + "обращения к другим серверам БД Университета \r\n" +
-                "и может занять некоторое время \r\n" + "Подтверждаете продолжение? ", "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                "и может занять некоторое время \r\n" + "Подтверждаете продолжение? ", "Запрос на подтверждение", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
             { return; }
             //this.UseWaitCursor = true;
             pBar1.Visible = true;
             pBar1.Minimum = 30;
             pBar1.Maximum = 90;
+            pBar1.Value = 45;
+            pBar1.Invalidate();
             if (!Utilities.UpdateStudentDVZ())
             {
                 //this.UseWaitCursor = false;
                 pBar1.Visible = false;
-                MessageBox.Show("Не удалось получить данные с сервера DEVELOPMENT", "Отмена действия");
+                MessageBox.Show("Не удалось получить данные с сервера DEVELOPMENT", "Отмена действия", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            pBar1.Value = 60;
+            pBar1.Value = 60; 
+            pBar1.Invalidate();
             if (Utilities.UpdateStudentData())
             {
                 //this.UseWaitCursor = false;
                 pBar1.Value = 90;
-                MessageBox.Show("Данные обновлены", "Успешное завершение");
+                MessageBox.Show("Данные обновлены", "Успешное завершение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 FillStudent();
                 pBar1.Visible = false;
                 return;
@@ -55,7 +59,7 @@ namespace EmployerPartners
             {
                 //this.UseWaitCursor = false;
                 pBar1.Visible = false;
-                MessageBox.Show("Не удалось обновить данные", "Сообщение");
+                MessageBox.Show("Не удалось обновить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
@@ -210,7 +214,7 @@ namespace EmployerPartners
                    
                     if (LPTable.Count() == 0)
                     {
-                        MessageBox.Show("Нет новых данных для обновления", "Инфо");
+                        MessageBox.Show("Нет новых данных для обновления", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         labelLP.Text = "Список";
                         FillLP();
                         return;
@@ -220,19 +224,19 @@ namespace EmployerPartners
             catch (Exception)
             {
                 labelLP.Text = "Список";
-                MessageBox.Show("Не удалось получить данные", "Сообщение");
+                MessageBox.Show("Не удалось получить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             //Добавление новых данных
             if (Utilities.UpdateLP())
             {
-                MessageBox.Show("Данные обновлены", "Успешное завершение");
+                MessageBox.Show("Данные обновлены", "Успешное завершение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 labelLP.Text = "Список";
                 FillLP();
                 return;
             }
             else
             {
-                MessageBox.Show("Не удалось обновить данные", "Сообщение");
+                MessageBox.Show("Не удалось обновить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
@@ -255,7 +259,7 @@ namespace EmployerPartners
                                }).ToList();
                     if (lst.Count() == 0)
                     {
-                        MessageBox.Show("Нет новых данных для обновления", "Инфо");
+                        MessageBox.Show("Нет новых данных для обновления", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         labelLP.Text = "Список";
                         FillLP();
                         return;
@@ -279,7 +283,7 @@ namespace EmployerPartners
             catch (Exception)
             {
                 labelLP.Text = "Список";
-                MessageBox.Show("Не удалось получить данные", "Сообщение");
+                MessageBox.Show("Не удалось получить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -308,7 +312,7 @@ namespace EmployerPartners
                                }).ToList();
                     if (lst.Count() == 0)
                     {
-                        MessageBox.Show("Нет новых данных для обновления", "Инфо");
+                        MessageBox.Show("Нет новых данных для обновления", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         labelOP.Text = "Список";
                         //FillOP();
                         FillOPInYear();
@@ -333,7 +337,7 @@ namespace EmployerPartners
             catch (Exception)
             {
                 labelOP.Text = "Список";
-                MessageBox.Show("Не удалось получить данные", "Сообщение");
+                MessageBox.Show("Не удалось получить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -355,7 +359,7 @@ namespace EmployerPartners
 
                     if (OPTable.Count() == 0)
                     {
-                        MessageBox.Show("Нет новых данных для обновления", "Инфо");
+                        MessageBox.Show("Нет новых данных для обновления", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         labelOP.Text = "Список";
                        // FillOP();
                         FillOPInYear();
@@ -366,12 +370,12 @@ namespace EmployerPartners
             catch (Exception)
             {
                 labelOP.Text = "Список";
-                MessageBox.Show("Не удалось получить данные", "Сообщение");
+                MessageBox.Show("Не удалось получить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             //Добавление новых данных
             if (Utilities.UpdateOP())
             {
-                MessageBox.Show("Данные обновлены", "Успешное завершение");
+                MessageBox.Show("Данные обновлены", "Успешное завершение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 labelOP.Text = "Список";
                 //FillOP();
                 FillOPInYear();
@@ -379,7 +383,7 @@ namespace EmployerPartners
             }
             else
             {
-                MessageBox.Show("Не удалось обновить данные", "Сообщение");
+                MessageBox.Show("Не удалось обновить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
@@ -394,6 +398,7 @@ namespace EmployerPartners
                                select new
                                {
                                    ФИО = x.FIO,
+                                   Фамилия = x.Surname,
                                    Дата_рожд = x.DR,
                                    Курс = x.Course,
                                    Уровень = x.DegreeName,
@@ -415,6 +420,7 @@ namespace EmployerPartners
                         col.HeaderText = col.Name.Replace("_", " ");
                     try
                     {
+                        dgvStudent.Columns["Фамилия"].Visible = false;
                         dgvStudent.Columns["ФИО"].Frozen = true;
                         dgvStudent.Columns["ФИО"].Width = 250;
                         dgvStudent.Columns["Курс"].Width = 60;
@@ -444,6 +450,65 @@ namespace EmployerPartners
                 if (this.Parent.Height > this.Height + 50 + this.Top)
                 {
                     this.Height = this.Parent.Height - 50 - this.Top;
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void tbSearch_TextChanged_1(object sender, EventArgs e)
+        {
+            try
+            {
+                string search = tbSearch.Text.Trim().ToUpper();
+                bool exit = false;
+                for (int i = 0; i < dgvStudent.RowCount; i++)
+                {
+                    if (exit)
+                    { break; }
+                    for (int j = 0; j < 2 /*dgvStudent.Columns.Count*/; j++)
+                    {
+                        //if (j == 0)
+                        //    continue;
+                        int length = 1;
+                        length = dgvStudent[j, i].Value.ToString().Length;
+                        length = (length <= 15) ? length : 15;
+                        if (dgvStudent[j, i].Value.ToString().Substring(0, length).ToUpper().Contains(search)) //(dgvStudent[j, i].Value.ToString().ToUpper().Contains(search))
+                        {
+                            dgvStudent.CurrentCell = dgvStudent[(j > 0) ? j-1 : j, i];
+                            exit = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void tbSearchOP_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string search = tbSearchOP.Text.Trim().ToUpper();
+                bool exit = false;
+                for (int i = 0; i < dgvOP.RowCount; i++)
+                {
+                    if (exit)
+                    { break; }
+                    for (int j = 0; j < 1 /*dgvOP.Columns.Count*/; j++)
+                    {
+                        if (j == 1)
+                            continue;
+                        if (dgvOP[j, i].Value.ToString().ToUpper().Contains(search))
+                        {
+                            dgvOP.CurrentCell = dgvOP[j, i];
+                            exit = true;
+                            break;
+                        }
+                    }
                 }
             }
             catch (Exception)

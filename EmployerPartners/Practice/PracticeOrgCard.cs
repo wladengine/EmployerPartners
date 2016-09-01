@@ -33,6 +33,11 @@ namespace EmployerPartners
             get { return tbDateEnd.Text.Trim(); }
             set { tbDateEnd.Text = value; }
         }
+        private int? OrgDogId
+        {
+            get { return ComboServ.GetComboIdInt(cbOrgDogovor); }
+            set { ComboServ.SetComboId(cbOrgDogovor, value); }
+        }
         public string Comment
         {
             get { return tbComment.Text.Trim(); }
@@ -58,8 +63,14 @@ namespace EmployerPartners
             _Id = id;
             _OrgId = orgid;
             _hndl = _hdl;
+            FillCombo();
             FillCard();
             this.MdiParent = Util.mainform;
+        }
+        private void FillCombo()
+        {
+            ComboServ.FillCombo(cbOrgDogovor, HelpClass.GetComboListByQuery(@" select distinct  CONVERT(varchar(100), Id) AS Id, [Document] as Name
+                from dbo.OrganizationDogovor where OrganizationId = " + _OrgId.ToString() + " and RubricId = 5 " + " and (DocumentTypeId = 2 or DocumentTypeId = 3) "), true, false);
         }
         private void FillCard()
         {
@@ -73,6 +84,7 @@ namespace EmployerPartners
                     OrgAddress = org.OrganizationAddress;
                     DateStart = (org.DateStart.HasValue) ? org.DateStart.Value.Date.ToString("dd.MM.yyyy") : "";
                     DateEnd = (org.DateEnd.HasValue) ? org.DateEnd.Value.Date.ToString("dd.MM.yyyy") : "";
+                    OrgDogId = org.OrganizationDogovorId;
                     Comment = org.Comment;
                     try
                     {
@@ -129,6 +141,7 @@ namespace EmployerPartners
                     plp.OrganizationName = OrgName;
                     plp.OrganizationAddress = OrgAddress;
                     plp.Comment = Comment;
+                    plp.OrganizationDogovorId = OrgDogId;
                     if (!String.IsNullOrEmpty(DateStart))
                     {
                         plp.DateStart = DateTime.Parse(DateStart);
@@ -164,6 +177,11 @@ namespace EmployerPartners
         private void btnOrgCard_Click(object sender, EventArgs e)
         {
             new CardOrganization(_OrgId, null).Show();
+        }
+
+        private void btnOrgDogovorRefresh_Click(object sender, EventArgs e)
+        {
+            FillCombo();
         }
     }
 }

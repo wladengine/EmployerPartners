@@ -116,6 +116,16 @@
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="EPLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActionName" Type="nvarchar" MaxLength="500" />
+          <Property Name="ActionValue" Type="nvarchar" MaxLength="500" />
+          <Property Name="ActionTime" Type="datetime" StoreGeneratedPattern="Computed" />
+          <Property Name="ActionUser" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+        </EntityType>
         <EntityType Name="Faculty">
           <Key>
             <PropertyRef Name="Id" />
@@ -371,7 +381,7 @@
           <Property Name="DocumentDate" Type="date" />
           <Property Name="PartTime" Type="nvarchar" MaxLength="100" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
-          <Property Name="IsActual" Type="bit" StoreGeneratedPattern="None" />
+          <Property Name="IsActual" Type="bit" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
         </EntityType>
@@ -611,6 +621,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PracticeLPId" Type="int" Nullable="false" />
           <Property Name="PracticeLPOrganizationId" Type="int" />
+          <Property Name="OrganizationDogovorId" Type="int" />
           <Property Name="StudDataId" Type="int" />
           <Property Name="StudentFIO" Type="nvarchar" MaxLength="300" />
           <Property Name="DR" Type="varchar" MaxLength="10" />
@@ -1788,6 +1799,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PracticeLPStudent_OrganizationDogovor">
+          <End Role="OrganizationDogovor" Type="Self.OrganizationDogovor" Multiplicity="0..1" />
+          <End Role="PracticeLPStudent" Type="Self.PracticeLPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationDogovor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPStudent">
+              <PropertyRef Name="OrganizationDogovorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PracticeLPStudent_PracticeLP">
           <End Role="PracticeLP" Type="Self.PracticeLP" Multiplicity="1" />
           <End Role="PracticeLPStudent" Type="Self.PracticeLPStudent" Multiplicity="*" />
@@ -1995,6 +2018,7 @@
           <EntitySet Name="dtproperties" EntityType="Self.dtproperties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EducationDocument" EntityType="Self.EducationDocument" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EducationPermit" EntityType="Self.EducationPermit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EPLog" EntityType="Self.EPLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HelpFiles" EntityType="Self.HelpFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InboxMessage" EntityType="Self.InboxMessage" Schema="dbo" store:Type="Tables" />
@@ -2309,6 +2333,10 @@
           <AssociationSet Name="FK_PracticeLPOrganization_PracticeLP" Association="Self.FK_PracticeLPOrganization_PracticeLP">
             <End Role="PracticeLP" EntitySet="PracticeLP" />
             <End Role="PracticeLPOrganization" EntitySet="PracticeLPOrganization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPStudent_OrganizationDogovor" Association="Self.FK_PracticeLPStudent_OrganizationDogovor">
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
+            <End Role="PracticeLPStudent" EntitySet="PracticeLPStudent" />
           </AssociationSet>
           <AssociationSet Name="FK_PracticeLPStudent_PracticeLP" Association="Self.FK_PracticeLPStudent_PracticeLP">
             <End Role="PracticeLP" EntitySet="PracticeLP" />
@@ -3989,6 +4017,11 @@
             <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
             <End Role="OrganizationDogovorFile" EntitySet="OrganizationDogovorFile" />
           </AssociationSet>
+          <AssociationSet Name="FK_PracticeLPStudent_OrganizationDogovor" Association="EmployerPartnersModel.FK_PracticeLPStudent_OrganizationDogovor">
+            <End Role="OrganizationDogovor" EntitySet="OrganizationDogovor" />
+            <End Role="PracticeLPStudent" EntitySet="PracticeLPStudent" />
+          </AssociationSet>
+          <EntitySet Name="EPLog" EntityType="EmployerPartnersModel.EPLog" />
           </EntityContainer>
         <EntityType Name="PartnerPersonActivityArea">
           <Key>
@@ -4593,6 +4626,8 @@
           <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_PracticeLPOrganization" FromRole="PracticeLPStudent" ToRole="PracticeLPOrganization" />
           <Property Name="ObrazProgramCrypt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="StudDataId" Type="Int32" />
+          <Property Name="OrganizationDogovorId" Type="Int32" />
+          <NavigationProperty Name="OrganizationDogovor" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_OrganizationDogovor" FromRole="PracticeLPStudent" ToRole="OrganizationDogovor" />
         </EntityType>
         <Association Name="FK_PracticeLPStudent_PracticeLP">
           <End Type="EmployerPartnersModel.PracticeLP" Role="PracticeLP" Multiplicity="1" />
@@ -4869,6 +4904,7 @@
           <Property Name="PartTime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="OrganizationDogovorFile" Relationship="EmployerPartnersModel.FK_OrganizationDogovorFile_OrganizationDogovor" FromRole="OrganizationDogovor" ToRole="OrganizationDogovorFile" />
           <Property Name="IsActual" Type="Boolean" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="PracticeLPStudent" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_OrganizationDogovor" FromRole="OrganizationDogovor" ToRole="PracticeLPStudent" />
         </EntityType>
         <Association Name="FK_OrganizationDogovor_DocumentType">
           <End Type="EmployerPartnersModel.DocumentType" Role="DocumentType" Multiplicity="1" />
@@ -4945,6 +4981,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PracticeLPStudent_OrganizationDogovor">
+          <End Type="EmployerPartnersModel.OrganizationDogovor" Role="OrganizationDogovor" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.PracticeLPStudent" Role="PracticeLPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationDogovor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PracticeLPStudent">
+              <PropertyRef Name="OrganizationDogovorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EPLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActionName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActionValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActionTime" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="ActionUser" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5828,6 +5886,7 @@
           <EntitySetMapping Name="PracticeLPStudent">
             <EntityTypeMapping TypeName="EmployerPartnersModel.PracticeLPStudent">
               <MappingFragment StoreEntitySet="PracticeLPStudent">
+                <ScalarProperty Name="OrganizationDogovorId" ColumnName="OrganizationDogovorId" />
                 <ScalarProperty Name="StudDataId" ColumnName="StudDataId" />
                 <ScalarProperty Name="ObrazProgramCrypt" ColumnName="ObrazProgramCrypt" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -5997,6 +6056,17 @@
                 <ScalarProperty Name="FileType" ColumnName="FileType" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="OrganizationDogovorId" ColumnName="OrganizationDogovorId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EPLog">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.EPLog">
+              <MappingFragment StoreEntitySet="EPLog">
+                <ScalarProperty Name="ActionUser" ColumnName="ActionUser" />
+                <ScalarProperty Name="ActionTime" ColumnName="ActionTime" />
+                <ScalarProperty Name="ActionValue" ColumnName="ActionValue" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -17,6 +17,16 @@ namespace EmployerPartners
             get { return tbFIO.Text.Trim(); }
             set { tbFIO.Text = value; }
         }
+        private string _Org
+        {
+            get { return tbOrg.Text.Trim(); }
+            set { tbOrg.Text = value; }
+        }
+        private int? OrgDogId
+        {
+            get { return ComboServ.GetComboIdInt(cbOrgDogovor); }
+            set { ComboServ.SetComboId(cbOrgDogovor, value); }
+        }
         private string Comment
         {
             get { return tbComment.Text.Trim(); }
@@ -27,26 +37,47 @@ namespace EmployerPartners
             get;
             set;
         }
+        private int? _OrgId
+        {
+            get;
+            set;
+        }
         UpdateVoidHandler _hndl;
 
-        public PracticeStudentCard(int? id, UpdateVoidHandler _hdl)
+        public PracticeStudentCard(int? id, int ? orgid, string orgname, UpdateVoidHandler _hdl)
         {
             InitializeComponent();
             _Id = id;
+            _OrgId = orgid;
+            _Org = orgname;
             _hndl = _hdl;
+            FillCombo();
             FillCard();
             this.MdiParent = Util.mainform;
+        }
+        private void FillCombo()
+        {
+            ComboServ.FillCombo(cbOrgDogovor, HelpClass.GetComboListByQuery(@" select distinct  CONVERT(varchar(100), Id) AS Id, [Document] as Name
+                from dbo.OrganizationDogovor where OrganizationId = " + ((_OrgId.HasValue) ? _OrgId.ToString() : "null") + " and RubricId = 5 "), true, false);
         }
         private void FillCard()
         {
             if (_Id.HasValue)
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    var stud = (from x in context.PracticeLPStudent      //context.PracticeStudent
+                    var stud = (from x in context.PracticeLPStudent
                                where x.Id == _Id
                                select x).First();
                     FIO = stud.StudentFIO;
+                    OrgDogId = stud.OrganizationDogovorId;
                     Comment = stud.Comment;
+                    try
+                    {
+                        this.Text = "Студент: " + FIO;
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
         }
 
@@ -67,6 +98,7 @@ namespace EmployerPartners
                     var pst = context.PracticeLPStudent.Where(x => x.Id == _Id).First();
 
                     pst.StudentFIO = FIO;
+                    pst.OrganizationDogovorId = OrgDogId;
                     pst.Comment = Comment;
 
                     context.SaveChanges();
@@ -80,8 +112,21 @@ namespace EmployerPartners
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Не удалось сохранить данные...\r\n" + ex.Message, "Сообщение");
+                MessageBox.Show("Не удалось сохранить данные...\r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void btnOrgCard_Click(object sender, EventArgs e)
+        {
+            if (_OrgId.HasValue)
+            {
+                new CardOrganization(_OrgId, null).Show();
+            }
+        }
+
+        private void btnOrgDogovorRefresh_Click(object sender, EventArgs e)
+        {
+            FillCombo();
         }
     }
 }

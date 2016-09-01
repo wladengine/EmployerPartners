@@ -92,6 +92,7 @@ namespace EmployerPartners
         public virtual DbSet<DocumentType> DocumentType { get; set; }
         public virtual DbSet<OrganizationDogovor> OrganizationDogovor { get; set; }
         public virtual DbSet<OrganizationDogovorFile> OrganizationDogovorFile { get; set; }
+        public virtual DbSet<EPLog> EPLog { get; set; }
     
         public virtual int RoleMember(string roleName, ObjectParameter result)
         {
