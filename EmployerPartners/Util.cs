@@ -42,32 +42,41 @@ namespace EmployerPartners
             }
         }
 
-        private static void Init ()
+        private static void Init()
         {
-            lstCountry = new List<KeyValuePair<int, string>>();
-            lstRegion = new List<KeyValuePair<int, string>>();
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                var lst_country = context.Country.Select(x => new { x.Id, x.Name }).ToList();
-                lstCountry = (from l in lst_country select new KeyValuePair<int, string>(l.Id, l.Name)).ToList();
-                
-                var lst_reg = context.Region.Where(x=>!String.IsNullOrEmpty(x.RegionNumber) && x.RegionNumber != "00").Select(x => new { x.Id, x.Name, x.RegionNumber }).Distinct().ToList();
-                lstRegion = (from l in lst_reg select new KeyValuePair<int, string>(l.Id, l.Name)).ToList();
-                lstRegionCode = (from l in lst_reg select new KeyValuePair<int, string>(l.Id, l.RegionNumber)).ToList();
 
-                var lst_country_city = context.Organization
-                    .Where(x => x.CountryId != countryRussiaId && x.CountryId.HasValue)
-                    .Select(x => new { key = x.CountryId.Value, value =  x.City}).Distinct().ToList();
-                lstCountryCity = (from lst in lst_country_city
-                                  select new KeyValuePair<int, string>(lst.key, lst.value)).ToList();
+                lstCountry = new List<KeyValuePair<int, string>>();
+                lstRegion = new List<KeyValuePair<int, string>>();
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst_country = context.Country.Select(x => new { x.Id, x.Name }).ToList();
+                    lstCountry = (from l in lst_country select new KeyValuePair<int, string>(l.Id, l.Name)).ToList();
 
-                var lst_city_street = context.Organization
-                    .Where(x => x.CountryId != countryRussiaId && x.CountryId.HasValue)
-                    .Select(x => new { key = x.City, value = x.Street }).Distinct().ToList();
-                lstCityStreet = (from lst in lst_city_street
-                                 select new KeyValuePair<string, string>(lst.key, lst.value)).ToList();
+                    var lst_reg = context.Region.Where(x => !String.IsNullOrEmpty(x.RegionNumber) && x.RegionNumber != "00").Select(x => new { x.Id, x.Name, x.RegionNumber }).Distinct().ToList();
+                    lstRegion = (from l in lst_reg select new KeyValuePair<int, string>(l.Id, l.Name)).ToList();
+                    lstRegionCode = (from l in lst_reg select new KeyValuePair<int, string>(l.Id, l.RegionNumber)).ToList();
+
+                    var lst_country_city = context.Organization
+                        .Where(x => x.CountryId != countryRussiaId && x.CountryId.HasValue)
+                        .Select(x => new { key = x.CountryId.Value, value = x.City }).Distinct().ToList();
+                    lstCountryCity = (from lst in lst_country_city
+                                      select new KeyValuePair<int, string>(lst.key, lst.value)).ToList();
+
+                    var lst_city_street = context.Organization
+                        .Where(x => x.CountryId != countryRussiaId && x.CountryId.HasValue)
+                        .Select(x => new { key = x.City, value = x.Street }).Distinct().ToList();
+                    lstCityStreet = (from lst in lst_city_street
+                                     select new KeyValuePair<string, string>(lst.key, lst.value)).ToList();
+                }
+            }
+            catch (Exception)
+            {
+
             }
         }
+
 
         public static string GetUserName()
         {
@@ -98,6 +107,11 @@ namespace EmployerPartners
             return IsRoleMember("db_owner");
         }
 
+        public static bool IsOrgPersonWrite()
+        {
+            return IsRoleMember("OrgPersonWrite");
+        }
+
         public static bool IsPractice()
         {
             return IsRoleMember("Practice");
@@ -113,6 +127,16 @@ namespace EmployerPartners
             return IsRoleMember("PracticeWrite");
         }
 
+        public static bool IsVKRRead()
+        {
+            return IsRoleMember("VKRRead");
+        }
+
+        public static bool IsVKRWrite()
+        {
+            return IsRoleMember("VKRWrite");
+        }
+
         public static bool IsReadOnlyAll()
         {
             return IsRoleMember("ReadOnlyAll"); 
@@ -120,19 +144,26 @@ namespace EmployerPartners
 		
         public static bool IsRoleMember(string roleName)
         {
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                ObjectParameter entId = new ObjectParameter("result", typeof(bool));
-                context.RoleMember(roleName, entId);
-                if (entId.Value is DBNull)
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    return Convert.ToBoolean(0);
+                    ObjectParameter entId = new ObjectParameter("result", typeof(bool));
+                    context.RoleMember(roleName, entId);
+                    if (entId.Value is DBNull)
+                    {
+                        return Convert.ToBoolean(0);
+                    }
+                    else
+                    {
+                        return Convert.ToBoolean(entId.Value);
+                    }
+                    //return Convert.ToBoolean(entId.Value);
                 }
-                else
-                {
-                    return Convert.ToBoolean(entId.Value);
-                }
-                //return Convert.ToBoolean(entId.Value);
+            }
+            catch 
+            {
+                return false;
             }
         }
         public static bool IsDeveloper()

@@ -44,6 +44,11 @@ namespace EmployerPartners
             get { return checkBoxPermanent.Checked; }
             set { checkBoxPermanent.Checked = value; }
         }
+        public bool FromDocumentDate
+        {
+            get { return checkBoxFromDocumentDate.Checked; }
+            set { checkBoxFromDocumentDate.Checked = value; }
+        }
         public string DocumentNumber
         {
             get { return tbDocumentNumber.Text.Trim(); }
@@ -89,11 +94,15 @@ namespace EmployerPartners
             this.MdiParent = Util.mainform;
             FillCard();
             FillFileList();
-            if (Util.IsReadOnlyAll())
+            SetAccessRight();
+        }
+        private void SetAccessRight()
+        {
+            if (Util.IsOrgPersonWrite())
             {
-                btnSave.Enabled = false;
-                btnAddFile.Enabled = false;
-                dgvFile.Columns[1].Visible = false;
+                btnSave.Enabled = true;
+                btnAddFile.Enabled = true;
+                dgvFile.Columns[1].Visible = true;
             }
         }
         private void FillCard()
@@ -119,6 +128,7 @@ namespace EmployerPartners
                     DocumentStart = (dogovor.DocumentStart.HasValue) ? dogovor.DocumentStart.Value.Date.ToString("dd.MM.yyyy") : "";
                     DocumentFinish = (dogovor.DocumentFinish.HasValue) ? dogovor.DocumentFinish.Value.Date.ToString("dd.MM.yyyy") : "";
                     Permanent = (bool)dogovor.Permanent;    //checkBoxPermanent.Checked = dogovor.Permanent.HasValue ? (bool)dogovor.Permanent : false;
+                    FromDocumentDate = (bool)dogovor.FromDocumentDate;
                     DocumentNumber = dogovor.DocumentNumber;
                     DocumentDate = (dogovor.DocumentDate.HasValue) ? dogovor.DocumentDate.Value.Date.ToString("dd.MM.yyyy") : "";
                     Comment = dogovor.Comment;
@@ -287,6 +297,16 @@ namespace EmployerPartners
             }
             try
             {
+                if (FromDocumentDate)
+                {
+                    DocumentStart = DocumentDate;
+                }
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
                     OrganizationDogovor dogovor;
@@ -303,10 +323,11 @@ namespace EmployerPartners
                     dogovor.RubricId = (int)RubricId;
                     dogovor.DocumentTypeId = (int)DocumentTypeId;
                     dogovor.Document = Document;
-                    dogovor.Permanent = checkBoxPermanent.Checked ? true : false;
+                    dogovor.Permanent = Permanent;      //checkBoxPermanent.Checked ? true : false;
+                    dogovor.FromDocumentDate = FromDocumentDate;    //checkBoxFromDocumentDate.Checked ? true : false;
                     dogovor.DocumentNumber = DocumentNumber;
                     dogovor.Comment = Comment;
-                    dogovor.IsActual = IsActual;     //checkBoxIsActual.Checked ? true : false;
+                    dogovor.IsActual = IsActual;        //checkBoxIsActual.Checked ? true : false;
 
                     if (!String.IsNullOrEmpty(DocumentStart))
                     {
@@ -344,7 +365,7 @@ namespace EmployerPartners
                     if (_hndl != null)
                         _hndl(_Id);
 
-                    this.Close();
+                    //this.Close();
                 }
             }
             catch (Exception ex)
@@ -580,6 +601,20 @@ namespace EmployerPartners
                         //////
                     }
                 }
+        }
+
+        private void checkBoxFromDocumentDate_CheckedChanged(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    if (FromDocumentDate)
+            //    {
+            //        DocumentStart = DocumentDate;   
+            //    }
+            //}
+            //catch 
+            //{
+            //}
         }
     }
 }

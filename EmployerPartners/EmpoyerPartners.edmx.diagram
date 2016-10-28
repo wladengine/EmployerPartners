@@ -155,6 +155,49 @@
         <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationDogovorFile_OrganizationDogovor" />
         <AssociationConnector Association="EmployerPartnersModel.FK_PracticeLPStudent_OrganizationDogovor" />
         <EntityTypeShape EntityType="EmployerPartnersModel.EPLog" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKR" Width="1.5" PointX="21.375" PointY="5.375" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKRCoordinator" Width="1.5" PointX="23.625" PointY="8.875" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKRSection" Width="1.5" PointX="23.625" PointY="5.25" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKRSectionCoordinator" Width="1.5" PointX="25.875" PointY="5" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKRSectionFaculty" Width="1.5" PointX="25.875" PointY="9.375" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPCoordinator_Faculty" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKRSectionFaculty_Faculty" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPCoordinator_VKR" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKRSection_VKR" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKRSectionCoordinator_VKRSection" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKRSectionFaculty_VKRSection" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKROP" Width="1.5" PointX="25.875" PointY="16.75" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROP_ObrazProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROP_ObrazProgramInYear" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROP_VKR" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROP_VKRCoordinator" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKRThemes" Width="1.5" PointX="23.625" PointY="24" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKRThemes_Faculty" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKRThemes_LicenseProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKRThemes_ObrazProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKRThemes_Organization" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKRThemes_Organization1" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKRThemes_VKR" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKROPStudent" Width="1.5" PointX="19.5" PointY="16.125" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKROPTheme" Width="1.5" PointX="28.125" PointY="15.625" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPStudent_Faculty" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPStudent_LicenseProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPStudent_ObrazProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPStudent_Organization" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPTheme_Organization" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPTheme_Organization1" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPTheme_VKRCoordinator" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPTheme_VKROP" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPStudent_VKROP" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKRSource" Width="1.5" PointX="15.375" PointY="4.875" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKROPStudent_VKRSource" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.ActivityAreaProfessional" Width="1.5" PointX="16.375" PointY="16.75" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_Organization_ActivityAreaProfessional" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.OrganizationNames" Width="1.5" PointX="5.25" PointY="63.5" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationNames_Organization" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.OrganizationActivityAreaProfessional" Width="1.5" PointX="22.625" PointY="20.375" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationActivityAreaProfessional_ActivityAreaProfessional" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationActivityAreaProfessional_Organization" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

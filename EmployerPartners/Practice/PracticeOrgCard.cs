@@ -50,6 +50,11 @@ namespace EmployerPartners
             get;
             set;
         }
+        public int POrgCardId
+        {
+            get;
+            set;
+        }
         private int _OrgId
         {
             get;
@@ -61,6 +66,7 @@ namespace EmployerPartners
         {
             InitializeComponent();
             _Id = id;
+            POrgCardId = (int)id;
             _OrgId = orgid;
             _hndl = _hdl;
             FillCombo();
@@ -176,12 +182,16 @@ namespace EmployerPartners
 
         private void btnOrgCard_Click(object sender, EventArgs e)
         {
+            if (Utilities.OrgCardIsOpened(_OrgId))
+                return;
             new CardOrganization(_OrgId, null).Show();
         }
 
         private void btnOrgDogovorRefresh_Click(object sender, EventArgs e)
         {
+            int? orgdogid = OrgDogId;
             FillCombo();
+            OrgDogId = orgdogid;
         }
     }
 }

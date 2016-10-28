@@ -35,6 +35,7 @@
             this.err = new System.Windows.Forms.ErrorProvider(this.components);
             this.SaveSuccess = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnAreaRefresh = new System.Windows.Forms.Button();
             this.chbAlumni = new System.Windows.Forms.CheckBox();
             this.chbIsGraduate = new System.Windows.Forms.CheckBox();
             this.lbCountry = new System.Windows.Forms.ListBox();
@@ -73,6 +74,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnRefreshOrgList = new System.Windows.Forms.Button();
             this.btnEditContact = new System.Windows.Forms.Button();
             this.btnDeleteContact = new System.Windows.Forms.Button();
             this.btnOrganizationCardOpen = new System.Windows.Forms.Button();
@@ -80,22 +82,27 @@
             this.dgvContacts = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.btnLPDelete = new System.Windows.Forms.Button();
             this.btnLPAdd = new System.Windows.Forms.Button();
             this.dgvLP = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.btnFacultyDelete = new System.Windows.Forms.Button();
             this.btnFacultyAdd = new System.Windows.Forms.Button();
             this.dgvFaculty = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.btnActivityAreaDelete = new System.Windows.Forms.Button();
             this.btnActivityAreaAdd = new System.Windows.Forms.Button();
             this.dgvActivityArea = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.btnRubricDelete = new System.Windows.Forms.Button();
             this.btnRublrikAdd = new System.Windows.Forms.Button();
             this.dgvRubric = new System.Windows.Forms.DataGridView();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.err)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SaveSuccess)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -125,7 +132,8 @@
             // 
             // btnSave
             // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Enabled = false;
             this.btnSave.Location = new System.Drawing.Point(767, 604);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(134, 23);
@@ -145,6 +153,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnAreaRefresh);
             this.tabPage1.Controls.Add(this.chbAlumni);
             this.tabPage1.Controls.Add(this.chbIsGraduate);
             this.tabPage1.Controls.Add(this.lbCountry);
@@ -188,6 +197,17 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные сведения";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnAreaRefresh
+            // 
+            this.btnAreaRefresh.Location = new System.Drawing.Point(8, 174);
+            this.btnAreaRefresh.Name = "btnAreaRefresh";
+            this.btnAreaRefresh.Size = new System.Drawing.Size(24, 23);
+            this.btnAreaRefresh.TabIndex = 29;
+            this.btnAreaRefresh.Text = "!";
+            this.toolTip1.SetToolTip(this.btnAreaRefresh, "Обновить");
+            this.btnAreaRefresh.UseVisualStyleBackColor = true;
+            this.btnAreaRefresh.Click += new System.EventHandler(this.btnAreaRefresh_Click);
             // 
             // chbAlumni
             // 
@@ -339,6 +359,8 @@
             // 
             // tbTitle
             // 
+            this.tbTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbTitle.Location = new System.Drawing.Point(183, 58);
             this.tbTitle.Multiline = true;
             this.tbTitle.Name = "tbTitle";
@@ -405,7 +427,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(23, 179);
+            this.label7.Location = new System.Drawing.Point(32, 179);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(141, 13);
             this.label7.TabIndex = 3;
@@ -527,6 +549,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnRefreshOrgList);
             this.tabPage2.Controls.Add(this.btnEditContact);
             this.tabPage2.Controls.Add(this.btnDeleteContact);
             this.tabPage2.Controls.Add(this.btnOrganizationCardOpen);
@@ -540,9 +563,20 @@
             this.tabPage2.Text = "Организации";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnRefreshOrgList
+            // 
+            this.btnRefreshOrgList.Location = new System.Drawing.Point(6, 11);
+            this.btnRefreshOrgList.Name = "btnRefreshOrgList";
+            this.btnRefreshOrgList.Size = new System.Drawing.Size(107, 23);
+            this.btnRefreshOrgList.TabIndex = 7;
+            this.btnRefreshOrgList.Text = "Обновить";
+            this.btnRefreshOrgList.UseVisualStyleBackColor = true;
+            this.btnRefreshOrgList.Click += new System.EventHandler(this.btnRefreshOrgList_Click);
+            // 
             // btnEditContact
             // 
-            this.btnEditContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEditContact.Enabled = false;
             this.btnEditContact.Location = new System.Drawing.Point(6, 485);
             this.btnEditContact.Name = "btnEditContact";
             this.btnEditContact.Size = new System.Drawing.Size(233, 23);
@@ -554,6 +588,7 @@
             // btnDeleteContact
             // 
             this.btnDeleteContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteContact.Enabled = false;
             this.btnDeleteContact.Location = new System.Drawing.Point(490, 11);
             this.btnDeleteContact.Name = "btnDeleteContact";
             this.btnDeleteContact.Size = new System.Drawing.Size(209, 23);
@@ -565,17 +600,18 @@
             // btnOrganizationCardOpen
             // 
             this.btnOrganizationCardOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOrganizationCardOpen.Location = new System.Drawing.Point(705, 485);
+            this.btnOrganizationCardOpen.Location = new System.Drawing.Point(671, 485);
             this.btnOrganizationCardOpen.Name = "btnOrganizationCardOpen";
-            this.btnOrganizationCardOpen.Size = new System.Drawing.Size(182, 23);
+            this.btnOrganizationCardOpen.Size = new System.Drawing.Size(216, 23);
             this.btnOrganizationCardOpen.TabIndex = 4;
-            this.btnOrganizationCardOpen.Text = "Открыть карточку";
+            this.btnOrganizationCardOpen.Text = "Открыть карточку организации";
             this.btnOrganizationCardOpen.UseVisualStyleBackColor = true;
             this.btnOrganizationCardOpen.Click += new System.EventHandler(this.btnOrganizationCardOpen_Click);
             // 
             // btnContactAdd
             // 
             this.btnContactAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnContactAdd.Enabled = false;
             this.btnContactAdd.Location = new System.Drawing.Point(705, 11);
             this.btnContactAdd.Name = "btnContactAdd";
             this.btnContactAdd.Size = new System.Drawing.Size(182, 23);
@@ -588,6 +624,9 @@
             // 
             this.dgvContacts.AllowUserToAddRows = false;
             this.dgvContacts.AllowUserToDeleteRows = false;
+            this.dgvContacts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvContacts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvContacts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvContacts.Location = new System.Drawing.Point(6, 40);
@@ -613,6 +652,9 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox4.Controls.Add(this.label14);
             this.groupBox4.Controls.Add(this.btnLPDelete);
             this.groupBox4.Controls.Add(this.btnLPAdd);
             this.groupBox4.Controls.Add(this.dgvLP);
@@ -623,9 +665,21 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Направления подготовки (по которым есть сотрудничество с партнером)";
             // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label14.Location = new System.Drawing.Point(6, 132);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(94, 12);
+            this.label14.TabIndex = 5;
+            this.label14.Text = "DoubleClick - редакт.";
+            // 
             // btnLPDelete
             // 
             this.btnLPDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLPDelete.Enabled = false;
             this.btnLPDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnLPDelete.Image")));
             this.btnLPDelete.Location = new System.Drawing.Point(816, 124);
             this.btnLPDelete.Name = "btnLPDelete";
@@ -637,6 +691,7 @@
             // btnLPAdd
             // 
             this.btnLPAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLPAdd.Enabled = false;
             this.btnLPAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnLPAdd.Image")));
             this.btnLPAdd.Location = new System.Drawing.Point(848, 124);
             this.btnLPAdd.Name = "btnLPAdd";
@@ -663,6 +718,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.btnFacultyDelete);
             this.groupBox2.Controls.Add(this.btnFacultyAdd);
             this.groupBox2.Controls.Add(this.dgvFaculty);
@@ -673,9 +729,20 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Направления (по которым есть сотрудничество с партнером)";
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label12.Location = new System.Drawing.Point(6, 154);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(94, 12);
+            this.label12.TabIndex = 3;
+            this.label12.Text = "DoubleClick - редакт.";
+            // 
             // btnFacultyDelete
             // 
             this.btnFacultyDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFacultyDelete.Enabled = false;
             this.btnFacultyDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnFacultyDelete.Image")));
             this.btnFacultyDelete.Location = new System.Drawing.Point(342, 146);
             this.btnFacultyDelete.Name = "btnFacultyDelete";
@@ -687,6 +754,7 @@
             // btnFacultyAdd
             // 
             this.btnFacultyAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFacultyAdd.Enabled = false;
             this.btnFacultyAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnFacultyAdd.Image")));
             this.btnFacultyAdd.Location = new System.Drawing.Point(374, 146);
             this.btnFacultyAdd.Name = "btnFacultyAdd";
@@ -713,6 +781,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.btnActivityAreaDelete);
             this.groupBox3.Controls.Add(this.btnActivityAreaAdd);
             this.groupBox3.Controls.Add(this.dgvActivityArea);
@@ -724,9 +793,20 @@
             this.groupBox3.Text = "Области деятельности партнера";
             this.groupBox3.UseCompatibleTextRendering = true;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label13.Location = new System.Drawing.Point(6, 338);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(94, 12);
+            this.label13.TabIndex = 4;
+            this.label13.Text = "DoubleClick - редакт.";
+            // 
             // btnActivityAreaDelete
             // 
             this.btnActivityAreaDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnActivityAreaDelete.Enabled = false;
             this.btnActivityAreaDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnActivityAreaDelete.Image")));
             this.btnActivityAreaDelete.Location = new System.Drawing.Point(404, 330);
             this.btnActivityAreaDelete.Name = "btnActivityAreaDelete";
@@ -738,6 +818,7 @@
             // btnActivityAreaAdd
             // 
             this.btnActivityAreaAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnActivityAreaAdd.Enabled = false;
             this.btnActivityAreaAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnActivityAreaAdd.Image")));
             this.btnActivityAreaAdd.Location = new System.Drawing.Point(436, 330);
             this.btnActivityAreaAdd.Name = "btnActivityAreaAdd";
@@ -764,6 +845,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.btnRubricDelete);
             this.groupBox1.Controls.Add(this.btnRublrikAdd);
             this.groupBox1.Controls.Add(this.dgvRubric);
@@ -774,9 +856,20 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Рубрики, по которым проходит партнер";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label9.Location = new System.Drawing.Point(6, 153);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(94, 12);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "DoubleClick - редакт.";
+            // 
             // btnRubricDelete
             // 
             this.btnRubricDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRubricDelete.Enabled = false;
             this.btnRubricDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnRubricDelete.Image")));
             this.btnRubricDelete.Location = new System.Drawing.Point(342, 146);
             this.btnRubricDelete.Name = "btnRubricDelete";
@@ -788,6 +881,7 @@
             // btnRublrikAdd
             // 
             this.btnRublrikAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRublrikAdd.Enabled = false;
             this.btnRublrikAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnRublrikAdd.Image")));
             this.btnRublrikAdd.Location = new System.Drawing.Point(374, 146);
             this.btnRublrikAdd.Name = "btnRublrikAdd";
@@ -815,6 +909,7 @@
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDelete.Enabled = false;
             this.btnDelete.Location = new System.Drawing.Point(12, 604);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(134, 23);
@@ -833,7 +928,6 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
             this.Name = "CardPerson";
             this.Text = "Физическое лицо";
             ((System.ComponentModel.ISupportInitialize)(this.err)).EndInit();
@@ -846,12 +940,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvContacts)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLP)).EndInit();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFaculty)).EndInit();
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvActivityArea)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRubric)).EndInit();
             this.ResumeLayout(false);
 
@@ -925,6 +1023,13 @@
         private System.Windows.Forms.DataGridView dgvRubric;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnEditContact;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnRefreshOrgList;
+        private System.Windows.Forms.Button btnAreaRefresh;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

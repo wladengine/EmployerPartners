@@ -18,6 +18,7 @@ namespace EmployerPartners
         public ObrazProgramInYear()
         {
             this.PracticeLPOP = new HashSet<PracticeLPOP>();
+            this.VKROP = new HashSet<VKROP>();
         }
     
         public int Id { get; set; }
@@ -39,5 +40,7 @@ namespace EmployerPartners
         public virtual Year Year1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PracticeLPOP> PracticeLPOP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKROP> VKROP { get; set; }
     }
 }

@@ -93,13 +93,14 @@
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(117, 24);
             this.btnOpen.TabIndex = 1;
-            this.btnOpen.Text = "Открыть";
+            this.btnOpen.Text = "Открыть карточку";
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // btnAddPartner
             // 
             this.btnAddPartner.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddPartner.Enabled = false;
             this.btnAddPartner.Location = new System.Drawing.Point(881, 90);
             this.btnAddPartner.Name = "btnAddPartner";
             this.btnAddPartner.Size = new System.Drawing.Size(117, 24);

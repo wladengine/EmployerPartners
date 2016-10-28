@@ -17,7 +17,8 @@ namespace EmployerPartners
             :base()
         {
             InitializeComponent();
-            this.Text = "Сферы деятельности";
+            //this.Text = "Сферы деятельности";
+            this.Text = "Ключевые слова";
         }
 
         public override void FillCard(DataGridView dgv, int? id)
@@ -53,32 +54,54 @@ namespace EmployerPartners
         }
         override public void DeleteRec(int Id)
         {
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                context.ActivityArea.Remove(context.ActivityArea.Where(x => x.Id == Id).First());
-                context.SaveChanges();
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    context.ActivityArea.Remove(context.ActivityArea.Where(x => x.Id == Id).First());
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удается удалить запись \r\n" + "Обычно это связано с наличием связанных записей в других таблицах.", "Сообщение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
         override public void UpdateRec(int? Id, string name)
         {
             if (Id.HasValue)
-                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                try
                 {
-                    ActivityArea obj = context.ActivityArea.Where(x => x.Id == Id).First();
-                    obj.Name = name;
-                    context.SaveChanges();
-                    FillCard(Id);
+                    using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                    {
+                        ActivityArea obj = context.ActivityArea.Where(x => x.Id == Id).First();
+                        obj.Name = name;
+                        context.SaveChanges();
+                        FillCard(Id);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Не удается обновить запись \r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
         }
         override public void AddRec(int? Id, string name)
         {
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                ActivityArea obj = new ActivityArea();
-                obj.Name = name;
-                context.ActivityArea.Add(obj);
-                context.SaveChanges();
-                FillCard(obj.Id);
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    ActivityArea obj = new ActivityArea();
+                    obj.Name = name;
+                    context.ActivityArea.Add(obj);
+                    context.SaveChanges();
+                    FillCard(obj.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Не удается добавить запись \r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
     }

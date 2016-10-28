@@ -53,32 +53,54 @@ namespace EmployerPartners
         }
         override public void DeleteRec(int Id)
         {
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                context.ActivityGoal.Remove(context.ActivityGoal.Where(x => x.Id == Id).First());
-                context.SaveChanges();
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    context.ActivityGoal.Remove(context.ActivityGoal.Where(x => x.Id == Id).First());
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+               MessageBox.Show("Не удается удалить запись \r\n" + "Обычно это связано с наличием связанных записей в других таблицах.", "Сообщение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
         override public void UpdateRec(int? Id, string name)
         {
             if (Id.HasValue)
-                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                try
                 {
-                    ActivityGoal obj = context.ActivityGoal.Where(x => x.Id == Id).First();
-                    obj.Name = name;
-                    context.SaveChanges();
-                    FillCard(Id);
+                    using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                    {
+                        ActivityGoal obj = context.ActivityGoal.Where(x => x.Id == Id).First();
+                        obj.Name = name;
+                        context.SaveChanges();
+                        FillCard(Id);
+                    }
+                }
+                catch (Exception ex)
+                {
+                   MessageBox.Show("Не удается обновить запись \r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
         }
         override public void AddRec(int? Id, string name)
         {
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                ActivityGoal obj = new ActivityGoal();
-                obj.Name = name;
-                context.ActivityGoal.Add(obj);
-                context.SaveChanges();
-                FillCard(obj.Id);
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    ActivityGoal obj = new ActivityGoal();
+                    obj.Name = name;
+                    context.ActivityGoal.Add(obj);
+                    context.SaveChanges();
+                    FillCard(obj.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+               MessageBox.Show("Не удается добавить запись \r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
     }

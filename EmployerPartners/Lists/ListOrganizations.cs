@@ -55,6 +55,8 @@ namespace EmployerPartners
             get { return ComboServ.GetComboIdInt(cbFaculty); }
             set { ComboServ.SetComboId(cbFaculty, value); }
         }
+        private int? RowNumStartSearch;
+
 
         public ListOrganizations()
         {
@@ -63,12 +65,15 @@ namespace EmployerPartners
             this.Text = "Список организаций";
             FillCard();
             FillGrid();
-            if (Util.IsReadOnlyAll())
+            SetAccessRight();
+        }
+        private void SetAccessRight()
+        {
+            if (Util.IsOrgPersonWrite())
             {
-                btnAddPartner.Enabled = false;
+                btnAddPartner.Enabled = true;
             }
         }
-
         private void FillCard()
         {
             ComboServ.FillCombo(cbOwnership, HelpClass.GetComboListByTable("dbo.OwnershipType"), false, true);
@@ -165,14 +170,26 @@ namespace EmployerPartners
                                Краткое_наименование = org.ShortName,
                                Наименование_англ = org.NameEng,
                                Краткое_наименование_англ = org.ShortNameEng,
-                               Источник = org.Source,
+                               Дата_с_которой_актуально_наименование = org.NameDate,
+                               Источник_Устав = org.SourceCharter,
+                               Источник_ЕГРЮЛ = org.SourceEGRUL,
+                               Источник_Сайт = org.SourceSite,
+                               Дополнит_источник = org.Source,
+                               Карточка_проверена = org.CardChecked,
+                               Используется = org.IsActual,
+                               OECD = org.OECD,
                                ОКВЭД = org.Okved,
                                Форма_собственности = org.OwnershipType.Name, 
                                Цель_деятельности = org.ActivityGoal.Name,
                                Национальная_принадлежность = org.NationalAffiliation.Name,
-                               Основная_сфера_деятельности = org.ActivityArea.Name,
+                               Ключевое_слово_основное = org.ActivityArea.Name,
+                               Область_профессиональной_деятельности_основная = (String.IsNullOrEmpty(org.ActivityAreaProfessional.Name)) ? "" : "[ " + org.ActivityAreaProfessional.Code + " ] " +
+                                    org.ActivityAreaProfessional.Name,
 
                                ИНН = org.INN,
+                               ОГРН = org.OGRN,
+                               Дата_присвоения_ОГРН = org.OGRNDate,
+                               Дата_прекращения_деятельности = org.CloseDate,
                                org.Email,
                                Телефон = org.Phone,
                                Мобильный_телефон = org.Mobiles,
@@ -229,6 +246,8 @@ namespace EmployerPartners
                     if (dgv.CurrentRow.Index >= 0)
                     {
                         int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                        if (Utilities.OrgCardIsOpened(id))
+                            return;
                         new CardOrganization(id, new UpdateVoidHandler(FillGrid)).Show();
                     }
             }
@@ -246,6 +265,8 @@ namespace EmployerPartners
                     if (dgv.CurrentRow.Index >= 0)
                     {
                         int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                        if (Utilities.OrgCardIsOpened(id))
+                            return;
                         new CardOrganization(id, new UpdateVoidHandler(FillGrid)).Show();
                     }
             }
@@ -257,6 +278,18 @@ namespace EmployerPartners
 
         private void btnAddPartner_Click(object sender, EventArgs e)
         {
+            try
+            {
+                foreach (Form frm in Application.OpenForms)
+                    if (frm is CardNewOrganization)
+                    {
+                        frm.Activate();
+                        return;
+                    }
+            }
+            catch (Exception)
+            {
+            }
             //new CardPartner(null, new UpdateVoidHandler(FillCard)).Show();
             new CardNewOrganization(new UpdateVoidHandler(FillGrid)).Show();
         }
@@ -412,6 +445,7 @@ namespace EmployerPartners
                             //dgv[j, i].Style.BackColor = Color.White;
                             dgv.CurrentCell = dgv[j, i];
                             exit = true;
+                            RowNumStartSearch = i + 1;
                             break;
                         }
                     }
@@ -422,7 +456,76 @@ namespace EmployerPartners
             }
         }
 
-        
+        private void btnSearchNext_Click(object sender, EventArgs e)
+        {
+            if (!RowNumStartSearch.HasValue)
+                return;
+            try
+            {
+                string search = tbSearch.Text.Trim().ToUpper();
+                bool exit = false;
+                int k = (int)RowNumStartSearch;
+                for (int i = k; i < dgv.RowCount; i++)
+                {
+                    if (exit)
+                    //{ break; }
+                    { return; }
+                    for (int j = 0; j < 6 /*dgv.Columns.Count*/; j++)
+                    {
+                        if (j == 1)
+                            continue;
+                        if (dgv[j, i].Value.ToString().ToUpper().Contains(search))
+                        {
+                            //dgv[j, i].Style.BackColor = Color.White;
+                            dgv.CurrentCell = dgv[j, i];
+                            exit = true;
+                            RowNumStartSearch = i + 1;
+                            break;
+                        }
+                    }
+                }
+                MessageBox.Show("Поиск завершен. Образец не найден.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void btnSearchPrevious_Click(object sender, EventArgs e)
+        {
+            if (!RowNumStartSearch.HasValue)
+                return;
+            try
+            {
+                string search = tbSearch.Text.Trim().ToUpper();
+                bool exit = false;
+                int k = (int)RowNumStartSearch - 2;
+                for (int i = k; i >= 0 /*dgv.RowCount*/; i--)
+                {
+                    if (exit)
+                    //{ break; }
+                    { return; }
+                    for (int j = 0; j < 6 /*dgv.Columns.Count*/; j++)
+                    {
+                        if (j == 1)
+                            continue;
+                        if (dgv[j, i].Value.ToString().ToUpper().Contains(search))
+                        {
+                            //dgv[j, i].Style.BackColor = Color.White;
+                            dgv.CurrentCell = dgv[j, i];
+                            exit = true;
+                            RowNumStartSearch = i - 1;
+                            break;
+                        }
+                    }
+                }
+                MessageBox.Show("Поиск завершен. Образец не найден.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
     }
 
 }

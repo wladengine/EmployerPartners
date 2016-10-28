@@ -37,6 +37,11 @@ namespace EmployerPartners
             get;
             set;
         }
+        public int PStudentCardId
+        {
+            get;
+            set;
+        }
         private int? _OrgId
         {
             get;
@@ -48,6 +53,7 @@ namespace EmployerPartners
         {
             InitializeComponent();
             _Id = id;
+            PStudentCardId = (int)id;
             _OrgId = orgid;
             _Org = orgname;
             _hndl = _hdl;
@@ -120,13 +126,17 @@ namespace EmployerPartners
         {
             if (_OrgId.HasValue)
             {
+                if (Utilities.OrgCardIsOpened((int)_OrgId))
+                    return;
                 new CardOrganization(_OrgId, null).Show();
             }
         }
 
         private void btnOrgDogovorRefresh_Click(object sender, EventArgs e)
         {
+            int? orgdogid = OrgDogId;
             FillCombo();
+            OrgDogId = orgdogid;
         }
     }
 }

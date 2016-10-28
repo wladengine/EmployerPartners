@@ -93,6 +93,19 @@ namespace EmployerPartners
         public virtual DbSet<OrganizationDogovor> OrganizationDogovor { get; set; }
         public virtual DbSet<OrganizationDogovorFile> OrganizationDogovorFile { get; set; }
         public virtual DbSet<EPLog> EPLog { get; set; }
+        public virtual DbSet<VKR> VKR { get; set; }
+        public virtual DbSet<VKRCoordinator> VKRCoordinator { get; set; }
+        public virtual DbSet<VKRSection> VKRSection { get; set; }
+        public virtual DbSet<VKRSectionCoordinator> VKRSectionCoordinator { get; set; }
+        public virtual DbSet<VKRSectionFaculty> VKRSectionFaculty { get; set; }
+        public virtual DbSet<VKROP> VKROP { get; set; }
+        public virtual DbSet<VKRThemes> VKRThemes { get; set; }
+        public virtual DbSet<VKROPStudent> VKROPStudent { get; set; }
+        public virtual DbSet<VKROPTheme> VKROPTheme { get; set; }
+        public virtual DbSet<VKRSource> VKRSource { get; set; }
+        public virtual DbSet<ActivityAreaProfessional> ActivityAreaProfessional { get; set; }
+        public virtual DbSet<OrganizationNames> OrganizationNames { get; set; }
+        public virtual DbSet<OrganizationActivityAreaProfessional> OrganizationActivityAreaProfessional { get; set; }
     
         public virtual int RoleMember(string roleName, ObjectParameter result)
         {

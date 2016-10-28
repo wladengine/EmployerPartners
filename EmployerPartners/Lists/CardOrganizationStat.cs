@@ -62,7 +62,7 @@ namespace EmployerPartners
                       orderby l.Count() descending, l.First().Name
                       select new
                       {
-                          Сфера_деятельности = l.First().Name,
+                          Ключевое_слово = l.First().Name,
                           Кол__во_организаций = l.Count(),
                       }).ToList();
                       //}).OrderByDescending(x => x.Кол__во_организаций).ToList();
@@ -366,7 +366,7 @@ namespace EmployerPartners
                                 break;
                             case "Сферы деятельности":
                                 rowshift = 0;
-                                ws = doc.Workbook.Worksheets.Add("Сферы деятельности");
+                                ws = doc.Workbook.Worksheets.Add("Ключевые слова");
                                 break;
                             default:
                                 break;

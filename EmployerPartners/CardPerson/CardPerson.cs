@@ -21,34 +21,46 @@ namespace EmployerPartners
             get;
             set;
         }
-        UpdateVoidHandler _hndl;
+        public int PersonId
+        {
+            get;
+            set;
+        }
+        //bool EditMode = false;
 
+        UpdateVoidHandler _hndl;
 
         public CardPerson(int? id, UpdateVoidHandler _hdl)
         {
             InitializeComponent();
             _hndl = _hdl;
             _Id = id;
+            PersonId = (int)id;
 
             FillCard();
             InitControls(this);
             this.MdiParent = Util.mainform;
 
-            if (Util.IsReadOnlyAll())
+            SetAccessRight();
+            //Utilities.SetReadMode(this);
+        }
+        private void SetAccessRight()
+        {
+            if (Util.IsOrgPersonWrite())
             {
-                btnSave.Enabled = false;
-                btnDelete.Enabled = false;
-                btnEditContact.Enabled = false;
-                btnContactAdd.Enabled = false;
-                btnDeleteContact.Enabled = false;
-                btnRublrikAdd.Enabled = false;
-                btnRubricDelete.Enabled = false;
-                btnFacultyAdd.Enabled = false;
-                btnFacultyDelete.Enabled = false;
-                btnActivityAreaAdd.Enabled = false;
-                btnActivityAreaDelete.Enabled = false;
-                btnLPAdd.Enabled = false;
-                btnLPDelete.Enabled = false;
+                btnSave.Enabled = true;
+                btnDelete.Enabled = true;
+                btnEditContact.Enabled = true;
+                btnContactAdd.Enabled = true;
+                btnDeleteContact.Enabled = true;
+                btnRublrikAdd.Enabled = true;
+                btnRubricDelete.Enabled = true;
+                btnFacultyAdd.Enabled = true;
+                btnFacultyDelete.Enabled = true;
+                btnActivityAreaAdd.Enabled = true;
+                btnActivityAreaDelete.Enabled = true;
+                btnLPAdd.Enabled = true;
+                btnLPDelete.Enabled = true;
             }
         }
         public void InitControls(Control obj)
@@ -196,6 +208,8 @@ namespace EmployerPartners
                 foreach (string s in new List<string>() { "Id", "OrgId" })
                     if (dgvContacts.Columns.Contains(s))
                         dgvContacts.Columns[s].Visible = false;
+                foreach (DataGridViewColumn col in dgvContacts.Columns)
+                    col.HeaderText = col.Name.Replace("_", " ");
                 if (id.HasValue)
                     foreach (DataGridViewRow rw in dgvContacts.Rows)
                         if (rw.Cells[0].Value.ToString() == id.Value.ToString())
@@ -340,7 +354,7 @@ namespace EmployerPartners
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Ошибка при сохранении карточки\r\n" + exc.InnerException, "");
+                MessageBox.Show("Ошибка при сохранении карточки\r\n" + exc.InnerException, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
         }
@@ -374,9 +388,9 @@ namespace EmployerPartners
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при сохранении карточки", "");
+                MessageBox.Show("Ошибка при сохранении карточки \r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
         }
@@ -476,16 +490,16 @@ namespace EmployerPartners
         }
         private void dgvContacts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Util.IsReadOnlyAll())
-                return;
-
-            if (_Id.HasValue)
-                if (dgvContacts.CurrentCell != null)
-                    if (dgvContacts.CurrentRow.Index >= 0)
-                    {
-                        int id = int.Parse(dgvContacts.CurrentRow.Cells["Id"].Value.ToString());
-                        new CardPersonOrganization(id, _Id.Value, new UpdateVoidHandler(FillPersonOrganization)).Show();
-                    }
+            if (Util.IsOrgPersonWrite())
+            {
+                if (_Id.HasValue)
+                    if (dgvContacts.CurrentCell != null)
+                        if (dgvContacts.CurrentRow.Index >= 0)
+                        {
+                            int id = int.Parse(dgvContacts.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardPersonOrganization(id, _Id.Value, new UpdateVoidHandler(FillPersonOrganization)).Show();
+                        }
+            }
         }
         private void btnDeleteContact_Click(object sender, EventArgs e)
         {
@@ -509,7 +523,8 @@ namespace EmployerPartners
                         catch (Exception)
                         {
                         }
-                        if (MessageBox.Show("Удалить выбранную запись? \r" + sOrgName + "\r" + sPosition, "Запрос на подтверждение", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                        if (MessageBox.Show("Удалить выбранную запись? \r" + sOrgName + "\r" + sPosition, "Запрос на подтверждение", 
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != System.Windows.Forms.DialogResult.Yes)
                             return;
 
                         int id = int.Parse(dgvContacts.CurrentRow.Cells["Id"].Value.ToString());
@@ -528,6 +543,8 @@ namespace EmployerPartners
                     if (dgvContacts.CurrentRow.Index >= 0)
                     {
                         int id = int.Parse(dgvContacts.CurrentRow.Cells["OrgId"].Value.ToString());
+                        if (Utilities.OrgCardIsOpened(id))
+                            return;
                         new CardOrganization(id, new UpdateVoidHandler(FillPersonOrganization)).Show();
                     }
         }
@@ -545,17 +562,17 @@ namespace EmployerPartners
         }
         private void dgvActivityArea_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Util.IsReadOnlyAll())
-                return;
-
-            DataGridView dgv = (DataGridView)sender;
-            if (_Id.HasValue)
-                if (dgv.CurrentCell != null)
-                    if (dgv.CurrentRow.Index >= 0)
-                    {
-                        int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
-                        new CardPersonArea(id, _Id.Value, new UpdateVoidHandler(FillPersonArea)).Show();
-                    }
+            if (Util.IsOrgPersonWrite())
+            {
+                DataGridView dgv = (DataGridView)sender;
+                if (_Id.HasValue)
+                    if (dgv.CurrentCell != null)
+                        if (dgv.CurrentRow.Index >= 0)
+                        {
+                            int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardPersonArea(id, _Id.Value, new UpdateVoidHandler(FillPersonArea)).Show();
+                        }
+            }
         }
         private void btnAreaDelete_Click(object sender, EventArgs e)
         {
@@ -657,16 +674,16 @@ namespace EmployerPartners
         }
         private void dgvRubric_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Util.IsReadOnlyAll())
-                return;
-
-            if (_Id.HasValue)
-                if (dgvRubric.CurrentCell != null)
-                    if (dgvRubric.CurrentRow.Index >= 0)
-                    {
-                        int id = int.Parse(dgvRubric.CurrentRow.Cells["Id"].Value.ToString());
-                        new CardPersonRubric(id, _Id.Value, new UpdateVoidHandler(FillRubrics)).Show();
-                    }
+            if (Util.IsOrgPersonWrite())
+            {
+                if (_Id.HasValue)
+                    if (dgvRubric.CurrentCell != null)
+                        if (dgvRubric.CurrentRow.Index >= 0)
+                        {
+                            int id = int.Parse(dgvRubric.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardPersonRubric(id, _Id.Value, new UpdateVoidHandler(FillRubrics)).Show();
+                        }
+            }
         }
         #endregion
 
@@ -754,16 +771,16 @@ namespace EmployerPartners
         }
         private void dgvFaculty_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Util.IsReadOnlyAll())
-                return;
-
-            if (_Id.HasValue)
-                if (dgvFaculty.CurrentCell != null)
-                    if (dgvFaculty.CurrentRow.Index >= 0)
-                    {
-                        int id = int.Parse(dgvFaculty.CurrentRow.Cells["Id"].Value.ToString());
-                        new CardPersonFaculty(id, _Id.Value, new UpdateVoidHandler(FillFaculty)).Show();
-                    }
+            if (Util.IsOrgPersonWrite())
+            {
+                if (_Id.HasValue)
+                    if (dgvFaculty.CurrentCell != null)
+                        if (dgvFaculty.CurrentRow.Index >= 0)
+                        {
+                            int id = int.Parse(dgvFaculty.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardPersonFaculty(id, _Id.Value, new UpdateVoidHandler(FillFaculty)).Show();
+                        }
+            }
         }
         #endregion
 
@@ -866,16 +883,16 @@ namespace EmployerPartners
         }
         private void dgvLP_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Util.IsReadOnlyAll())
-                return;
-
-            if (_Id.HasValue)
-                if (dgvLP.CurrentCell != null)
-                    if (dgvLP.CurrentRow.Index >= 0)
-                    {
-                        int id = int.Parse(dgvLP.CurrentRow.Cells["Id"].Value.ToString());
-                        new CardPersonLP(id, _Id.Value, new UpdateVoidHandler(FillLP)).Show();
-                    }
+            if (Util.IsOrgPersonWrite())
+            {
+                if (_Id.HasValue)
+                    if (dgvLP.CurrentCell != null)
+                        if (dgvLP.CurrentRow.Index >= 0)
+                        {
+                            int id = int.Parse(dgvLP.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardPersonLP(id, _Id.Value, new UpdateVoidHandler(FillLP)).Show();
+                        }
+            }
         }
         #endregion
 
@@ -891,7 +908,8 @@ namespace EmployerPartners
                 catch (Exception)
                 {
                 }
-                if (MessageBox.Show("Удалить карточку? \r\n" + FIO, "Запрос на подтверждение", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                if (MessageBox.Show("Удалить карточку? \r\n" + FIO, "Запрос на подтверждение", 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != System.Windows.Forms.DialogResult.Yes)
                     return;
                 try
                 {
@@ -916,6 +934,18 @@ namespace EmployerPartners
                         int id = int.Parse(dgvContacts.CurrentRow.Cells["Id"].Value.ToString());
                         new CardPersonOrganization(id, _Id.Value, new UpdateVoidHandler(FillPersonOrganization)).Show();
                     }
+        }
+
+        private void btnRefreshOrgList_Click(object sender, EventArgs e)
+        {
+            FillPersonOrganization();
+        }
+
+        private void btnAreaRefresh_Click(object sender, EventArgs e)
+        {
+            int? areaid = AreaId;
+            ComboServ.FillCombo(cbArea, HelpClass.GetComboListByTable("dbo.ActivityArea"), true, false);
+            AreaId = areaid;
         }
     }
 }

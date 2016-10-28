@@ -19,5 +19,8 @@ namespace EmployerPartners
         public string ActionValue { get; set; }
         public Nullable<System.DateTime> ActionTime { get; set; }
         public string ActionUser { get; set; }
+        public string ActionName1 { get; set; }
+        public string ActionValue1 { get; set; }
+        public Nullable<System.DateTime> ActionTime1 { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using System.IO;
 using FastMember;
 
 using KLADR;
+using System.Transactions;
 
 namespace EmployerPartners
 {
@@ -21,38 +22,72 @@ namespace EmployerPartners
             get;
             set;
         }
-        UpdateVoidHandler _hndl;
+        public int OrgId
+        {
+            get;
+            set;
+        }
+        public int OrgNamesId
+        {
+            get;
+            set;
+        }
+        //bool EditMode = false;
 
+        UpdateVoidHandler _hndl;
 
         public CardOrganization(int? id, UpdateVoidHandler _hdl)
         {
             InitializeComponent();
             _hndl = _hdl;
             _Id = id;
+            OrgId = (int)id;
 
             FillCard();
             InitControls(this);
             this.MdiParent = Util.mainform;
 
-            if (Util.IsReadOnlyAll())
+            SetAccessRight();
+            //Utilities.SetReadMode(this);
+        }
+        private void SetAccessRight()
+        {
+            if (Util.IsOrgPersonWrite())
             {
-                btnSave.Enabled = false;
-                btnDelete.Enabled = false;
-                BtnContactEdit.Enabled = false;
-                btnDeleteContact.Enabled = false;
-                btnContactAdd.Enabled = false;
-                btnRublrikAdd.Enabled = false;
-                btnRubricDelete.Enabled = false;
-                btnFacultyAdd.Enabled = false;
-                btnFacultyDelete.Enabled = false;
-                btnActivityAreaAdd.Enabled = false;
-                btnActivityAreaDelete.Enabled = false;
-                btnLPAdd.Enabled = false;
-                btnLPDelete.Enabled = false;
-                btnAddOkved.Enabled = false;
-                btnDelOkved.Enabled = false;
-                btnAddDogovor.Enabled = false;
-                dgvDogovor.Columns[1].Visible = false;
+                btnSave.Enabled = true;
+                btnDelete.Enabled = true;
+                btnChangeName.Enabled = true;
+                BtnContactEdit.Enabled = true;
+                btnDeleteContact.Enabled = true;
+                btnContactAdd.Enabled = true;
+                btnRublrikAdd.Enabled = true;
+                btnRubricDelete.Enabled = true;
+                btnFacultyAdd.Enabled = true;
+                btnFacultyDelete.Enabled = true;
+                btnActivityAreaAdd.Enabled = true;
+                btnActivityAreaDelete.Enabled = true;
+                btnLPAdd.Enabled = true;
+                btnLPDelete.Enabled = true;
+                //btnAddOkved.Enabled = true;
+                //btnDelOkved.Enabled = true;
+                btnAddDogovor.Enabled = true;
+                dgvDogovor.Columns[1].Visible = true;
+            }
+        }
+        private void SetReadMode()
+        {
+            foreach (Control control in this.Controls)
+            {
+                TextBox tb = control as TextBox;
+                if (tb != null)
+                {
+                    tb.ReadOnly = true;
+                }
+                ComboBox cb = control as ComboBox;
+                if (cb != null)
+                {
+                    cb.Enabled = false;
+                }
             }
         }
         public void InitControls(Control obj)
@@ -123,6 +158,7 @@ namespace EmployerPartners
             ComboServ.FillCombo(cbNationalAffiliation, HelpClass.GetComboListByTable("dbo.NationalAffiliation"), true, false);
             ComboServ.FillCombo(cbOwnershipType, HelpClass.GetComboListByTable("dbo.OwnershipType"), true, false);
             ComboServ.FillCombo(cbArea, HelpClass.GetComboListByTable("dbo.ActivityArea"), true, false);
+            ComboServ.FillCombo(cbAreaProfessional, HelpClass.GetComboListByTable("dbo.ActivityAreaProfessional"), true, false);
 
             FillPartnerInfo();
             FillOrganizationArea();
@@ -151,15 +187,27 @@ namespace EmployerPartners
                     ShortNameEng = Partner.ShortNameEng;
 
                     okved = Partner.Okved;
+                    okveddop = Partner.OkvedDop;
+                    oecd = Partner.OECD;
                     OwnershipTypeId = Partner.OwnershipTypeId;
                     ActivityGoalId = Partner.ActivityGoalId;
                     NationalAffiliationId = Partner.NationalAffiliationId;
                     AreaId = Partner.ActivityAreaId;
+                    AreaProfessionalId = Partner.ActivityAreaProfessionalId;
 
                     Source = Partner.Source;
+                    SourceCharter = (Partner.SourceCharter.HasValue) ? (bool)Partner.SourceCharter : false;
+                    SourceEGRUL = (Partner.SourceEGRUL.HasValue) ? (bool)Partner.SourceEGRUL : false;
+                    SourceSite = (Partner.SourceSite.HasValue) ? (bool)Partner.SourceSite : false;
+                    CardChecked = (Partner.CardChecked.HasValue) ? (bool)Partner.CardChecked : false;
+                    IsActual = (Partner.IsActual.HasValue) ? (bool)Partner.IsActual : false;
                     Description = Partner.Description;
 
                     INN = Partner.INN;
+                    NameDate = (Partner.NameDate.HasValue) ? Partner.NameDate.Value.ToString("dd.MM.yyyy") : "";
+                    OGRN = Partner.OGRN;
+                    OGRNDate = (Partner.OGRNDate.HasValue) ? Partner.OGRNDate.Value.ToString("dd.MM.yyyy") : "";
+                    CloseDate = (Partner.CloseDate.HasValue) ? Partner.CloseDate.Value.ToString("dd.MM.yyyy") : "";
                     Email = Partner.Email;
                     WebSite = Partner.WebSite;
                     Fax = Partner.Fax;
@@ -176,6 +224,7 @@ namespace EmployerPartners
                     lbStreet.Visible = false;
                     House = Partner.House;
                     Apartment = Partner.Apartment;
+                    Address = Partner.Address;
                     lbHouse.Visible = false;
                     Code = Partner.Code;
                     Comment = Partner.Comment;
@@ -205,11 +254,12 @@ namespace EmployerPartners
                                    x.OrganizationId,
                                    Тип_документа = dtype.Name,
                                    Договор = x.Document,
+                                   Номер_договора = x.DocumentNumber,
+                                   Дата_подписания = x.DocumentDate,
+                                   Действует_с_момента_подписания = x.FromDocumentDate,
                                    Дата_начала = x.DocumentStart,
                                    Дата_окончания = x.DocumentFinish,
                                    Бессрочный = x.Permanent,
-                                   Номер_договора = x.DocumentNumber,
-                                   Дата_подписания = x.DocumentDate,
                                    Примечание = x.Comment,
                                    Действующий = x.IsActual
                                }).ToList();
@@ -373,6 +423,8 @@ namespace EmployerPartners
                 foreach (string s in new List<string>() { "Id", "PersonId" })
                     if (dgvContacts.Columns.Contains(s))
                         dgvContacts.Columns[s].Visible = false;
+                foreach (DataGridViewColumn col in dgvContacts.Columns)
+                    col.HeaderText = col.Name.Replace("_", " ");
                 if (id.HasValue)
                     foreach (DataGridViewRow rw in dgvContacts.Rows)
                         if (rw.Cells[0].Value.ToString() == id.Value.ToString())
@@ -390,14 +442,77 @@ namespace EmployerPartners
         {
             if (String.IsNullOrEmpty(OrgName))
             {
-                err.SetError(tbName, "не задано полное наименование организации");
+                err.SetError(tbName, "Не задано полное наименование организации");
                 tabControl1.SelectedTab = tabPage1;
                 return false;
             }
             else
                 err.Clear();
 
+            if (String.IsNullOrEmpty(INN))
+            {
+                if (MessageBox.Show("Вообще говоря, ввод ИНН является обязательным.\r\n" + "Продолжить соханение данных без уаказания ИНН?", "Запрос на подтверждение", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                    return true;
+                err.SetError(tbINN, "Не указан ИНН");
+                tabControl1.SelectedTab = tabPage1;
+                return false;
+            }
+            else
+                err.Clear();
 
+            if (!String.IsNullOrEmpty(INN))
+            {
+                try
+                {
+                    using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                    {
+                        var lst = (from x  in context.Organization
+                                   where (x.INN == INN) && (x.Id != OrgId)
+                                   select x.Id).ToList();
+                        if (lst.Count() > 0)
+                        {
+                            var org = context.Organization.Where(x => x.INN == INN).First();
+                            err.SetError(tbINN, "Такой ИНН уже существует у организации\r\n" + org.Name);
+                            MessageBox.Show("Такой ИНН уже существует у организации\r\n" + org.Name,"Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            tabControl1.SelectedTab = tabPage1;
+                            return false;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    return true;
+                } 
+                
+            }
+            else
+                err.Clear();
+
+            DateTime res;
+            if (!String.IsNullOrEmpty(OGRNDate))
+            {
+                if (!DateTime.TryParse(OGRNDate, out res))
+                {
+                    err.SetError(tbOGRNDate, "Неправильный формат даты в поле 'Дата присвоения ОГРН' \r\n" + "Образец: 01.12.2016");
+                    MessageBox.Show("Неправильный формат даты в поле 'Дата присвоения ОГРН' \r\n" + "Образец: 01.12.2016", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return false;
+                }
+            }
+            else
+                err.Clear();
+
+            if (!String.IsNullOrEmpty(CloseDate))
+            {
+                if (!DateTime.TryParse(CloseDate, out res))
+                {
+                    err.SetError(tbOGRNDate, "Неправильный формат даты в поле 'Дата прекращения деятельности' \r\n" + "Образец: 01.12.2016");
+                    MessageBox.Show("Неправильный формат даты в поле 'Дата прекращения деятельности' \r\n" + "Образец: 01.12.2016", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return false;
+                }
+            }
+            else
+                err.Clear();
 
             if (!CountryId.HasValue)
             {
@@ -478,12 +593,17 @@ namespace EmployerPartners
                         ShortNameEng = ShortNameEng,
 
                         Okved = okved,
+                        OkvedDop = okveddop,
+                        OECD = oecd,
                         NationalAffiliationId = NationalAffiliationId,
                         OwnershipTypeId = OwnershipTypeId,
                         ActivityGoalId = ActivityGoalId,
                         ActivityAreaId = AreaId,
 
                         INN = INN,
+                        OGRN = OGRN,
+                        //OGRNDate
+                        //CloseDate
                         Email = Email,
                         WebSite = WebSite,
                         CountryId = CountryId,
@@ -492,6 +612,7 @@ namespace EmployerPartners
                         Street = Street,
                         House = House,
                         Apartment = Apartment,
+                        Address = Address,
                         Code = Code,
                         CodeKLADR = CodeKLADR,
                         Fax = Fax,
@@ -509,7 +630,7 @@ namespace EmployerPartners
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Ошибка при сохранении карточки\r\n" + exc.InnerException, "");
+                MessageBox.Show("Ошибка при сохранении карточки\r\n" + exc.InnerException, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
         }
@@ -527,12 +648,40 @@ namespace EmployerPartners
                     Org.ShortNameEng = ShortNameEng;
 
                     Org.Okved = okved;
+                    Org.OkvedDop = okveddop;
+                    Org.OECD = oecd;
                     Org.OwnershipTypeId = OwnershipTypeId;
                     Org.ActivityGoalId = ActivityGoalId;
                     Org.NationalAffiliationId = NationalAffiliationId;
                     Org.ActivityAreaId = AreaId;
+                    Org.ActivityAreaProfessionalId = AreaProfessionalId;
 
                     Org.INN = INN;
+                    if (!String.IsNullOrEmpty(NameDate))
+                    {
+                        Org.NameDate = DateTime.Parse(NameDate);
+                    }
+                    else
+                    {
+                        Org.NameDate = null;
+                    }
+                    Org.OGRN = OGRN;
+                    if (!String.IsNullOrEmpty(OGRNDate))
+                    {
+                        Org.OGRNDate = DateTime.Parse(OGRNDate);
+                    }
+                    else
+                    {
+                        Org.OGRNDate = null;
+                    }
+                    if (!String.IsNullOrEmpty(CloseDate))
+                    {
+                        Org.CloseDate = DateTime.Parse(CloseDate);
+                    }
+                    else
+                    {
+                        Org.CloseDate = null;
+                    }
                     Org.Email = Email;
                     Org.WebSite = WebSite;
                     Org.Fax = Fax;
@@ -545,23 +694,30 @@ namespace EmployerPartners
                     Org.Street = Street;
                     Org.House = House;
                     Org.Apartment = Apartment;
+                    Org.Address = Address;
                     Org.Code = Code;
                     Org.CodeKLADR = CodeKLADR;
 
                     Org.Comment = Comment;
                     Org.Source = Source;
+                    Org.SourceCharter = chkbSourceCharter.Checked ? true : false;
+                    Org.SourceEGRUL = chkbSourceEGRUL.Checked ? true : false;
+                    Org.SourceSite = chkbSourceSite.Checked ? true : false;
+                    Org.CardChecked = chkbCardChecked.Checked ? true : false;
+                    Org.IsActual = chkbIsActual.Checked ? true : false;
                     Org.Description = Description;
 
                     context.SaveChanges();
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при сохранении карточки", "");
+                MessageBox.Show("Ошибка при сохранении карточки \r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
         }
+        
         private void t_Tick(object sender, EventArgs e)
         {
             Timer t = (Timer)sender;
@@ -963,6 +1119,8 @@ namespace EmployerPartners
         {
             if (Util.IsReadOnlyAll())
                 return;
+            if (!Util.IsOrgPersonWrite())
+                return;
 
             if (_Id.HasValue)
                 if (dgvOkvedCodes.CurrentCell != null)
@@ -986,16 +1144,16 @@ namespace EmployerPartners
         }
         private void dgvContacts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Util.IsReadOnlyAll())
-                return;
-                
-            if (_Id.HasValue)
-                if (dgvContacts.CurrentCell != null)
-                    if (dgvContacts.CurrentRow.Index >= 0)
-                    {
-                        int id = int.Parse(dgvContacts.CurrentRow.Cells["Id"].Value.ToString());
-                        new CardOrganizationPerson(id, _Id.Value, new UpdateVoidHandler(FillOrganizationPerson)).Show();
-                    }
+            if (Util.IsOrgPersonWrite())
+            {
+                if (_Id.HasValue)
+                    if (dgvContacts.CurrentCell != null)
+                        if (dgvContacts.CurrentRow.Index >= 0)
+                        {
+                            int id = int.Parse(dgvContacts.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardOrganizationPerson(id, _Id.Value, new UpdateVoidHandler(FillOrganizationPerson)).Show();
+                        }
+            }
         }
         private void btnDeleteContact_Click(object sender, EventArgs e)
         {
@@ -1003,7 +1161,8 @@ namespace EmployerPartners
                 if (dgvContacts.CurrentCell != null)
                     if (dgvContacts.CurrentRow.Index >= 0)
                     {
-                        if (MessageBox.Show("Удалить выбранный контакт? \r\n" + dgvContacts.CurrentRow.Cells["ФИО"].Value.ToString(), "Запрос на подтверждение", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                        if (MessageBox.Show("Удалить выбранный контакт? \r\n" + dgvContacts.CurrentRow.Cells["ФИО"].Value.ToString(), "Запрос на подтверждение", 
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != System.Windows.Forms.DialogResult.Yes)
                             return;
 
                         int id = int.Parse(dgvContacts.CurrentRow.Cells["Id"].Value.ToString());
@@ -1022,6 +1181,8 @@ namespace EmployerPartners
                     if (dgvContacts.CurrentRow.Index >= 0)
                     {
                         int id = int.Parse(dgvContacts.CurrentRow.Cells["PersonId"].Value.ToString());
+                        if (Utilities.PersonCardIsOpened(id))
+                            return;
                         new CardPerson(id, new UpdateVoidHandler(FillOrganizationPerson)).Show();
                     }
         }
@@ -1039,17 +1200,17 @@ namespace EmployerPartners
         }
         private void dgvActivityArea_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Util.IsReadOnlyAll())
-                return;
-
-            DataGridView dgv = (DataGridView)sender;
-            if (_Id.HasValue)
-                if (dgv.CurrentCell != null)
-                    if (dgv.CurrentRow.Index >= 0)
-                    {
-                        int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
-                        new CardOrganizationArea(id, _Id.Value, new UpdateVoidHandler(FillOrganizationArea)).Show();
-                    }
+            if (Util.IsOrgPersonWrite())
+            {
+                DataGridView dgv = (DataGridView)sender;
+                if (_Id.HasValue)
+                    if (dgv.CurrentCell != null)
+                        if (dgv.CurrentRow.Index >= 0)
+                        {
+                            int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardOrganizationArea(id, _Id.Value, new UpdateVoidHandler(FillOrganizationArea)).Show();
+                        }
+            }
         }
         private void btnAreaDelete_Click(object sender, EventArgs e)
         {
@@ -1064,7 +1225,7 @@ namespace EmployerPartners
                     if (dgv.CurrentRow.Index >= 0)
                     {
                         int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
-                        if (MessageBox.Show("Удалить выбранную сферу деятельности организации? \r\n" + dgvActivityArea.CurrentRow.Cells["Название"].Value.ToString(), "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                        if (MessageBox.Show("Удалить выбранное ключевое слово? \r\n" + dgvActivityArea.CurrentRow.Cells["Название"].Value.ToString(), "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                         {
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                             {
@@ -1151,16 +1312,16 @@ namespace EmployerPartners
         }
         private void dgvRubric_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Util.IsReadOnlyAll())
-                return;
-
-            if (_Id.HasValue)
-                if (dgvRubric.CurrentCell != null)
-                    if (dgvRubric.CurrentRow.Index >= 0)
-                    {
-                        int id = int.Parse(dgvRubric.CurrentRow.Cells["Id"].Value.ToString());
-                        new CardOrganizationRubric(id, _Id.Value, new UpdateVoidHandler(FillRubrics)).Show();
-                    }
+            if (Util.IsOrgPersonWrite())
+            {
+                if (_Id.HasValue)
+                    if (dgvRubric.CurrentCell != null)
+                        if (dgvRubric.CurrentRow.Index >= 0)
+                        {
+                            int id = int.Parse(dgvRubric.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardOrganizationRubric(id, _Id.Value, new UpdateVoidHandler(FillRubrics)).Show();
+                        }
+            }
         }
         #endregion
 
@@ -1252,16 +1413,16 @@ namespace EmployerPartners
         }
         private void dgvFaculty_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Util.IsReadOnlyAll())
-                return;
-
-            if (_Id.HasValue)
-                if (dgvFaculty.CurrentCell != null)
-                    if (dgvFaculty.CurrentRow.Index >= 0)
-                    {
-                        int id = int.Parse(dgvFaculty.CurrentRow.Cells["Id"].Value.ToString());
-                        new CardOrganizationFaculty(id, _Id.Value, new UpdateVoidHandler(FillFaculty)).Show();
-                    }
+            if (Util.IsOrgPersonWrite())
+            {
+                if (_Id.HasValue)
+                    if (dgvFaculty.CurrentCell != null)
+                        if (dgvFaculty.CurrentRow.Index >= 0)
+                        {
+                            int id = int.Parse(dgvFaculty.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardOrganizationFaculty(id, _Id.Value, new UpdateVoidHandler(FillFaculty)).Show();
+                        }
+            }
         }
         #endregion
 
@@ -1364,16 +1525,16 @@ namespace EmployerPartners
         }
         private void dgvLP_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Util.IsReadOnlyAll())
-                return;
-
-            if (_Id.HasValue)
-                if (dgvLP.CurrentCell != null)
-                    if (dgvLP.CurrentRow.Index >= 0)
-                    {
-                        int id = int.Parse(dgvLP.CurrentRow.Cells["Id"].Value.ToString());
-                        new CardOrganizationLP(id, _Id.Value, new UpdateVoidHandler(FillLP)).Show();
-                    }
+            if (Util.IsOrgPersonWrite())
+            {
+                if (_Id.HasValue)
+                    if (dgvLP.CurrentCell != null)
+                        if (dgvLP.CurrentRow.Index >= 0)
+                        {
+                            int id = int.Parse(dgvLP.CurrentRow.Cells["Id"].Value.ToString());
+                            new CardOrganizationLP(id, _Id.Value, new UpdateVoidHandler(FillLP)).Show();
+                        }
+            }
         }
         #endregion
 
@@ -1389,7 +1550,8 @@ namespace EmployerPartners
                 catch (Exception)
                 {
                 }
-                if (MessageBox.Show("Удалить карточку? \r\n" + OrgName, "Запрос на подтверждение", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                if (MessageBox.Show("Удалить карточку? \r\n" + OrgName, "Запрос на подтверждение", 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != System.Windows.Forms.DialogResult.Yes)
                     return;
                 try
                 {
@@ -1529,5 +1691,263 @@ namespace EmployerPartners
                     }
                 }
         }
+
+        private void btnRefreshContact_Click(object sender, EventArgs e)
+        {
+            FillOrganizationPerson();
+        }
+
+        private void btnAreaRefresh_Click(object sender, EventArgs e)
+        {
+            int? areaid = AreaId;
+            ComboServ.FillCombo(cbArea, HelpClass.GetComboListByTable("dbo.ActivityArea"), true, false);
+            AreaId = areaid;
+        }
+
+        private void btnChangeName_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(INN))
+            {
+                MessageBox.Show("Для смены наименования оранизации\r\n необходимо ввести ИНН!", "Инфо",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (String.IsNullOrEmpty(NameDate))
+            {
+                MessageBox.Show("Для смены наименования организации\r\n необходимо ввести Дату, с которой актуально наименование (ЕГРЮЛ)!\r\n" +
+                                    "Т.е., дату, с которой актуально текущее наименование.\r\n" +
+                                    "Эта дата пойдет в архив вместе с текущим наименованием.", "Инфо",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            DateTime res;
+            if (!String.IsNullOrEmpty(NameDate))
+            {
+                if (!DateTime.TryParse(NameDate, out res))
+                {
+                    MessageBox.Show("Неправильный формат даты в поле 'Дата, с которой актуально наименование (ЕГРЮЛ)'\r\n" + "Образец: 01.12.2016", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+            }
+
+            //if (String.IsNullOrEmpty(OGRN))
+            //{
+            //    MessageBox.Show("Для смены наименования организации\r\n необходимо ввести ОГРН!", "Инфо",
+            //                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
+
+            //if (String.IsNullOrEmpty(OGRNDate))
+            //{
+            //    MessageBox.Show("Для смены наименования организации\r\n необходимо ввести Дату присвоения ОГРН!", "Инфо",
+            //                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
+
+            DateTime result;
+            if (!String.IsNullOrEmpty(OGRNDate))
+            {
+                if (!DateTime.TryParse(OGRNDate, out result))
+                {
+                    MessageBox.Show("Неправильный формат даты в поле 'Дата присвоения ОГРН' \r\n" + "Образец: 01.12.2016", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+            }
+            //if (String.IsNullOrEmpty(CloseDate))
+            //{
+            //    MessageBox.Show("Для смены наименования организации\r\n необходимо ввести Дату прекращения деятельности!", "Инфо",
+            //                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
+
+            if (MessageBox.Show("Смена наименования организации \r\n (ИНН сохраняется !!!)\r\n Продолжить?", "Запрос на подтверждение",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes)
+            {
+                try
+                {
+                    groupBoxNewName.Visible = true;
+                    INNNew = INN;
+                    OGRNNew = OGRN;
+                    OGRNDateNew = OGRNDate;
+                }
+                catch (Exception)
+                { groupBoxNewName.Visible = false; }
+            }
+        }
+
+        private void btnRemoveNewOrgName_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                btnChangeName.Focus();
+                groupBoxNewName.Visible = false; 
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void btnSetNewOrgName_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(OrgNameNew))
+            {
+                MessageBox.Show("Для смены наименования организации\r\n необходимо ввести новое полное наименование! \r\n", "Инфо",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (String.IsNullOrEmpty(INNNew))
+            {
+                MessageBox.Show("Для смены наименования организации\r\n необходимо ввести ИНН! \r\n И он должен совпадать с предыдущим ИНН", "Инфо",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            try
+            {
+                if (INNNew != INN) 
+                {
+                    MessageBox.Show("При смене наименования организации\r\n ИНН должен совпадать с предыдущим ИНН", "Инфо",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+            }
+            if (String.IsNullOrEmpty(NameDateNew))
+            {
+                MessageBox.Show("Для смены наименования организации\r\n необходимо ввести Дату, с которой актуально наименование (ЕГРЮЛ):", "Инфо",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            DateTime res;
+            if (!String.IsNullOrEmpty(NameDateNew))
+            {
+                if (!DateTime.TryParse(NameDateNew, out res))
+                {
+                    MessageBox.Show("Неправильный формат даты в поле 'Дата, с которой актуально наименование (ЕГРЮЛ)' \r\n" + "Образец: 01.12.2016", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+            }
+
+            //if (String.IsNullOrEmpty(OGRNNew))
+            //{
+            //    MessageBox.Show("Для смены наименования организации\r\n необходимо ввести ОГРН!", "Инфо",
+            //                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
+            //if (String.IsNullOrEmpty(OGRNDateNew))
+            //{
+            //    MessageBox.Show("Для смены наименования организации\r\n необходимо ввести Дату присвоения ОГРН!", "Инфо",
+            //                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
+            //DateTime res;
+            //if (!String.IsNullOrEmpty(OGRNDateNew))
+            //{
+            //    if (!DateTime.TryParse(OGRNDateNew, out res))
+            //    {
+            //        MessageBox.Show("Неправильный формат даты в поле 'Дата присвоения ОГРН' \r\n" + "Образец: 01.12.2016", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //        return;
+            //    }
+            //}
+
+            if (MessageBox.Show("Выполнить смену наименования организации \r\n (ИНН сохраняется !!!)", "Запрос на подтверждение",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes)
+            {
+                if (OrganizationNamesRecInsert())
+                {
+                    FillPartnerInfo();
+                    return;
+                }
+            }
+        }
+        private bool OrganizationNamesRecInsert()
+        {
+            try
+            {
+                using (TransactionScope distibutedTransaction = new TransactionScope())
+
+                {
+                    using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                    {
+                        OrganizationNames orgnames  = new OrganizationNames();
+
+                        orgnames.OrganizationId = OrgId;
+                        orgnames.Name = OrgName;
+                        orgnames.NameEng = NameEng;
+                        orgnames.MiddleName = MiddleName;
+                        orgnames.ShortName = ShortName;
+                        orgnames.ShortNameEng = ShortNameEng;
+
+                        orgnames.INN = INN;
+                        if (!String.IsNullOrEmpty(NameDate))
+                        {
+                            orgnames.NameDate = DateTime.Parse(NameDate);
+                        }
+                        else
+                        {
+                            orgnames.NameDate = null;
+                        }
+                        orgnames.OGRN = OGRN;
+                        if (!String.IsNullOrEmpty(OGRNDate))
+	                    {
+		                    orgnames.OGRNDate = DateTime.Parse(OGRNDate);
+	                    }
+                        else
+	                    {
+                            orgnames.OGRNDate = null;
+	                    }
+                        //if (!String.IsNullOrEmpty(CloseDate))
+                        //{
+                        //    orgnames.CloseDate = DateTime.Parse(CloseDate);
+                        //}
+                        //else
+                        //{
+                        //    orgnames.CloseDate = null;
+                        //}
+
+                        context.OrganizationNames.Add(orgnames);
+                        context.SaveChanges();
+                        OrgNamesId = orgnames.Id;
+                    
+                        //записать новые данные в таблицу Organization
+                        var org = context.Organization.Where(x => x.Id == OrgId).First();
+                        org.Name = OrgNameNew;
+                        org.MiddleName = MiddleNameNew;
+                        org.ShortName = ShortNameNew;
+                        org.NameEng = NameEngNew;
+                        org.ShortNameEng = ShortNameEngNew;
+                        if (!String.IsNullOrEmpty(NameDateNew))
+                        {
+                            org.NameDate = DateTime.Parse(NameDateNew);
+                        }
+                        else
+                        {
+                            org.NameDate = null;
+                        }
+                        //org.INN = INNNew;
+                        //org.OGRN = OGRNNew;
+                        //org.CloseDate = null;
+                        context.SaveChanges();
+                    }
+                    distibutedTransaction.Complete();
+                }
+                MessageBox.Show("Данные сохранены", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Не удалось сохранить данные...\r\n" + exc.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+        }
+
+        private void btnPreviousName_Click(object sender, EventArgs e)
+        {
+            //if (Utilities.PracticeOrgCardIsOpened(id))
+            //    return;
+            new CardOrgPreviousName(OrgId).Show();
+        }
+
     }
 }

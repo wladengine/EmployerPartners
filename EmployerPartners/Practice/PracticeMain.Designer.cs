@@ -225,6 +225,7 @@
             // 
             // btnAddLP
             // 
+            this.btnAddLP.Enabled = false;
             this.btnAddLP.Location = new System.Drawing.Point(447, 32);
             this.btnAddLP.Name = "btnAddLP";
             this.btnAddLP.Size = new System.Drawing.Size(144, 28);
@@ -254,11 +255,11 @@
             // btnOpen
             // 
             this.btnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpen.Location = new System.Drawing.Point(926, 529);
+            this.btnOpen.Location = new System.Drawing.Point(876, 529);
             this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(144, 28);
+            this.btnOpen.Size = new System.Drawing.Size(194, 28);
             this.btnOpen.TabIndex = 7;
-            this.btnOpen.Text = "Редактировать";
+            this.btnOpen.Text = "Просмотр / редакт. практики";
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 

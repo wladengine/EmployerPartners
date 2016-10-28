@@ -38,7 +38,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbDocument = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.tbDocumentStart = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbDocumentFinish = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -57,6 +56,8 @@
             this.lblFile = new System.Windows.Forms.Label();
             this.btnAddFile = new System.Windows.Forms.Button();
             this.checkBoxIsActual = new System.Windows.Forms.CheckBox();
+            this.checkBoxFromDocumentDate = new System.Windows.Forms.CheckBox();
+            this.tbDocumentStart = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFile)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,6 +73,7 @@
             // 
             // btnSave
             // 
+            this.btnSave.Enabled = false;
             this.btnSave.Location = new System.Drawing.Point(720, 30);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(114, 24);
@@ -142,17 +144,10 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Договор *";
             // 
-            // tbDocumentStart
-            // 
-            this.tbDocumentStart.Location = new System.Drawing.Point(148, 176);
-            this.tbDocumentStart.Name = "tbDocumentStart";
-            this.tbDocumentStart.Size = new System.Drawing.Size(138, 20);
-            this.tbDocumentStart.TabIndex = 9;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 179);
+            this.label5.Location = new System.Drawing.Point(20, 269);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 13);
             this.label5.TabIndex = 10;
@@ -160,15 +155,15 @@
             // 
             // tbDocumentFinish
             // 
-            this.tbDocumentFinish.Location = new System.Drawing.Point(148, 212);
+            this.tbDocumentFinish.Location = new System.Drawing.Point(148, 302);
             this.tbDocumentFinish.Name = "tbDocumentFinish";
             this.tbDocumentFinish.Size = new System.Drawing.Size(136, 20);
-            this.tbDocumentFinish.TabIndex = 11;
+            this.tbDocumentFinish.TabIndex = 12;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(20, 219);
+            this.label6.Location = new System.Drawing.Point(20, 309);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(89, 13);
             this.label6.TabIndex = 12;
@@ -177,7 +172,7 @@
             // checkBoxPermanent
             // 
             this.checkBoxPermanent.AutoSize = true;
-            this.checkBoxPermanent.Location = new System.Drawing.Point(148, 247);
+            this.checkBoxPermanent.Location = new System.Drawing.Point(148, 337);
             this.checkBoxPermanent.Name = "checkBoxPermanent";
             this.checkBoxPermanent.Size = new System.Drawing.Size(87, 17);
             this.checkBoxPermanent.TabIndex = 13;
@@ -186,15 +181,15 @@
             // 
             // tbDocumentNumber
             // 
-            this.tbDocumentNumber.Location = new System.Drawing.Point(148, 279);
+            this.tbDocumentNumber.Location = new System.Drawing.Point(148, 172);
             this.tbDocumentNumber.Name = "tbDocumentNumber";
             this.tbDocumentNumber.Size = new System.Drawing.Size(224, 20);
-            this.tbDocumentNumber.TabIndex = 14;
+            this.tbDocumentNumber.TabIndex = 8;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(20, 282);
+            this.label7.Location = new System.Drawing.Point(20, 175);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(75, 13);
             this.label7.TabIndex = 15;
@@ -202,15 +197,15 @@
             // 
             // tbDocumentDate
             // 
-            this.tbDocumentDate.Location = new System.Drawing.Point(148, 312);
+            this.tbDocumentDate.Location = new System.Drawing.Point(148, 205);
             this.tbDocumentDate.Name = "tbDocumentDate";
             this.tbDocumentDate.Size = new System.Drawing.Size(136, 20);
-            this.tbDocumentDate.TabIndex = 16;
+            this.tbDocumentDate.TabIndex = 9;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(20, 315);
+            this.label8.Location = new System.Drawing.Point(20, 208);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(103, 13);
             this.label8.TabIndex = 17;
@@ -218,7 +213,7 @@
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(148, 377);
+            this.tbComment.Location = new System.Drawing.Point(148, 400);
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(826, 20);
             this.tbComment.TabIndex = 20;
@@ -226,7 +221,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(20, 380);
+            this.label10.Location = new System.Drawing.Point(20, 403);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(70, 13);
             this.label10.TabIndex = 21;
@@ -237,7 +232,7 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(20, 436);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(512, 143);
+            this.label11.Size = new System.Drawing.Size(471, 143);
             this.label11.TabIndex = 22;
             this.label11.Text = resources.GetString("label11.Text");
             // 
@@ -275,6 +270,7 @@
             this.ColumnDelFile.ReadOnly = true;
             this.ColumnDelFile.Text = "Удалить";
             this.ColumnDelFile.UseColumnTextForButtonValue = true;
+            this.ColumnDelFile.Visible = false;
             // 
             // ColumnViewFile
             // 
@@ -297,6 +293,7 @@
             // 
             // btnAddFile
             // 
+            this.btnAddFile.Enabled = false;
             this.btnAddFile.Location = new System.Drawing.Point(436, 308);
             this.btnAddFile.Name = "btnAddFile";
             this.btnAddFile.Size = new System.Drawing.Size(171, 23);
@@ -309,18 +306,38 @@
             // checkBoxIsActual
             // 
             this.checkBoxIsActual.AutoSize = true;
-            this.checkBoxIsActual.Location = new System.Drawing.Point(148, 346);
+            this.checkBoxIsActual.Location = new System.Drawing.Point(148, 369);
             this.checkBoxIsActual.Name = "checkBoxIsActual";
             this.checkBoxIsActual.Size = new System.Drawing.Size(146, 17);
             this.checkBoxIsActual.TabIndex = 17;
             this.checkBoxIsActual.Text = "действующий документ";
             this.checkBoxIsActual.UseVisualStyleBackColor = true;
             // 
+            // checkBoxFromDocumentDate
+            // 
+            this.checkBoxFromDocumentDate.AutoSize = true;
+            this.checkBoxFromDocumentDate.Location = new System.Drawing.Point(148, 237);
+            this.checkBoxFromDocumentDate.Name = "checkBoxFromDocumentDate";
+            this.checkBoxFromDocumentDate.Size = new System.Drawing.Size(200, 17);
+            this.checkBoxFromDocumentDate.TabIndex = 10;
+            this.checkBoxFromDocumentDate.Text = "Действует с момента подписания";
+            this.checkBoxFromDocumentDate.UseVisualStyleBackColor = true;
+            this.checkBoxFromDocumentDate.CheckedChanged += new System.EventHandler(this.checkBoxFromDocumentDate_CheckedChanged);
+            // 
+            // tbDocumentStart
+            // 
+            this.tbDocumentStart.Location = new System.Drawing.Point(148, 269);
+            this.tbDocumentStart.Name = "tbDocumentStart";
+            this.tbDocumentStart.Size = new System.Drawing.Size(136, 20);
+            this.tbDocumentStart.TabIndex = 26;
+            // 
             // CardOrganizationDogovor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1005, 602);
+            this.Controls.Add(this.tbDocumentStart);
+            this.Controls.Add(this.checkBoxFromDocumentDate);
             this.Controls.Add(this.checkBoxIsActual);
             this.Controls.Add(this.btnAddFile);
             this.Controls.Add(this.lblFile);
@@ -336,7 +353,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tbDocumentFinish);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.tbDocumentStart);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tbDocument);
             this.Controls.Add(this.label3);
@@ -366,7 +382,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbDocument;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox tbDocumentStart;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbDocumentFinish;
         private System.Windows.Forms.Label label6;
@@ -381,9 +396,11 @@
         private System.Windows.Forms.DataGridView dgvFile;
         private System.Windows.Forms.Label lblFile;
         private System.Windows.Forms.Button btnAddFile;
+        private System.Windows.Forms.CheckBox checkBoxIsActual;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv1;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnDelFile;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnViewFile;
-        private System.Windows.Forms.CheckBox checkBoxIsActual;
+        private System.Windows.Forms.CheckBox checkBoxFromDocumentDate;
+        private System.Windows.Forms.TextBox tbDocumentStart;
     }
 }

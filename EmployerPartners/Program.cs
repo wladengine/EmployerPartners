@@ -15,9 +15,12 @@ namespace EmployerPartners
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            mf = new MainForm();
-            Util.mainform = mf;
-            Application.Run(mf);
+            if (Utilities.TestConnection())
+            {
+                mf = new MainForm();
+                Util.mainform = mf;
+                Application.Run(mf);
+            }
         }
     }
 }

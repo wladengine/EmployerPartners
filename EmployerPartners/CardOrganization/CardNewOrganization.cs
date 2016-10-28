@@ -18,6 +18,7 @@ namespace EmployerPartners
         {
             InitializeComponent();
             _hdl = h;
+            this.MdiParent = Util.mainform;
         }
 
         private bool Check()

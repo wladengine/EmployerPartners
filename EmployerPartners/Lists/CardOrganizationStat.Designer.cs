@@ -111,7 +111,7 @@
             this.groupBox1.Size = new System.Drawing.Size(424, 425);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Сферы деятельности";
+            this.groupBox1.Text = "Ключевые слова";
             // 
             // lblActivityArea
             // 

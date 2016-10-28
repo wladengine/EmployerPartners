@@ -30,14 +30,16 @@
         {
             this.SuspendLayout();
             // 
-            // CardOrganizationRubric
+            // CardOrganizationLP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 46);
-            this.Name = "CardOrganizationRubric";
+            this.ClientSize = new System.Drawing.Size(518, 163);
+            this.MinimumSize = new System.Drawing.Size(0, 0);
+            this.Name = "CardOrganizationLP";
             this.Text = "CardOrganizationRubric";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

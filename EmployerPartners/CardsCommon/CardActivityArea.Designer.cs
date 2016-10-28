@@ -38,17 +38,17 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 15);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.Size = new System.Drawing.Size(96, 13);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Сфера деят.:";
+            this.label2.Text = "Ключевое слово.:";
             // 
             // cbName
             // 
             this.cbName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbName.FormattingEnabled = true;
-            this.cbName.Location = new System.Drawing.Point(90, 12);
+            this.cbName.Location = new System.Drawing.Point(107, 12);
             this.cbName.Name = "cbName";
-            this.cbName.Size = new System.Drawing.Size(340, 21);
+            this.cbName.Size = new System.Drawing.Size(323, 21);
             this.cbName.TabIndex = 1;
             // 
             // btnAdd
@@ -61,7 +61,7 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // CardOrganizationArea
+            // CardActivityArea
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -69,10 +69,8 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.cbName);
             this.Controls.Add(this.label2);
-            this.MaximumSize = new System.Drawing.Size(458, 133);
-            this.MinimumSize = new System.Drawing.Size(458, 133);
-            this.Name = "CardOrganizationArea";
-            this.Text = "Организация - сферы деятельности";
+            this.Name = "CardActivityArea";
+            this.Text = "Организация - ключевые слова";
             this.ResumeLayout(false);
             this.PerformLayout();
 
