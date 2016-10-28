@@ -70,8 +70,6 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.label1);
-            this.MaximumSize = new System.Drawing.Size(999, 136);
-            this.MinimumSize = new System.Drawing.Size(432, 136);
             this.Name = "CardDictionaryItem";
             this.Text = "Редактирование элемента";
             this.ResumeLayout(false);

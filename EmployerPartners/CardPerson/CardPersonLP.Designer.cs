@@ -34,7 +34,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 278);
+            this.ClientSize = new System.Drawing.Size(495, 303);
+            this.MinimumSize = new System.Drawing.Size(0, 0);
             this.Name = "CardPersonLP";
             this.Text = "CardOrganizationRubric";
             this.ResumeLayout(false);

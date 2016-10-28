@@ -29,55 +29,302 @@ namespace EmployerPartners
             }
             return table;
         }
+        public static bool TestConnection()
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = (from x in context.Organization
+                               select x).First();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Нет подключения к базе данных \r\n" + ex.Message + "\r\n" + ex.InnerException.Message, "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;   
+            }
+            finally
+            {
+            }
+        }
+        public static void SetReadMode(Control obj)
+        {
+            foreach (Control control in obj.Controls)
+            {
+                TextBox tb = control as TextBox;
+                if (tb != null)
+                {
+                    tb.ReadOnly = true;
+                }
+                ComboBox cb = control as ComboBox;
+                if (cb != null)
+                {
+                    cb.Enabled = false;
+                }
+            }
+        }
+        public static bool FormIsOpened(string frmName)
+        {
+            try
+            {
+                foreach (Form frm in Application.OpenForms)
+                {
+                    System.Type st = frm.GetType();
+                    if  (st.Name == frmName)   //(frm.Name == frmName)
+                    {
+                        frm.Activate();
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static bool OrgCardIsOpened(int orgid)
+        {
+            try
+            {
+                CardOrganization OrgCard;
+                for (int i = 0; i < Application.OpenForms.Count; i++)
+                {
+                    if (Application.OpenForms[i].GetType() == typeof(CardOrganization))
+                    {
+                        OrgCard = Application.OpenForms[i] as CardOrganization;
+                        if (OrgCard.OrgId == orgid)
+                        {
+                            OrgCard.Activate();
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static bool PersonCardIsOpened(int personid)
+        {
+            try
+            {
+                CardPerson PersonCard;
+                for (int i = 0; i < Application.OpenForms.Count; i++)
+                {
+                    if (Application.OpenForms[i].GetType() == typeof(CardPerson))
+                    {
+                        PersonCard = Application.OpenForms[i] as CardPerson;
+                        if (PersonCard.PersonId == personid)
+                        {
+                            PersonCard.Activate();
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static bool PracticeCardIsOpened(int practicecardid)
+        {
+            try
+            {
+                PracticeCard PCard;
+                for (int i = 0; i < Application.OpenForms.Count; i++)
+                {
+                    if (Application.OpenForms[i].GetType() == typeof(PracticeCard))
+                    {
+                        PCard = Application.OpenForms[i] as PracticeCard;
+                        if (PCard.PracticeCardId == practicecardid)
+                        {
+                            PCard.Activate();
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static bool PracticeOrgCardIsOpened(int porgcardid)
+        {
+            try
+            {
+                PracticeOrgCard POrgCard;
+                for (int i = 0; i < Application.OpenForms.Count; i++)
+                {
+                    if (Application.OpenForms[i].GetType() == typeof(PracticeOrgCard))
+                    {
+                        POrgCard = Application.OpenForms[i] as PracticeOrgCard;
+                        if (POrgCard.POrgCardId == porgcardid)
+                        {
+                            POrgCard.Activate();
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static bool PracticeStudentCardIsOpened(int pstudentcardid)
+        {
+            try
+            {
+                PracticeStudentCard PStudentCard;
+                for (int i = 0; i < Application.OpenForms.Count; i++)
+                {
+                    if (Application.OpenForms[i].GetType() == typeof(PracticeStudentCard))
+                    {
+                        PStudentCard = Application.OpenForms[i] as PracticeStudentCard;
+                        if (PStudentCard.PStudentCardId == pstudentcardid)
+                        {
+                            PStudentCard.Activate();
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static bool VKRCardIsOpened(int vkrcardid)
+        {
+            try
+            {
+                VKRStudent VKRStCard;
+                for (int i = 0; i < Application.OpenForms.Count; i++)
+                {
+                    if (Application.OpenForms[i].GetType() == typeof(VKRStudent))
+                    {
+                        VKRStCard = Application.OpenForms[i] as VKRStudent;
+                        if (VKRStCard.VKRStCardId == vkrcardid)
+                        {
+                            VKRStCard.Activate();
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static bool VKRStudentCardIsOpened(int vkrstudentcardid)
+        {
+            try
+            {
+                VKRStudentCard VKRStCard;
+                for (int i = 0; i < Application.OpenForms.Count; i++)
+                {
+                    if (Application.OpenForms[i].GetType() == typeof(VKRStudentCard))
+                    {
+                        VKRStCard = Application.OpenForms[i] as VKRStudentCard;
+                        if (VKRStCard.VKRStudentCardId == vkrstudentcardid)
+                        {
+                            VKRStCard.Activate();
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         public static bool UpdateLP()
         {
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                ObjectParameter entId = new ObjectParameter("result", typeof(bool));
-                context.UpDateLicenseProgram(entId);
-                if (entId.Value is DBNull)
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    return Convert.ToBoolean(0);
+                    ObjectParameter entId = new ObjectParameter("result", typeof(bool));
+                    context.UpDateLicenseProgram(entId);
+                    if (entId.Value is DBNull)
+                    {
+                        return Convert.ToBoolean(0);
+                    }
+                    else
+                    {
+                        return Convert.ToBoolean(entId.Value);
+                    }
+                    //return Convert.ToBoolean(entId.Value);
                 }
-                else
-                {
-                    return Convert.ToBoolean(entId.Value);
-                }
-                //return Convert.ToBoolean(entId.Value);
             }
+            catch (Exception)
+            {
+                return false;
+            }
+            
         }
         public static bool UpdateOP()
         {
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                ObjectParameter entId = new ObjectParameter("result", typeof(bool));
-                context.UpDateObrazProgram(entId);
-                if (entId.Value is DBNull)
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    return Convert.ToBoolean(0);
+                    ObjectParameter entId = new ObjectParameter("result", typeof(bool));
+                    context.UpDateObrazProgram(entId);
+                    if (entId.Value is DBNull)
+                    {
+                        return Convert.ToBoolean(0);
+                    }
+                    else
+                    {
+                        return Convert.ToBoolean(entId.Value);
+                    }
+                    //return Convert.ToBoolean(entId.Value);
                 }
-                else
-                {
-                    return Convert.ToBoolean(entId.Value);
-                }
-                //return Convert.ToBoolean(entId.Value);
             }
+            catch (Exception)
+            {
+                return false;
+            }
+            
         }
         public static bool UpdateStudentData()
         {
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                ObjectParameter entId = new ObjectParameter("result", typeof(bool));
-                context.UpDateStudentData(entId);
-                if (entId.Value is DBNull)
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    return Convert.ToBoolean(0);
+                    ObjectParameter entId = new ObjectParameter("result", typeof(bool));
+                    context.UpDateStudentData(entId);
+                    if (entId.Value is DBNull)
+                    {
+                        return Convert.ToBoolean(0);
+                    }
+                    else
+                    {
+                        return Convert.ToBoolean(entId.Value);
+                    }
+                    //return Convert.ToBoolean(entId.Value);
                 }
-                else
-                {
-                    return Convert.ToBoolean(entId.Value);
-                }
-                //return Convert.ToBoolean(entId.Value);
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
         public static bool UpdateStudentDVZ()

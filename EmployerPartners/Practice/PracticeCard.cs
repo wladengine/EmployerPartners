@@ -108,6 +108,11 @@ namespace EmployerPartners
             get;
             set;
         }
+        public int PracticeCardId
+        {
+            get;
+            set;
+        }
         private int? _PId
         {
             get;
@@ -154,6 +159,7 @@ namespace EmployerPartners
         {
             InitializeComponent();
             _Id = id;
+            PracticeCardId = id;
             _PId = pid;
             _LPId = lpid;
             LP = lp;
@@ -161,29 +167,31 @@ namespace EmployerPartners
             FillCard();
             this.MdiParent = Util.mainform;
             this.Text = "Практика: " + LP;
-
-            if (Util.IsReadOnlyAll() || Util.IsPracticeRead())
+            SetAccessRight();
+        }
+        private void SetAccessRight()
+        {
+            if (Util.IsPracticeWrite())
             {
-                btnSave.Enabled = false;
-                btnAddOP.Enabled = false;
-                btnDelOP.Enabled = false;
-                btnDelPractice.Enabled = false;
-                btnOrgEdit.Enabled = false;
-                btnAddOrg.Enabled = false;
-                btnMakeOrder.Enabled = false;
-                btnOrderLoad.Enabled = false;
-                dgvOrder.Columns[1].Visible = false;
-                btnMakeInstruction.Enabled = false;
-                btnInstructionLoad.Enabled = false;
-                btnSetOrgStudent.Enabled = false;
-                btnAddStudent.Enabled = false;
-                dgvInstruction.Columns[1].Visible = false;
-                dgvOrg.Columns[1].Visible = false;
-                dgvOrg.Columns[2].Visible = false;
-                dgvStudent.Columns[1].Visible = false;
-                dgvStudent.Columns[2].Visible = false;
-                dgvStudent.Columns[3].Visible = false;
-
+                btnSave.Enabled = true;
+                btnAddOP.Enabled = true;
+                btnDelOP.Enabled = true;
+                btnDelPractice.Enabled = true;
+                btnOrgEdit.Enabled = true;
+                btnAddOrg.Enabled = true;
+                btnMakeOrder.Enabled = true;
+                btnOrderLoad.Enabled = true;
+                dgvOrder.Columns[1].Visible = true;
+                btnMakeInstruction.Enabled = true;
+                btnInstructionLoad.Enabled = true;
+                btnSetOrgStudent.Enabled = true;
+                btnAddStudent.Enabled = true;
+                dgvInstruction.Columns[1].Visible = true;
+                dgvOrg.Columns[1].Visible = true;
+                dgvOrg.Columns[2].Visible = true;
+                dgvStudent.Columns[1].Visible = true;
+                dgvStudent.Columns[2].Visible = true;
+                dgvStudent.Columns[3].Visible = true;
             }
         }
         private void FillCard()
@@ -1040,7 +1048,7 @@ namespace EmployerPartners
             int? OPId = ComboServ.GetComboIdInt(cbOP);
             if (!OPId.HasValue)
             {
-                MessageBox.Show("Не выбрана образовательная программа", "Инфо");
+                MessageBox.Show("Не выбрана образовательная программа", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 cbOP.DroppedDown = true;
                 return;
             }
@@ -1107,7 +1115,8 @@ namespace EmployerPartners
                     catch (Exception)
                     {
                     }
-                    if (MessageBox.Show("Удалить образовательную программу? \r\n" + sOP, "Запрос на подтверждение", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                    if (MessageBox.Show("Удалить образовательную программу? \r\n" + sOP, "Запрос на подтверждение", MessageBoxButtons.YesNo, 
+                        MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
                     {
                         try
                         {
@@ -1140,7 +1149,8 @@ namespace EmployerPartners
                 catch (Exception)
                 {
                 }
-                if (MessageBox.Show("Удалить практику? \r\n" + PracticeName, "Запрос на подтверждение", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                if (MessageBox.Show("Удалить практику? \r\n" + PracticeName, "Запрос на подтверждение", MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != System.Windows.Forms.DialogResult.Yes)
                     return;
                 try
                 {
@@ -1158,7 +1168,7 @@ namespace EmployerPartners
                         "Примечание: полностью сформированная практика, \r\n" + "содержащая список организаций и студентов, \r\n" + "удаляется в следующей последовательности:\r\n" + 
                         "1. Сначала удаляются все студенты из практики\r\n" + "2. Затем удаляются все организации из практики\r\n" +
                         "3. Далее удаляются все загруженные документы по этой практике\r\n" + "(приказы и распоряжения)\r\n" +
-                        "4. После этого используется кнопка «Удалить практику»\r\n" + "для окончательного удаления.", "Сообщение");
+                        "4. После этого используется кнопка «Удалить практику»\r\n" + "для окончательного удаления.", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
 
             }
@@ -1171,7 +1181,7 @@ namespace EmployerPartners
             {
                 if (!DateTime.TryParse(DateStart, out res))
                 {
-                    MessageBox.Show("Неправильный формат даты в поле 'Начало практики' \r\n" + "Образец: 01.12.2016", "Инфо");
+                    MessageBox.Show("Неправильный формат даты в поле 'Начало практики' \r\n" + "Образец: 01.12.2016", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
             }
@@ -1179,7 +1189,7 @@ namespace EmployerPartners
             {
                 if (!DateTime.TryParse(DateEnd, out res))
                 {
-                    MessageBox.Show("Неправильный формат даты в поле 'Окончание практики' \r\n" + "Образец: 01.12.2016", "Инфо");
+                    MessageBox.Show("Неправильный формат даты в поле 'Окончание практики' \r\n" + "Образец: 01.12.2016", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
             }
@@ -1187,7 +1197,7 @@ namespace EmployerPartners
             {
                 if (!DateTime.TryParse(OrderDate, out res))
                 {
-                    MessageBox.Show("Неправильный формат даты в поле 'Дата приказа' \r\n" + "Образец: 01.12.2016", "Инфо");
+                    MessageBox.Show("Неправильный формат даты в поле 'Дата приказа' \r\n" + "Образец: 01.12.2016", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     tabControl1.SelectedTab = tabPage1;
                     return false;
                 }
@@ -1196,7 +1206,7 @@ namespace EmployerPartners
             {
                 if (!DateTime.TryParse(InstructionDate, out res))
                 {
-                    MessageBox.Show("Неправильный формат даты в поле 'Дата распоряжения' \r\n" + "Образец: 01.12.2016", "Инфо");
+                    MessageBox.Show("Неправильный формат даты в поле 'Дата распоряжения' \r\n" + "Образец: 01.12.2016", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     tabControl1.SelectedTab = tabPage2;
                     return false;
                 }
@@ -1271,12 +1281,12 @@ namespace EmployerPartners
                         if (_PId.HasValue)
                         _hndl(_PId);
 
-                    MessageBox.Show("Данные сохранены", "Сообщение");
+                    MessageBox.Show("Данные сохранены", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Не удалось сохранить данные...\r\n" + ex.Message, "Сообщение");
+                MessageBox.Show("Не удалось сохранить данные...\r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
         private bool CheckOrderData()
@@ -1645,7 +1655,6 @@ namespace EmployerPartners
                         {
                             if (DateStart == "" || DateEnd == "")
                             {
-                                //MessageBox.Show("Не введены данные в поля 'Начало практики' и 'Окончание практики'", "Сообщение");
                                 if (MessageBox.Show("Не введены данные в поля 'Начало практики' и 'Окончание практики' \r\n" +
                                                     "В этом случае придется вводить эти данные для каждой новой организации отдельно \r\n" +
                                                     "(после ввода дат не забудьте нажать кнопку 'Сохранить')\r\n" +
@@ -1726,6 +1735,8 @@ namespace EmployerPartners
                         try
                         {
                             int Orgid = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                            if (Utilities.OrgCardIsOpened(Orgid))
+                                return;
                             new CardOrganization(Orgid, null).Show();
                         }
                         catch
@@ -1811,6 +1822,8 @@ namespace EmployerPartners
                         {
                             int id = int.Parse(dgvOrg.CurrentRow.Cells["Id"].Value.ToString());
                             int orgid = int.Parse(dgvOrg.CurrentRow.Cells["OrganizationId"].Value.ToString());
+                            if (Utilities.PracticeOrgCardIsOpened(id))
+                                return;
                             new PracticeOrgCard(id, orgid, new UpdateVoidHandler(FillOrg)).Show();
                         }
                         catch (Exception)
@@ -2125,6 +2138,7 @@ namespace EmployerPartners
                 lbl_cbOrgStudent.Visible = false;
                 dgvStudentNew.Visible = !dgvStudentNew.Visible;
                 lbl_dgvStudentNew.Visible = !lbl_dgvStudentNew.Visible;
+                btnDopStudent.Visible = !btnDopStudent.Visible;
                 cbCourse.Visible = !cbCourse.Visible;
                 lbl_cbCourse.Visible = !lbl_cbCourse.Visible;
                 cbStudyingName.Visible = !cbStudyingName.Visible;
@@ -2141,6 +2155,7 @@ namespace EmployerPartners
             {
                 dgvStudentNew.Visible = false;
                 lbl_dgvStudentNew.Visible = false;
+                btnDopStudent.Visible = false;
                 cbCourse.Visible = false;
                 lbl_cbCourse.Visible = false;
                 checkBoxStudentOP.Visible = false;
@@ -2212,9 +2227,7 @@ namespace EmployerPartners
 
                             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                             {
-                                //PracticeStudent pst = new PracticeStudent();
                                 PracticeLPStudent pst = new PracticeLPStudent();
-                                //pst.PracticeId = (int)_PId;
                                 pst.PracticeLPId = (int)_Id;
                                 pst.StudDataId = StudDataId;
                                 pst.StudentFIO = FIO;
@@ -2231,7 +2244,6 @@ namespace EmployerPartners
                                 pst.ObrazProgramCrypt = OPCrypt;
                                 pst.LicenseProgramId = LicenseProgramId;
                                 pst.FacultyId = FacultyId;
-                                //context.PracticeStudent.Add(pst);
                                 context.PracticeLPStudent.Add(pst);
                                 context.SaveChanges();
                                 FillStudent();
@@ -2294,7 +2306,6 @@ namespace EmployerPartners
                             {
                                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                                 {
-                                    //context.PracticeStudent.RemoveRange(context.PracticeStudent.Where(x => x.Id == id));
                                     context.PracticeLPStudent.RemoveRange(context.PracticeLPStudent.Where(x => x.Id == id));
                                     context.SaveChanges();
                                 }
@@ -2340,6 +2351,8 @@ namespace EmployerPartners
                             catch (Exception)
                             {
                             }
+                            if (Utilities.PracticeStudentCardIsOpened(id))
+                                return;
                             new PracticeStudentCard(id, orgid, orgname, new UpdateVoidHandler(FillStudent)).Show();
                         }
                         catch (Exception)
@@ -2414,6 +2427,7 @@ namespace EmployerPartners
             {
                 dgvStudentNew.Visible = false;
                 lbl_dgvStudentNew.Visible = false;
+                btnDopStudent.Visible = false;
                 cbCourse.Visible = false;
                 lbl_cbCourse.Visible = false;
                 cbStudyingName.Visible = false;
@@ -3066,6 +3080,73 @@ namespace EmployerPartners
         private void cbStudyingName_SelectedIndexChanged(object sender, EventArgs e)
         {
             FillStudentNewList(Course);
+        }
+        private bool CheckOPData()
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = context.PracticeLPOP.Where(x => x.PracticeLPId == _Id).Count();
+                    if (lst > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        private void btnDopStudent_Click(object sender, EventArgs e)
+        {
+            //if (Utilities.FormIsOpened("PracticeStudentDopList"))
+            //    return;
+
+            //Проверка наличия дополнительного списка студентов
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    string sqlStudent = "SELECT * FROM StudentDVZ where StudDataId not in (select StudDataId from StudentData)";
+                    var StudentTable = context.Database.SqlQuery<StudentDVZ>(sqlStudent);
+                    if (StudentTable.Count() == 0)
+                    {
+                        MessageBox.Show("В дополнительный список входят все студенты, которых не удалось однозначно идентифицировать. " + 
+                            "Причины: отсутствие номера учебного плана, либо этот номер не существует в основной базе данных учебных планов. \r\n" + 
+                            "В настоящий момент этот список пуст.", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("В дополнительный список входят все студенты, которых не удалось однозначно идентифицировать. " +
+                            "Причины: отсутствие номера учебного плана, либо этот номер не существует в основной базе данных учебных планов. ", "Инфо", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch
+            { }
+            //Проверка наличия выбранной ОП
+            //if (!CheckOPData())
+            //{
+            //    MessageBox.Show("Не выбрана образовательная программа.\r\n" +
+            //        "Для продолжения должна быть установлена образовательная программа.", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        return;
+            //}
+
+            try
+            {
+                new PracticeStudentDopList((int)_Id, (int)_PId, (int)_LPId, LP, new UpdateVoidHandler(FillStudent)).Show();
+            }
+            catch (Exception)
+            {
+            } 
         }
     }
 }

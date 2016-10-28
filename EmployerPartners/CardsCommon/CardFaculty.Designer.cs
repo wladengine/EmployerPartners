@@ -93,8 +93,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbName);
             this.Controls.Add(this.label2);
-            this.MaximumSize = new System.Drawing.Size(460, 153);
-            this.MinimumSize = new System.Drawing.Size(460, 153);
             this.Name = "CardFaculty";
             this.Text = "Добавить направление";
             this.ResumeLayout(false);

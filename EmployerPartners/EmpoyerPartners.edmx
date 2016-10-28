@@ -22,6 +22,17 @@
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="ActivityAreaProfessional">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Sorting" Type="int" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
         <EntityType Name="ActivityGoal">
           <Key>
             <PropertyRef Name="Id" />
@@ -124,6 +135,9 @@
           <Property Name="ActionName" Type="nvarchar" MaxLength="500" />
           <Property Name="ActionValue" Type="nvarchar" MaxLength="500" />
           <Property Name="ActionTime" Type="datetime" StoreGeneratedPattern="Computed" />
+          <Property Name="ActionName1" Type="nvarchar" MaxLength="500" />
+          <Property Name="ActionValue1" Type="nvarchar" MaxLength="500" />
+          <Property Name="ActionTime1" Type="datetime" />
           <Property Name="ActionUser" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Faculty">
@@ -311,16 +325,28 @@
           <Property Name="ShortName" Type="nvarchar" MaxLength="255" />
           <Property Name="NameEng" Type="nvarchar" MaxLength="500" />
           <Property Name="ShortNameEng" Type="nvarchar" MaxLength="255" />
+          <Property Name="NameDate" Type="date" />
           <Property Name="Source" Type="nvarchar" MaxLength="255" />
+          <Property Name="SourceCharter" Type="bit" />
+          <Property Name="SourceEGRUL" Type="bit" />
+          <Property Name="SourceSite" Type="bit" />
+          <Property Name="CardChecked" Type="bit" />
+          <Property Name="IsActual" Type="bit" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="SPbGU" Type="bit" />
-          <Property Name="Okved" Type="nvarchar" MaxLength="20" />
+          <Property Name="OECD" Type="nvarchar" MaxLength="255" />
+          <Property Name="Okved" Type="nvarchar" MaxLength="500" />
+          <Property Name="OkvedDop" Type="nvarchar" MaxLength="500" />
           <Property Name="OwnershipTypeId" Type="int" />
           <Property Name="ActivityGoalId" Type="int" />
           <Property Name="NationalAffiliationId" Type="int" />
           <Property Name="ActivityAreaId" Type="int" />
+          <Property Name="ActivityAreaProfessionalId" Type="int" />
           <Property Name="Contact" Type="nvarchar" MaxLength="500" />
           <Property Name="INN" Type="nvarchar" MaxLength="50" />
+          <Property Name="OGRN" Type="nvarchar" MaxLength="50" />
+          <Property Name="OGRNDate" Type="date" />
+          <Property Name="CloseDate" Type="date" />
           <Property Name="Email" Type="nvarchar" MaxLength="255" />
           <Property Name="Phone" Type="nvarchar" MaxLength="255" />
           <Property Name="Mobiles" Type="nvarchar" MaxLength="255" />
@@ -334,6 +360,7 @@
           <Property Name="Street" Type="nvarchar" MaxLength="255" />
           <Property Name="House" Type="nvarchar" MaxLength="255" />
           <Property Name="Apartment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
           <Property Name="Comment" Type="nvarchar" MaxLength="500" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
@@ -348,6 +375,16 @@
           <Property Name="ActivityAreaId" Type="int" Nullable="false" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="OrganizationActivityAreaProfessional">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrganizationId" Type="int" Nullable="false" />
+          <Property Name="ActivityAreaProfessionalId" Type="int" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="OrganizationContacts">
           <Key>
@@ -376,6 +413,7 @@
           <Property Name="Document" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="DocumentStart" Type="date" />
           <Property Name="DocumentFinish" Type="date" />
+          <Property Name="FromDocumentDate" Type="bit" />
           <Property Name="Permanent" Type="bit" />
           <Property Name="DocumentNumber" Type="nvarchar" MaxLength="150" />
           <Property Name="DocumentDate" Type="date" />
@@ -420,6 +458,25 @@
           <Property Name="LicenseProgramId" Type="int" Nullable="false" />
           <Property Name="Author" Type="nvarchar" MaxLength="150" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="OrganizationNames">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrganizationId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="500" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="255" />
+          <Property Name="NameEng" Type="nvarchar" MaxLength="500" />
+          <Property Name="ShortNameEng" Type="nvarchar" MaxLength="255" />
+          <Property Name="NameDate" Type="date" />
+          <Property Name="INN" Type="nvarchar" MaxLength="50" />
+          <Property Name="OGRN" Type="nvarchar" MaxLength="50" />
+          <Property Name="OGRNDate" Type="date" />
+          <Property Name="CloseDate" Type="date" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="OrganizationOkved">
           <Key>
@@ -981,6 +1038,162 @@
           <Property Name="DateLoad" Type="datetime" Nullable="false" />
           <Property Name="FileSizeKBytes" Type="float" Nullable="false" />
         </EntityType>
+        <EntityType Name="VKR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudyYear" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Archive" Type="bit" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="VKRCoordinator">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VKRId" Type="int" Nullable="false" />
+          <Property Name="FacultyId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Position" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="255" />
+          <Property Name="Mobiles" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="VKROP">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VKRId" Type="int" Nullable="false" />
+          <Property Name="ObrazProgramId" Type="int" Nullable="false" />
+          <Property Name="ObrazProgramInYearId" Type="int" Nullable="false" />
+          <Property Name="VKRCoordinatorId" Type="int" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="VKROPStudent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VKROPId" Type="int" Nullable="false" />
+          <Property Name="OrganizationId" Type="int" />
+          <Property Name="VKRSourceId" Type="int" />
+          <Property Name="StudentFIO" Type="nvarchar" MaxLength="300" />
+          <Property Name="LicenseProgramId" Type="int" Nullable="false" />
+          <Property Name="FacultyId" Type="int" Nullable="false" />
+          <Property Name="ObrazProgramId" Type="int" />
+          <Property Name="VKRName" Type="nvarchar" MaxLength="500" />
+          <Property Name="VKRNameEng" Type="nvarchar" MaxLength="500" />
+          <Property Name="ObrazProgramCrypt" Type="nvarchar" MaxLength="100" />
+          <Property Name="ObrazProgramInYearId" Type="uniqueidentifier" />
+          <Property Name="Chair" Type="nvarchar" MaxLength="255" />
+          <Property Name="Supervisor" Type="nvarchar" MaxLength="500" />
+          <Property Name="SupervisorAccount" Type="varchar" MaxLength="128" />
+          <Property Name="StudDataId" Type="int" />
+          <Property Name="DR" Type="varchar" MaxLength="10" />
+          <Property Name="Course" Type="nvarchar" MaxLength="128" />
+          <Property Name="RegNomWP" Type="nvarchar" MaxLength="255" />
+          <Property Name="Department" Type="varchar" MaxLength="50" />
+          <Property Name="StudyBasis" Type="varchar" MaxLength="50" />
+          <Property Name="StatusName" Type="varchar" MaxLength="10" />
+          <Property Name="Accout" Type="varchar" MaxLength="128" />
+          <Property Name="DegreeName" Type="varchar" MaxLength="50" />
+          <Property Name="SpecNumber" Type="nvarchar" MaxLength="128" />
+          <Property Name="SpecName" Type="nvarchar" MaxLength="128" />
+          <Property Name="FacultyName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="VKROPTheme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VKROPId" Type="int" Nullable="false" />
+          <Property Name="OrganizationId" Type="int" Nullable="false" />
+          <Property Name="OrganizationAgreedId" Type="int" />
+          <Property Name="VKRCoordinatorId" Type="int" />
+          <Property Name="VKRName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="VKRNameEng" Type="nvarchar" MaxLength="500" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VKRSection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VKRId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Coordinator" Type="nvarchar" MaxLength="255" />
+          <Property Name="Position" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="255" />
+          <Property Name="Mobiles" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="VKRSectionCoordinator">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VKRSectionId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Position" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="255" />
+          <Property Name="Mobiles" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="VKRSectionFaculty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VKRSectionId" Type="int" Nullable="false" />
+          <Property Name="FacultyId" Type="int" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="VKRSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VKRThemes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VKRId" Type="int" Nullable="false" />
+          <Property Name="OrganizationId" Type="int" Nullable="false" />
+          <Property Name="OrganizationAgreedId" Type="int" />
+          <Property Name="VKRName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="VKRNameEng" Type="nvarchar" MaxLength="500" />
+          <Property Name="LicenseProgramId" Type="int" />
+          <Property Name="ObrazProgramId" Type="int" />
+          <Property Name="FacultyId" Type="int" />
+          <Property Name="History" Type="nvarchar" MaxLength="500" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="Author" Type="nvarchar" MaxLength="150" StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
         <EntityType Name="Year">
           <Key>
             <PropertyRef Name="Id" />
@@ -1203,6 +1416,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Organization_ActivityAreaProfessional">
+          <End Role="ActivityAreaProfessional" Type="Self.ActivityAreaProfessional" Multiplicity="0..1" />
+          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityAreaProfessional">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="ActivityAreaProfessionalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Organization_ActivityGoal">
           <End Role="ActivityGoal" Type="Self.ActivityGoal" Multiplicity="0..1" />
           <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
@@ -1285,6 +1510,30 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="OrganizationActivityArea">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationActivityAreaProfessional_ActivityAreaProfessional">
+          <End Role="ActivityAreaProfessional" Type="Self.ActivityAreaProfessional" Multiplicity="1" />
+          <End Role="OrganizationActivityAreaProfessional" Type="Self.OrganizationActivityAreaProfessional" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityAreaProfessional">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationActivityAreaProfessional">
+              <PropertyRef Name="ActivityAreaProfessionalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationActivityAreaProfessional_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="OrganizationActivityAreaProfessional" Type="Self.OrganizationActivityAreaProfessional" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationActivityAreaProfessional">
               <PropertyRef Name="OrganizationId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1422,6 +1671,18 @@
             </Principal>
             <Dependent Role="OrganizationLP">
               <PropertyRef Name="RubricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationNames_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="OrganizationNames" Type="Self.OrganizationNames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationNames">
+              <PropertyRef Name="OrganizationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1991,6 +2252,318 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VKROP_ObrazProgram">
+          <End Role="ObrazProgram" Type="Self.ObrazProgram" Multiplicity="1" />
+          <End Role="VKROP" Type="Self.VKROP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROP">
+              <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROP_ObrazProgramInYear">
+          <End Role="ObrazProgramInYear" Type="Self.ObrazProgramInYear" Multiplicity="1" />
+          <End Role="VKROP" Type="Self.VKROP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgramInYear">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROP">
+              <PropertyRef Name="ObrazProgramInYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROP_VKR">
+          <End Role="VKR" Type="Self.VKR" Multiplicity="1" />
+          <End Role="VKROP" Type="Self.VKROP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROP">
+              <PropertyRef Name="VKRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROP_VKRCoordinator">
+          <End Role="VKRCoordinator" Type="Self.VKRCoordinator" Multiplicity="0..1" />
+          <End Role="VKROP" Type="Self.VKROP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKRCoordinator">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROP">
+              <PropertyRef Name="VKRCoordinatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPCoordinator_Faculty">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+          <End Role="VKRCoordinator" Type="Self.VKRCoordinator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRCoordinator">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPCoordinator_VKR">
+          <End Role="VKR" Type="Self.VKR" Multiplicity="1" />
+          <End Role="VKRCoordinator" Type="Self.VKRCoordinator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRCoordinator">
+              <PropertyRef Name="VKRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPStudent_Faculty">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+          <End Role="VKROPStudent" Type="Self.VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPStudent_LicenseProgram">
+          <End Role="LicenseProgram" Type="Self.LicenseProgram" Multiplicity="1" />
+          <End Role="VKROPStudent" Type="Self.VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LicenseProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="LicenseProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPStudent_ObrazProgram">
+          <End Role="ObrazProgram" Type="Self.ObrazProgram" Multiplicity="0..1" />
+          <End Role="VKROPStudent" Type="Self.VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPStudent_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="VKROPStudent" Type="Self.VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPStudent_VKROP">
+          <End Role="VKROP" Type="Self.VKROP" Multiplicity="1" />
+          <End Role="VKROPStudent" Type="Self.VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKROP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="VKROPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPStudent_VKRSource">
+          <End Role="VKRSource" Type="Self.VKRSource" Multiplicity="0..1" />
+          <End Role="VKROPStudent" Type="Self.VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKRSource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="VKRSourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPTheme_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="VKROPTheme" Type="Self.VKROPTheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPTheme">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPTheme_Organization1">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="VKROPTheme" Type="Self.VKROPTheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPTheme">
+              <PropertyRef Name="OrganizationAgreedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPTheme_VKRCoordinator">
+          <End Role="VKRCoordinator" Type="Self.VKRCoordinator" Multiplicity="0..1" />
+          <End Role="VKROPTheme" Type="Self.VKROPTheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKRCoordinator">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPTheme">
+              <PropertyRef Name="VKRCoordinatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPTheme_VKROP">
+          <End Role="VKROP" Type="Self.VKROP" Multiplicity="1" />
+          <End Role="VKROPTheme" Type="Self.VKROPTheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKROP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPTheme">
+              <PropertyRef Name="VKROPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRSection_VKR">
+          <End Role="VKR" Type="Self.VKR" Multiplicity="1" />
+          <End Role="VKRSection" Type="Self.VKRSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRSection">
+              <PropertyRef Name="VKRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRSectionCoordinator_VKRSection">
+          <End Role="VKRSection" Type="Self.VKRSection" Multiplicity="1" />
+          <End Role="VKRSectionCoordinator" Type="Self.VKRSectionCoordinator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKRSection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRSectionCoordinator">
+              <PropertyRef Name="VKRSectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRSectionFaculty_Faculty">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
+          <End Role="VKRSectionFaculty" Type="Self.VKRSectionFaculty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRSectionFaculty">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRSectionFaculty_VKRSection">
+          <End Role="VKRSection" Type="Self.VKRSection" Multiplicity="1" />
+          <End Role="VKRSectionFaculty" Type="Self.VKRSectionFaculty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKRSection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRSectionFaculty">
+              <PropertyRef Name="VKRSectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRThemes_Faculty">
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
+          <End Role="VKRThemes" Type="Self.VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRThemes_LicenseProgram">
+          <End Role="LicenseProgram" Type="Self.LicenseProgram" Multiplicity="0..1" />
+          <End Role="VKRThemes" Type="Self.VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LicenseProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="LicenseProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRThemes_ObrazProgram">
+          <End Role="ObrazProgram" Type="Self.ObrazProgram" Multiplicity="0..1" />
+          <End Role="VKRThemes" Type="Self.VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRThemes_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="VKRThemes" Type="Self.VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRThemes_Organization1">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="VKRThemes" Type="Self.VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="OrganizationAgreedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRThemes_VKR">
+          <End Role="VKR" Type="Self.VKR" Multiplicity="1" />
+          <End Role="VKRThemes" Type="Self.VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="VKRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="RoleMember" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="roleName" Type="nvarchar" Mode="In" />
           <Parameter Name="result" Type="bit" Mode="InOut" />
@@ -2010,6 +2583,7 @@
         <EntityContainer Name="EmployerPartnersModelStoreContainer">
           <EntitySet Name="_AppSettings" EntityType="Self._AppSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ActivityArea" EntityType="Self.ActivityArea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActivityAreaProfessional" EntityType="Self.ActivityAreaProfessional" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ActivityGoal" EntityType="Self.ActivityGoal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Degree" EntityType="Self.Degree" Schema="dbo" store:Type="Tables" />
@@ -2032,11 +2606,13 @@
           <EntitySet Name="OkvedType" EntityType="Self.OkvedType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationActivityArea" EntityType="Self.OrganizationActivityArea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrganizationActivityAreaProfessional" EntityType="Self.OrganizationActivityAreaProfessional" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationContacts" EntityType="Self.OrganizationContacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationDogovor" EntityType="Self.OrganizationDogovor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationDogovorFile" EntityType="Self.OrganizationDogovorFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationFaculty" EntityType="Self.OrganizationFaculty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationLP" EntityType="Self.OrganizationLP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrganizationNames" EntityType="Self.OrganizationNames" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationOkved" EntityType="Self.OrganizationOkved" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationPerson" EntityType="Self.OrganizationPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationRubric" EntityType="Self.OrganizationRubric" Schema="dbo" store:Type="Tables" />
@@ -2073,6 +2649,16 @@
           <EntitySet Name="StudyPlanPrintFormType" EntityType="Self.StudyPlanPrintFormType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Templates" EntityType="Self.Templates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VKR" EntityType="Self.VKR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VKRCoordinator" EntityType="Self.VKRCoordinator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VKROP" EntityType="Self.VKROP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VKROPStudent" EntityType="Self.VKROPStudent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VKROPTheme" EntityType="Self.VKROPTheme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VKRSection" EntityType="Self.VKRSection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VKRSectionCoordinator" EntityType="Self.VKRSectionCoordinator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VKRSectionFaculty" EntityType="Self.VKRSectionFaculty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VKRSource" EntityType="Self.VKRSource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VKRThemes" EntityType="Self.VKRThemes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Year" EntityType="Self.Year" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_InboxMessage_Organization" Association="Self.FK_InboxMessage_Organization">
             <End Role="Organization" EntitySet="Organization" />
@@ -2142,6 +2728,10 @@
             <End Role="ActivityArea" EntitySet="ActivityArea" />
             <End Role="Organization" EntitySet="Organization" />
           </AssociationSet>
+          <AssociationSet Name="FK_Organization_ActivityAreaProfessional" Association="Self.FK_Organization_ActivityAreaProfessional">
+            <End Role="ActivityAreaProfessional" EntitySet="ActivityAreaProfessional" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
           <AssociationSet Name="FK_Organization_ActivityGoal" Association="Self.FK_Organization_ActivityGoal">
             <End Role="ActivityGoal" EntitySet="ActivityGoal" />
             <End Role="Organization" EntitySet="Organization" />
@@ -2169,6 +2759,14 @@
           <AssociationSet Name="FK_OrganizationActivityArea_Organization" Association="Self.FK_OrganizationActivityArea_Organization">
             <End Role="Organization" EntitySet="Organization" />
             <End Role="OrganizationActivityArea" EntitySet="OrganizationActivityArea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationActivityAreaProfessional_ActivityAreaProfessional" Association="Self.FK_OrganizationActivityAreaProfessional_ActivityAreaProfessional">
+            <End Role="ActivityAreaProfessional" EntitySet="ActivityAreaProfessional" />
+            <End Role="OrganizationActivityAreaProfessional" EntitySet="OrganizationActivityAreaProfessional" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationActivityAreaProfessional_Organization" Association="Self.FK_OrganizationActivityAreaProfessional_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="OrganizationActivityAreaProfessional" EntitySet="OrganizationActivityAreaProfessional" />
           </AssociationSet>
           <AssociationSet Name="FK_OrganizationContacts_Organization" Association="Self.FK_OrganizationContacts_Organization">
             <End Role="Organization" EntitySet="Organization" />
@@ -2213,6 +2811,10 @@
           <AssociationSet Name="FK_OrganizationLP_Rubric" Association="Self.FK_OrganizationLP_Rubric">
             <End Role="Rubric" EntitySet="Rubric" />
             <End Role="OrganizationLP" EntitySet="OrganizationLP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationNames_Organization" Association="Self.FK_OrganizationNames_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="OrganizationNames" EntitySet="OrganizationNames" />
           </AssociationSet>
           <AssociationSet Name="FK_OrganizationOkved_OkvedType" Association="Self.FK_OrganizationOkved_OkvedType">
             <End Role="OkvedType" EntitySet="OkvedType" />
@@ -2398,6 +3000,110 @@
             <End Role="StudyPlanPrintFormType" EntitySet="StudyPlanPrintFormType" />
             <End Role="StudyLevel" EntitySet="StudyLevel" />
           </AssociationSet>
+          <AssociationSet Name="FK_VKROP_ObrazProgram" Association="Self.FK_VKROP_ObrazProgram">
+            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="VKROP" EntitySet="VKROP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROP_ObrazProgramInYear" Association="Self.FK_VKROP_ObrazProgramInYear">
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
+            <End Role="VKROP" EntitySet="VKROP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROP_VKR" Association="Self.FK_VKROP_VKR">
+            <End Role="VKR" EntitySet="VKR" />
+            <End Role="VKROP" EntitySet="VKROP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROP_VKRCoordinator" Association="Self.FK_VKROP_VKRCoordinator">
+            <End Role="VKRCoordinator" EntitySet="VKRCoordinator" />
+            <End Role="VKROP" EntitySet="VKROP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPCoordinator_Faculty" Association="Self.FK_VKROPCoordinator_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="VKRCoordinator" EntitySet="VKRCoordinator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPCoordinator_VKR" Association="Self.FK_VKROPCoordinator_VKR">
+            <End Role="VKR" EntitySet="VKR" />
+            <End Role="VKRCoordinator" EntitySet="VKRCoordinator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPStudent_Faculty" Association="Self.FK_VKROPStudent_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPStudent_LicenseProgram" Association="Self.FK_VKROPStudent_LicenseProgram">
+            <End Role="LicenseProgram" EntitySet="LicenseProgram" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPStudent_ObrazProgram" Association="Self.FK_VKROPStudent_ObrazProgram">
+            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPStudent_Organization" Association="Self.FK_VKROPStudent_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPStudent_VKROP" Association="Self.FK_VKROPStudent_VKROP">
+            <End Role="VKROP" EntitySet="VKROP" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPStudent_VKRSource" Association="Self.FK_VKROPStudent_VKRSource">
+            <End Role="VKRSource" EntitySet="VKRSource" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPTheme_Organization" Association="Self.FK_VKROPTheme_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="VKROPTheme" EntitySet="VKROPTheme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPTheme_Organization1" Association="Self.FK_VKROPTheme_Organization1">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="VKROPTheme" EntitySet="VKROPTheme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPTheme_VKRCoordinator" Association="Self.FK_VKROPTheme_VKRCoordinator">
+            <End Role="VKRCoordinator" EntitySet="VKRCoordinator" />
+            <End Role="VKROPTheme" EntitySet="VKROPTheme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPTheme_VKROP" Association="Self.FK_VKROPTheme_VKROP">
+            <End Role="VKROP" EntitySet="VKROP" />
+            <End Role="VKROPTheme" EntitySet="VKROPTheme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRSection_VKR" Association="Self.FK_VKRSection_VKR">
+            <End Role="VKR" EntitySet="VKR" />
+            <End Role="VKRSection" EntitySet="VKRSection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRSectionCoordinator_VKRSection" Association="Self.FK_VKRSectionCoordinator_VKRSection">
+            <End Role="VKRSection" EntitySet="VKRSection" />
+            <End Role="VKRSectionCoordinator" EntitySet="VKRSectionCoordinator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRSectionFaculty_Faculty" Association="Self.FK_VKRSectionFaculty_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="VKRSectionFaculty" EntitySet="VKRSectionFaculty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRSectionFaculty_VKRSection" Association="Self.FK_VKRSectionFaculty_VKRSection">
+            <End Role="VKRSection" EntitySet="VKRSection" />
+            <End Role="VKRSectionFaculty" EntitySet="VKRSectionFaculty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRThemes_Faculty" Association="Self.FK_VKRThemes_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRThemes_LicenseProgram" Association="Self.FK_VKRThemes_LicenseProgram">
+            <End Role="LicenseProgram" EntitySet="LicenseProgram" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRThemes_ObrazProgram" Association="Self.FK_VKRThemes_ObrazProgram">
+            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRThemes_Organization" Association="Self.FK_VKRThemes_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRThemes_Organization1" Association="Self.FK_VKRThemes_Organization1">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRThemes_VKR" Association="Self.FK_VKRThemes_VKR">
+            <End Role="VKR" EntitySet="VKR" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -2531,6 +3237,10 @@
           <NavigationProperty Name="Practice" Relationship="EmployerPartnersModel.FK_Practice_Faculty" FromRole="Faculty" ToRole="Practice" />
           <NavigationProperty Name="Student" Relationship="EmployerPartnersModel.FK_Student_Faculty" FromRole="Faculty" ToRole="Student" />
           <NavigationProperty Name="ObrazProgramInYear" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_Faculty" FromRole="Faculty" ToRole="ObrazProgramInYear" />
+          <NavigationProperty Name="VKRCoordinator" Relationship="EmployerPartnersModel.FK_VKROPCoordinator_Faculty" FromRole="Faculty" ToRole="VKRCoordinator" />
+          <NavigationProperty Name="VKRSectionFaculty" Relationship="EmployerPartnersModel.FK_VKRSectionFaculty_Faculty" FromRole="Faculty" ToRole="VKRSectionFaculty" />
+          <NavigationProperty Name="VKRThemes" Relationship="EmployerPartnersModel.FK_VKRThemes_Faculty" FromRole="Faculty" ToRole="VKRThemes" />
+          <NavigationProperty Name="VKROPStudent" Relationship="EmployerPartnersModel.FK_VKROPStudent_Faculty" FromRole="Faculty" ToRole="VKROPStudent" />
         </EntityType>
         <EntityType Name="InboxMessage">
           <Key>
@@ -2612,6 +3322,8 @@
           <NavigationProperty Name="PracticeLP" Relationship="EmployerPartnersModel.FK_PracticeLP_LicenseProgram" FromRole="LicenseProgram" ToRole="PracticeLP" />
           <NavigationProperty Name="Student" Relationship="EmployerPartnersModel.FK_Student_LicenseProgram" FromRole="LicenseProgram" ToRole="Student" />
           <NavigationProperty Name="ObrazProgramInYear" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_LicenseProgram" FromRole="LicenseProgram" ToRole="ObrazProgramInYear" />
+          <NavigationProperty Name="VKRThemes" Relationship="EmployerPartnersModel.FK_VKRThemes_LicenseProgram" FromRole="LicenseProgram" ToRole="VKRThemes" />
+          <NavigationProperty Name="VKROPStudent" Relationship="EmployerPartnersModel.FK_VKROPStudent_LicenseProgram" FromRole="LicenseProgram" ToRole="VKROPStudent" />
         </EntityType>
         <EntityType Name="MobilityType">
           <Key>
@@ -2672,6 +3384,9 @@
           <Property Name="SecondLicenseProgramId" Type="Int32" />
           <NavigationProperty Name="ObrazProgramInYear" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_ObrazProgram" FromRole="ObrazProgram" ToRole="ObrazProgramInYear" />
           <NavigationProperty Name="PracticeLPOP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgram" FromRole="ObrazProgram" ToRole="PracticeLPOP" />
+          <NavigationProperty Name="VKROP" Relationship="EmployerPartnersModel.FK_VKROP_ObrazProgram" FromRole="ObrazProgram" ToRole="VKROP" />
+          <NavigationProperty Name="VKRThemes" Relationship="EmployerPartnersModel.FK_VKRThemes_ObrazProgram" FromRole="ObrazProgram" ToRole="VKRThemes" />
+          <NavigationProperty Name="VKROPStudent" Relationship="EmployerPartnersModel.FK_VKROPStudent_ObrazProgram" FromRole="ObrazProgram" ToRole="VKROPStudent" />
         </EntityType>
         <EntityType Name="OkvedType">
           <Key>
@@ -2694,7 +3409,7 @@
           <Property Name="Source" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SPbGU" Type="Boolean" />
-          <Property Name="Okved" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Okved" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="OwnershipTypeId" Type="Int32" />
           <Property Name="ActivityGoalId" Type="Int32" />
           <Property Name="NationalAffiliationId" Type="Int32" />
@@ -2735,6 +3450,27 @@
           <NavigationProperty Name="PracticeLPOrganization" Relationship="EmployerPartnersModel.FK_PracticeLPOrganization_Organization" FromRole="Organization" ToRole="PracticeLPOrganization" />
           <NavigationProperty Name="PracticeStudent" Relationship="EmployerPartnersModel.FK_PracticeStudent_Organization" FromRole="Organization" ToRole="PracticeStudent" />
           <NavigationProperty Name="OrganizationDogovor" Relationship="EmployerPartnersModel.FK_OrganizationDogovor_Organization" FromRole="Organization" ToRole="OrganizationDogovor" />
+          <NavigationProperty Name="VKRThemes" Relationship="EmployerPartnersModel.FK_VKRThemes_Organization" FromRole="Organization" ToRole="VKRThemes" />
+          <NavigationProperty Name="VKRThemes1" Relationship="EmployerPartnersModel.FK_VKRThemes_Organization1" FromRole="Organization" ToRole="VKRThemes" />
+          <NavigationProperty Name="VKROPStudent" Relationship="EmployerPartnersModel.FK_VKROPStudent_Organization" FromRole="Organization" ToRole="VKROPStudent" />
+          <NavigationProperty Name="VKROPTheme" Relationship="EmployerPartnersModel.FK_VKROPTheme_Organization" FromRole="Organization" ToRole="VKROPTheme" />
+          <NavigationProperty Name="VKROPTheme1" Relationship="EmployerPartnersModel.FK_VKROPTheme_Organization1" FromRole="Organization" ToRole="VKROPTheme" />
+          <Property Name="SourceCharter" Type="Boolean" />
+          <Property Name="SourceEGRUL" Type="Boolean" />
+          <Property Name="SourceSite" Type="Boolean" />
+          <Property Name="CardChecked" Type="Boolean" />
+          <Property Name="IsActual" Type="Boolean" />
+          <Property Name="ActivityAreaProfessionalId" Type="Int32" />
+          <NavigationProperty Name="ActivityAreaProfessional" Relationship="EmployerPartnersModel.FK_Organization_ActivityAreaProfessional" FromRole="Organization" ToRole="ActivityAreaProfessional" />
+          <Property Name="OGRN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OGRNDate" Type="DateTime" Precision="0" />
+          <Property Name="CloseDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="OrganizationNames" Relationship="EmployerPartnersModel.FK_OrganizationNames_Organization" FromRole="Organization" ToRole="OrganizationNames" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrganizationActivityAreaProfessional" Relationship="EmployerPartnersModel.FK_OrganizationActivityAreaProfessional_Organization" FromRole="Organization" ToRole="OrganizationActivityAreaProfessional" />
+          <Property Name="NameDate" Type="DateTime" Precision="0" />
+          <Property Name="OECD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="OkvedDop" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OrganizationActivityArea">
           <Key>
@@ -4022,6 +4758,139 @@
             <End Role="PracticeLPStudent" EntitySet="PracticeLPStudent" />
           </AssociationSet>
           <EntitySet Name="EPLog" EntityType="EmployerPartnersModel.EPLog" />
+          <EntitySet Name="VKR" EntityType="EmployerPartnersModel.VKR" />
+          <EntitySet Name="VKRCoordinator" EntityType="EmployerPartnersModel.VKRCoordinator" />
+          <EntitySet Name="VKRSection" EntityType="EmployerPartnersModel.VKRSection" />
+          <EntitySet Name="VKRSectionCoordinator" EntityType="EmployerPartnersModel.VKRSectionCoordinator" />
+          <EntitySet Name="VKRSectionFaculty" EntityType="EmployerPartnersModel.VKRSectionFaculty" />
+          <AssociationSet Name="FK_VKROPCoordinator_Faculty" Association="EmployerPartnersModel.FK_VKROPCoordinator_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="VKRCoordinator" EntitySet="VKRCoordinator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRSectionFaculty_Faculty" Association="EmployerPartnersModel.FK_VKRSectionFaculty_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="VKRSectionFaculty" EntitySet="VKRSectionFaculty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPCoordinator_VKR" Association="EmployerPartnersModel.FK_VKROPCoordinator_VKR">
+            <End Role="VKR" EntitySet="VKR" />
+            <End Role="VKRCoordinator" EntitySet="VKRCoordinator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRSection_VKR" Association="EmployerPartnersModel.FK_VKRSection_VKR">
+            <End Role="VKR" EntitySet="VKR" />
+            <End Role="VKRSection" EntitySet="VKRSection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRSectionCoordinator_VKRSection" Association="EmployerPartnersModel.FK_VKRSectionCoordinator_VKRSection">
+            <End Role="VKRSection" EntitySet="VKRSection" />
+            <End Role="VKRSectionCoordinator" EntitySet="VKRSectionCoordinator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRSectionFaculty_VKRSection" Association="EmployerPartnersModel.FK_VKRSectionFaculty_VKRSection">
+            <End Role="VKRSection" EntitySet="VKRSection" />
+            <End Role="VKRSectionFaculty" EntitySet="VKRSectionFaculty" />
+          </AssociationSet>
+          <EntitySet Name="VKROP" EntityType="EmployerPartnersModel.VKROP" />
+          <AssociationSet Name="FK_VKROP_ObrazProgram" Association="EmployerPartnersModel.FK_VKROP_ObrazProgram">
+            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="VKROP" EntitySet="VKROP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROP_ObrazProgramInYear" Association="EmployerPartnersModel.FK_VKROP_ObrazProgramInYear">
+            <End Role="ObrazProgramInYear" EntitySet="ObrazProgramInYear" />
+            <End Role="VKROP" EntitySet="VKROP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROP_VKR" Association="EmployerPartnersModel.FK_VKROP_VKR">
+            <End Role="VKR" EntitySet="VKR" />
+            <End Role="VKROP" EntitySet="VKROP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROP_VKRCoordinator" Association="EmployerPartnersModel.FK_VKROP_VKRCoordinator">
+            <End Role="VKRCoordinator" EntitySet="VKRCoordinator" />
+            <End Role="VKROP" EntitySet="VKROP" />
+          </AssociationSet>
+          <EntitySet Name="VKRThemes" EntityType="EmployerPartnersModel.VKRThemes" />
+          <AssociationSet Name="FK_VKRThemes_Faculty" Association="EmployerPartnersModel.FK_VKRThemes_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRThemes_LicenseProgram" Association="EmployerPartnersModel.FK_VKRThemes_LicenseProgram">
+            <End Role="LicenseProgram" EntitySet="LicenseProgram" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRThemes_ObrazProgram" Association="EmployerPartnersModel.FK_VKRThemes_ObrazProgram">
+            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRThemes_Organization" Association="EmployerPartnersModel.FK_VKRThemes_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRThemes_Organization1" Association="EmployerPartnersModel.FK_VKRThemes_Organization1">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKRThemes_VKR" Association="EmployerPartnersModel.FK_VKRThemes_VKR">
+            <End Role="VKR" EntitySet="VKR" />
+            <End Role="VKRThemes" EntitySet="VKRThemes" />
+          </AssociationSet>
+          <EntitySet Name="VKROPStudent" EntityType="EmployerPartnersModel.VKROPStudent" />
+          <EntitySet Name="VKROPTheme" EntityType="EmployerPartnersModel.VKROPTheme" />
+          <AssociationSet Name="FK_VKROPStudent_Faculty" Association="EmployerPartnersModel.FK_VKROPStudent_Faculty">
+            <End Role="Faculty" EntitySet="Faculty" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPStudent_LicenseProgram" Association="EmployerPartnersModel.FK_VKROPStudent_LicenseProgram">
+            <End Role="LicenseProgram" EntitySet="LicenseProgram" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPStudent_ObrazProgram" Association="EmployerPartnersModel.FK_VKROPStudent_ObrazProgram">
+            <End Role="ObrazProgram" EntitySet="ObrazProgram" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPStudent_Organization" Association="EmployerPartnersModel.FK_VKROPStudent_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPTheme_Organization" Association="EmployerPartnersModel.FK_VKROPTheme_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="VKROPTheme" EntitySet="VKROPTheme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPTheme_Organization1" Association="EmployerPartnersModel.FK_VKROPTheme_Organization1">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="VKROPTheme" EntitySet="VKROPTheme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPTheme_VKRCoordinator" Association="EmployerPartnersModel.FK_VKROPTheme_VKRCoordinator">
+            <End Role="VKRCoordinator" EntitySet="VKRCoordinator" />
+            <End Role="VKROPTheme" EntitySet="VKROPTheme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPTheme_VKROP" Association="EmployerPartnersModel.FK_VKROPTheme_VKROP">
+            <End Role="VKROP" EntitySet="VKROP" />
+            <End Role="VKROPTheme" EntitySet="VKROPTheme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKROPStudent_VKROP" Association="EmployerPartnersModel.FK_VKROPStudent_VKROP">
+            <End Role="VKROP" EntitySet="VKROP" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <EntitySet Name="VKRSource" EntityType="EmployerPartnersModel.VKRSource" />
+          <AssociationSet Name="FK_VKROPStudent_VKRSource" Association="EmployerPartnersModel.FK_VKROPStudent_VKRSource">
+            <End Role="VKRSource" EntitySet="VKRSource" />
+            <End Role="VKROPStudent" EntitySet="VKROPStudent" />
+          </AssociationSet>
+          <EntitySet Name="ActivityAreaProfessional" EntityType="EmployerPartnersModel.ActivityAreaProfessional" />
+          <AssociationSet Name="FK_Organization_ActivityAreaProfessional" Association="EmployerPartnersModel.FK_Organization_ActivityAreaProfessional">
+            <End Role="ActivityAreaProfessional" EntitySet="ActivityAreaProfessional" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
+          <EntitySet Name="OrganizationNames" EntityType="EmployerPartnersModel.OrganizationNames" />
+          <AssociationSet Name="FK_OrganizationNames_Organization" Association="EmployerPartnersModel.FK_OrganizationNames_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="OrganizationNames" EntitySet="OrganizationNames" />
+          </AssociationSet>
+          <EntitySet Name="OrganizationActivityAreaProfessional" EntityType="EmployerPartnersModel.OrganizationActivityAreaProfessional" />
+          <AssociationSet Name="FK_OrganizationActivityAreaProfessional_ActivityAreaProfessional" Association="EmployerPartnersModel.FK_OrganizationActivityAreaProfessional_ActivityAreaProfessional">
+            <End Role="ActivityAreaProfessional" EntitySet="ActivityAreaProfessional" />
+            <End Role="OrganizationActivityAreaProfessional" EntitySet="OrganizationActivityAreaProfessional" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationActivityAreaProfessional_Organization" Association="EmployerPartnersModel.FK_OrganizationActivityAreaProfessional_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="OrganizationActivityAreaProfessional" EntitySet="OrganizationActivityAreaProfessional" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PartnerPersonActivityArea">
           <Key>
@@ -4740,6 +5609,7 @@
           <NavigationProperty Name="ObrazProgram" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_ObrazProgram" FromRole="ObrazProgramInYear" ToRole="ObrazProgram" />
           <NavigationProperty Name="Year1" Relationship="EmployerPartnersModel.FK_ObrazProgramInYear_Year" FromRole="ObrazProgramInYear" ToRole="Year" />
           <NavigationProperty Name="PracticeLPOP" Relationship="EmployerPartnersModel.FK_PracticeLPOP_ObrazProgramInYear" FromRole="ObrazProgramInYear" ToRole="PracticeLPOP" />
+          <NavigationProperty Name="VKROP" Relationship="EmployerPartnersModel.FK_VKROP_ObrazProgramInYear" FromRole="ObrazProgramInYear" ToRole="VKROP" />
         </EntityType>
         <Association Name="FK_ObrazProgramInYear_Faculty">
           <End Type="EmployerPartnersModel.Faculty" Role="Faculty" Multiplicity="1" />
@@ -4905,6 +5775,7 @@
           <NavigationProperty Name="OrganizationDogovorFile" Relationship="EmployerPartnersModel.FK_OrganizationDogovorFile_OrganizationDogovor" FromRole="OrganizationDogovor" ToRole="OrganizationDogovorFile" />
           <Property Name="IsActual" Type="Boolean" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="PracticeLPStudent" Relationship="EmployerPartnersModel.FK_PracticeLPStudent_OrganizationDogovor" FromRole="OrganizationDogovor" ToRole="PracticeLPStudent" />
+          <Property Name="FromDocumentDate" Type="Boolean" />
         </EntityType>
         <Association Name="FK_OrganizationDogovor_DocumentType">
           <End Type="EmployerPartnersModel.DocumentType" Role="DocumentType" Multiplicity="1" />
@@ -5002,7 +5873,608 @@
           <Property Name="ActionValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ActionTime" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="ActionUser" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="ActionName1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActionValue1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActionTime1" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="None" />
         </EntityType>
+        <EntityType Name="VKR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudyYear" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="VKRCoordinator" Relationship="EmployerPartnersModel.FK_VKROPCoordinator_VKR" FromRole="VKR" ToRole="VKRCoordinator" />
+          <NavigationProperty Name="VKRSection" Relationship="EmployerPartnersModel.FK_VKRSection_VKR" FromRole="VKR" ToRole="VKRSection" />
+          <NavigationProperty Name="VKROP" Relationship="EmployerPartnersModel.FK_VKROP_VKR" FromRole="VKR" ToRole="VKROP" />
+          <NavigationProperty Name="VKRThemes" Relationship="EmployerPartnersModel.FK_VKRThemes_VKR" FromRole="VKR" ToRole="VKRThemes" />
+          <Property Name="Archive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="VKRCoordinator">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VKRId" Type="Int32" Nullable="false" />
+          <Property Name="FacultyId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Mobiles" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Faculty" Relationship="EmployerPartnersModel.FK_VKROPCoordinator_Faculty" FromRole="VKRCoordinator" ToRole="Faculty" />
+          <NavigationProperty Name="VKR" Relationship="EmployerPartnersModel.FK_VKROPCoordinator_VKR" FromRole="VKRCoordinator" ToRole="VKR" />
+          <NavigationProperty Name="VKROP" Relationship="EmployerPartnersModel.FK_VKROP_VKRCoordinator" FromRole="VKRCoordinator" ToRole="VKROP" />
+          <NavigationProperty Name="VKROPTheme" Relationship="EmployerPartnersModel.FK_VKROPTheme_VKRCoordinator" FromRole="VKRCoordinator" ToRole="VKROPTheme" />
+        </EntityType>
+        <EntityType Name="VKRSection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VKRId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="VKR" Relationship="EmployerPartnersModel.FK_VKRSection_VKR" FromRole="VKRSection" ToRole="VKR" />
+          <NavigationProperty Name="VKRSectionCoordinator" Relationship="EmployerPartnersModel.FK_VKRSectionCoordinator_VKRSection" FromRole="VKRSection" ToRole="VKRSectionCoordinator" />
+          <NavigationProperty Name="VKRSectionFaculty" Relationship="EmployerPartnersModel.FK_VKRSectionFaculty_VKRSection" FromRole="VKRSection" ToRole="VKRSectionFaculty" />
+          <Property Name="Coordinator" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Mobiles" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VKRSectionCoordinator">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VKRSectionId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Mobiles" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="VKRSection" Relationship="EmployerPartnersModel.FK_VKRSectionCoordinator_VKRSection" FromRole="VKRSectionCoordinator" ToRole="VKRSection" />
+        </EntityType>
+        <EntityType Name="VKRSectionFaculty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VKRSectionId" Type="Int32" Nullable="false" />
+          <Property Name="FacultyId" Type="Int32" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Faculty" Relationship="EmployerPartnersModel.FK_VKRSectionFaculty_Faculty" FromRole="VKRSectionFaculty" ToRole="Faculty" />
+          <NavigationProperty Name="VKRSection" Relationship="EmployerPartnersModel.FK_VKRSectionFaculty_VKRSection" FromRole="VKRSectionFaculty" ToRole="VKRSection" />
+        </EntityType>
+        <Association Name="FK_VKROPCoordinator_Faculty">
+          <End Type="EmployerPartnersModel.Faculty" Role="Faculty" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKRCoordinator" Role="VKRCoordinator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRCoordinator">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRSectionFaculty_Faculty">
+          <End Type="EmployerPartnersModel.Faculty" Role="Faculty" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKRSectionFaculty" Role="VKRSectionFaculty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRSectionFaculty">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPCoordinator_VKR">
+          <End Type="EmployerPartnersModel.VKR" Role="VKR" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKRCoordinator" Role="VKRCoordinator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRCoordinator">
+              <PropertyRef Name="VKRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRSection_VKR">
+          <End Type="EmployerPartnersModel.VKR" Role="VKR" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKRSection" Role="VKRSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRSection">
+              <PropertyRef Name="VKRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRSectionCoordinator_VKRSection">
+          <End Type="EmployerPartnersModel.VKRSection" Role="VKRSection" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKRSectionCoordinator" Role="VKRSectionCoordinator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKRSection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRSectionCoordinator">
+              <PropertyRef Name="VKRSectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRSectionFaculty_VKRSection">
+          <End Type="EmployerPartnersModel.VKRSection" Role="VKRSection" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKRSectionFaculty" Role="VKRSectionFaculty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKRSection">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRSectionFaculty">
+              <PropertyRef Name="VKRSectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VKROP">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VKRId" Type="Int32" Nullable="false" />
+          <Property Name="ObrazProgramId" Type="Int32" Nullable="false" />
+          <Property Name="ObrazProgramInYearId" Type="Int32" Nullable="false" />
+          <Property Name="VKRCoordinatorId" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="ObrazProgram" Relationship="EmployerPartnersModel.FK_VKROP_ObrazProgram" FromRole="VKROP" ToRole="ObrazProgram" />
+          <NavigationProperty Name="ObrazProgramInYear" Relationship="EmployerPartnersModel.FK_VKROP_ObrazProgramInYear" FromRole="VKROP" ToRole="ObrazProgramInYear" />
+          <NavigationProperty Name="VKR" Relationship="EmployerPartnersModel.FK_VKROP_VKR" FromRole="VKROP" ToRole="VKR" />
+          <NavigationProperty Name="VKRCoordinator" Relationship="EmployerPartnersModel.FK_VKROP_VKRCoordinator" FromRole="VKROP" ToRole="VKRCoordinator" />
+          <NavigationProperty Name="VKROPTheme" Relationship="EmployerPartnersModel.FK_VKROPTheme_VKROP" FromRole="VKROP" ToRole="VKROPTheme" />
+          <NavigationProperty Name="VKROPStudent" Relationship="EmployerPartnersModel.FK_VKROPStudent_VKROP" FromRole="VKROP" ToRole="VKROPStudent" />
+        </EntityType>
+        <Association Name="FK_VKROP_ObrazProgram">
+          <End Type="EmployerPartnersModel.ObrazProgram" Role="ObrazProgram" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKROP" Role="VKROP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROP">
+              <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROP_ObrazProgramInYear">
+          <End Type="EmployerPartnersModel.ObrazProgramInYear" Role="ObrazProgramInYear" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKROP" Role="VKROP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgramInYear">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROP">
+              <PropertyRef Name="ObrazProgramInYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROP_VKR">
+          <End Type="EmployerPartnersModel.VKR" Role="VKR" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKROP" Role="VKROP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROP">
+              <PropertyRef Name="VKRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROP_VKRCoordinator">
+          <End Type="EmployerPartnersModel.VKRCoordinator" Role="VKRCoordinator" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.VKROP" Role="VKROP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKRCoordinator">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROP">
+              <PropertyRef Name="VKRCoordinatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VKRThemes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VKRId" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationId" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationAgreedId" Type="Int32" />
+          <Property Name="VKRName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="VKRNameEng" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseProgramId" Type="Int32" />
+          <Property Name="ObrazProgramId" Type="Int32" />
+          <Property Name="FacultyId" Type="Int32" />
+          <Property Name="History" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Faculty" Relationship="EmployerPartnersModel.FK_VKRThemes_Faculty" FromRole="VKRThemes" ToRole="Faculty" />
+          <NavigationProperty Name="LicenseProgram" Relationship="EmployerPartnersModel.FK_VKRThemes_LicenseProgram" FromRole="VKRThemes" ToRole="LicenseProgram" />
+          <NavigationProperty Name="ObrazProgram" Relationship="EmployerPartnersModel.FK_VKRThemes_ObrazProgram" FromRole="VKRThemes" ToRole="ObrazProgram" />
+          <NavigationProperty Name="Organization" Relationship="EmployerPartnersModel.FK_VKRThemes_Organization" FromRole="VKRThemes" ToRole="Organization" />
+          <NavigationProperty Name="Organization1" Relationship="EmployerPartnersModel.FK_VKRThemes_Organization1" FromRole="VKRThemes" ToRole="Organization" />
+          <NavigationProperty Name="VKR" Relationship="EmployerPartnersModel.FK_VKRThemes_VKR" FromRole="VKRThemes" ToRole="VKR" />
+        </EntityType>
+        <Association Name="FK_VKRThemes_Faculty">
+          <End Type="EmployerPartnersModel.Faculty" Role="Faculty" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.VKRThemes" Role="VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRThemes_LicenseProgram">
+          <End Type="EmployerPartnersModel.LicenseProgram" Role="LicenseProgram" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.VKRThemes" Role="VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LicenseProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="LicenseProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRThemes_ObrazProgram">
+          <End Type="EmployerPartnersModel.ObrazProgram" Role="ObrazProgram" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.VKRThemes" Role="VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRThemes_Organization">
+          <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKRThemes" Role="VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRThemes_Organization1">
+          <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.VKRThemes" Role="VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="OrganizationAgreedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKRThemes_VKR">
+          <End Type="EmployerPartnersModel.VKR" Role="VKR" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKRThemes" Role="VKRThemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKRThemes">
+              <PropertyRef Name="VKRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VKROPStudent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VKROPId" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationId" Type="Int32" />
+          <Property Name="StudentFIO" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseProgramId" Type="Int32" Nullable="false" />
+          <Property Name="FacultyId" Type="Int32" Nullable="false" />
+          <Property Name="ObrazProgramId" Type="Int32" />
+          <Property Name="VKRName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="VKRNameEng" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ObrazProgramCrypt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ObrazProgramInYearId" Type="Guid" />
+          <Property Name="Chair" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Supervisor" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SupervisorAccount" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="StudDataId" Type="Int32" />
+          <Property Name="DR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Course" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RegNomWP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StudyBasis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StatusName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Accout" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="DegreeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SpecNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SpecName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FacultyName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Faculty" Relationship="EmployerPartnersModel.FK_VKROPStudent_Faculty" FromRole="VKROPStudent" ToRole="Faculty" />
+          <NavigationProperty Name="LicenseProgram" Relationship="EmployerPartnersModel.FK_VKROPStudent_LicenseProgram" FromRole="VKROPStudent" ToRole="LicenseProgram" />
+          <NavigationProperty Name="ObrazProgram" Relationship="EmployerPartnersModel.FK_VKROPStudent_ObrazProgram" FromRole="VKROPStudent" ToRole="ObrazProgram" />
+          <NavigationProperty Name="Organization" Relationship="EmployerPartnersModel.FK_VKROPStudent_Organization" FromRole="VKROPStudent" ToRole="Organization" />
+          <NavigationProperty Name="VKROP" Relationship="EmployerPartnersModel.FK_VKROPStudent_VKROP" FromRole="VKROPStudent" ToRole="VKROP" />
+          <Property Name="VKRSourceId" Type="Int32" />
+          <NavigationProperty Name="VKRSource" Relationship="EmployerPartnersModel.FK_VKROPStudent_VKRSource" FromRole="VKROPStudent" ToRole="VKRSource" />
+        </EntityType>
+        <EntityType Name="VKROPTheme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VKROPId" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationId" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationAgreedId" Type="Int32" />
+          <Property Name="VKRCoordinatorId" Type="Int32" />
+          <Property Name="VKRName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="VKRNameEng" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Organization" Relationship="EmployerPartnersModel.FK_VKROPTheme_Organization" FromRole="VKROPTheme" ToRole="Organization" />
+          <NavigationProperty Name="Organization1" Relationship="EmployerPartnersModel.FK_VKROPTheme_Organization1" FromRole="VKROPTheme" ToRole="Organization" />
+          <NavigationProperty Name="VKRCoordinator" Relationship="EmployerPartnersModel.FK_VKROPTheme_VKRCoordinator" FromRole="VKROPTheme" ToRole="VKRCoordinator" />
+          <NavigationProperty Name="VKROP" Relationship="EmployerPartnersModel.FK_VKROPTheme_VKROP" FromRole="VKROPTheme" ToRole="VKROP" />
+        </EntityType>
+        <Association Name="FK_VKROPStudent_Faculty">
+          <End Type="EmployerPartnersModel.Faculty" Role="Faculty" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKROPStudent" Role="VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPStudent_LicenseProgram">
+          <End Type="EmployerPartnersModel.LicenseProgram" Role="LicenseProgram" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKROPStudent" Role="VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LicenseProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="LicenseProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPStudent_ObrazProgram">
+          <End Type="EmployerPartnersModel.ObrazProgram" Role="ObrazProgram" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.VKROPStudent" Role="VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ObrazProgram">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="ObrazProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPStudent_Organization">
+          <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.VKROPStudent" Role="VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPTheme_Organization">
+          <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKROPTheme" Role="VKROPTheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPTheme">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPTheme_Organization1">
+          <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.VKROPTheme" Role="VKROPTheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPTheme">
+              <PropertyRef Name="OrganizationAgreedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPTheme_VKRCoordinator">
+          <End Type="EmployerPartnersModel.VKRCoordinator" Role="VKRCoordinator" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.VKROPTheme" Role="VKROPTheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKRCoordinator">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPTheme">
+              <PropertyRef Name="VKRCoordinatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPTheme_VKROP">
+          <End Type="EmployerPartnersModel.VKROP" Role="VKROP" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKROPTheme" Role="VKROPTheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKROP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPTheme">
+              <PropertyRef Name="VKROPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKROPStudent_VKROP">
+          <End Type="EmployerPartnersModel.VKROP" Role="VKROP" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.VKROPStudent" Role="VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKROP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="VKROPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VKRSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VKROPStudent" Relationship="EmployerPartnersModel.FK_VKROPStudent_VKRSource" FromRole="VKRSource" ToRole="VKROPStudent" />
+        </EntityType>
+        <Association Name="FK_VKROPStudent_VKRSource">
+          <End Type="EmployerPartnersModel.VKRSource" Role="VKRSource" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.VKROPStudent" Role="VKROPStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKRSource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKROPStudent">
+              <PropertyRef Name="VKRSourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ActivityAreaProfessional">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Sorting" Type="Int32" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Organization" Relationship="EmployerPartnersModel.FK_Organization_ActivityAreaProfessional" FromRole="ActivityAreaProfessional" ToRole="Organization" />
+          <NavigationProperty Name="OrganizationActivityAreaProfessional" Relationship="EmployerPartnersModel.FK_OrganizationActivityAreaProfessional_ActivityAreaProfessional" FromRole="ActivityAreaProfessional" ToRole="OrganizationActivityAreaProfessional" />
+        </EntityType>
+        <Association Name="FK_Organization_ActivityAreaProfessional">
+          <End Type="EmployerPartnersModel.ActivityAreaProfessional" Role="ActivityAreaProfessional" Multiplicity="0..1" />
+          <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityAreaProfessional">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="ActivityAreaProfessionalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrganizationNames">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrganizationId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NameEng" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ShortNameEng" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="INN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OGRN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OGRNDate" Type="DateTime" Precision="0" />
+          <Property Name="CloseDate" Type="DateTime" Precision="0" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Organization" Relationship="EmployerPartnersModel.FK_OrganizationNames_Organization" FromRole="OrganizationNames" ToRole="Organization" />
+          <Property Name="NameDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <Association Name="FK_OrganizationNames_Organization">
+          <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.OrganizationNames" Role="OrganizationNames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationNames">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrganizationActivityAreaProfessional">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrganizationId" Type="Int32" Nullable="false" />
+          <Property Name="ActivityAreaProfessionalId" Type="Int32" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="150" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="ActivityAreaProfessional" Relationship="EmployerPartnersModel.FK_OrganizationActivityAreaProfessional_ActivityAreaProfessional" FromRole="OrganizationActivityAreaProfessional" ToRole="ActivityAreaProfessional" />
+          <NavigationProperty Name="Organization" Relationship="EmployerPartnersModel.FK_OrganizationActivityAreaProfessional_Organization" FromRole="OrganizationActivityAreaProfessional" ToRole="Organization" />
+        </EntityType>
+        <Association Name="FK_OrganizationActivityAreaProfessional_ActivityAreaProfessional">
+          <End Type="EmployerPartnersModel.ActivityAreaProfessional" Role="ActivityAreaProfessional" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.OrganizationActivityAreaProfessional" Role="OrganizationActivityAreaProfessional" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityAreaProfessional">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationActivityAreaProfessional">
+              <PropertyRef Name="ActivityAreaProfessionalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationActivityAreaProfessional_Organization">
+          <End Type="EmployerPartnersModel.Organization" Role="Organization" Multiplicity="1" />
+          <End Type="EmployerPartnersModel.OrganizationActivityAreaProfessional" Role="OrganizationActivityAreaProfessional" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrganizationActivityAreaProfessional">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5265,6 +6737,19 @@
           <EntitySetMapping Name="Organization">
             <EntityTypeMapping TypeName="EmployerPartnersModel.Organization">
               <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="OkvedDop" ColumnName="OkvedDop" />
+                <ScalarProperty Name="OECD" ColumnName="OECD" />
+                <ScalarProperty Name="NameDate" ColumnName="NameDate" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CloseDate" ColumnName="CloseDate" />
+                <ScalarProperty Name="OGRNDate" ColumnName="OGRNDate" />
+                <ScalarProperty Name="OGRN" ColumnName="OGRN" />
+                <ScalarProperty Name="ActivityAreaProfessionalId" ColumnName="ActivityAreaProfessionalId" />
+                <ScalarProperty Name="IsActual" ColumnName="IsActual" />
+                <ScalarProperty Name="CardChecked" ColumnName="CardChecked" />
+                <ScalarProperty Name="SourceSite" ColumnName="SourceSite" />
+                <ScalarProperty Name="SourceEGRUL" ColumnName="SourceEGRUL" />
+                <ScalarProperty Name="SourceCharter" ColumnName="SourceCharter" />
                 <ScalarProperty Name="Apartment" ColumnName="Apartment" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -6027,6 +7512,7 @@
           <EntitySetMapping Name="OrganizationDogovor">
             <EntityTypeMapping TypeName="EmployerPartnersModel.OrganizationDogovor">
               <MappingFragment StoreEntitySet="OrganizationDogovor">
+                <ScalarProperty Name="FromDocumentDate" ColumnName="FromDocumentDate" />
                 <ScalarProperty Name="IsActual" ColumnName="IsActual" />
                 <ScalarProperty Name="PartTime" ColumnName="PartTime" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -6063,10 +7549,222 @@
           <EntitySetMapping Name="EPLog">
             <EntityTypeMapping TypeName="EmployerPartnersModel.EPLog">
               <MappingFragment StoreEntitySet="EPLog">
+                <ScalarProperty Name="ActionTime1" ColumnName="ActionTime1" />
+                <ScalarProperty Name="ActionValue1" ColumnName="ActionValue1" />
+                <ScalarProperty Name="ActionName1" ColumnName="ActionName1" />
                 <ScalarProperty Name="ActionUser" ColumnName="ActionUser" />
                 <ScalarProperty Name="ActionTime" ColumnName="ActionTime" />
                 <ScalarProperty Name="ActionValue" ColumnName="ActionValue" />
                 <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VKR">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.VKR">
+              <MappingFragment StoreEntitySet="VKR">
+                <ScalarProperty Name="Archive" ColumnName="Archive" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="StudyYear" ColumnName="StudyYear" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VKRCoordinator">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.VKRCoordinator">
+              <MappingFragment StoreEntitySet="VKRCoordinator">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Mobiles" ColumnName="Mobiles" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="VKRId" ColumnName="VKRId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VKRSection">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.VKRSection">
+              <MappingFragment StoreEntitySet="VKRSection">
+                <ScalarProperty Name="Mobiles" ColumnName="Mobiles" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="VKRId" ColumnName="VKRId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VKRSectionCoordinator">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.VKRSectionCoordinator">
+              <MappingFragment StoreEntitySet="VKRSectionCoordinator">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Mobiles" ColumnName="Mobiles" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="VKRSectionId" ColumnName="VKRSectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VKRSectionFaculty">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.VKRSectionFaculty">
+              <MappingFragment StoreEntitySet="VKRSectionFaculty">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="VKRSectionId" ColumnName="VKRSectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VKROP">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.VKROP">
+              <MappingFragment StoreEntitySet="VKROP">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="VKRCoordinatorId" ColumnName="VKRCoordinatorId" />
+                <ScalarProperty Name="ObrazProgramInYearId" ColumnName="ObrazProgramInYearId" />
+                <ScalarProperty Name="ObrazProgramId" ColumnName="ObrazProgramId" />
+                <ScalarProperty Name="VKRId" ColumnName="VKRId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VKRThemes">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.VKRThemes">
+              <MappingFragment StoreEntitySet="VKRThemes">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="History" ColumnName="History" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="ObrazProgramId" ColumnName="ObrazProgramId" />
+                <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
+                <ScalarProperty Name="VKRNameEng" ColumnName="VKRNameEng" />
+                <ScalarProperty Name="VKRName" ColumnName="VKRName" />
+                <ScalarProperty Name="OrganizationAgreedId" ColumnName="OrganizationAgreedId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="VKRId" ColumnName="VKRId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VKROPStudent">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.VKROPStudent">
+              <MappingFragment StoreEntitySet="VKROPStudent">
+                <ScalarProperty Name="VKRSourceId" ColumnName="VKRSourceId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FacultyName" ColumnName="FacultyName" />
+                <ScalarProperty Name="SpecName" ColumnName="SpecName" />
+                <ScalarProperty Name="SpecNumber" ColumnName="SpecNumber" />
+                <ScalarProperty Name="DegreeName" ColumnName="DegreeName" />
+                <ScalarProperty Name="Accout" ColumnName="Accout" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StudyBasis" ColumnName="StudyBasis" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="RegNomWP" ColumnName="RegNomWP" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="DR" ColumnName="DR" />
+                <ScalarProperty Name="StudDataId" ColumnName="StudDataId" />
+                <ScalarProperty Name="SupervisorAccount" ColumnName="SupervisorAccount" />
+                <ScalarProperty Name="Supervisor" ColumnName="Supervisor" />
+                <ScalarProperty Name="Chair" ColumnName="Chair" />
+                <ScalarProperty Name="ObrazProgramInYearId" ColumnName="ObrazProgramInYearId" />
+                <ScalarProperty Name="ObrazProgramCrypt" ColumnName="ObrazProgramCrypt" />
+                <ScalarProperty Name="VKRNameEng" ColumnName="VKRNameEng" />
+                <ScalarProperty Name="VKRName" ColumnName="VKRName" />
+                <ScalarProperty Name="ObrazProgramId" ColumnName="ObrazProgramId" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="LicenseProgramId" ColumnName="LicenseProgramId" />
+                <ScalarProperty Name="StudentFIO" ColumnName="StudentFIO" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="VKROPId" ColumnName="VKROPId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VKROPTheme">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.VKROPTheme">
+              <MappingFragment StoreEntitySet="VKROPTheme">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="VKRNameEng" ColumnName="VKRNameEng" />
+                <ScalarProperty Name="VKRName" ColumnName="VKRName" />
+                <ScalarProperty Name="VKRCoordinatorId" ColumnName="VKRCoordinatorId" />
+                <ScalarProperty Name="OrganizationAgreedId" ColumnName="OrganizationAgreedId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="VKROPId" ColumnName="VKROPId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VKRSource">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.VKRSource">
+              <MappingFragment StoreEntitySet="VKRSource">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActivityAreaProfessional">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.ActivityAreaProfessional">
+              <MappingFragment StoreEntitySet="ActivityAreaProfessional">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Sorting" ColumnName="Sorting" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrganizationNames">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.OrganizationNames">
+              <MappingFragment StoreEntitySet="OrganizationNames">
+                <ScalarProperty Name="NameDate" ColumnName="NameDate" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="CloseDate" ColumnName="CloseDate" />
+                <ScalarProperty Name="OGRNDate" ColumnName="OGRNDate" />
+                <ScalarProperty Name="OGRN" ColumnName="OGRN" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="ShortNameEng" ColumnName="ShortNameEng" />
+                <ScalarProperty Name="NameEng" ColumnName="NameEng" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrganizationActivityAreaProfessional">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.OrganizationActivityAreaProfessional">
+              <MappingFragment StoreEntitySet="OrganizationActivityAreaProfessional">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="ActivityAreaProfessionalId" ColumnName="ActivityAreaProfessionalId" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

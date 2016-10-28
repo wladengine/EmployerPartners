@@ -23,8 +23,19 @@ namespace EmployerPartners
             //FillOP();
             FillOPInYear();
             FillStudent();
+            SetAccessRight();
         }
-
+        private void SetAccessRight()
+        {
+            if (Util.IsOrgPersonWrite())
+            {
+                btnCheckLP.Enabled = true;
+                btnUpdateLP.Enabled = true;
+                btnCheckOP.Enabled = true;
+                btnUpdateOP.Enabled = true;
+                btnUpdateStudent.Enabled = true;
+            }
+        }
         private void btnUpdateStudent_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Операция обновления данных потребует\r\n" + "обращения к другим серверам БД Университета \r\n" +
@@ -41,7 +52,8 @@ namespace EmployerPartners
             {
                 //this.UseWaitCursor = false;
                 pBar1.Visible = false;
-                MessageBox.Show("Не удалось получить данные с сервера DEVELOPMENT", "Отмена действия", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Не удалось получить данные с сервера DEVELOPMENT \r\n" +
+                    "[В большинстве случаев это означает, что \r\n" + "недостаточно прав доступа.]", "Отмена действия", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             pBar1.Value = 60; 
@@ -59,7 +71,8 @@ namespace EmployerPartners
             {
                 //this.UseWaitCursor = false;
                 pBar1.Visible = false;
-                MessageBox.Show("Не удалось обновить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Не удалось обновить данные... \r\n" +
+                    "[В большинстве случаев это означает, что \r\n" + "недостаточно прав доступа к другим серверам баз данных.]", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
@@ -224,7 +237,9 @@ namespace EmployerPartners
             catch (Exception)
             {
                 labelLP.Text = "Список";
-                MessageBox.Show("Не удалось получить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Не удалось получить данные... \r\n" +
+                    "[В большинстве случаев это означает, что \r\n" + "недостаточно прав доступа к другим серверам баз данных.]", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
             //Добавление новых данных
             if (Utilities.UpdateLP())
@@ -236,7 +251,8 @@ namespace EmployerPartners
             }
             else
             {
-                MessageBox.Show("Не удалось обновить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Не удалось обновить данные... \r\n" +
+                    "[В большинстве случаев это означает, что \r\n" + "недостаточно прав доступа к другим серверам баз данных.]", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
@@ -283,7 +299,8 @@ namespace EmployerPartners
             catch (Exception)
             {
                 labelLP.Text = "Список";
-                MessageBox.Show("Не удалось получить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Не удалось получить данные... \r\n" + 
+                    "[В большинстве случаев это означает, что \r\n" + "недостаточно прав доступа к другим серверам баз данных.]", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -337,7 +354,8 @@ namespace EmployerPartners
             catch (Exception)
             {
                 labelOP.Text = "Список";
-                MessageBox.Show("Не удалось получить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Не удалось получить данные... \r\n" +
+                    "[В большинстве случаев это означает, что \r\n" + "недостаточно прав доступа к другим серверам баз данных.]", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -370,7 +388,9 @@ namespace EmployerPartners
             catch (Exception)
             {
                 labelOP.Text = "Список";
-                MessageBox.Show("Не удалось получить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Не удалось получить данные... \r\n" +
+                    "[В большинстве случаев это означает, что \r\n" + "недостаточно прав доступа к другим серверам баз данных.]", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
             //Добавление новых данных
             if (Utilities.UpdateOP())
@@ -383,7 +403,8 @@ namespace EmployerPartners
             }
             else
             {
-                MessageBox.Show("Не удалось обновить данные", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Не удалось обновить данные... \r\n" +
+                    "[В большинстве случаев это означает, что \r\n" + "недостаточно прав доступа к другим серверам баз данных.]", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }

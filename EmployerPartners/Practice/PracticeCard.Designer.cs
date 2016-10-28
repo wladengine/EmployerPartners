@@ -99,6 +99,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.tbOrderDoc = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnDopStudent = new System.Windows.Forms.Button();
+            this.Lbl_cbStudyingName = new System.Windows.Forms.Label();
+            this.cbStudyingName = new System.Windows.Forms.ComboBox();
             this.btnAddAllStudentToPractice = new System.Windows.Forms.Button();
             this.btnInstructionLoad = new System.Windows.Forms.Button();
             this.label24 = new System.Windows.Forms.Label();
@@ -174,8 +177,6 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.checkBoxOutSPb = new System.Windows.Forms.CheckBox();
             this.label22 = new System.Windows.Forms.Label();
-            this.cbStudyingName = new System.Windows.Forms.ComboBox();
-            this.Lbl_cbStudyingName = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).BeginInit();
@@ -313,6 +314,7 @@
             // 
             // btnOrderLoad
             // 
+            this.btnOrderLoad.Enabled = false;
             this.btnOrderLoad.Location = new System.Drawing.Point(646, 63);
             this.btnOrderLoad.Name = "btnOrderLoad";
             this.btnOrderLoad.Size = new System.Drawing.Size(231, 24);
@@ -362,6 +364,7 @@
             this.ColumnDelOrder.Name = "ColumnDelOrder";
             this.ColumnDelOrder.Text = "Удалить";
             this.ColumnDelOrder.UseColumnTextForButtonValue = true;
+            this.ColumnDelOrder.Visible = false;
             // 
             // ColumnViewOrder
             // 
@@ -384,6 +387,7 @@
             // btnOrgEdit
             // 
             this.btnOrgEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnOrgEdit.Enabled = false;
             this.btnOrgEdit.Location = new System.Drawing.Point(330, 390);
             this.btnOrgEdit.Name = "btnOrgEdit";
             this.btnOrgEdit.Size = new System.Drawing.Size(192, 23);
@@ -592,6 +596,7 @@
             // btnAddOrg
             // 
             this.btnAddOrg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddOrg.Enabled = false;
             this.btnAddOrg.Location = new System.Drawing.Point(1057, 390);
             this.btnAddOrg.Name = "btnAddOrg";
             this.btnAddOrg.Size = new System.Drawing.Size(147, 23);
@@ -602,6 +607,7 @@
             // 
             // btnMakeOrder
             // 
+            this.btnMakeOrder.Enabled = false;
             this.btnMakeOrder.Location = new System.Drawing.Point(330, 56);
             this.btnMakeOrder.Name = "btnMakeOrder";
             this.btnMakeOrder.Size = new System.Drawing.Size(114, 39);
@@ -788,6 +794,7 @@
             this.ColumnDelOrg.ReadOnly = true;
             this.ColumnDelOrg.Text = "Удалить";
             this.ColumnDelOrg.UseColumnTextForButtonValue = true;
+            this.ColumnDelOrg.Visible = false;
             // 
             // ColumnEditOrg
             // 
@@ -797,6 +804,7 @@
             this.ColumnEditOrg.ReadOnly = true;
             this.ColumnEditOrg.Text = "Изменить";
             this.ColumnEditOrg.UseColumnTextForButtonValue = true;
+            this.ColumnEditOrg.Visible = false;
             // 
             // label10
             // 
@@ -880,6 +888,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnDopStudent);
             this.tabPage2.Controls.Add(this.Lbl_cbStudyingName);
             this.tabPage2.Controls.Add(this.cbStudyingName);
             this.tabPage2.Controls.Add(this.btnAddAllStudentToPractice);
@@ -920,6 +929,39 @@
             this.tabPage2.Text = "Распоряжение";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnDopStudent
+            // 
+            this.btnDopStudent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDopStudent.Location = new System.Drawing.Point(933, 389);
+            this.btnDopStudent.Name = "btnDopStudent";
+            this.btnDopStudent.Size = new System.Drawing.Size(107, 23);
+            this.btnDopStudent.TabIndex = 48;
+            this.btnDopStudent.Text = "Доп. студенты";
+            this.btnDopStudent.UseVisualStyleBackColor = true;
+            this.btnDopStudent.Visible = false;
+            this.btnDopStudent.Click += new System.EventHandler(this.btnDopStudent_Click);
+            // 
+            // Lbl_cbStudyingName
+            // 
+            this.Lbl_cbStudyingName.AutoSize = true;
+            this.Lbl_cbStudyingName.Location = new System.Drawing.Point(1017, 156);
+            this.Lbl_cbStudyingName.Name = "Lbl_cbStudyingName";
+            this.Lbl_cbStudyingName.Size = new System.Drawing.Size(61, 13);
+            this.Lbl_cbStudyingName.TabIndex = 47;
+            this.Lbl_cbStudyingName.Text = "Состояние";
+            this.Lbl_cbStudyingName.Visible = false;
+            // 
+            // cbStudyingName
+            // 
+            this.cbStudyingName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStudyingName.FormattingEnabled = true;
+            this.cbStudyingName.Location = new System.Drawing.Point(1083, 153);
+            this.cbStudyingName.Name = "cbStudyingName";
+            this.cbStudyingName.Size = new System.Drawing.Size(121, 21);
+            this.cbStudyingName.TabIndex = 46;
+            this.cbStudyingName.Visible = false;
+            this.cbStudyingName.SelectedIndexChanged += new System.EventHandler(this.cbStudyingName_SelectedIndexChanged);
+            // 
             // btnAddAllStudentToPractice
             // 
             this.btnAddAllStudentToPractice.Location = new System.Drawing.Point(669, 123);
@@ -933,6 +975,7 @@
             // 
             // btnInstructionLoad
             // 
+            this.btnInstructionLoad.Enabled = false;
             this.btnInstructionLoad.Location = new System.Drawing.Point(628, 63);
             this.btnInstructionLoad.Name = "btnInstructionLoad";
             this.btnInstructionLoad.Size = new System.Drawing.Size(249, 24);
@@ -982,6 +1025,7 @@
             this.ColumnDelInstruction.Name = "ColumnDelInstruction";
             this.ColumnDelInstruction.Text = "Удалить";
             this.ColumnDelInstruction.UseColumnTextForButtonValue = true;
+            this.ColumnDelInstruction.Visible = false;
             // 
             // ColumnViewInstruction
             // 
@@ -999,7 +1043,7 @@
             this.cbOrgStudent.FormattingEnabled = true;
             this.cbOrgStudent.Location = new System.Drawing.Point(669, 153);
             this.cbOrgStudent.Name = "cbOrgStudent";
-            this.cbOrgStudent.Size = new System.Drawing.Size(535, 21);
+            this.cbOrgStudent.Size = new System.Drawing.Size(533, 21);
             this.cbOrgStudent.TabIndex = 37;
             this.cbOrgStudent.Visible = false;
             // 
@@ -1016,6 +1060,7 @@
             // btnSetOrgStudent
             // 
             this.btnSetOrgStudent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSetOrgStudent.Enabled = false;
             this.btnSetOrgStudent.Location = new System.Drawing.Point(330, 390);
             this.btnSetOrgStudent.Name = "btnSetOrgStudent";
             this.btnSetOrgStudent.Size = new System.Drawing.Size(256, 23);
@@ -1156,6 +1201,7 @@
             // btnAddStudent
             // 
             this.btnAddStudent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddStudent.Enabled = false;
             this.btnAddStudent.Location = new System.Drawing.Point(1057, 389);
             this.btnAddStudent.Name = "btnAddStudent";
             this.btnAddStudent.Size = new System.Drawing.Size(147, 23);
@@ -1215,6 +1261,7 @@
             // 
             // btnMakeInstruction
             // 
+            this.btnMakeInstruction.Enabled = false;
             this.btnMakeInstruction.Location = new System.Drawing.Point(330, 56);
             this.btnMakeInstruction.Name = "btnMakeInstruction";
             this.btnMakeInstruction.Size = new System.Drawing.Size(114, 39);
@@ -1366,6 +1413,7 @@
             this.ColumnDelStudent.ReadOnly = true;
             this.ColumnDelStudent.Text = "Удалить";
             this.ColumnDelStudent.UseColumnTextForButtonValue = true;
+            this.ColumnDelStudent.Visible = false;
             // 
             // ColumnEditStudent
             // 
@@ -1375,6 +1423,7 @@
             this.ColumnEditStudent.ReadOnly = true;
             this.ColumnEditStudent.Text = "Изменить";
             this.ColumnEditStudent.UseColumnTextForButtonValue = true;
+            this.ColumnEditStudent.Visible = false;
             // 
             // ColumnSetOrgStudent
             // 
@@ -1384,6 +1433,7 @@
             this.ColumnSetOrgStudent.ReadOnly = true;
             this.ColumnSetOrgStudent.Text = "Выбор орг-ции";
             this.ColumnSetOrgStudent.UseColumnTextForButtonValue = true;
+            this.ColumnSetOrgStudent.Visible = false;
             // 
             // label14
             // 
@@ -1578,6 +1628,7 @@
             // 
             // btnAddOP
             // 
+            this.btnAddOP.Enabled = false;
             this.btnAddOP.Location = new System.Drawing.Point(19, 144);
             this.btnAddOP.Name = "btnAddOP";
             this.btnAddOP.Size = new System.Drawing.Size(96, 24);
@@ -1588,6 +1639,7 @@
             // 
             // btnDelOP
             // 
+            this.btnDelOP.Enabled = false;
             this.btnDelOP.Location = new System.Drawing.Point(911, 140);
             this.btnDelOP.Name = "btnDelOP";
             this.btnDelOP.Size = new System.Drawing.Size(130, 25);
@@ -1598,6 +1650,7 @@
             // 
             // btnDelPractice
             // 
+            this.btnDelPractice.Enabled = false;
             this.btnDelPractice.Location = new System.Drawing.Point(911, 171);
             this.btnDelPractice.Name = "btnDelPractice";
             this.btnDelPractice.Size = new System.Drawing.Size(130, 25);
@@ -1608,6 +1661,7 @@
             // 
             // btnSave
             // 
+            this.btnSave.Enabled = false;
             this.btnSave.Location = new System.Drawing.Point(909, 11);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(132, 25);
@@ -1634,27 +1688,6 @@
             this.label22.Size = new System.Drawing.Size(289, 13);
             this.label22.TabIndex = 18;
             this.label22.Text = "(хотя бы одна организация связана с выездом из СПб)";
-            // 
-            // cbStudyingName
-            // 
-            this.cbStudyingName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbStudyingName.FormattingEnabled = true;
-            this.cbStudyingName.Location = new System.Drawing.Point(1083, 153);
-            this.cbStudyingName.Name = "cbStudyingName";
-            this.cbStudyingName.Size = new System.Drawing.Size(121, 21);
-            this.cbStudyingName.TabIndex = 46;
-            this.cbStudyingName.Visible = false;
-            this.cbStudyingName.SelectedIndexChanged += new System.EventHandler(this.cbStudyingName_SelectedIndexChanged);
-            // 
-            // Lbl_cbStudyingName
-            // 
-            this.Lbl_cbStudyingName.AutoSize = true;
-            this.Lbl_cbStudyingName.Location = new System.Drawing.Point(1017, 156);
-            this.Lbl_cbStudyingName.Name = "Lbl_cbStudyingName";
-            this.Lbl_cbStudyingName.Size = new System.Drawing.Size(61, 13);
-            this.Lbl_cbStudyingName.TabIndex = 47;
-            this.Lbl_cbStudyingName.Text = "Состояние";
-            this.Lbl_cbStudyingName.Visible = false;
             // 
             // PracticeCard
             // 
@@ -1832,18 +1865,11 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem3;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem3;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv1;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnDelOrg;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnEditOrg;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv4;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnAddStudent;
         private System.Windows.Forms.ComboBox cbOrgStudent;
         private System.Windows.Forms.Button btnSetOrgStudent;
         private System.Windows.Forms.Label lbl_cbOrgStudent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv3;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnDelStudent;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnEditStudent;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnSetOrgStudent;
         private System.Windows.Forms.CheckBox checkBoxOutSPb;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Button btnOrderLoad;
@@ -1852,12 +1878,6 @@
         private System.Windows.Forms.Button btnInstructionLoad;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.DataGridView dgvInstruction;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv6;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnDelInstruction;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnViewInstruction;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv5;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnDelOrder;
-        private System.Windows.Forms.DataGridViewButtonColumn ColumnViewOrder;
         private System.Windows.Forms.CheckBox checkBoxStudentOP;
         private System.Windows.Forms.Button btnStudentNewUpdate;
         private System.Windows.Forms.Button btnAddAllStudentToPractice;
@@ -1868,5 +1888,19 @@
         private System.Windows.Forms.DataGridViewButtonColumn ColumnCard;
         private System.Windows.Forms.Label Lbl_cbStudyingName;
         private System.Windows.Forms.ComboBox cbStudyingName;
+        private System.Windows.Forms.Button btnDopStudent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv5;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnDelOrder;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnViewOrder;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv6;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnDelInstruction;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnViewInstruction;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv1;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnDelOrg;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnEditOrg;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv3;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnDelStudent;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnEditStudent;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnSetOrgStudent;
     }
 }

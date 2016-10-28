@@ -68,6 +68,8 @@
             // 
             // cbOrganization
             // 
+            this.cbOrganization.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbOrganization.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbOrganization.FormattingEnabled = true;
             this.cbOrganization.Location = new System.Drawing.Point(117, 12);
@@ -133,7 +135,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.MinimumSize = new System.Drawing.Size(458, 236);
             this.Name = "CardPersonOrganization";
             this.Text = "Организация - контакты";
             this.ResumeLayout(false);

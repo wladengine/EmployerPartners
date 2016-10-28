@@ -104,7 +104,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(355, 236);
+            this.btnAdd.Location = new System.Drawing.Point(355, 248);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 5;
@@ -243,7 +243,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.MinimumSize = new System.Drawing.Size(458, 236);
             this.Name = "CardOrganizationPerson";
             this.Text = "Организация - контакты";
             this.ResumeLayout(false);

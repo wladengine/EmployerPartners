@@ -53,32 +53,54 @@ namespace EmployerPartners
         }
         override public void DeleteRec(int Id)
         {
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                context.OwnershipType.Remove(context.OwnershipType.Where(x => x.Id == Id).First());
-                context.SaveChanges();
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    context.OwnershipType.Remove(context.OwnershipType.Where(x => x.Id == Id).First());
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+               MessageBox.Show("Не удается удалить запись \r\n" + "Обычно это связано с наличием связанных записей в других таблицах.", "Сообщение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
         override public void UpdateRec(int? Id, string name)
         {
             if (Id.HasValue)
-                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                try
                 {
-                    OwnershipType obj = context.OwnershipType.Where(x => x.Id == Id).First();
-                    obj.Name = name;
-                    context.SaveChanges();
-                    FillCard(Id);
+                    using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                    {
+                        OwnershipType obj = context.OwnershipType.Where(x => x.Id == Id).First();
+                        obj.Name = name;
+                        context.SaveChanges();
+                        FillCard(Id);
+                    }
+                }
+                catch (Exception ex)
+                {
+                   MessageBox.Show("Не удается обновить запись \r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
         }
         override public void AddRec(int? Id, string name)
         {
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                OwnershipType obj = new OwnershipType();
-                obj.Name = name;
-                context.OwnershipType.Add(obj);
-                context.SaveChanges();
-                FillCard(obj.Id);
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    OwnershipType obj = new OwnershipType();
+                    obj.Name = name;
+                    context.OwnershipType.Add(obj);
+                    context.SaveChanges();
+                    FillCard(obj.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+               MessageBox.Show("Не удается добавить запись \r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
     }

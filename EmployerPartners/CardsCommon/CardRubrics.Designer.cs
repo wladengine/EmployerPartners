@@ -69,8 +69,6 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.cbName);
             this.Controls.Add(this.label2);
-            this.MaximumSize = new System.Drawing.Size(460, 132);
-            this.MinimumSize = new System.Drawing.Size(460, 132);
             this.Name = "CardRubrics";
             this.Text = "Добавить рубрику";
             this.ResumeLayout(false);

@@ -58,13 +58,15 @@ namespace EmployerPartners
             this.Text = "Список физических лиц";
             FillCard();
             FillGrid();
-
-            if (Util.IsReadOnlyAll())
+            SetAccessRight();
+        }
+        private void SetAccessRight()
+        {
+            if (Util.IsOrgPersonWrite())
             {
-                btnAddPartner.Enabled = false;
+                btnAddPartner.Enabled = true;
             }
         }
-
         private void FillCard()
         {
             ComboServ.FillCombo(cbDegree, HelpClass.GetComboListByTable("dbo.Degree"), false, true);
@@ -157,6 +159,8 @@ namespace EmployerPartners
                 if (dgv.CurrentRow.Index>=0)
                 {
                     int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                    if (Utilities.PersonCardIsOpened(id))
+                        return;
                     new CardPerson(id, new UpdateVoidHandler(FillGrid)).Show();
                 }
         }
@@ -167,12 +171,26 @@ namespace EmployerPartners
                 if (dgv.CurrentCell.RowIndex >= 0)
                 {
                     int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                    if (Utilities.PersonCardIsOpened(id))
+                        return;
                     new CardPerson(id, new UpdateVoidHandler(FillGrid)).Show();
                 }
         }
 
         private void btnAddPartner_Click(object sender, EventArgs e)
         {
+            try
+            {
+                foreach (Form frm in Application.OpenForms)
+                    if (frm is CardNewPerson)
+                    {
+                        frm.Activate();
+                        return;
+                    }
+            }
+            catch (Exception)
+            {
+            }
             //new CardPartner(null, new UpdateVoidHandler(FillCard)).Show();
             new CardNewPerson(new UpdateVoidHandler(FillGrid)).Show();
         }

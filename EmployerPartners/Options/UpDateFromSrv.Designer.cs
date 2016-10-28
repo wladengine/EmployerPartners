@@ -110,6 +110,7 @@
             // 
             // btnUpdateStudent
             // 
+            this.btnUpdateStudent.Enabled = false;
             this.btnUpdateStudent.Location = new System.Drawing.Point(20, 15);
             this.btnUpdateStudent.Name = "btnUpdateStudent";
             this.btnUpdateStudent.Size = new System.Drawing.Size(200, 25);
@@ -159,6 +160,7 @@
             // 
             // btnCheckLP
             // 
+            this.btnCheckLP.Enabled = false;
             this.btnCheckLP.Location = new System.Drawing.Point(20, 15);
             this.btnCheckLP.Name = "btnCheckLP";
             this.btnCheckLP.Size = new System.Drawing.Size(200, 25);
@@ -178,6 +180,7 @@
             // 
             // btnUpdateLP
             // 
+            this.btnUpdateLP.Enabled = false;
             this.btnUpdateLP.Location = new System.Drawing.Point(244, 15);
             this.btnUpdateLP.Name = "btnUpdateLP";
             this.btnUpdateLP.Size = new System.Drawing.Size(200, 25);
@@ -365,6 +368,7 @@
             // 
             // btnUpdateOP
             // 
+            this.btnUpdateOP.Enabled = false;
             this.btnUpdateOP.Location = new System.Drawing.Point(244, 15);
             this.btnUpdateOP.Name = "btnUpdateOP";
             this.btnUpdateOP.Size = new System.Drawing.Size(200, 25);
@@ -375,6 +379,7 @@
             // 
             // btnCheckOP
             // 
+            this.btnCheckOP.Enabled = false;
             this.btnCheckOP.Location = new System.Drawing.Point(20, 15);
             this.btnCheckOP.Name = "btnCheckOP";
             this.btnCheckOP.Size = new System.Drawing.Size(200, 25);

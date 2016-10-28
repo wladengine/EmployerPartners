@@ -17,6 +17,16 @@ namespace EmployerPartners
             InitializeComponent();
             this.MdiParent = Util.mainform;
             FillCard(null);
+            SetAccessRight();
+        }
+        private void SetAccessRight()
+        {
+            if (Util.IsOrgPersonWrite())
+            {
+                btnAdd.Enabled = true;
+                btnEdit.Enabled = true;
+                btnDelete.Enabled = true;
+            }
         }
         public void FillCard(int? id)
         {
@@ -42,7 +52,10 @@ namespace EmployerPartners
 
         private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Edit();
+            if (Util.IsOrgPersonWrite())
+            {
+                Edit();
+            }
         }
         private void Edit()
         {
@@ -60,7 +73,7 @@ namespace EmployerPartners
             if (dgv.CurrentCell != null)
                 if (dgv.CurrentRow.Index >= 0)
                 {
-                    if (MessageBox.Show("Удалить выбранное?","", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                    if (MessageBox.Show("Удалить выбранное?","Запрос на подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != System.Windows.Forms.DialogResult.Yes)
                         return;
 
                     int Id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());

@@ -67,6 +67,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.tbSearch = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.btnSearchNext = new System.Windows.Forms.Button();
+            this.btnSearchPrevious = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -95,13 +97,14 @@
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(117, 24);
             this.btnOpen.TabIndex = 1;
-            this.btnOpen.Text = "Открыть";
+            this.btnOpen.Text = "Открыть карточку";
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // btnAddPartner
             // 
             this.btnAddPartner.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddPartner.Enabled = false;
             this.btnAddPartner.Location = new System.Drawing.Point(883, 95);
             this.btnAddPartner.Name = "btnAddPartner";
             this.btnAddPartner.Size = new System.Drawing.Size(117, 24);
@@ -216,9 +219,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(14, 90);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(141, 13);
+            this.label6.Size = new System.Drawing.Size(144, 13);
             this.label6.TabIndex = 2;
-            this.label6.Text = "Осн. сфера деятельности:";
+            this.label6.Text = "Ключевое слово основное:";
             // 
             // cbActivityArea
             // 
@@ -231,11 +234,12 @@
             // 
             // label7
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(676, 530);
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label7.Location = new System.Drawing.Point(783, 530);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(260, 13);
+            this.label7.Size = new System.Drawing.Size(217, 12);
             this.label7.TabIndex = 5;
             this.label7.Text = "DoubleClick в любом поле - карточка организации";
             // 
@@ -409,7 +413,7 @@
             // tbSearch
             // 
             this.tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tbSearch.Location = new System.Drawing.Point(523, 527);
+            this.tbSearch.Location = new System.Drawing.Point(465, 527);
             this.tbSearch.Name = "tbSearch";
             this.tbSearch.Size = new System.Drawing.Size(100, 20);
             this.tbSearch.TabIndex = 12;
@@ -419,11 +423,33 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(340, 530);
+            this.label10.Location = new System.Drawing.Point(282, 530);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(175, 13);
             this.label10.TabIndex = 13;
             this.label10.Text = "Поиск (по всем видам названий)";
+            // 
+            // btnSearchNext
+            // 
+            this.btnSearchNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSearchNext.Location = new System.Drawing.Point(578, 524);
+            this.btnSearchNext.Name = "btnSearchNext";
+            this.btnSearchNext.Size = new System.Drawing.Size(96, 24);
+            this.btnSearchNext.TabIndex = 14;
+            this.btnSearchNext.Text = "Найти далее";
+            this.btnSearchNext.UseVisualStyleBackColor = true;
+            this.btnSearchNext.Click += new System.EventHandler(this.btnSearchNext_Click);
+            // 
+            // btnSearchPrevious
+            // 
+            this.btnSearchPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSearchPrevious.Location = new System.Drawing.Point(680, 524);
+            this.btnSearchPrevious.Name = "btnSearchPrevious";
+            this.btnSearchPrevious.Size = new System.Drawing.Size(96, 24);
+            this.btnSearchPrevious.TabIndex = 15;
+            this.btnSearchPrevious.Text = "Найти пред.";
+            this.btnSearchPrevious.UseVisualStyleBackColor = true;
+            this.btnSearchPrevious.Click += new System.EventHandler(this.btnSearchPrevious_Click);
             // 
             // ListOrganizations
             // 
@@ -431,6 +457,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1133, 556);
+            this.Controls.Add(this.btnSearchPrevious);
+            this.Controls.Add(this.btnSearchNext);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.tbSearch);
             this.Controls.Add(this.label9);
@@ -508,5 +536,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tbSearch;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnSearchNext;
+        private System.Windows.Forms.Button btnSearchPrevious;
     }
 }

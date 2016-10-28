@@ -19,6 +19,9 @@ namespace EmployerPartners
         {
             this.ObrazProgramInYear = new HashSet<ObrazProgramInYear>();
             this.PracticeLPOP = new HashSet<PracticeLPOP>();
+            this.VKROP = new HashSet<VKROP>();
+            this.VKRThemes = new HashSet<VKRThemes>();
+            this.VKROPStudent = new HashSet<VKROPStudent>();
         }
     
         public int Id { get; set; }
@@ -57,5 +60,11 @@ namespace EmployerPartners
         public virtual ICollection<ObrazProgramInYear> ObrazProgramInYear { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PracticeLPOP> PracticeLPOP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKROP> VKROP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKRThemes> VKRThemes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKROPStudent> VKROPStudent { get; set; }
     }
 }

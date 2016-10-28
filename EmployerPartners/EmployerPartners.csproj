@@ -92,6 +92,9 @@
     <Compile Include="ActivityArea.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="ActivityAreaProfessional.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="ActivityGoal.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
@@ -125,6 +128,18 @@
     </Compile>
     <Compile Include="CardOrganization\CardOrganizationRubric.Designer.cs">
       <DependentUpon>CardOrganizationRubric.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardOrganization\CardOrgNewName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CardOrganization\CardOrgNewName.Designer.cs">
+      <DependentUpon>CardOrgNewName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardOrganization\CardOrgPreviousName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CardOrganization\CardOrgPreviousName.Designer.cs">
+      <DependentUpon>CardOrgPreviousName.cs</DependentUpon>
     </Compile>
     <Compile Include="CardPerson\CardNewPerson.cs">
       <SubType>Form</SubType>
@@ -402,6 +417,9 @@
     <Compile Include="OrganizationActivityArea.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrganizationActivityAreaProfessional.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="OrganizationContacts.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
@@ -415,6 +433,9 @@
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="OrganizationLP.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrganizationNames.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="OrganizationOkved.cs">
@@ -464,6 +485,12 @@
     </Compile>
     <Compile Include="PracticeStudent.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Practice\PracticeStudentDopList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Practice\PracticeStudentDopList.Designer.cs">
+      <DependentUpon>PracticeStudentDopList.cs</DependentUpon>
     </Compile>
     <Compile Include="PracticeType.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
@@ -577,11 +604,74 @@
     </Compile>
     <Compile Include="Util.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="VKR.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKROPStudent.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKROPTheme.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKRSource.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKR\VKRStudentCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VKR\VKRStudentCard.Designer.cs">
+      <DependentUpon>VKRStudentCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VKR\VKRStudent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VKR\VKRStudent.Designer.cs">
+      <DependentUpon>VKRStudent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VKRThemes.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKR\VKRListThemes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VKR\VKRListThemes.Designer.cs">
+      <DependentUpon>VKRListThemes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VKR\VKRCoord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VKR\VKRCoord.Designer.cs">
+      <DependentUpon>VKRCoord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VKRCoordinator.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKROP.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKRSection.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKRSectionCoordinator.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKRSectionFaculty.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKR\VKRMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VKR\VKRMain.Designer.cs">
+      <DependentUpon>VKRMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Year.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <EmbeddedResource Include="CardContact.resx">
       <DependentUpon>CardContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardOrganization\CardOrganizationArea.resx">
+      <DependentUpon>CardOrganizationArea.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CardOrganization\CardOrganizationDogovor.resx">
       <DependentUpon>CardOrganizationDogovor.cs</DependentUpon>
@@ -595,6 +685,12 @@
     <EmbeddedResource Include="CardOrganization\CardOrganizationRubric.resx">
       <DependentUpon>CardOrganizationRubric.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CardOrganization\CardOrgNewName.resx">
+      <DependentUpon>CardOrgNewName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardOrganization\CardOrgPreviousName.resx">
+      <DependentUpon>CardOrgPreviousName.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CardPerson\CardNewPerson.resx">
       <DependentUpon>CardNewPerson.cs</DependentUpon>
     </EmbeddedResource>
@@ -603,6 +699,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CardOrganization\CardOrgaizationPerson.resx">
       <DependentUpon>CardOrgaizationPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardPerson\CardPersonArea.resx">
+      <DependentUpon>CardPersonArea.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CardPerson\CardPersonLP.resx">
       <DependentUpon>CardPersonLP.cs</DependentUpon>
@@ -664,6 +763,9 @@
     <EmbeddedResource Include="Options\Templates.resx">
       <DependentUpon>Templates.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Practice\PracticeStudentDopList.resx">
+      <DependentUpon>PracticeStudentDopList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Practice\PracticeOrgCard.resx">
       <DependentUpon>PracticeOrgCard.cs</DependentUpon>
     </EmbeddedResource>
@@ -687,6 +789,21 @@
     <EmbeddedResource Include="Options\UpDateFromSrv.resx">
       <DependentUpon>UpdateFromSrv.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VKR\VKRListThemes.resx">
+      <DependentUpon>VKRListThemes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VKR\VKRCoord.resx">
+      <DependentUpon>VKRCoord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VKR\VKRMain.resx">
+      <DependentUpon>VKRMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VKR\VKRStudent.resx">
+      <DependentUpon>VKRStudent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VKR\VKRStudentCard.resx">
+      <DependentUpon>VKRStudentCard.cs</DependentUpon>
+    </EmbeddedResource>
     <EntityDeploy Include="EmpoyerPartners.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EmpoyerPartners.Designer.cs</LastGenOutput>
@@ -694,6 +811,7 @@
     <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="ClassDiagram1.cd" />
     <None Include="EmpoyerPartners.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EmpoyerPartners.edmx</DependentUpon>
@@ -759,6 +877,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

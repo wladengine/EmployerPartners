@@ -28,6 +28,13 @@ namespace EmployerPartners
             this.PracticeLPOrganization = new HashSet<PracticeLPOrganization>();
             this.PracticeStudent = new HashSet<PracticeStudent>();
             this.OrganizationDogovor = new HashSet<OrganizationDogovor>();
+            this.VKRThemes = new HashSet<VKRThemes>();
+            this.VKRThemes1 = new HashSet<VKRThemes>();
+            this.VKROPStudent = new HashSet<VKROPStudent>();
+            this.VKROPTheme = new HashSet<VKROPTheme>();
+            this.VKROPTheme1 = new HashSet<VKROPTheme>();
+            this.OrganizationNames = new HashSet<OrganizationNames>();
+            this.OrganizationActivityAreaProfessional = new HashSet<OrganizationActivityAreaProfessional>();
         }
     
         public int Id { get; set; }
@@ -63,6 +70,19 @@ namespace EmployerPartners
         public System.DateTime DateCreated { get; set; }
         public System.Guid rowguid { get; set; }
         public string Apartment { get; set; }
+        public Nullable<bool> SourceCharter { get; set; }
+        public Nullable<bool> SourceEGRUL { get; set; }
+        public Nullable<bool> SourceSite { get; set; }
+        public Nullable<bool> CardChecked { get; set; }
+        public Nullable<bool> IsActual { get; set; }
+        public Nullable<int> ActivityAreaProfessionalId { get; set; }
+        public string OGRN { get; set; }
+        public Nullable<System.DateTime> OGRNDate { get; set; }
+        public Nullable<System.DateTime> CloseDate { get; set; }
+        public string Address { get; set; }
+        public Nullable<System.DateTime> NameDate { get; set; }
+        public string OECD { get; set; }
+        public string OkvedDop { get; set; }
     
         public virtual ActivityArea ActivityArea { get; set; }
         public virtual ActivityGoal ActivityGoal { get; set; }
@@ -92,5 +112,20 @@ namespace EmployerPartners
         public virtual ICollection<PracticeStudent> PracticeStudent { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrganizationDogovor> OrganizationDogovor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKRThemes> VKRThemes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKRThemes> VKRThemes1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKROPStudent> VKROPStudent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKROPTheme> VKROPTheme { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKROPTheme> VKROPTheme1 { get; set; }
+        public virtual ActivityAreaProfessional ActivityAreaProfessional { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrganizationNames> OrganizationNames { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrganizationActivityAreaProfessional> OrganizationActivityAreaProfessional { get; set; }
     }
 }

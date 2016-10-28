@@ -37,6 +37,7 @@ namespace EmployerPartners
         public Nullable<System.DateTime> DateCreated { get; set; }
         public string PartTime { get; set; }
         public Nullable<bool> IsActual { get; set; }
+        public Nullable<bool> FromDocumentDate { get; set; }
     
         public virtual DocumentType DocumentType { get; set; }
         public virtual Organization Organization { get; set; }

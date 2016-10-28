@@ -54,9 +54,9 @@ namespace EmployerPartners
         }
         private void SetAccessRight()
         {
-            if (Util.IsReadOnlyAll() || Util.IsPracticeRead())
+            if (Util.IsPracticeWrite())
             {
-                btnAddLP.Enabled = false;
+                btnAddLP.Enabled = true;
             }
         }
         private void FillPracticeYear()
@@ -159,7 +159,8 @@ namespace EmployerPartners
                            join lp in context.LicenseProgram on plp.LicenseProgramId equals lp.Id 
                            join st in context.StudyLevel on lp.StudyLevelId equals st.Id
                            join progt in context.ProgramType on lp.ProgramTypeId equals progt.Id
-                           join q in context.Qualification on lp.QualificationId equals q.Id
+                           join q in context.Qualification on lp.QualificationId equals q.Id into _q
+                           from q in _q.DefaultIfEmpty()
                            where (id.HasValue ? plp.PracticeId == id : true) && (PracticeYear.HasValue ? p.PracticeYear == PracticeYear : false) &&
                                     (StudyLevelId.HasValue ? lp.StudyLevelId == StudyLevelId : true)
                            orderby fac.Name, lp.Code, st.Name, progt.Id 
@@ -299,28 +300,44 @@ namespace EmployerPartners
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            if (dgv.CurrentCell != null)
-                if (dgv.CurrentCell.RowIndex >= 0)
-                {
-                    int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
-                    int pid = int.Parse(dgv.CurrentRow.Cells["PracticeId"].Value.ToString());
-                    int lpid = int.Parse(dgv.CurrentRow.Cells["LicenseProgramId"].Value.ToString());
-                    string lp = dgv.CurrentRow.Cells["Направление"].Value.ToString();
-                    new PracticeCard(id, pid, lpid, lp, new UpdateVoidHandler(FillGrid)).Show();
-                }
+            try
+            {
+                if (dgv.CurrentCell != null)
+                    if (dgv.CurrentCell.RowIndex >= 0)
+                    {
+                        int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                        int pid = int.Parse(dgv.CurrentRow.Cells["PracticeId"].Value.ToString());
+                        int lpid = int.Parse(dgv.CurrentRow.Cells["LicenseProgramId"].Value.ToString());
+                        string lp = dgv.CurrentRow.Cells["Направление"].Value.ToString();
+                        if (Utilities.PracticeCardIsOpened(id))
+                            return;
+                        new PracticeCard(id, pid, lpid, lp, new UpdateVoidHandler(FillGrid)).Show();
+                    }
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgv.CurrentCell != null)
-                if (dgv.CurrentCell.RowIndex >= 0)
-                {
-                    int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
-                    int pid = int.Parse(dgv.CurrentRow.Cells["PracticeId"].Value.ToString());
-                    int lpid = int.Parse(dgv.CurrentRow.Cells["LicenseProgramId"].Value.ToString());
-                    string lp = dgv.CurrentRow.Cells["Направление"].Value.ToString();
-                    new PracticeCard(id, pid, lpid, lp, new UpdateVoidHandler(FillGrid)).Show();
-                }
+            try
+            {
+                if (dgv.CurrentCell != null)
+                    if (dgv.CurrentCell.RowIndex >= 0)
+                    {
+                        int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
+                        int pid = int.Parse(dgv.CurrentRow.Cells["PracticeId"].Value.ToString());
+                        int lpid = int.Parse(dgv.CurrentRow.Cells["LicenseProgramId"].Value.ToString());
+                        string lp = dgv.CurrentRow.Cells["Направление"].Value.ToString();
+                        if (Utilities.PracticeCardIsOpened(id))
+                            return;
+                        new PracticeCard(id, pid, lpid, lp, new UpdateVoidHandler(FillGrid)).Show();
+                    }
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -1280,7 +1297,8 @@ namespace EmployerPartners
                                select new
                                {
                                    FIO = x.StudentFIO,
-                                   LPOP = "ОП " + opinyear.ObrazProgramCrypt + " Направление: " + lp.Code,
+                                   //LPOP = "ОП " + opinyear.ObrazProgramCrypt + " Направление: " + lp.Code,
+                                   LPOP = lp.Code + " " + lp.Name + " (ОП: " + op.Name + ")",//opinyear.ObrazProgramCrypt,
                                    RegNomWP = x.RegNomWP,
                                    StudyForm = x.Department,
                                    StudyLevel = st.Name,
