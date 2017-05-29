@@ -68,7 +68,7 @@ namespace EmployerPartners
             }
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
-                if (!CheckExist(context, FacultyId))
+                if (!CheckExist(context, FacultyId, RubricId))
                     return;
                 
                 if (!_id.HasValue)
@@ -83,6 +83,10 @@ namespace EmployerPartners
                     _hdl(_id);
             }
             this.Close();
+        }
+        virtual public bool CheckExist(EmployerPartnersEntities context, int? ObjId, int? Obj2Id)
+        {
+            return true;
         }
         virtual public bool CheckExist(EmployerPartnersEntities context, int? ObjId)
         {

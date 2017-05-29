@@ -47,6 +47,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.tbpositionEng = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.btnNewPP = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -219,11 +220,24 @@
             this.label9.TabIndex = 5;
             this.label9.Text = "Должность (англ.) :";
             // 
+            // btnNewPP
+            // 
+            this.btnNewPP.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnNewPP.Location = new System.Drawing.Point(18, 39);
+            this.btnNewPP.Name = "btnNewPP";
+            this.btnNewPP.Size = new System.Drawing.Size(98, 36);
+            this.btnNewPP.TabIndex = 6;
+            this.btnNewPP.Text = "Новое физ.лицо\r\n(нет в списке)";
+            this.btnNewPP.UseVisualStyleBackColor = true;
+            this.btnNewPP.Visible = false;
+            this.btnNewPP.Click += new System.EventHandler(this.btnNewPP_Click);
+            // 
             // CardOrganizationPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(442, 319);
+            this.Controls.Add(this.btnNewPP);
             this.Controls.Add(this.tbpositionEng);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
@@ -271,5 +285,6 @@
         private System.Windows.Forms.Label label8;
         public System.Windows.Forms.TextBox tbpositionEng;
         public System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnNewPP;
     }
 }

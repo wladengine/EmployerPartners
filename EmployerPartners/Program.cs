@@ -15,6 +15,7 @@ namespace EmployerPartners
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            
             if (Utilities.TestConnection())
             {
                 mf = new MainForm();

@@ -33,7 +33,8 @@ namespace EmployerPartners
                          select x.Id).Count();
                 tbOrgCount.Text = _Count.ToString();
 
-                FillActivityArea(context);
+                FillActivityAreaProfessional2(context);
+                //FillActivityArea(context);
                 FillOwnership(context);
                 FillActivityGoal(context);
                 FillRubrics(context);
@@ -72,6 +73,88 @@ namespace EmployerPartners
             dgvActivityArea.DataSource = dt;
             foreach (DataGridViewColumn col in dgvActivityArea.Columns)
                 col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
+        }
+        public void FillActivityAreaProfessional(EmployerPartnersEntities context)
+        {
+            //расчет по таблице OrganizationActivityAreaProfessional
+            var lst = (from x in context.OrganizationActivityAreaProfessional
+                       join a in context.ActivityAreaProfessional on x.ActivityAreaProfessionalId equals a.Id
+                       select new
+                       {
+                           a.Id,
+                           a.Code,
+                           a.Name,
+                           x.OrganizationId,
+                       }).Distinct().ToList();
+            int cnt = lst.Select(x => x.OrganizationId).Distinct().Count();
+            lblActivityArea.Text = cnt.ToString() + "/" + (_Count - cnt).ToString();
+
+            var gr = (from l in lst
+                      group l by l.Id into l
+                      orderby l.First().Id  //l.Count() descending, l.First().Name
+                      select new
+                      {
+                          Код = l.First().Code,
+                          Область_деятельности = l.First().Name,
+                          Кол__во_организаций = l.Count(),
+                      }).ToList();
+            //}).OrderByDescending(x => x.Кол__во_организаций).ToList();
+
+            DataTable dt = new DataTable();
+            dt = Utilities.ConvertToDataTable(gr);
+            dgvActivityArea.DataSource = dt;
+            foreach (DataGridViewColumn col in dgvActivityArea.Columns)
+                col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
+            try
+            {
+                dgvActivityArea.Columns["Код"].Width = 50;
+                dgvActivityArea.Columns["Область_деятельности"].Width = 200;
+                dgvActivityArea.Columns["Кол__во_организаций"].Width = 80;
+            }
+            catch (Exception)
+            {
+            }
+        }
+        public void FillActivityAreaProfessional2(EmployerPartnersEntities context)
+        {
+            //расчет по таблице Organization (по полю )
+            var lst = (from x in context.Organization
+                       join a in context.ActivityAreaProfessional on x.ActivityAreaProfessionalId equals a.Id
+                       select new
+                       {
+                           a.Id,
+                           a.Code,
+                           a.Name,
+                           OrganizationId = x.Id,
+                       }).Distinct().ToList();
+            int cnt = lst.Select(x => x.OrganizationId).Distinct().Count();
+            lblActivityArea.Text = cnt.ToString() + "/" + (_Count - cnt).ToString();
+
+            var gr = (from l in lst
+                      group l by l.Id into l
+                      orderby l.First().Id  //l.Count() descending, l.First().Name
+                      select new
+                      {
+                          Код = l.First().Code,
+                          Область_деятельности = l.First().Name,
+                          Кол__во_организаций = l.Count(),
+                      }).ToList();
+            //}).OrderByDescending(x => x.Кол__во_организаций).ToList();
+
+            DataTable dt = new DataTable();
+            dt = Utilities.ConvertToDataTable(gr);
+            dgvActivityArea.DataSource = dt;
+            foreach (DataGridViewColumn col in dgvActivityArea.Columns)
+                col.HeaderText = col.HeaderText.Replace("__", "-").Replace("_", " ");
+            try
+            {
+                dgvActivityArea.Columns["Код"].Width = 50;
+                dgvActivityArea.Columns["Область_деятельности"].Width = 200;
+                dgvActivityArea.Columns["Кол__во_организаций"].Width = 80;
+            }
+            catch (Exception)
+            {
+            }
         }
         public void FillOwnership(EmployerPartnersEntities context)
         {
@@ -366,7 +449,7 @@ namespace EmployerPartners
                                 break;
                             case "Сферы деятельности":
                                 rowshift = 0;
-                                ws = doc.Workbook.Worksheets.Add("Ключевые слова");
+                                ws = doc.Workbook.Worksheets.Add("Области проф деятельности");
                                 break;
                             default:
                                 break;

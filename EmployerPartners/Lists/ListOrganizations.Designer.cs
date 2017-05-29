@@ -69,6 +69,10 @@
             this.label10 = new System.Windows.Forms.Label();
             this.btnSearchNext = new System.Windows.Forms.Button();
             this.btnSearchPrevious = new System.Windows.Forms.Button();
+            this.btnShowSearchResult = new System.Windows.Forms.Button();
+            this.btnRemoveFilter = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -83,17 +87,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv.Location = new System.Drawing.Point(15, 125);
+            this.dgv.Location = new System.Drawing.Point(15, 157);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
-            this.dgv.Size = new System.Drawing.Size(1108, 393);
+            this.dgv.Size = new System.Drawing.Size(1108, 328);
             this.dgv.TabIndex = 0;
             this.dgv.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellDoubleClick);
             // 
             // btnOpen
             // 
             this.btnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpen.Location = new System.Drawing.Point(1006, 524);
+            this.btnOpen.Location = new System.Drawing.Point(1006, 493);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(117, 24);
             this.btnOpen.TabIndex = 1;
@@ -105,7 +109,7 @@
             // 
             this.btnAddPartner.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddPartner.Enabled = false;
-            this.btnAddPartner.Location = new System.Drawing.Point(883, 95);
+            this.btnAddPartner.Location = new System.Drawing.Point(1006, 90);
             this.btnAddPartner.Name = "btnAddPartner";
             this.btnAddPartner.Size = new System.Drawing.Size(117, 24);
             this.btnAddPartner.TabIndex = 1;
@@ -115,8 +119,7 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.Location = new System.Drawing.Point(1006, 95);
+            this.btnRefresh.Location = new System.Drawing.Point(868, 90);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(117, 24);
             this.btnRefresh.TabIndex = 1;
@@ -234,14 +237,15 @@
             // 
             // label7
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(783, 530);
+            this.label7.Location = new System.Drawing.Point(232, 527);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(217, 12);
             this.label7.TabIndex = 5;
             this.label7.Text = "DoubleClick в любом поле - карточка организации";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // bindingNavigator1
             // 
@@ -264,7 +268,7 @@
             this.bindingNavigatorSeparator2,
             this.bindingNavigatorAddNewItem,
             this.bindingNavigatorDeleteItem});
-            this.bindingNavigator1.Location = new System.Drawing.Point(15, 524);
+            this.bindingNavigator1.Location = new System.Drawing.Point(15, 493);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
@@ -404,16 +408,16 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(545, 90);
+            this.label9.Location = new System.Drawing.Point(583, 90);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(78, 13);
+            this.label9.Size = new System.Drawing.Size(34, 13);
             this.label9.TabIndex = 11;
-            this.label9.Text = "Направление:";
+            this.label9.Text = "УНП:";
             // 
             // tbSearch
             // 
             this.tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tbSearch.Location = new System.Drawing.Point(465, 527);
+            this.tbSearch.Location = new System.Drawing.Point(465, 496);
             this.tbSearch.Name = "tbSearch";
             this.tbSearch.Size = new System.Drawing.Size(100, 20);
             this.tbSearch.TabIndex = 12;
@@ -423,16 +427,17 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(282, 530);
+            this.label10.Location = new System.Drawing.Point(282, 499);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(175, 13);
             this.label10.TabIndex = 13;
             this.label10.Text = "Поиск (по всем видам названий)";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // btnSearchNext
             // 
             this.btnSearchNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSearchNext.Location = new System.Drawing.Point(578, 524);
+            this.btnSearchNext.Location = new System.Drawing.Point(578, 493);
             this.btnSearchNext.Name = "btnSearchNext";
             this.btnSearchNext.Size = new System.Drawing.Size(96, 24);
             this.btnSearchNext.TabIndex = 14;
@@ -443,7 +448,7 @@
             // btnSearchPrevious
             // 
             this.btnSearchPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSearchPrevious.Location = new System.Drawing.Point(680, 524);
+            this.btnSearchPrevious.Location = new System.Drawing.Point(680, 493);
             this.btnSearchPrevious.Name = "btnSearchPrevious";
             this.btnSearchPrevious.Size = new System.Drawing.Size(96, 24);
             this.btnSearchPrevious.TabIndex = 15;
@@ -451,12 +456,62 @@
             this.btnSearchPrevious.UseVisualStyleBackColor = true;
             this.btnSearchPrevious.Click += new System.EventHandler(this.btnSearchPrevious_Click);
             // 
+            // btnShowSearchResult
+            // 
+            this.btnShowSearchResult.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnShowSearchResult.Location = new System.Drawing.Point(578, 522);
+            this.btnShowSearchResult.Name = "btnShowSearchResult";
+            this.btnShowSearchResult.Size = new System.Drawing.Size(140, 24);
+            this.btnShowSearchResult.TabIndex = 16;
+            this.btnShowSearchResult.Text = "Фильтр по найденному";
+            this.btnShowSearchResult.UseVisualStyleBackColor = true;
+            this.btnShowSearchResult.Click += new System.EventHandler(this.btnShowSearchResult_Click);
+            // 
+            // btnRemoveFilter
+            // 
+            this.btnRemoveFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRemoveFilter.Location = new System.Drawing.Point(733, 522);
+            this.btnRemoveFilter.Name = "btnRemoveFilter";
+            this.btnRemoveFilter.Size = new System.Drawing.Size(140, 24);
+            this.btnRemoveFilter.TabIndex = 17;
+            this.btnRemoveFilter.Text = "Убрать фильтр";
+            this.btnRemoveFilter.UseVisualStyleBackColor = true;
+            this.btnRemoveFilter.Click += new System.EventHandler(this.btnRemoveFilter_Click);
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label11.Location = new System.Drawing.Point(15, 527);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(177, 12);
+            this.label11.TabIndex = 18;
+            this.label11.Text = "Click по заголовку столбца - сортировка";
+            this.label11.Click += new System.EventHandler(this.label11_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label12.ForeColor = System.Drawing.Color.Red;
+            this.label12.Location = new System.Drawing.Point(15, 132);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(1058, 13);
+            this.label12.TabIndex = 19;
+            this.label12.Text = "При добавлении  необходимо проверить наличие в БД вводимой организации. Проверка:" +
+    " поле Поиск  (любая часть  наименования) + кнопка \'Фильтр по найденному\' (отобра" +
+    "жаются все найденные записи)";
+            // 
             // ListOrganizations
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1133, 556);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.btnRemoveFilter);
+            this.Controls.Add(this.btnShowSearchResult);
             this.Controls.Add(this.btnSearchPrevious);
             this.Controls.Add(this.btnSearchNext);
             this.Controls.Add(this.label10);
@@ -484,6 +539,7 @@
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.dgv);
+            this.Controls.Add(this.label12);
             this.Name = "ListOrganizations";
             this.Text = "ListOrganizations";
             this.Load += new System.EventHandler(this.ListOrganizations_Load);
@@ -538,5 +594,9 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btnSearchNext;
         private System.Windows.Forms.Button btnSearchPrevious;
+        private System.Windows.Forms.Button btnShowSearchResult;
+        private System.Windows.Forms.Button btnRemoveFilter;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
     }
 }

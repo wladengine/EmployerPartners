@@ -151,6 +151,9 @@ namespace EmployerPartners
                            join ptype in context.PracticeType on plp.PracticeTypeId equals ptype.Id into _ptype
                            from ptype in _ptype.DefaultIfEmpty()
 
+                           join op  in context.ObrazProgram on plp.ObrazProgramId equals op.Id into _op
+                           from op in _op.DefaultIfEmpty()
+
                            join lpop in context.PracticeLPOP on plp.Id equals lpop.PracticeLPId into _lpop
                            from lpop in _lpop.DefaultIfEmpty()
                            join opyear in context.ObrazProgramInYear on lpop.ObrazProgramInYearId equals opyear.Id into _opyear
@@ -170,7 +173,17 @@ namespace EmployerPartners
                                plp.Id,
                                plp.PracticeId,
                                plp.LicenseProgramId,
-                               Шифр_ОП = opyear.ObrazProgramCrypt,
+                               //Шифр_ОП = opyear.ObrazProgramCrypt,
+                               Практика = plp.DisciplineName,
+                               Номер_дисциплины = plp.DisciplineNumber,
+                               Курс = plp.StudyCourse,
+                               Семестр =  plp.ModuleName,
+                               Шифр_ОП = plp.ObrazProgramCrypt,
+                               Образовательная_программа = op.Name,
+                               Профиль = plp.ProfileName,
+                               Реализация = plp.RealizationVariantName,
+                               Траектория = plp.TrajectoryName,
+
                                Тип_практики = ptype.Name,
                                Начало_практики = plp.DateStart,
                                Окончание_практики = plp.DateEnd,
@@ -204,6 +217,9 @@ namespace EmployerPartners
                 {
                     dgv.Columns["Направление"].Frozen = true;
                     dgv.Columns["Направление"].Width = 600;
+                    dgv.Columns["Практика"].Width = 300;
+                    dgv.Columns["Курс"].Width = 60;
+                    dgv.Columns["Образовательная_программа"].Width = 300;
                     dgv.Columns["Тип_практики"].Width = 150;
                     dgv.Columns["Приказ"].Width = 150;
                     dgv.Columns["Распоряжение"].Width = 150;

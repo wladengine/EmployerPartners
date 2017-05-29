@@ -28,7 +28,8 @@ namespace EmployerPartners
                            select new
                            {
                                x.Id,
-                               x.Name
+                               x.Name,
+                               x.NameEng
                            }).OrderBy(x=>x.Name).ToList();
                 
                 
@@ -42,6 +43,11 @@ namespace EmployerPartners
                 {
                     dgv.Columns["Name"].HeaderText = "Название";
                 }
+                if (dgv.Columns.Contains("NameEng"))
+                {
+                    dgv.Columns["NameEng"].HeaderText = "Название на английском";
+                }
+
                 if (id.HasValue)
                     foreach (DataGridViewRow rw in dgv.Rows)
                         if (rw.Cells[0].Value.ToString() == id.Value.ToString())

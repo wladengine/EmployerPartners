@@ -29,6 +29,10 @@ namespace EmployerPartners
             this.MdiParent = Util.mainform;
             FillCard();
         }
+        public void FillPersonCombo()
+        {
+            ComboServ.FillCombo(cbPerson, HelpClass.GetComboListByTable("dbo.PartnerPerson"), false, false);
+        }
         public void FillCard()
         {
             btnAdd.Text = (_id.HasValue) ? "Обновить" : "Добавить";
@@ -69,7 +73,36 @@ namespace EmployerPartners
                 ComboServ.SetComboId(cbPerson, lst.Id);
             }
         }
+        public void FillCardNewContact(int? personid)
+        {
+            //btnAdd.Text = (_id.HasValue) ? "Обновить" : "Добавить";
+            ComboServ.FillCombo(cbPerson, HelpClass.GetComboListByTable("dbo.PartnerPerson"), false, false);
+            ComboServ.SetComboId(cbPerson, personid);
 
+            if (!personid.HasValue) return;
+            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            {
+                var lst = (from p in context.PartnerPerson
+                           where p.Id == personid
+                           select new
+                           {
+                               p.Id,
+                               p.Name,
+                               p.Title,
+                               p.IsSPbGUGraduate,
+                               p.AlumniAssociation,
+                               ActivityAreaName = p.ActivityArea.Name,
+                               p.Email,
+                           }).FirstOrDefault();
+                if (lst == null)
+                    return;
+                lblTitle.Text = lst.Title;
+                lblActivityArea.Text = lst.ActivityAreaName;
+                lblAlumni.Text = (lst.AlumniAssociation ?? false) ? "да" : "нет";
+                lblEmail.Text = lst.Email;
+                lblIsGreduateSPbGU.Text = (lst.IsSPbGUGraduate ?? false) ? "да" : "нет";
+            }
+        }
         private void btnAdd_Click(object sender, EventArgs e)
         {
             int? PersonId = ComboServ.GetComboIdInt(cbPerson);
@@ -155,6 +188,13 @@ namespace EmployerPartners
                 lblEmail.Text = lst.Email;
                 lblIsGreduateSPbGU.Text = (lst.IsSPbGUGraduate ?? false) ? "да" : "нет";
             }
+        }
+
+        private void btnNewPP_Click(object sender, EventArgs e)
+        {
+            //if (Utilities.OrgCardIsOpened((int)_OrgId))
+            //    return;
+            new ContactNewPerson(PersId, new UpdateVoidHandler(FillCardNewContact)).Show();
         }
     }
 }

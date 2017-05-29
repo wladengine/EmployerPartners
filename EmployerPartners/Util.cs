@@ -107,6 +107,11 @@ namespace EmployerPartners
             return IsRoleMember("db_owner");
         }
 
+        public static bool IsSuperUser()
+        {
+            return IsRoleMember("SuperUser");
+        }
+
         public static bool IsOrgPersonWrite()
         {
             return IsRoleMember("OrgPersonWrite");
@@ -135,6 +140,16 @@ namespace EmployerPartners
         public static bool IsVKRWrite()
         {
             return IsRoleMember("VKRWrite");
+        }
+
+        public static bool IsGAKRead()
+        {
+            return IsRoleMember("GAKRead");
+        }
+
+        public static bool IsGAKWrite()
+        {
+            return IsRoleMember("GAKWrite");
         }
 
         public static bool IsReadOnlyAll()

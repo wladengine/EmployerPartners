@@ -48,30 +48,30 @@
             this.cbQulification = new System.Windows.Forms.ComboBox();
             this.cbRubric = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cbLicense = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnAdd
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdd.Location = new System.Drawing.Point(394, 101);
+            this.btnAdd.Location = new System.Drawing.Point(561, 101);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 6;
+            this.btnAdd.TabIndex = 8;
             this.btnAdd.Text = "Добавить";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // cbName
             // 
-            this.cbName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbName.FormattingEnabled = true;
             this.cbName.Location = new System.Drawing.Point(92, 18);
             this.cbName.Name = "cbName";
-            this.cbName.Size = new System.Drawing.Size(377, 21);
-            this.cbName.TabIndex = 5;
+            this.cbName.Size = new System.Drawing.Size(544, 21);
+            this.cbName.TabIndex = 6;
             this.cbName.SelectedIndexChanged += new System.EventHandler(this.cbName_SelectedIndexChanged);
             // 
             // label2
@@ -157,8 +157,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.lblQualification);
             this.groupBox1.Controls.Add(this.btnAdd);
             this.groupBox1.Controls.Add(this.label5);
@@ -172,7 +170,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(12, 164);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(475, 130);
+            this.groupBox1.Size = new System.Drawing.Size(642, 130);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Направление";
@@ -193,7 +191,7 @@
             this.cbLevel.Location = new System.Drawing.Point(104, 54);
             this.cbLevel.Name = "cbLevel";
             this.cbLevel.Size = new System.Drawing.Size(383, 21);
-            this.cbLevel.TabIndex = 5;
+            this.cbLevel.TabIndex = 2;
             this.cbLevel.SelectedIndexChanged += new System.EventHandler(this.cbLevel_SelectedIndexChanged);
             // 
             // label7
@@ -221,7 +219,7 @@
             this.cbProgramType.Location = new System.Drawing.Point(104, 78);
             this.cbProgramType.Name = "cbProgramType";
             this.cbProgramType.Size = new System.Drawing.Size(383, 21);
-            this.cbProgramType.TabIndex = 5;
+            this.cbProgramType.TabIndex = 3;
             this.cbProgramType.SelectedIndexChanged += new System.EventHandler(this.cbProgramType_SelectedIndexChanged);
             // 
             // cbQulification
@@ -231,7 +229,7 @@
             this.cbQulification.Location = new System.Drawing.Point(104, 105);
             this.cbQulification.Name = "cbQulification";
             this.cbQulification.Size = new System.Drawing.Size(383, 21);
-            this.cbQulification.TabIndex = 5;
+            this.cbQulification.TabIndex = 4;
             this.cbQulification.SelectedIndexChanged += new System.EventHandler(this.cbQulification_SelectedIndexChanged);
             // 
             // cbRubric
@@ -242,7 +240,7 @@
             this.cbRubric.MaximumSize = new System.Drawing.Size(340, 0);
             this.cbRubric.Name = "cbRubric";
             this.cbRubric.Size = new System.Drawing.Size(340, 21);
-            this.cbRubric.TabIndex = 10;
+            this.cbRubric.TabIndex = 1;
             // 
             // label9
             // 
@@ -253,11 +251,32 @@
             this.label9.TabIndex = 9;
             this.label9.Text = "Рубрика:";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(32, 137);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(60, 13);
+            this.label10.TabIndex = 12;
+            this.label10.Text = "Лицензия:";
+            // 
+            // cbLicense
+            // 
+            this.cbLicense.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLicense.FormattingEnabled = true;
+            this.cbLicense.Location = new System.Drawing.Point(104, 137);
+            this.cbLicense.Name = "cbLicense";
+            this.cbLicense.Size = new System.Drawing.Size(544, 21);
+            this.cbLicense.TabIndex = 5;
+            this.cbLicense.SelectedIndexChanged += new System.EventHandler(this.cbLicense_SelectedIndexChanged);
+            // 
             // CardLP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(499, 302);
+            this.ClientSize = new System.Drawing.Size(678, 308);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.cbLicense);
             this.Controls.Add(this.cbRubric);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.groupBox1);
@@ -299,5 +318,7 @@
         private System.Windows.Forms.ComboBox cbQulification;
         private System.Windows.Forms.ComboBox cbRubric;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox cbLicense;
     }
 }

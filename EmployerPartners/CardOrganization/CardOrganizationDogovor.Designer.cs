@@ -58,6 +58,8 @@
             this.checkBoxIsActual = new System.Windows.Forms.CheckBox();
             this.checkBoxFromDocumentDate = new System.Windows.Forms.CheckBox();
             this.tbDocumentStart = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbAddress = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFile)).BeginInit();
             this.SuspendLayout();
             // 
@@ -213,7 +215,7 @@
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(148, 400);
+            this.tbComment.Location = new System.Drawing.Point(148, 428);
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(826, 20);
             this.tbComment.TabIndex = 20;
@@ -221,7 +223,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(20, 403);
+            this.label10.Location = new System.Drawing.Point(20, 431);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(70, 13);
             this.label10.TabIndex = 21;
@@ -230,7 +232,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(20, 436);
+            this.label11.Location = new System.Drawing.Point(20, 461);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(471, 143);
             this.label11.TabIndex = 22;
@@ -329,13 +331,32 @@
             this.tbDocumentStart.Location = new System.Drawing.Point(148, 269);
             this.tbDocumentStart.Name = "tbDocumentStart";
             this.tbDocumentStart.Size = new System.Drawing.Size(136, 20);
-            this.tbDocumentStart.TabIndex = 26;
+            this.tbDocumentStart.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(20, 395);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(101, 26);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "Адрес проведения\r\nпрактики";
+            // 
+            // tbAddress
+            // 
+            this.tbAddress.Location = new System.Drawing.Point(148, 396);
+            this.tbAddress.Name = "tbAddress";
+            this.tbAddress.Size = new System.Drawing.Size(826, 20);
+            this.tbAddress.TabIndex = 19;
             // 
             // CardOrganizationDogovor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1005, 602);
+            this.ClientSize = new System.Drawing.Size(1005, 623);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.tbAddress);
             this.Controls.Add(this.tbDocumentStart);
             this.Controls.Add(this.checkBoxFromDocumentDate);
             this.Controls.Add(this.checkBoxIsActual);
@@ -402,5 +423,7 @@
         private System.Windows.Forms.DataGridViewButtonColumn ColumnViewFile;
         private System.Windows.Forms.CheckBox checkBoxFromDocumentDate;
         private System.Windows.Forms.TextBox tbDocumentStart;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbAddress;
     }
 }

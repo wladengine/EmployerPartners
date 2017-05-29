@@ -43,6 +43,29 @@ namespace EmployerPartners
         public string Author { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<bool> OutSPb { get; set; }
+        public Nullable<System.Guid> StudyPlanId { get; set; }
+        public string StudyPlanNumber { get; set; }
+        public Nullable<int> DisciplineId { get; set; }
+        public string DisciplineNumber { get; set; }
+        public string DisciplineName { get; set; }
+        public Nullable<int> ModuleNameId { get; set; }
+        public string ModuleName { get; set; }
+        public Nullable<int> EducYear { get; set; }
+        public Nullable<int> ModuleNameIntValue { get; set; }
+        public Nullable<short> StudyCourse { get; set; }
+        public Nullable<int> ObrazProgramId { get; set; }
+        public Nullable<int> StudyFormId { get; set; }
+        public Nullable<int> FacultyId { get; set; }
+        public Nullable<int> LicenseId { get; set; }
+        public Nullable<int> StudyLevelId { get; set; }
+        public string ObrazProgramCrypt { get; set; }
+        public Nullable<System.Guid> ObrazProgramInYearId { get; set; }
+        public Nullable<int> TrajectoryId { get; set; }
+        public Nullable<int> RealizationVariantId { get; set; }
+        public string RealizationVariantName { get; set; }
+        public string TrajectoryName { get; set; }
+        public string RealizationVariantAcronymEng { get; set; }
+        public string ProfileName { get; set; }
     
         public virtual LicenseProgram LicenseProgram { get; set; }
         public virtual Practice Practice { get; set; }

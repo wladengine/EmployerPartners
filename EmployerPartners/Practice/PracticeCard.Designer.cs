@@ -36,6 +36,10 @@
             this.tbLP = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnRemoveFilter = new System.Windows.Forms.Button();
+            this.btnShowSearchResult = new System.Windows.Forms.Button();
+            this.btnSearchPrevious = new System.Windows.Forms.Button();
+            this.btnSearchNext = new System.Windows.Forms.Button();
             this.lbl_tbSearch = new System.Windows.Forms.Label();
             this.tbSearch = new System.Windows.Forms.TextBox();
             this.btnOrderLoad = new System.Windows.Forms.Button();
@@ -245,11 +249,15 @@
             this.tabControl1.Location = new System.Drawing.Point(15, 221);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1237, 449);
+            this.tabControl1.Size = new System.Drawing.Size(1237, 509);
             this.tabControl1.TabIndex = 4;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnRemoveFilter);
+            this.tabPage1.Controls.Add(this.btnShowSearchResult);
+            this.tabPage1.Controls.Add(this.btnSearchPrevious);
+            this.tabPage1.Controls.Add(this.btnSearchNext);
             this.tabPage1.Controls.Add(this.lbl_tbSearch);
             this.tabPage1.Controls.Add(this.tbSearch);
             this.tabPage1.Controls.Add(this.btnOrderLoad);
@@ -286,16 +294,68 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1229, 423);
+            this.tabPage1.Size = new System.Drawing.Size(1229, 483);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Приказ";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnRemoveFilter
+            // 
+            this.btnRemoveFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRemoveFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnRemoveFilter.Location = new System.Drawing.Point(1122, 450);
+            this.btnRemoveFilter.Name = "btnRemoveFilter";
+            this.btnRemoveFilter.Size = new System.Drawing.Size(83, 24);
+            this.btnRemoveFilter.TabIndex = 41;
+            this.btnRemoveFilter.Text = "Убрать фильтр";
+            this.btnRemoveFilter.UseVisualStyleBackColor = true;
+            this.btnRemoveFilter.Visible = false;
+            this.btnRemoveFilter.Click += new System.EventHandler(this.btnRemoveFilter_Click);
+            // 
+            // btnShowSearchResult
+            // 
+            this.btnShowSearchResult.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnShowSearchResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnShowSearchResult.Location = new System.Drawing.Point(998, 450);
+            this.btnShowSearchResult.Name = "btnShowSearchResult";
+            this.btnShowSearchResult.Size = new System.Drawing.Size(119, 24);
+            this.btnShowSearchResult.TabIndex = 40;
+            this.btnShowSearchResult.Text = "Фильтр по найденному";
+            this.btnShowSearchResult.UseVisualStyleBackColor = true;
+            this.btnShowSearchResult.Visible = false;
+            this.btnShowSearchResult.Click += new System.EventHandler(this.btnShowSearchResult_Click);
+            // 
+            // btnSearchPrevious
+            // 
+            this.btnSearchPrevious.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSearchPrevious.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSearchPrevious.Location = new System.Drawing.Point(912, 450);
+            this.btnSearchPrevious.Name = "btnSearchPrevious";
+            this.btnSearchPrevious.Size = new System.Drawing.Size(80, 24);
+            this.btnSearchPrevious.TabIndex = 39;
+            this.btnSearchPrevious.Text = "Найти пред.";
+            this.btnSearchPrevious.UseVisualStyleBackColor = true;
+            this.btnSearchPrevious.Visible = false;
+            this.btnSearchPrevious.Click += new System.EventHandler(this.btnSearchPrevious_Click);
+            // 
+            // btnSearchNext
+            // 
+            this.btnSearchNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSearchNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSearchNext.Location = new System.Drawing.Point(826, 450);
+            this.btnSearchNext.Name = "btnSearchNext";
+            this.btnSearchNext.Size = new System.Drawing.Size(80, 24);
+            this.btnSearchNext.TabIndex = 38;
+            this.btnSearchNext.Text = "Найти далее";
+            this.btnSearchNext.UseVisualStyleBackColor = true;
+            this.btnSearchNext.Visible = false;
+            this.btnSearchNext.Click += new System.EventHandler(this.btnSearchNext_Click);
             // 
             // lbl_tbSearch
             // 
             this.lbl_tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbl_tbSearch.AutoSize = true;
-            this.lbl_tbSearch.Location = new System.Drawing.Point(904, 396);
+            this.lbl_tbSearch.Location = new System.Drawing.Point(674, 455);
             this.lbl_tbSearch.Name = "lbl_tbSearch";
             this.lbl_tbSearch.Size = new System.Drawing.Size(39, 13);
             this.lbl_tbSearch.TabIndex = 37;
@@ -305,7 +365,7 @@
             // tbSearch
             // 
             this.tbSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tbSearch.Location = new System.Drawing.Point(951, 393);
+            this.tbSearch.Location = new System.Drawing.Point(721, 452);
             this.tbSearch.Name = "tbSearch";
             this.tbSearch.Size = new System.Drawing.Size(100, 20);
             this.tbSearch.TabIndex = 36;
@@ -388,7 +448,7 @@
             // 
             this.btnOrgEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnOrgEdit.Enabled = false;
-            this.btnOrgEdit.Location = new System.Drawing.Point(330, 390);
+            this.btnOrgEdit.Location = new System.Drawing.Point(330, 421);
             this.btnOrgEdit.Name = "btnOrgEdit";
             this.btnOrgEdit.Size = new System.Drawing.Size(192, 23);
             this.btnOrgEdit.TabIndex = 31;
@@ -467,7 +527,7 @@
             this.bindingNavigatorMoveNextItem1,
             this.bindingNavigatorMoveLastItem1,
             this.bindingNavigatorSeparator5});
-            this.bindingNavigator2.Location = new System.Drawing.Point(669, 389);
+            this.bindingNavigator2.Location = new System.Drawing.Point(669, 418);
             this.bindingNavigator2.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
             this.bindingNavigator2.MoveLastItem = this.bindingNavigatorMoveLastItem1;
             this.bindingNavigator2.MoveNextItem = this.bindingNavigatorMoveNextItem1;
@@ -558,10 +618,10 @@
             this.ColumnDiv,
             this.Column1,
             this.ColumnCard});
-            this.dgv.Location = new System.Drawing.Point(669, 179);
+            this.dgv.Location = new System.Drawing.Point(669, 178);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
-            this.dgv.Size = new System.Drawing.Size(535, 205);
+            this.dgv.Size = new System.Drawing.Size(535, 237);
             this.dgv.TabIndex = 23;
             this.dgv.Visible = false;
             this.dgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
@@ -597,7 +657,7 @@
             // 
             this.btnAddOrg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddOrg.Enabled = false;
-            this.btnAddOrg.Location = new System.Drawing.Point(1057, 390);
+            this.btnAddOrg.Location = new System.Drawing.Point(1057, 421);
             this.btnAddOrg.Name = "btnAddOrg";
             this.btnAddOrg.Size = new System.Drawing.Size(147, 23);
             this.btnAddOrg.TabIndex = 22;
@@ -671,7 +731,7 @@
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2});
-            this.bindingNavigator1.Location = new System.Drawing.Point(17, 387);
+            this.bindingNavigator1.Location = new System.Drawing.Point(17, 418);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
@@ -773,7 +833,7 @@
             this.dgvOrg.Location = new System.Drawing.Point(17, 178);
             this.dgvOrg.Name = "dgvOrg";
             this.dgvOrg.ReadOnly = true;
-            this.dgvOrg.Size = new System.Drawing.Size(1187, 206);
+            this.dgvOrg.Size = new System.Drawing.Size(1187, 237);
             this.dgvOrg.TabIndex = 14;
             this.dgvOrg.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrg_CellClick);
             // 
@@ -924,7 +984,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1229, 423);
+            this.tabPage2.Size = new System.Drawing.Size(1229, 483);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Распоряжение";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -932,7 +992,7 @@
             // btnDopStudent
             // 
             this.btnDopStudent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDopStudent.Location = new System.Drawing.Point(933, 389);
+            this.btnDopStudent.Location = new System.Drawing.Point(933, 449);
             this.btnDopStudent.Name = "btnDopStudent";
             this.btnDopStudent.Size = new System.Drawing.Size(107, 23);
             this.btnDopStudent.TabIndex = 48;
@@ -1061,7 +1121,7 @@
             // 
             this.btnSetOrgStudent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSetOrgStudent.Enabled = false;
-            this.btnSetOrgStudent.Location = new System.Drawing.Point(330, 390);
+            this.btnSetOrgStudent.Location = new System.Drawing.Point(330, 450);
             this.btnSetOrgStudent.Name = "btnSetOrgStudent";
             this.btnSetOrgStudent.Size = new System.Drawing.Size(256, 23);
             this.btnSetOrgStudent.TabIndex = 38;
@@ -1088,7 +1148,7 @@
             this.bindingNavigatorMoveNextItem3,
             this.bindingNavigatorMoveLastItem3,
             this.bindingNavigatorSeparator11});
-            this.bindingNavigator4.Location = new System.Drawing.Point(669, 389);
+            this.bindingNavigator4.Location = new System.Drawing.Point(669, 449);
             this.bindingNavigator4.MoveFirstItem = this.bindingNavigatorMoveFirstItem3;
             this.bindingNavigator4.MoveLastItem = this.bindingNavigatorMoveLastItem3;
             this.bindingNavigator4.MoveNextItem = this.bindingNavigatorMoveNextItem3;
@@ -1202,7 +1262,7 @@
             // 
             this.btnAddStudent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddStudent.Enabled = false;
-            this.btnAddStudent.Location = new System.Drawing.Point(1057, 389);
+            this.btnAddStudent.Location = new System.Drawing.Point(1057, 449);
             this.btnAddStudent.Name = "btnAddStudent";
             this.btnAddStudent.Size = new System.Drawing.Size(147, 23);
             this.btnAddStudent.TabIndex = 32;
@@ -1224,7 +1284,7 @@
             this.dgvStudentNew.Location = new System.Drawing.Point(669, 179);
             this.dgvStudentNew.Name = "dgvStudentNew";
             this.dgvStudentNew.ReadOnly = true;
-            this.dgvStudentNew.Size = new System.Drawing.Size(535, 205);
+            this.dgvStudentNew.Size = new System.Drawing.Size(535, 265);
             this.dgvStudentNew.TabIndex = 31;
             this.dgvStudentNew.Visible = false;
             this.dgvStudentNew.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStudentNew_CellClick);
@@ -1289,7 +1349,7 @@
             this.bindingNavigatorMoveNextItem2,
             this.bindingNavigatorMoveLastItem2,
             this.bindingNavigatorSeparator8});
-            this.bindingNavigator3.Location = new System.Drawing.Point(13, 389);
+            this.bindingNavigator3.Location = new System.Drawing.Point(13, 449);
             this.bindingNavigator3.MoveFirstItem = this.bindingNavigatorMoveFirstItem2;
             this.bindingNavigator3.MoveLastItem = this.bindingNavigatorMoveLastItem2;
             this.bindingNavigator3.MoveNextItem = this.bindingNavigatorMoveNextItem2;
@@ -1392,7 +1452,7 @@
             this.dgvStudent.Location = new System.Drawing.Point(17, 178);
             this.dgvStudent.Name = "dgvStudent";
             this.dgvStudent.ReadOnly = true;
-            this.dgvStudent.Size = new System.Drawing.Size(1187, 206);
+            this.dgvStudent.Size = new System.Drawing.Size(1187, 266);
             this.dgvStudent.TabIndex = 26;
             this.dgvStudent.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStudent_CellClick);
             // 
@@ -1694,7 +1754,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1264, 682);
+            this.ClientSize = new System.Drawing.Size(1264, 742);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.checkBoxOutSPb);
             this.Controls.Add(this.btnDelPractice);
@@ -1902,5 +1962,9 @@
         private System.Windows.Forms.DataGridViewButtonColumn ColumnDelStudent;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnEditStudent;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnSetOrgStudent;
+        private System.Windows.Forms.Button btnSearchPrevious;
+        private System.Windows.Forms.Button btnSearchNext;
+        private System.Windows.Forms.Button btnRemoveFilter;
+        private System.Windows.Forms.Button btnShowSearchResult;
     }
 }

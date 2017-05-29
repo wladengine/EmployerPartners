@@ -105,6 +105,18 @@
     <Compile Include="CardContact.Designer.cs">
       <DependentUpon>CardContact.cs</DependentUpon>
     </Compile>
+    <Compile Include="CardOrganization\CardOrganizationSubdivision.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CardOrganization\CardOrganizationSubdivision.Designer.cs">
+      <DependentUpon>CardOrganizationSubdivision.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CardOrganization\CardOrgAAreaProfessional.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CardOrganization\CardOrgAAreaProfessional.Designer.cs">
+      <DependentUpon>CardOrgAAreaProfessional.cs</DependentUpon>
+    </Compile>
     <Compile Include="CardOrganization\CardOrganizationDogovor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -256,10 +268,19 @@
     <Compile Include="CardsCommon\CardDictionary.Designer.cs">
       <DependentUpon>CardDictionary.cs</DependentUpon>
     </Compile>
+    <Compile Include="CardPerson\ContactNewPerson.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CardPerson\ContactNewPerson.Designer.cs">
+      <DependentUpon>ContactNewPerson.cs</DependentUpon>
+    </Compile>
     <Compile Include="Country.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="C_AppSettings.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="C_Settings.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="Degree.cs">
@@ -310,16 +331,128 @@
     <Compile Include="dtproperties.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="ECD_EmpContactsDetailsUNP_GAK2016.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ECD_EmpContactsDetailsUNP_GAK2017.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ECD_OrganizationPersonOrgName.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="EducationDocument.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="EducationPermit.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmployerContactDetails_GAK2016.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployerContactDetails_GAK2017.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="EPLog.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="ext_GAK_2017.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="Faculty.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK\GAK_Lists.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GAK\GAK_Lists.Designer.cs">
+      <DependentUpon>GAK_Lists.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_ChairmanSource.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_ExamVKR.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK\GAK_Source.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GAK\GAK_Source.Designer.cs">
+      <DependentUpon>GAK_Source.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GAK\GAK_SourceEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GAK\GAK_SourceEdit.Designer.cs">
+      <DependentUpon>GAK_SourceEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GAK\GAK_Members.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GAK\GAK_Members.Designer.cs">
+      <DependentUpon>GAK_Members.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_LP_Person.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_LP_PersonOrderYear_Result.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_Member.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_MemberNPR.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_MemberNPR_archive.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_MemberNPR_log.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_MemberPP.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK\GAK_MembersCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GAK\GAK_MembersCard.Designer.cs">
+      <DependentUpon>GAK_MembersCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_MemberPP_archive.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_MemberPP_log.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_Number.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_Number_archive.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_Number_log.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_Source.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GAK\GAK_Statistics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GAK\GAK_Statistics.Designer.cs">
+      <DependentUpon>GAK_Statistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_StatChairmanPPNPR_Itog.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_StatOP.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GAK_StatOP_Itog.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="Graphics\GListBox.cs">
@@ -336,6 +469,9 @@
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="License.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LicenseInLicenseProgram.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="LicenseProgram.cs">
@@ -359,6 +495,18 @@
     </Compile>
     <Compile Include="NationalAffiliation.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lists\NPRListToFind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lists\NPRListToFind.Designer.cs">
+      <DependentUpon>NPRListToFind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options\NewAppVersion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\NewAppVersion.Designer.cs">
+      <DependentUpon>NewAppVersion.cs</DependentUpon>
     </Compile>
     <Compile Include="ObrazProgram.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
@@ -429,6 +577,9 @@
     <Compile Include="OrganizationDogovorFile.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrganizationEnglishSource.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="OrganizationFaculty.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
@@ -447,6 +598,15 @@
     <Compile Include="OrganizationRubric.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="Lists\OrgListToFind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lists\OrgListToFind.Designer.cs">
+      <DependentUpon>OrgListToFind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrganizationSubdivision.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="OwnershipType.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
@@ -462,8 +622,47 @@
     <Compile Include="PartnerPersonLP.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="PartnerPersonOrgPosition.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PartnerPersonPrefix.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="PartnerPersonRubric.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lists\PersonListToFind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lists\PersonListToFind.Designer.cs">
+      <DependentUpon>PersonListToFind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PersonOrgPosition.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PersonOrgPositionMiddle.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Position.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Options\Positions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\Positions.Designer.cs">
+      <DependentUpon>Positions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options\PositionNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\PositionNew.Designer.cs">
+      <DependentUpon>PositionNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Lists\PositionListToFind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lists\PositionListToFind.Designer.cs">
+      <DependentUpon>PositionListToFind.cs</DependentUpon>
     </Compile>
     <Compile Include="Practice.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
@@ -560,10 +759,37 @@
     <Compile Include="Rank.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="RankHonorary.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankState.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="Region.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="Rubric.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Options\SAP_NPS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\SAP_NPS.Designer.cs">
+      <DependentUpon>SAP_NPS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SAP_ALL_PERS.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SAP_GROUPS.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SAP_NPR.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SAP_ORGSTRUCTURE.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SAP_POSITIONS.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <Compile Include="Specialist.cs">
@@ -597,10 +823,46 @@
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Options\UpdateStudentFromSrv.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\UpdateStudentFromSrv.Designer.cs">
+      <DependentUpon>UpdateStudentFromSrv.cs</DependentUpon>
+    </Compile>
     <Compile Include="Util.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="VKR.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKR\VKRThemesStudentCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VKR\VKRThemesStudentCard.Designer.cs">
+      <DependentUpon>VKRThemesStudentCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VKR\VKRThemesStudent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VKR\VKRThemesStudent.Designer.cs">
+      <DependentUpon>VKRThemesStudent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VKR\VKRThemesEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VKR\VKRThemesEdit.Designer.cs">
+      <DependentUpon>VKRThemesEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VKR\VKRNPRCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VKR\VKRNPRCard.Designer.cs">
+      <DependentUpon>VKRNPRCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VKR\VKRInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VKR\VKRInput.Designer.cs">
+      <DependentUpon>VKRInput.cs</DependentUpon>
     </Compile>
     <Compile Include="VKROPStudent.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
@@ -659,11 +921,38 @@
     <Compile Include="VKR\VKRMain.Designer.cs">
       <DependentUpon>VKRMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="VKR_Crypt.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKR_OrderSource.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKR_OrganizationList.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKR_Source.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKR_Student_Not_In_StudData_Id.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKR_Themes.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKR_ThemesStudent.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VKR_ThemesStudentOrder.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="Year.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
     <EmbeddedResource Include="CardContact.resx">
       <DependentUpon>CardContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardOrganization\CardOrgAAreaProfessional.resx">
+      <DependentUpon>CardOrgAAreaProfessional.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CardOrganization\CardOrganizationArea.resx">
       <DependentUpon>CardOrganizationArea.cs</DependentUpon>
@@ -679,6 +968,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CardOrganization\CardOrganizationRubric.resx">
       <DependentUpon>CardOrganizationRubric.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardOrganization\CardOrganizationSubdivision.resx">
+      <DependentUpon>CardOrganizationSubdivision.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CardOrganization\CardOrgNewName.resx">
       <DependentUpon>CardOrgNewName.cs</DependentUpon>
@@ -713,6 +1005,9 @@
     <EmbeddedResource Include="CardPerson\CardPerson.resx">
       <DependentUpon>CardPerson.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CardPerson\ContactNewPerson.resx">
+      <DependentUpon>ContactNewPerson.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CardsCommon\CardActivityArea.resx">
       <DependentUpon>CardActivityArea.cs</DependentUpon>
     </EmbeddedResource>
@@ -737,11 +1032,44 @@
     <EmbeddedResource Include="CardsCommon\CardDictionary.resx">
       <DependentUpon>CardDictionary.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dictionary\CardDictionaryDegree.resx">
+      <DependentUpon>CardDictionaryDegree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GAK\GAK_Lists.resx">
+      <DependentUpon>GAK_Lists.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GAK\GAK_Members.resx">
+      <DependentUpon>GAK_Members.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GAK\GAK_MembersCard.resx">
+      <DependentUpon>GAK_MembersCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GAK\GAK_Source.resx">
+      <DependentUpon>GAK_Source.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GAK\GAK_SourceEdit.resx">
+      <DependentUpon>GAK_SourceEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GAK\GAK_Statistics.resx">
+      <DependentUpon>GAK_Statistics.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Lists\CardOrganizationStat.resx">
       <DependentUpon>CardOrganizationStat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Lists\ListPersons.resx">
       <DependentUpon>ListPersons.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lists\OrgListToFind.resx">
+      <DependentUpon>OrgListToFind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lists\PersonListToFind.resx">
+      <DependentUpon>PersonListToFind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lists\PositionListToFind.resx">
+      <DependentUpon>PositionListToFind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lists\NPRListToFind.resx">
+      <DependentUpon>NPRListToFind.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OldCards\CardPartner_old.resx">
       <DependentUpon>CardPartner_old.cs</DependentUpon>
@@ -755,8 +1083,23 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Options\NewAppVersion.resx">
+      <DependentUpon>NewAppVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\PositionNew.resx">
+      <DependentUpon>PositionNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\SAP_NPS.resx">
+      <DependentUpon>SAP_NPS.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Options\Templates.resx">
       <DependentUpon>Templates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\Positions.resx">
+      <DependentUpon>Positions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options\UpdateStudentFromSrv.resx">
+      <DependentUpon>UpdateStudentFromSrv.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Practice\PracticeStudentDopList.resx">
       <DependentUpon>PracticeStudentDopList.cs</DependentUpon>
@@ -783,6 +1126,9 @@
     <EmbeddedResource Include="Options\UpDateFromSrv.resx">
       <DependentUpon>UpdateFromSrv.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VKR\VKRInput.resx">
+      <DependentUpon>VKRInput.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VKR\VKRListThemes.resx">
       <DependentUpon>VKRListThemes.cs</DependentUpon>
     </EmbeddedResource>
@@ -792,11 +1138,23 @@
     <EmbeddedResource Include="VKR\VKRMain.resx">
       <DependentUpon>VKRMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VKR\VKRNPRCard.resx">
+      <DependentUpon>VKRNPRCard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VKR\VKRStudent.resx">
       <DependentUpon>VKRStudent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VKR\VKRStudentCard.resx">
       <DependentUpon>VKRStudentCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VKR\VKRThemesEdit.resx">
+      <DependentUpon>VKRThemesEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VKR\VKRThemesStudent.resx">
+      <DependentUpon>VKRThemesStudent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VKR\VKRThemesStudentCard.resx">
+      <DependentUpon>VKRThemesStudentCard.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="EmpoyerPartners.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -871,7 +1229,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

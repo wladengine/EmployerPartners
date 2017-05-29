@@ -33,8 +33,8 @@ namespace EmployerPartners
                                x.FileSizeKBytes
                            }).ToList();
                 dgv.DataSource = lst;
-                dgv.Columns["TemplateName"].Width = 200;
-                dgv.Columns["FileName"].Width = 200;
+                dgv.Columns["TemplateName"].Width = 300;
+                dgv.Columns["FileName"].Width = 300;
             }
         }
 

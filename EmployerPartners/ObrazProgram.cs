@@ -22,6 +22,10 @@ namespace EmployerPartners
             this.VKROP = new HashSet<VKROP>();
             this.VKRThemes = new HashSet<VKRThemes>();
             this.VKROPStudent = new HashSet<VKROPStudent>();
+            this.GAK_Number = new HashSet<GAK_Number>();
+            this.GAK_Number_log = new HashSet<GAK_Number_log>();
+            this.VKR_ThemesStudentOrder = new HashSet<VKR_ThemesStudentOrder>();
+            this.GAK_Number_archive = new HashSet<GAK_Number_archive>();
         }
     
         public int Id { get; set; }
@@ -66,5 +70,13 @@ namespace EmployerPartners
         public virtual ICollection<VKRThemes> VKRThemes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VKROPStudent> VKROPStudent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_Number> GAK_Number { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_Number_log> GAK_Number_log { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKR_ThemesStudentOrder> VKR_ThemesStudentOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_Number_archive> GAK_Number_archive { get; set; }
     }
 }

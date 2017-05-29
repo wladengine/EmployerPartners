@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f8fd0f54a3c44cac9815de3b200570a7" Name="Diagram1" ZoomLevel="100">
+      <Diagram DiagramId="f8fd0f54a3c44cac9815de3b200570a7" Name="Diagram1" ZoomLevel="93">
         <EntityTypeShape EntityType="EmployerPartnersModel.C_AppSettings" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EmployerPartnersModel.ActivityArea" Width="1.5" PointX="0.75" PointY="18.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EmployerPartnersModel.ActivityGoal" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
@@ -198,6 +198,97 @@
         <EntityTypeShape EntityType="EmployerPartnersModel.OrganizationActivityAreaProfessional" Width="1.5" PointX="22.625" PointY="20.375" />
         <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationActivityAreaProfessional_ActivityAreaProfessional" />
         <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationActivityAreaProfessional_Organization" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.SAP_ALL_PERS" Width="1.5" PointX="17.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.SAP_NPR" Width="1.5" PointX="22.375" PointY="13.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.SAP_ORGSTRUCTURE" Width="1.5" PointX="17.375" PointY="6.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.SAP_POSITIONS" Width="1.5" PointX="19.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.SAP_GROUPS" Width="1.5" PointX="21.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.C_Settings" Width="1.5" PointX="23.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKR_Source" Width="1.5" PointX="24.375" PointY="13.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKR_Themes" Width="1.5" PointX="26.375" PointY="22" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.Position" Width="1.5" PointX="25.375" PointY="0.75" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationPerson_Position" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.RankState" Width="1.5" PointX="28.375" PointY="1" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKR_Crypt" Width="1.5" PointX="16.375" PointY="25.75" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPerson_RankState" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.RankHonorary" Width="1.5" PointX="28.375" PointY="6" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPerson_RankHonorary" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.OrganizationSubdivision" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationSubdivision_Organization" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_OrganizationPerson_OrganizationSubdivision" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK" Width="1.5" PointX="15" PointY="57.625" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PersonOrgPosition" Width="1.5" PointX="26.375" PointY="12.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.LicenseInLicenseProgram" Width="1.5" PointX="18.25" PointY="44" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_LicenseInLicenseProgram_License" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_LicenseInLicenseProgram_LicenseProgram" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_ChairmanSource" Width="1.5" PointX="28.375" PointY="10.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PartnerPersonPrefix" Width="1.5" PointX="28.375" PointY="20.875" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_PartnerPerson_PartnerPersonPrefix" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKR_ThemesStudent" Width="2" PointX="28.375" PointY="23.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKR_OrderSource" Width="1.5" PointX="30.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.ECD_EmpContactsDetailsUNP_GAK2016" Width="1.5" PointX="0.75" PointY="30.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.EmployerContactDetails_GAK2016" Width="1.5" PointX="2.75" PointY="30.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.EmployerContactDetails_GAK2017" Width="1.5" PointX="32.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.ECD_EmpContactsDetailsUNP_GAK2017" Width="3" PointX="30.375" PointY="6.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PartnerPersonOrgPosition" Width="1.5" PointX="24.375" PointY="32.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKR_Student_Not_In_StudData_Id" Width="1.5" PointX="19.375" PointY="29.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_ExamVKR" Width="1.5" PointX="21.375" PointY="29.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_Member" Width="1.5" PointX="26.75" PointY="36.875" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_MemberNPR" Width="1.5" PointX="22.75" PointY="56.125" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_MemberPP" Width="1.5" PointX="33.75" PointY="29.75" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Member_PartnerPerson" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_MemberPP_PartnerPerson" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_Number" Width="1.5" PointX="23.625" PointY="44.625" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Numbers_GAK" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_GAK_ExamVKR" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Member_GAK_Number" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_MemberNPR_GAK_Number" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_MemberPP_GAK_Number" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_PartnerPerson" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Numbers_ObrazProgram" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_LP_Person" Width="1.5" PointX="21.25" PointY="43.25" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_LP_Person_GAK" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_LP_Person_LicenseProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_LP_Person_PartnerPerson" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_GAK_LP_Person" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.PersonOrgPositionMiddle" Width="1.5" PointX="23.375" PointY="29.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.ECD_OrganizationPersonOrgName" Width="1.5" PointX="8.375" PointY="33.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_Source" Width="1.5" PointX="34.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKR_OrganizationList" Width="1.5" PointX="34.375" PointY="4.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_MemberNPR_log" Width="2" PointX="36.125" PointY="42.625" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_MemberPP_log" Width="2.625" PointX="36.125" PointY="26.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_Number_log" Width="1.5" PointX="33.875" PointY="35.375" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_log_GAK" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_log_GAK_ExamVKR" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_MemberNPR_log_GAK_Number_log" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_MemberPP_log_GAK_Number_log" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_MemberPP_log_PartnerPerson" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_log_GAK_Number" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_log_ObrazProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_log_PartnerPerson" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.VKR_ThemesStudentOrder" Width="1.5" PointX="31.5" PointY="12.375" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKR_ThemesStudentOrder_Faculty" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKR_ThemesStudentOrder_LicenseProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKR_ThemesStudentOrder_ObrazProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKR_ThemesStudentOrder_Organization" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKR_ThemesStudentOrder_PartnerPerson" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKR_ThemesStudentOrder_PartnerPerson1" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_MemberNPR_archive" Width="2.125" PointX="28.125" PointY="51.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_MemberPP_archive" Width="2.125" PointX="28.75" PointY="37.375" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_Number_archive" Width="1.5" PointX="25.875" PointY="44.5" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_archive_GAK" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_archive_GAK_ExamVKR" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_MemberNPR_archive_GAK_Number_archive" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_MemberPP_archive_GAK_Number_archive" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_MemberPP_archive_PartnerPerson" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_archive_GAK_Number" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_archive_ObrazProgram" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_GAK_Number_archive_PartnerPerson" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.OrganizationEnglishSource" Width="1.5" PointX="34.375" PointY="8.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.ext_GAK_2017" Width="1.5" PointX="34.375" PointY="11.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_StatOP" Width="1.5" PointX="16.375" PointY="34.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_StatOP_Itog" Width="1.5" PointX="34.375" PointY="18.75" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.GAK_StatChairmanPPNPR_Itog" Width="1.5" PointX="34.375" PointY="22.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -49,17 +49,16 @@ namespace EmployerPartners
                     FillControls(query, lst.FacultyId, lst.RubricId);
                 }
         }
-        public override bool CheckExist(EmployerPartnersEntities context, int? AreaId)
+        public override bool CheckExist(EmployerPartnersEntities context, int? FacultyId, int? RubricId)
         {
             var lst = (from x in context.PartnerPersonFaculty
                        where x.PartnerPersonId == ObjectId
                        && x.Id != _id
-                       && x.FacultyId == AreaId
-                       select new
-                       {
-                           x.Id
-                       }).ToList().Count();
-            if (lst > 0)
+                       && x.FacultyId == FacultyId
+                       && x.RubricId == RubricId
+                       select x
+                       ).ToList();
+            if (lst.Count() > 0)
             {
                 MessageBox.Show("Такая рубрика уже была добавлена");
                 return false;

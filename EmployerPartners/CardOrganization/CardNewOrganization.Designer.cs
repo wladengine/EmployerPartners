@@ -34,6 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnAddQuotes = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -94,11 +95,22 @@
     "ь его уже в карточке, которая сразу откроется после нажатия на кнопку \"Добавить\"" +
     "";
             // 
+            // btnAddQuotes
+            // 
+            this.btnAddQuotes.Location = new System.Drawing.Point(273, 43);
+            this.btnAddQuotes.Name = "btnAddQuotes";
+            this.btnAddQuotes.Size = new System.Drawing.Size(143, 23);
+            this.btnAddQuotes.TabIndex = 4;
+            this.btnAddQuotes.Text = "Вставить кавычки «»";
+            this.btnAddQuotes.UseVisualStyleBackColor = true;
+            this.btnAddQuotes.Click += new System.EventHandler(this.btnAddQuotes_Click);
+            // 
             // CardNewOrganization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(602, 241);
+            this.Controls.Add(this.btnAddQuotes);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnAdd);
@@ -120,5 +132,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnAddQuotes;
     }
 }

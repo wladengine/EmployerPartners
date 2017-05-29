@@ -27,6 +27,7 @@ namespace EmployerPartners
         public Nullable<int> Sorting { get; set; }
         public string Author { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
+        public string NameEng { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Organization> Organization { get; set; }

@@ -35,6 +35,9 @@
             this.err = new System.Windows.Forms.ErrorProvider(this.components);
             this.SaveSuccess = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label55 = new System.Windows.Forms.Label();
+            this.cbOrganizationEnglishSource = new System.Windows.Forms.ComboBox();
+            this.chkbEngSourceOfficial = new System.Windows.Forms.CheckBox();
             this.label19 = new System.Windows.Forms.Label();
             this.tbOECD = new System.Windows.Forms.TextBox();
             this.label51 = new System.Windows.Forms.Label();
@@ -142,6 +145,14 @@
             this.tbApartment = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnOECDDelete = new System.Windows.Forms.Button();
+            this.btnOECDAdd = new System.Windows.Forms.Button();
+            this.dgvOECD = new System.Windows.Forms.DataGridView();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnActivityAreaProfessionalDelete = new System.Windows.Forms.Button();
+            this.btnActivityAreaProfessionalAdd = new System.Windows.Forms.Button();
+            this.dgvActivityAreaProfessional = new System.Windows.Forms.DataGridView();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label35 = new System.Windows.Forms.Label();
             this.btnLPDelete = new System.Windows.Forms.Button();
@@ -162,6 +173,11 @@
             this.btnRubricDelete = new System.Windows.Forms.Button();
             this.btnRublrikAdd = new System.Windows.Forms.Button();
             this.dgvRubric = new System.Windows.Forms.DataGridView();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.btnSubdivisionEdit = new System.Windows.Forms.Button();
+            this.btnSubdivisionDelete = new System.Windows.Forms.Button();
+            this.btnSubdivisionAdd = new System.Windows.Forms.Button();
+            this.dgvSubdivisions = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnRefreshContact = new System.Windows.Forms.Button();
             this.BtnContactEdit = new System.Windows.Forms.Button();
@@ -190,6 +206,7 @@
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tbAuthor = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.err)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SaveSuccess)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -197,6 +214,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvArea)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOECD)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvActivityAreaProfessional)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLP)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -205,6 +226,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvActivityArea)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRubric)).BeginInit();
+            this.tabPage7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSubdivisions)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvContacts)).BeginInit();
             this.tabPage6.SuspendLayout();
@@ -246,6 +269,10 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.label55);
+            this.tabPage1.Controls.Add(this.cbOrganizationEnglishSource);
+            this.tabPage1.Controls.Add(this.chkbEngSourceOfficial);
             this.tabPage1.Controls.Add(this.label19);
             this.tabPage1.Controls.Add(this.tbOECD);
             this.tabPage1.Controls.Add(this.label51);
@@ -337,6 +364,37 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные сведения";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label55
+            // 
+            this.label55.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label55.AutoSize = true;
+            this.label55.Location = new System.Drawing.Point(927, 129);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(83, 13);
+            this.label55.TabIndex = 59;
+            this.label55.Text = "Англ. источник";
+            // 
+            // cbOrganizationEnglishSource
+            // 
+            this.cbOrganizationEnglishSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbOrganizationEnglishSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbOrganizationEnglishSource.FormattingEnabled = true;
+            this.cbOrganizationEnglishSource.Location = new System.Drawing.Point(1024, 124);
+            this.cbOrganizationEnglishSource.Name = "cbOrganizationEnglishSource";
+            this.cbOrganizationEnglishSource.Size = new System.Drawing.Size(185, 21);
+            this.cbOrganizationEnglishSource.TabIndex = 58;
+            // 
+            // chkbEngSourceOfficial
+            // 
+            this.chkbEngSourceOfficial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkbEngSourceOfficial.AutoSize = true;
+            this.chkbEngSourceOfficial.Location = new System.Drawing.Point(1022, 104);
+            this.chkbEngSourceOfficial.Name = "chkbEngSourceOfficial";
+            this.chkbEngSourceOfficial.Size = new System.Drawing.Size(187, 17);
+            this.chkbEngSourceOfficial.TabIndex = 57;
+            this.chkbEngSourceOfficial.Text = "Англ. наименование проверено";
+            this.chkbEngSourceOfficial.UseVisualStyleBackColor = true;
             // 
             // label19
             // 
@@ -1041,9 +1099,9 @@
             // 
             // tbSource
             // 
-            this.tbSource.Location = new System.Drawing.Point(1012, 154);
+            this.tbSource.Location = new System.Drawing.Point(1022, 154);
             this.tbSource.Name = "tbSource";
-            this.tbSource.Size = new System.Drawing.Size(197, 20);
+            this.tbSource.Size = new System.Drawing.Size(187, 20);
             this.tbSource.TabIndex = 37;
             // 
             // tbINN
@@ -1059,7 +1117,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbShortNameEng.Location = new System.Drawing.Point(182, 127);
             this.tbShortNameEng.Name = "tbShortNameEng";
-            this.tbShortNameEng.Size = new System.Drawing.Size(1028, 20);
+            this.tbShortNameEng.Size = new System.Drawing.Size(711, 20);
             this.tbShortNameEng.TabIndex = 7;
             // 
             // tbMiddleName
@@ -1086,7 +1144,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbNameEng.Location = new System.Drawing.Point(182, 101);
             this.tbNameEng.Name = "tbNameEng";
-            this.tbNameEng.Size = new System.Drawing.Size(1028, 20);
+            this.tbNameEng.Size = new System.Drawing.Size(823, 20);
             this.tbNameEng.TabIndex = 6;
             // 
             // tbName
@@ -1220,7 +1278,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(887, 157);
+            this.label26.Location = new System.Drawing.Point(903, 157);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(109, 13);
             this.label26.TabIndex = 3;
@@ -1330,6 +1388,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage4);
@@ -1342,6 +1401,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.groupBox6);
+            this.tabPage3.Controls.Add(this.groupBox5);
             this.tabPage3.Controls.Add(this.groupBox4);
             this.tabPage3.Controls.Add(this.groupBox2);
             this.tabPage3.Controls.Add(this.groupBox3);
@@ -1353,6 +1414,108 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Рубрики/ Направления/ Сферы деятельности";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.btnOECDDelete);
+            this.groupBox6.Controls.Add(this.btnOECDAdd);
+            this.groupBox6.Controls.Add(this.dgvOECD);
+            this.groupBox6.Location = new System.Drawing.Point(893, 421);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(326, 236);
+            this.groupBox6.TabIndex = 2;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "OECD";
+            // 
+            // btnOECDDelete
+            // 
+            this.btnOECDDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOECDDelete.Enabled = false;
+            this.btnOECDDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnOECDDelete.Image")));
+            this.btnOECDDelete.Location = new System.Drawing.Point(262, 204);
+            this.btnOECDDelete.Name = "btnOECDDelete";
+            this.btnOECDDelete.Size = new System.Drawing.Size(26, 26);
+            this.btnOECDDelete.TabIndex = 2;
+            this.btnOECDDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnOECDAdd
+            // 
+            this.btnOECDAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOECDAdd.Enabled = false;
+            this.btnOECDAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnOECDAdd.Image")));
+            this.btnOECDAdd.Location = new System.Drawing.Point(294, 204);
+            this.btnOECDAdd.Name = "btnOECDAdd";
+            this.btnOECDAdd.Size = new System.Drawing.Size(26, 26);
+            this.btnOECDAdd.TabIndex = 3;
+            this.btnOECDAdd.UseVisualStyleBackColor = true;
+            // 
+            // dgvOECD
+            // 
+            this.dgvOECD.AllowUserToAddRows = false;
+            this.dgvOECD.AllowUserToDeleteRows = false;
+            this.dgvOECD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvOECD.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOECD.Location = new System.Drawing.Point(6, 18);
+            this.dgvOECD.Name = "dgvOECD";
+            this.dgvOECD.ReadOnly = true;
+            this.dgvOECD.Size = new System.Drawing.Size(314, 180);
+            this.dgvOECD.TabIndex = 0;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Controls.Add(this.btnActivityAreaProfessionalDelete);
+            this.groupBox5.Controls.Add(this.btnActivityAreaProfessionalAdd);
+            this.groupBox5.Controls.Add(this.dgvActivityAreaProfessional);
+            this.groupBox5.Location = new System.Drawing.Point(893, 9);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(326, 406);
+            this.groupBox5.TabIndex = 1;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Области профессиональной деятельности";
+            // 
+            // btnActivityAreaProfessionalDelete
+            // 
+            this.btnActivityAreaProfessionalDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnActivityAreaProfessionalDelete.Enabled = false;
+            this.btnActivityAreaProfessionalDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnActivityAreaProfessionalDelete.Image")));
+            this.btnActivityAreaProfessionalDelete.Location = new System.Drawing.Point(262, 374);
+            this.btnActivityAreaProfessionalDelete.Name = "btnActivityAreaProfessionalDelete";
+            this.btnActivityAreaProfessionalDelete.Size = new System.Drawing.Size(26, 26);
+            this.btnActivityAreaProfessionalDelete.TabIndex = 2;
+            this.btnActivityAreaProfessionalDelete.UseVisualStyleBackColor = true;
+            this.btnActivityAreaProfessionalDelete.Click += new System.EventHandler(this.btnActivityAreaProfessionalDelete_Click);
+            // 
+            // btnActivityAreaProfessionalAdd
+            // 
+            this.btnActivityAreaProfessionalAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnActivityAreaProfessionalAdd.Enabled = false;
+            this.btnActivityAreaProfessionalAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnActivityAreaProfessionalAdd.Image")));
+            this.btnActivityAreaProfessionalAdd.Location = new System.Drawing.Point(294, 374);
+            this.btnActivityAreaProfessionalAdd.Name = "btnActivityAreaProfessionalAdd";
+            this.btnActivityAreaProfessionalAdd.Size = new System.Drawing.Size(26, 26);
+            this.btnActivityAreaProfessionalAdd.TabIndex = 3;
+            this.btnActivityAreaProfessionalAdd.UseVisualStyleBackColor = true;
+            this.btnActivityAreaProfessionalAdd.Click += new System.EventHandler(this.btnActivityAreaProfessionalAdd_Click);
+            // 
+            // dgvActivityAreaProfessional
+            // 
+            this.dgvActivityAreaProfessional.AllowUserToAddRows = false;
+            this.dgvActivityAreaProfessional.AllowUserToDeleteRows = false;
+            this.dgvActivityAreaProfessional.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvActivityAreaProfessional.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvActivityAreaProfessional.Location = new System.Drawing.Point(6, 19);
+            this.dgvActivityAreaProfessional.Name = "dgvActivityAreaProfessional";
+            this.dgvActivityAreaProfessional.ReadOnly = true;
+            this.dgvActivityAreaProfessional.Size = new System.Drawing.Size(314, 350);
+            this.dgvActivityAreaProfessional.TabIndex = 0;
             // 
             // groupBox4
             // 
@@ -1609,6 +1772,70 @@
             this.dgvRubric.Size = new System.Drawing.Size(394, 144);
             this.dgvRubric.TabIndex = 0;
             this.dgvRubric.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRubric_CellDoubleClick);
+            // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.btnSubdivisionEdit);
+            this.tabPage7.Controls.Add(this.btnSubdivisionDelete);
+            this.tabPage7.Controls.Add(this.btnSubdivisionAdd);
+            this.tabPage7.Controls.Add(this.dgvSubdivisions);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Size = new System.Drawing.Size(1234, 664);
+            this.tabPage7.TabIndex = 6;
+            this.tabPage7.Text = "Подразделения";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // btnSubdivisionEdit
+            // 
+            this.btnSubdivisionEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSubdivisionEdit.Enabled = false;
+            this.btnSubdivisionEdit.Location = new System.Drawing.Point(15, 14);
+            this.btnSubdivisionEdit.Name = "btnSubdivisionEdit";
+            this.btnSubdivisionEdit.Size = new System.Drawing.Size(199, 24);
+            this.btnSubdivisionEdit.TabIndex = 7;
+            this.btnSubdivisionEdit.Text = "Редактировать подразделение";
+            this.btnSubdivisionEdit.UseVisualStyleBackColor = true;
+            this.btnSubdivisionEdit.Click += new System.EventHandler(this.btnSubdivisionEdit_Click);
+            // 
+            // btnSubdivisionDelete
+            // 
+            this.btnSubdivisionDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSubdivisionDelete.Enabled = false;
+            this.btnSubdivisionDelete.Location = new System.Drawing.Point(893, 14);
+            this.btnSubdivisionDelete.Name = "btnSubdivisionDelete";
+            this.btnSubdivisionDelete.Size = new System.Drawing.Size(158, 24);
+            this.btnSubdivisionDelete.TabIndex = 5;
+            this.btnSubdivisionDelete.Text = "Удалить подразделение";
+            this.btnSubdivisionDelete.UseVisualStyleBackColor = true;
+            this.btnSubdivisionDelete.Click += new System.EventHandler(this.btnSubdivisionDelete_Click);
+            // 
+            // btnSubdivisionAdd
+            // 
+            this.btnSubdivisionAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSubdivisionAdd.Enabled = false;
+            this.btnSubdivisionAdd.Location = new System.Drawing.Point(1057, 14);
+            this.btnSubdivisionAdd.Name = "btnSubdivisionAdd";
+            this.btnSubdivisionAdd.Size = new System.Drawing.Size(158, 24);
+            this.btnSubdivisionAdd.TabIndex = 6;
+            this.btnSubdivisionAdd.Text = "Добавить подразделение";
+            this.btnSubdivisionAdd.UseVisualStyleBackColor = true;
+            this.btnSubdivisionAdd.Click += new System.EventHandler(this.btnSubdivisionAdd_Click);
+            // 
+            // dgvSubdivisions
+            // 
+            this.dgvSubdivisions.AllowUserToAddRows = false;
+            this.dgvSubdivisions.AllowUserToDeleteRows = false;
+            this.dgvSubdivisions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvSubdivisions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvSubdivisions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSubdivisions.Location = new System.Drawing.Point(15, 50);
+            this.dgvSubdivisions.Name = "dgvSubdivisions";
+            this.dgvSubdivisions.ReadOnly = true;
+            this.dgvSubdivisions.Size = new System.Drawing.Size(1200, 566);
+            this.dgvSubdivisions.TabIndex = 4;
             // 
             // tabPage2
             // 
@@ -1931,18 +2158,29 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // tbAuthor
+            // 
+            this.tbAuthor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbAuthor.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbAuthor.Location = new System.Drawing.Point(196, 750);
+            this.tbAuthor.Name = "tbAuthor";
+            this.tbAuthor.ReadOnly = true;
+            this.tbAuthor.Size = new System.Drawing.Size(784, 13);
+            this.tbAuthor.TabIndex = 6;
+            // 
             // CardOrganization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 782);
+            this.Controls.Add(this.tbAuthor);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblName);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "CardOrganization";
             this.Text = "Организация";
+            this.Load += new System.EventHandler(this.CardOrganization_Load);
             ((System.ComponentModel.ISupportInitialize)(this.err)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SaveSuccess)).EndInit();
             this.tabPage1.ResumeLayout(false);
@@ -1952,6 +2190,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvArea)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOECD)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvActivityAreaProfessional)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLP)).EndInit();
@@ -1964,6 +2206,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRubric)).EndInit();
+            this.tabPage7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSubdivisions)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvContacts)).EndInit();
             this.tabPage6.ResumeLayout(false);
@@ -1974,6 +2218,7 @@
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -2139,6 +2384,23 @@
         private System.Windows.Forms.TextBox tbOkvedDop;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox tbOECD;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btnOECDDelete;
+        private System.Windows.Forms.Button btnOECDAdd;
+        private System.Windows.Forms.DataGridView dgvOECD;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button btnActivityAreaProfessionalDelete;
+        private System.Windows.Forms.Button btnActivityAreaProfessionalAdd;
+        private System.Windows.Forms.DataGridView dgvActivityAreaProfessional;
+        private System.Windows.Forms.CheckBox chkbEngSourceOfficial;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.Button btnSubdivisionDelete;
+        private System.Windows.Forms.Button btnSubdivisionAdd;
+        private System.Windows.Forms.DataGridView dgvSubdivisions;
+        private System.Windows.Forms.Button btnSubdivisionEdit;
+        private System.Windows.Forms.TextBox tbAuthor;
+        private System.Windows.Forms.ComboBox cbOrganizationEnglishSource;
+        private System.Windows.Forms.Label label55;
     }
 }
 

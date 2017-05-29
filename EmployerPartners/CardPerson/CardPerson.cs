@@ -11,6 +11,7 @@ using System.IO;
 using FastMember;
 
 using KLADR;
+using WordOut;
 
 namespace EmployerPartners
 {
@@ -97,8 +98,15 @@ namespace EmployerPartners
             ExtraInit(false);
 
             ComboServ.FillCombo(cbDegree, HelpClass.GetComboListByTable("dbo.Degree"), true, false);
+            ComboServ.FillCombo(cbDegree2, HelpClass.GetComboListByTable("dbo.Degree"), true, false);
             ComboServ.FillCombo(cbRank, HelpClass.GetComboListByTable("dbo.Rank"), true, false);
+            ComboServ.FillCombo(cbRank2, HelpClass.GetComboListByTable("dbo.Rank"), true, false);
+            ComboServ.FillCombo(cbRankHonorary, HelpClass.GetComboListByTable("dbo.RankHonorary"), true, false);
+            ComboServ.FillCombo(cbRankHonorary2, HelpClass.GetComboListByTable("dbo.RankHonorary"), true, false);
+            ComboServ.FillCombo(cbRankState, HelpClass.GetComboListByTable("dbo.RankState"), true, false);
+            ComboServ.FillCombo(cbRankState2, HelpClass.GetComboListByTable("dbo.RankState"), true, false);
             ComboServ.FillCombo(cbArea, HelpClass.GetComboListByTable("dbo.ActivityArea"), true, false);
+            ComboServ.FillCombo(cbPrefix, HelpClass.GetComboListByTable("dbo.PartnerPersonPrefix"), true, false);
 
             FillPartnerInfo();
             FillPersonArea();
@@ -118,12 +126,37 @@ namespace EmployerPartners
                     var Partner = (from x in context.PartnerPerson
                                    where x.Id == _Id
                                    select x).First();
+                    LastName = Partner.LastName;
+                    FirstName = Partner.FirstName;
+                    SecondName = Partner.SecondName;
                     PersonName = Partner.Name;
+                    NameInitials = Partner.NameInitials;
+                    LastNameEng = Partner.LastNameEng;
+                    FirstNameEng = Partner.FirstNameEng;
+                    SecondNameEng = Partner.SecondNameEng;
                     NameEng = Partner.NameEng;
+                    NameInitialsEng = Partner.NameInitialsEng;
 
+                    isGAK = (Partner.IsGAK.HasValue) ? (bool)Partner.IsGAK : false;
+                    isGAKChairMan = (Partner.IsGAKChairman.HasValue) ? (bool)Partner.IsGAKChairman : false;
+                    isGAK2016 = (Partner.IsGAK2016.HasValue) ? (bool)Partner.IsGAK2016 : false;
+                    isGAKChairMan2016 = (Partner.IsGAKChairman2016.HasValue) ? (bool)Partner.IsGAKChairman2016 : false;
+
+                    IsPersonDataAgreed = (Partner.IsPersonDataAgreed.HasValue) ? (bool)Partner.IsPersonDataAgreed : false;
+                    IsPersonDataChecked = (Partner.IsPersonDataChecked.HasValue) ? (bool)Partner.IsPersonDataChecked : false;
+
+                    PrefixId = Partner.PartnerPersonPrefixId;
                     Title = Partner.Title;
+                    Account = String.IsNullOrEmpty(Partner.Account) ? "pt" : Partner.Account;
                     DegreeId = Partner.DegreeId;
+                    Degree2Id = Partner.Degree2Id;
                     RankId = Partner.RankId;
+                    Rank2Id = Partner.Rank2Id;
+
+                    RankHonoraryId = Partner.RankHonoraryId;
+                    RankHonorary2Id = Partner.RankHonorary2Id;
+                    RankStateId = Partner.RankStateId;
+                    RankState2Id = Partner.RankState2Id;
                     AreaId = Partner.ActivityAreaId;
 
                     isGraduateSPbGU = Partner.IsSPbGUGraduate ?? false;
@@ -137,6 +170,15 @@ namespace EmployerPartners
                     CountryId = Partner.CountryId;
                     FillCountry(CountryId);
                     Comment = Partner.Comment;
+
+                    try
+                    {
+                        tbAuthor.Text = "Карточка заведена пользователем: " + Util.GetADUserName(Partner.Author) + "  " + Partner.DateCreated.Date.ToString("dd.MM.yyyy");
+                    }
+                    catch (Exception)
+                    {
+                        //MessageBox.Show(ex.Message, "Инфо");  
+                    }
 
                     this.Text = "Карточка: " + PersonName;
                 }
@@ -190,15 +232,35 @@ namespace EmployerPartners
             {
                 var lst = (from x in context.OrganizationPerson
                            join p in context.Organization on x.OrganizationId equals p.Id
+                           join pos in context.Position on x.PositionId equals pos.Id into _pos
+                           from pos in _pos.DefaultIfEmpty()
+                           join pos2 in context.Position on x.Position2Id equals pos2.Id into _pos2
+                           from pos2 in _pos2.DefaultIfEmpty()
+                           join sdiv in context.OrganizationSubdivision on x.OrganizationSubdivisionId equals sdiv.Id into _sdiv
+                           from sdiv in _sdiv.DefaultIfEmpty()
+                           join sdiv2 in context.OrganizationSubdivision on x.OrganizationSubdivision2Id equals sdiv2.Id into _sdiv2
+                           from sdiv2 in _sdiv2.DefaultIfEmpty()
+                           //join subdiv in context.OrganizationSubdivision on x.OrganizationId equals subdiv.OrganizationId into _subdiv
+                           //from subdiv in _subdiv.DefaultIfEmpty()
                            where x.PartnerPersonId == _Id.Value
+                           orderby x.Sorting
                            select new
                            {
+                               Не_использовать_в_документах = x.NotUseInDocs,
+                               Сортировка = x.Sorting,
+                               //Название = p.Name,
+                               Название = ((String.IsNullOrEmpty(p.MiddleName)) ? ((String.IsNullOrEmpty(p.ShortName)) ? p.Name : p.ShortName) : p.MiddleName),
+                               Должность_в_организации_по_справочнику = pos.Name,
+                               //Подразделение_в_организации = subdiv.Name,
+                               Подразделение_в_организации = sdiv.Name,
+                               //Должность_в_организации_ручной_ввод = x.Position,
+                               //Должность_англ_по_справочнику = pos.NameEng,
+                               //Должность_англ_ручной_ввод = x.PositionEng,
+                               Вторая_должность_в_организации_по_справочнику = pos2.Name,
+                               Подразделение_в_организации_вторая_должность = sdiv2.Name,
+                               Комментарий = x.Comment,
                                x.Id,
                                OrgId = p.Id,
-                               Название = p.Name,
-                               Должность_в_организации = x.Position,
-                               Должность_англ = x.PositionEng,
-                               Комментарий = x.Comment,
                            }).ToList();
 
                 DataTable dt = new DataTable();
@@ -210,6 +272,19 @@ namespace EmployerPartners
                         dgvContacts.Columns[s].Visible = false;
                 foreach (DataGridViewColumn col in dgvContacts.Columns)
                     col.HeaderText = col.Name.Replace("_", " ");
+                try
+                {
+                    dgvContacts.Columns["Не_использовать_в_документах"].Frozen = true;
+                    dgvContacts.Columns["Сортировка"].Frozen = true;
+                    dgvContacts.Columns["Название"].Frozen = true;
+                    dgvContacts.Columns["Не_использовать_в_документах"].Width = 100;
+                    dgvContacts.Columns["Сортировка"].Width = 80;
+                    dgvContacts.Columns["Название"].Width = 250;
+                    
+                }
+                catch (Exception)
+                {
+                }
                 if (id.HasValue)
                     foreach (DataGridViewRow rw in dgvContacts.Rows)
                         if (rw.Cells[0].Value.ToString() == id.Value.ToString())
@@ -225,6 +300,14 @@ namespace EmployerPartners
         #region CheckSaveUpdate_CommonInformation
         private bool CheckFields()
         {
+            if (String.IsNullOrEmpty(LastName))
+            {
+                err.SetError(tbLastName, "не введена Фамилия");
+                tabControl1.SelectedTab = tabPage1;
+                return false;
+            }
+            else
+                err.Clear();
             if (String.IsNullOrEmpty(PersonName))
             {
                 err.SetError(tbName, "не введено ФИО");
@@ -233,14 +316,50 @@ namespace EmployerPartners
             }
             else
                 err.Clear();
-            if (String.IsNullOrEmpty(Title))
+            if (String.IsNullOrEmpty(NameInitials))
             {
-                err.SetError(tbTitle, "не заданы регалии");
+                err.SetError(tbName, "не введено ФИО-инициалы");
                 tabControl1.SelectedTab = tabPage1;
                 return false;
             }
             else
                 err.Clear();
+            if (!String.IsNullOrEmpty(Account))
+            {
+                if ((Account.Length != 8) && (Account != "pt"))
+                {
+                    err.SetError(tbAccount, "Значение 'Аккаунт' некорректно \r\n Аккаунт состоит из 8 символов, начиная с pt");
+                    tabControl1.SelectedTab = tabPage1;
+                    return false;
+                }
+                try
+                {
+                    using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                    {
+                        var lst = context.PartnerPerson.Where(x => x.Account == Account && x.Id != PersonId).Count();
+                        if (lst > 0)
+                        {
+                            var pt = context.PartnerPerson.Where(x => x.Account == Account && x.Id != PersonId).First();
+                            MessageBox.Show("Идентификационный номер " + Account + "\r\n" + "уже существует \r\n" + pt.Name, "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return false;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+            else
+                err.Clear();
+
+            //if (String.IsNullOrEmpty(Title))
+            //{
+            //    err.SetError(tbTitle, "не заданы регалии");
+            //    tabControl1.SelectedTab = tabPage1;
+            //    return false;
+            //}
+            //else
+            //    err.Clear();
 
             if (!String.IsNullOrEmpty(tbGraduateYear.Text))
             {
@@ -328,13 +447,37 @@ namespace EmployerPartners
                     context.PartnerPerson.Add(new PartnerPerson()
                     {
                         rowguid = gId,
+                        LastName = LastName,
+                        FirstName = FirstName,
+                        SecondName = SecondName,
                         Name = PersonName,
+                        NameInitials = NameInitials,
+                        LastNameEng = LastNameEng,
+                        FirstNameEng = FirstNameEng,
+                        SecondNameEng = SecondNameEng,
                         NameEng = NameEng,
+                        NameInitialsEng = NameInitialsEng,
 
+                        IsGAK = isGAK,
+                        IsGAKChairman = isGAKChairMan,
+                        IsGAK2016 = isGAK2016,
+                        IsGAKChairman2016 = isGAKChairMan2016,
+
+                        IsPersonDataAgreed = IsPersonDataAgreed,
+                        IsPersonDataChecked = IsPersonDataChecked,
+   
                         Title = Title,
+                        Account = (Account == "pt") ? "" : Account,
                         RankId = RankId,
+                        Rank2Id = Rank2Id,
+                        RankHonoraryId = RankHonoraryId,
+                        RankHonorary2Id = RankHonorary2Id,
+                        RankStateId = RankStateId,
+                        RankState2Id = RankState2Id,
                         DegreeId = DegreeId,
+                        Degree2Id = Degree2Id,
                         ActivityAreaId = AreaId,
+                        PartnerPersonPrefixId = PrefixId,
 
                         IsSPbGUGraduate = isGraduateSPbGU,
                         AlumniAssociation = isAlumni,
@@ -365,13 +508,37 @@ namespace EmployerPartners
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
                     var Org = context.PartnerPerson.Where(x => x.Id == _Id).First();
+                    Org.LastName = LastName;
+                    Org.FirstName = FirstName;
+                    Org.SecondName = SecondName;
                     Org.Name = PersonName;
+                    Org.NameInitials = NameInitials;
+                    Org.LastNameEng = LastNameEng;
+                    Org.FirstNameEng = FirstNameEng;
+                    Org.SecondNameEng = SecondNameEng;
                     Org.NameEng = NameEng;
+                    Org.NameInitialsEng = NameInitialsEng;
+
+                    Org.IsGAK = isGAK;
+                    Org.IsGAKChairman = isGAKChairMan;
+                    Org.IsGAK2016 = isGAK2016;
+                    Org.IsGAKChairman2016 = isGAKChairMan2016;
+
+                    Org.IsPersonDataAgreed = IsPersonDataAgreed;
+                    Org.IsPersonDataChecked = IsPersonDataChecked;
 
                     Org.Title = Title;
+                    Org.Account = (Account == "pt") ? "" : Account;
                     Org.ActivityAreaId = AreaId;
                     Org.DegreeId = DegreeId;
+                    Org.Degree2Id = Degree2Id;
                     Org.RankId = RankId;
+                    Org.Rank2Id = Rank2Id;
+                    Org.RankHonoraryId = RankHonoraryId;
+                    Org.RankHonorary2Id = RankHonorary2Id;
+                    Org.RankStateId = RankStateId;
+                    Org.RankState2Id = RankState2Id;
+                    Org.PartnerPersonPrefixId = PrefixId;
 
                     Org.IsSPbGUGraduate = isGraduateSPbGU;
                     Org.AlumniAssociation = isAlumni;
@@ -921,7 +1088,14 @@ namespace EmployerPartners
                 {
                     MessageBox.Show("Не удалось удалить карточку...\r\n" + "Обычно это связано с тем, что у данной записи имеются связанные записи в других таблицах.", "Сообщение");
                 }
-
+                try
+                {
+                    if (_hndl != null)
+                        _hndl(null);
+                }
+                catch (Exception)
+                {
+                }
             }
         }
 
@@ -946,6 +1120,424 @@ namespace EmployerPartners
             int? areaid = AreaId;
             ComboServ.FillCombo(cbArea, HelpClass.GetComboListByTable("dbo.ActivityArea"), true, false);
             AreaId = areaid;
+        }
+        private void MakeFIO()
+        {
+            string FIO = "";
+            if (!String.IsNullOrEmpty(LastName))
+            {
+                FIO = LastName;
+            }
+            if (!String.IsNullOrEmpty(FirstName))
+            {
+                if (FIO != "")
+                {
+                    FIO += " " + FirstName;
+                }
+                else
+                {
+                    FIO = FirstName;
+                }
+            }
+            if (!String.IsNullOrEmpty(SecondName))
+            {
+                if (FIO != "")
+                {
+                    FIO += " " + SecondName;
+                }
+                else
+                {
+                    FIO = SecondName;
+                }
+            }
+            PersonName = FIO;
+            this.Text = FIO;
+        }
+        private void MakeFIOInitials()
+        {
+            string FIO = "";
+            if (!String.IsNullOrEmpty(LastName))
+            {
+                FIO = LastName;
+            }
+            if (!String.IsNullOrEmpty(FirstName))
+            {
+                if (FIO != "")
+                {
+                    FIO += " " + FirstName.Substring(0,1) + ".";
+                }
+                else
+                {
+                    FIO = FirstName.Substring(0, 1) + ".";
+                }
+            }
+            if (!String.IsNullOrEmpty(SecondName))
+            {
+                if (FIO != "")
+                {
+                    //FIO += " " + SecondName.Substring(0, 1) + ".";
+                    FIO += (!String.IsNullOrEmpty(FirstName)) ? SecondName.Substring(0, 1) + "." : " " + SecondName.Substring(0, 1) + ".";
+                }
+                else
+                {
+                    FIO = SecondName.Substring(0, 1) + ".";
+                }
+            }
+            NameInitials = FIO;
+            //this.Text = FIO;
+        }
+        private void MakeFIOEng()
+        {
+            string FIO = "";
+            if (!String.IsNullOrEmpty(LastNameEng))
+            {
+                FIO = LastNameEng;
+            }
+            if (!String.IsNullOrEmpty(FirstNameEng))
+            {
+                if (FIO != "")
+                {
+                    FIO += " " + FirstNameEng;
+                }
+                else
+                {
+                    FIO = FirstNameEng;
+                }
+            }
+            if (!String.IsNullOrEmpty(SecondNameEng))
+            {
+                if (FIO != "")
+                {
+                    FIO += " " + SecondNameEng;
+                }
+                else
+                {
+                    FIO = SecondNameEng;
+                }
+            }
+            NameEng = FIO;
+            //this.Text = FIO;
+        }
+        private void MakeFIOInitialsEng()
+        {
+            string FIO = "";
+            if (!String.IsNullOrEmpty(LastNameEng))
+            {
+                FIO = LastNameEng;
+            }
+            if (!String.IsNullOrEmpty(FirstNameEng))
+            {
+                if (FIO != "")
+                {
+                    FIO += " " + FirstNameEng.Substring(0, 1) + ".";
+                }
+                else
+                {
+                    FIO = FirstNameEng.Substring(0, 1) + ".";
+                }
+            }
+            if (!String.IsNullOrEmpty(SecondNameEng))
+            {
+                if (FIO != "")
+                {
+                    //FIO += " " + SecondNameEng.Substring(0, 1) + ".";
+                    FIO += (!String.IsNullOrEmpty(FirstNameEng)) ? SecondNameEng.Substring(0, 1) + "." : " " + SecondNameEng.Substring(0, 1) + ".";
+                }
+                else
+                {
+                    FIO = SecondNameEng.Substring(0, 1) + ".";
+                }
+            }
+            NameInitialsEng = FIO;
+            //this.Text = FIO;
+        }
+        private void tbLastName_TextChanged(object sender, EventArgs e)
+        {
+            MakeFIO();
+            MakeFIOInitials();
+        }
+
+        private void tbFirstName_TextChanged(object sender, EventArgs e)
+        {
+            MakeFIO();
+            MakeFIOInitials();
+        }
+
+        private void tbSecondName_TextChanged(object sender, EventArgs e)
+        {
+            MakeFIO();
+            MakeFIOInitials();
+        }
+
+        private void tbLastNameEng_TextChanged(object sender, EventArgs e)
+        {
+            MakeFIOEng();
+            MakeFIOInitialsEng();
+        }
+
+        private void tbFirstNameEng_TextChanged(object sender, EventArgs e)
+        {
+            MakeFIOEng();
+            MakeFIOInitialsEng();
+        }
+
+        private void tbSecondNameEng_TextChanged(object sender, EventArgs e)
+        {
+            MakeFIOEng();
+            MakeFIOInitialsEng();
+        }
+
+        private void CardPerson_Load(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    if (this.Parent.Width > this.Width + 150 + this.Left)
+            //    {
+            //        this.Width = this.Parent.Width - 150 - this.Left;
+            //    }
+            //    if (this.Parent.Height > this.Height + 150 + this.Top)
+            //    {
+            //        this.Height = this.Parent.Height - 150 - this.Top;
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //}
+        }
+
+        private void btnAgreement_Click(object sender, EventArgs e)
+        {
+            AgreementDoc();
+        }
+        private void AgreementDoc()
+        {
+            //извлечение шаблона из БД
+            byte[] fileByteArray;
+            string type;
+            string name;
+            string nameshort;
+            string templatename = "";
+            templatename = "СОГЛАСИЕ_члена ГЭК";
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+
+                    var template = (from x in context.Templates
+                                    where x.TemplateName == templatename
+                                    select x).First();
+
+                    fileByteArray = (byte[])template.FileData;
+                    type = (string)template.FileType.Trim();
+                    name = (string)template.FileName.Trim();
+                    nameshort = name.Substring(0, name.Length - type.Length);
+                }
+            }
+            catch (Exception exc)
+            {
+                if (Util.IsDBOwner())
+                {
+                    MessageBox.Show("Не удалось получить данные...\r\n" + exc.Message, "Сообщение");
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось получить данные...", "Сообщение");
+                }
+                return;
+            }
+            string TempFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\EmployerPartners_TempFiles\";    //@"\Приказы по составам ГЭК\";
+            try
+            {
+                if (!Directory.Exists(TempFilesFolder))
+                    Directory.CreateDirectory(TempFilesFolder);
+            }
+            catch (Exception ex)
+            {
+                if (Util.IsDBOwner())
+                {
+                    MessageBox.Show("Не удалось создать директорию.\r\n" + ex.Message, "Сообщение");
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось открыть файл...", "Сообщение");
+                }
+                return;
+            }
+
+            string filePath = TempFilesFolder + name;
+            string[] fileList = Directory.GetFiles(TempFilesFolder, nameshort + "*" + type);
+            int suffix;
+            Random rnd = new Random();
+            suffix = rnd.Next();
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    File.Delete(filePath);
+                    foreach (string f in fileList)
+                    {
+                        File.Delete(f);
+                    }
+                }
+                catch (Exception)
+                {
+                    filePath = TempFilesFolder + nameshort + " " + suffix + type;
+                }
+            }
+            //Запись на диск
+            try
+            {
+                FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
+                BinaryWriter binWriter = new BinaryWriter(fileStream);
+                binWriter.Write(fileByteArray);
+                binWriter.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось открыть файл...", "Сообщение");
+                return;
+            }
+
+            WordDoc wd = new WordDoc(string.Format(filePath), true);
+
+            try
+            {
+                string FIO = "";
+                string Title = "";
+                string TitleNext = "";
+                string TitleEng = "";
+                string TitleEngNext = "";
+                string PersonData = "";
+                string PersonDataEng = "";
+                string Email = "";
+                string Phone = "";
+
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var item = (from x in context.PartnerPerson
+
+                               join degree in context.Degree on x.DegreeId equals degree.Id into _degree
+                               from degree in _degree.DefaultIfEmpty()
+                               join degree2 in context.Degree on x.Degree2Id equals degree2.Id into _degree2
+                               from degree2 in _degree2.DefaultIfEmpty()
+
+                               join rank in context.Rank on x.RankId equals rank.Id into _rank
+                               from rank in _rank.DefaultIfEmpty()
+                               join rank2 in context.Rank on x.Rank2Id equals rank2.Id into _rank2
+                               from rank2 in _rank2.DefaultIfEmpty()
+
+                               join rankhon in context.RankHonorary on x.RankHonoraryId equals rankhon.Id into _rankhon
+                               from rankhon in _rankhon.DefaultIfEmpty()
+                               join rankhon2 in context.RankHonorary on x.RankHonorary2Id equals rankhon2.Id into _rankhon2
+                               from rankhon2 in _rankhon2.DefaultIfEmpty()
+
+                               join rankstate in context.RankState on x.RankStateId equals rankstate.Id into _rankstate
+                               from rankstate in _rankstate.DefaultIfEmpty()
+                               join rankstate2 in context.RankState on x.RankState2Id equals rankstate2.Id into _rankstate2
+                               from rankstate2 in _rankstate2.DefaultIfEmpty()
+
+                               join orgpos in context.PersonOrgPosition on x.Id equals orgpos.PartnerPersonId into _orgpos
+                               from orgpos in _orgpos.DefaultIfEmpty()
+
+                               where (x.Id == _Id)
+                               select new
+                               {
+                                   x.Id,
+                                   FIO = x.Name,
+                                   orgpos.OrgPosition,
+                                   Degree = (x.DegreeId.HasValue) ? ((x.Degree2Id.HasValue) ? (degree.Name + ", " + degree2.Name) : degree.Name) : ((x.Degree2Id.HasValue) ? (degree2.Name) : ""),
+                                   Rank = (x.RankId.HasValue) ? ((x.Rank2Id.HasValue) ? (rank.Name + ", " + rank2.Name) : rank.Name) : ((x.Rank2Id.HasValue) ? (rank2.Name) : ""),
+                                   RankHonorary = (x.RankHonoraryId.HasValue) ? ((x.RankHonorary2Id.HasValue) ? (rankhon.Name + ", " + rankhon2.Name) : rankhon.Name) : ((x.RankHonorary2Id.HasValue) ? (rankhon2.Name) : ""),
+                                   RankState = (x.RankStateId.HasValue) ? ((x.RankState2Id.HasValue) ? (rankstate.Name + ", " + rankstate2.Name) : rankstate.Name) : ((x.RankState2Id.HasValue) ? (rankstate.Name) : ""),
+                                   
+                                   FIOEng = String.IsNullOrEmpty(x.NameEng) ? "" : x.NameEng,
+                                   orgpos.OrgPositionEng,
+                                   DegreeEng = (x.DegreeId.HasValue) ? ((x.Degree2Id.HasValue) ? (degree.NameEng + ", " + degree2.NameEng) : degree.NameEng) : ((x.Degree2Id.HasValue) ? (degree2.NameEng) : ""),
+                                   RankEng = (x.RankId.HasValue) ? ((x.Rank2Id.HasValue) ? (rank.NameEng + ", " + rank2.NameEng) : rank.NameEng) : ((x.Rank2Id.HasValue) ? (rank2.NameEng) : ""),
+                                   RankHonoraryEng = (x.RankHonoraryId.HasValue) ? ((x.RankHonorary2Id.HasValue) ? (rankhon.NameEng + ", " + rankhon2.NameEng) : rankhon.NameEng) : ((x.RankHonorary2Id.HasValue) ? (rankhon2.NameEng) : ""),
+                                   RankStateEng = (x.RankStateId.HasValue) ? ((x.RankState2Id.HasValue) ? (rankstate.NameEng + ", " + rankstate2.NameEng) : rankstate.NameEng) : ((x.RankState2Id.HasValue) ? (rankstate.NameEng) : ""),
+                                   //Ученая_степень = person.Degree.Name,
+                                   //Ученое_звание = person.Rank.Name,
+                                   //Почетное_звание = person.RankHonorary.Name,
+                                   //Государственное_или_военное_звание = person.RankState.Name,
+                                   TitleDop = x.Title,
+                                   TitleEngDop = x.TitleEng,
+                                   Email = x.Email,
+                                   Phone = x.Phone
+                               }).First();
+                    //Русские значения
+                    Title = (!String.IsNullOrEmpty(item.Degree)) ? item.Degree : "";
+                    TitleNext = (!String.IsNullOrEmpty(item.Rank)) ? item.Rank : "";
+                    Title = (!string.IsNullOrEmpty(Title)) ? ((!String.IsNullOrEmpty(TitleNext)) ? (Title + ", " + TitleNext) : Title) : TitleNext;
+                    TitleNext = item.OrgPosition;
+                    Title = (!string.IsNullOrEmpty(Title)) ? ((!String.IsNullOrEmpty(TitleNext)) ? (Title + ", " + TitleNext) : Title) : TitleNext;
+                    TitleNext = (!String.IsNullOrEmpty(item.RankHonorary)) ? item.RankHonorary : "";
+                    Title = (!string.IsNullOrEmpty(Title)) ? ((!String.IsNullOrEmpty(TitleNext)) ? (Title + ", " + TitleNext) : Title) : TitleNext;
+                    TitleNext = (!String.IsNullOrEmpty(item.RankState)) ? item.RankState : "";
+                    Title = (!string.IsNullOrEmpty(Title)) ? ((!String.IsNullOrEmpty(TitleNext)) ? (Title + ", " + TitleNext) : Title) : TitleNext;
+                    TitleNext = (!String.IsNullOrEmpty(item.TitleDop)) ? item.TitleDop : "";
+                    Title = (!string.IsNullOrEmpty(Title)) ? ((!String.IsNullOrEmpty(TitleNext)) ? (Title + ", " + TitleNext) : Title) : TitleNext;
+
+                    //английские значения
+                    TitleEng = (!String.IsNullOrEmpty(item.DegreeEng)) ? item.DegreeEng : "";
+                    TitleEngNext = (!String.IsNullOrEmpty(item.Rank)) ? item.RankEng : "";
+                    TitleEng = (!string.IsNullOrEmpty(TitleEng)) ? ((!String.IsNullOrEmpty(TitleEngNext)) ? (TitleEng + ", " + TitleEngNext) : TitleEng) : TitleEngNext;
+                    TitleEngNext = item.OrgPositionEng;
+                    TitleEng = (!string.IsNullOrEmpty(TitleEng)) ? ((!String.IsNullOrEmpty(TitleEngNext)) ? (TitleEng + ", " + TitleEngNext) : TitleEng) : TitleEngNext;
+                    TitleEngNext = (!String.IsNullOrEmpty(item.RankHonoraryEng)) ? item.RankHonoraryEng : "";
+                    TitleEng = (!string.IsNullOrEmpty(TitleEng)) ? ((!String.IsNullOrEmpty(TitleEngNext)) ? (TitleEng + ", " + TitleEngNext) : TitleEng) : TitleEngNext;
+                    TitleEngNext = (!String.IsNullOrEmpty(item.RankStateEng)) ? item.RankStateEng : "";
+                    TitleEng = (!string.IsNullOrEmpty(TitleEng)) ? ((!String.IsNullOrEmpty(TitleEngNext)) ? (TitleEng + ", " + TitleEngNext) : TitleEng) : TitleEngNext;
+                    TitleEngNext = (!String.IsNullOrEmpty(item.TitleEngDop)) ? item.TitleEngDop : "";
+                    TitleEng = (!string.IsNullOrEmpty(TitleEng)) ? ((!String.IsNullOrEmpty(TitleEngNext)) ? (TitleEng + ", " + TitleEngNext) : TitleEng) : TitleEngNext;
+
+                    FIO = item.FIO;
+                    PersonData = item.FIO + ", " + Title;
+                    if (item.FIOEng == "")
+                    {
+                        PersonDataEng = TitleEng;
+                    }
+                    else
+                    {
+                        PersonDataEng = item.FIOEng + ", " + TitleEng;
+                    }
+
+                    Email = (!String.IsNullOrEmpty(item.Email)) ? item.Email : "_________________";
+                    Phone = (!String.IsNullOrEmpty(item.Phone)) ? item.Phone : "_________________";
+
+                    wd.SetFields("FIO", item.FIO);
+                    wd.SetFields("PersonData", PersonData);
+                    wd.SetFields("PersonDataEng", PersonDataEng);
+                    wd.SetFields("Email", Email);
+                    wd.SetFields("Phone", Phone);
+
+                }
+                if (File.Exists(filePath))
+                {
+                    try
+                    {
+                        File.Delete(filePath);
+                    }
+                    catch
+                    { }
+                }
+                string fpath = filePath;
+                try
+                {
+                    filePath = TempFilesFolder + nameshort + " " + FIO + type;
+                }
+                catch (Exception)
+                {
+                    filePath = fpath;
+                }
+
+                wd.Save(filePath);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Не удалось сформировать документ\r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
     }
 }

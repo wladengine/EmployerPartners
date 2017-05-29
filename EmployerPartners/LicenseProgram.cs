@@ -25,6 +25,9 @@ namespace EmployerPartners
             this.ObrazProgramInYear = new HashSet<ObrazProgramInYear>();
             this.VKRThemes = new HashSet<VKRThemes>();
             this.VKROPStudent = new HashSet<VKROPStudent>();
+            this.LicenseInLicenseProgram = new HashSet<LicenseInLicenseProgram>();
+            this.GAK_LP_Person = new HashSet<GAK_LP_Person>();
+            this.VKR_ThemesStudentOrder = new HashSet<VKR_ThemesStudentOrder>();
         }
     
         public int Id { get; set; }
@@ -32,7 +35,7 @@ namespace EmployerPartners
         public string NameEng { get; set; }
         public string Acronym { get; set; }
         public string Code { get; set; }
-        public int LicenseId { get; set; }
+        public Nullable<int> LicenseId { get; set; }
         public int StudyLevelId { get; set; }
         public int ProgramTypeId { get; set; }
         public string ApplicationNum { get; set; }
@@ -67,5 +70,11 @@ namespace EmployerPartners
         public virtual ICollection<VKRThemes> VKRThemes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VKROPStudent> VKROPStudent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LicenseInLicenseProgram> LicenseInLicenseProgram { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_LP_Person> GAK_LP_Person { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKR_ThemesStudentOrder> VKR_ThemesStudentOrder { get; set; }
     }
 }

@@ -87,6 +87,18 @@ namespace EmployerPartners
                     AddString.Add(" where QualificationId = " + QualificationId.Value.ToString());
                 }
             }
+            if (LPLicenseId.HasValue)
+            {
+                if (sqlWhere)
+                {
+                    AddString.Add(" and LicenseId = " + LPLicenseId.Value.ToString());
+                }
+                else
+                {
+                    sqlWhere = true;
+                    AddString.Add(" where LicenseId = " + LPLicenseId.Value.ToString());
+                }
+            }
 
             string query = @"
 select distinct  CONVERT(varchar(100), LicenseProgram.Id) AS Id, LicenseProgram.Code + ' ('+LicenseProgram.Name +')' as Name
