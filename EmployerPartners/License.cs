@@ -18,6 +18,7 @@ namespace EmployerPartners
         public License()
         {
             this.LicenseProgram = new HashSet<LicenseProgram>();
+            this.LicenseInLicenseProgram = new HashSet<LicenseInLicenseProgram>();
         }
     
         public int Id { get; set; }
@@ -41,5 +42,7 @@ namespace EmployerPartners
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LicenseProgram> LicenseProgram { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LicenseInLicenseProgram> LicenseInLicenseProgram { get; set; }
     }
 }

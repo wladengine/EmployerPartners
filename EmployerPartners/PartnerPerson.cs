@@ -22,6 +22,16 @@ namespace EmployerPartners
             this.PartnerPersonFaculty = new HashSet<PartnerPersonFaculty>();
             this.PartnerPersonLP = new HashSet<PartnerPersonLP>();
             this.PartnerPersonRubric = new HashSet<PartnerPersonRubric>();
+            this.GAK_Member = new HashSet<GAK_Member>();
+            this.GAK_MemberPP = new HashSet<GAK_MemberPP>();
+            this.GAK_Number = new HashSet<GAK_Number>();
+            this.GAK_LP_Person = new HashSet<GAK_LP_Person>();
+            this.GAK_MemberPP_log = new HashSet<GAK_MemberPP_log>();
+            this.GAK_Number_log = new HashSet<GAK_Number_log>();
+            this.VKR_ThemesStudentOrder = new HashSet<VKR_ThemesStudentOrder>();
+            this.VKR_ThemesStudentOrder1 = new HashSet<VKR_ThemesStudentOrder>();
+            this.GAK_MemberPP_archive = new HashSet<GAK_MemberPP_archive>();
+            this.GAK_Number_archive = new HashSet<GAK_Number_archive>();
         }
     
         public int Id { get; set; }
@@ -49,6 +59,31 @@ namespace EmployerPartners
         public string Author { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.Guid rowguid { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
+        public string NameInitials { get; set; }
+        public Nullable<bool> IsGAK { get; set; }
+        public Nullable<bool> IsGAKChairman { get; set; }
+        public Nullable<int> RankHonoraryId { get; set; }
+        public Nullable<int> RankStateId { get; set; }
+        public string Account { get; set; }
+        public string LastNameEng { get; set; }
+        public string FirstNameEng { get; set; }
+        public string SecondNameEng { get; set; }
+        public string NameInitialsEng { get; set; }
+        public string TitleEng { get; set; }
+        public Nullable<int> Degree2Id { get; set; }
+        public Nullable<int> Rank2Id { get; set; }
+        public Nullable<int> RankHonorary2Id { get; set; }
+        public Nullable<int> RankState2Id { get; set; }
+        public Nullable<bool> IsGAK2016 { get; set; }
+        public Nullable<bool> IsGAKChairman2016 { get; set; }
+        public Nullable<int> PartnerPersonPrefixId { get; set; }
+        public string SttAccount { get; set; }
+        public string SttPwd { get; set; }
+        public Nullable<bool> IsPersonDataAgreed { get; set; }
+        public Nullable<bool> IsPersonDataChecked { get; set; }
     
         public virtual ActivityArea ActivityArea { get; set; }
         public virtual Country Country { get; set; }
@@ -65,5 +100,28 @@ namespace EmployerPartners
         public virtual ICollection<PartnerPersonLP> PartnerPersonLP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PartnerPersonRubric> PartnerPersonRubric { get; set; }
+        public virtual RankState RankState { get; set; }
+        public virtual RankHonorary RankHonorary { get; set; }
+        public virtual PartnerPersonPrefix PartnerPersonPrefix { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_Member> GAK_Member { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_MemberPP> GAK_MemberPP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_Number> GAK_Number { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_LP_Person> GAK_LP_Person { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_MemberPP_log> GAK_MemberPP_log { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_Number_log> GAK_Number_log { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKR_ThemesStudentOrder> VKR_ThemesStudentOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKR_ThemesStudentOrder> VKR_ThemesStudentOrder1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_MemberPP_archive> GAK_MemberPP_archive { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GAK_Number_archive> GAK_Number_archive { get; set; }
     }
 }

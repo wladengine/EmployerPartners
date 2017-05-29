@@ -27,6 +27,7 @@ namespace EmployerPartners
             this.VKRSectionFaculty = new HashSet<VKRSectionFaculty>();
             this.VKRThemes = new HashSet<VKRThemes>();
             this.VKROPStudent = new HashSet<VKROPStudent>();
+            this.VKR_ThemesStudentOrder = new HashSet<VKR_ThemesStudentOrder>();
         }
     
         public int Id { get; set; }
@@ -67,5 +68,7 @@ namespace EmployerPartners
         public virtual ICollection<VKRThemes> VKRThemes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VKROPStudent> VKROPStudent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKR_ThemesStudentOrder> VKR_ThemesStudentOrder { get; set; }
     }
 }

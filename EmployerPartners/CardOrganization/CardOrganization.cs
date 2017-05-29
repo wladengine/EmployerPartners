@@ -57,6 +57,9 @@ namespace EmployerPartners
                 btnSave.Enabled = true;
                 btnDelete.Enabled = true;
                 btnChangeName.Enabled = true;
+                btnSubdivisionAdd.Enabled = true;
+                btnSubdivisionDelete.Enabled = true;
+                btnSubdivisionEdit.Enabled = true;
                 BtnContactEdit.Enabled = true;
                 btnDeleteContact.Enabled = true;
                 btnContactAdd.Enabled = true;
@@ -68,12 +71,23 @@ namespace EmployerPartners
                 btnActivityAreaDelete.Enabled = true;
                 btnLPAdd.Enabled = true;
                 btnLPDelete.Enabled = true;
+                btnChangeName.Enabled = true;
+                btnActivityAreaProfessionalAdd.Enabled = true;
+                btnActivityAreaProfessionalDelete.Enabled = true;
+                btnOECDAdd.Enabled = true;
+                btnOECDDelete.Enabled = true;
                 //btnAddOkved.Enabled = true;
                 //btnDelOkved.Enabled = true;
                 btnAddDogovor.Enabled = true;
                 dgvDogovor.Columns[1].Visible = true;
             }
+            if (Util.IsDBOwner() || Util.IsAdministrator())
+            {
+                btnAddOkved.Enabled = true;
+                btnDelOkved.Enabled = true;
+            }
         }
+       
         private void SetReadMode()
         {
             foreach (Control control in this.Controls)
@@ -159,16 +173,25 @@ namespace EmployerPartners
             ComboServ.FillCombo(cbOwnershipType, HelpClass.GetComboListByTable("dbo.OwnershipType"), true, false);
             ComboServ.FillCombo(cbArea, HelpClass.GetComboListByTable("dbo.ActivityArea"), true, false);
             ComboServ.FillCombo(cbAreaProfessional, HelpClass.GetComboListByTable("dbo.ActivityAreaProfessional"), true, false);
+            //ComboServ.FillCombo(cbOrganizationEnglishSource, HelpClass.GetComboListByTable("dbo.OrganizationEnglishSource"), true, false);
 
+            FillOrgEnglisSource();
             FillPartnerInfo();
             FillOrganizationArea();
+            FillOrgAreaProfessional();
             FillOkvedCode();
             FillOrganizationPerson();
             FillRubrics();
             FillFaculty();
             FillLP();
             FillDogovor();
+            FillOrganizationSubdivision();
             ExtraInit(true);
+        }
+        private void FillOrgEnglisSource()
+        {
+            ComboServ.FillCombo(cbOrganizationEnglishSource, HelpClass.GetComboListByQuery(@" SELECT DISTINCT CONVERT(varchar(100), Id) AS Id, Name 
+                FROM dbo.OrganizationEnglishSource ORDER BY Id"), true, false);
         }
         private void FillPartnerInfo()
         {
@@ -195,7 +218,9 @@ namespace EmployerPartners
                     AreaId = Partner.ActivityAreaId;
                     AreaProfessionalId = Partner.ActivityAreaProfessionalId;
 
+                    OrganizationEnglishSourceId = Partner.OrganizationEnglishSourceId;
                     Source = Partner.Source;
+                    EngSourceOfficial = (Partner.EngSourceOfficial.HasValue) ? (bool)Partner.EngSourceOfficial : false;
                     SourceCharter = (Partner.SourceCharter.HasValue) ? (bool)Partner.SourceCharter : false;
                     SourceEGRUL = (Partner.SourceEGRUL.HasValue) ? (bool)Partner.SourceEGRUL : false;
                     SourceSite = (Partner.SourceSite.HasValue) ? (bool)Partner.SourceSite : false;
@@ -228,7 +253,15 @@ namespace EmployerPartners
                     lbHouse.Visible = false;
                     Code = Partner.Code;
                     Comment = Partner.Comment;
-
+                    try
+                    {
+                        tbAuthor.Text = "Карточка заведена пользователем: " + Util.GetADUserName(Partner.Author) +  "  " +  Partner.DateCreated.Date.ToString("dd.MM.yyyy");
+                    }
+                    catch (Exception)
+                    {
+                        //MessageBox.Show(ex.Message, "Инфо");  
+                    }
+                    
                     this.Text = "Карточка: " + ((String.IsNullOrEmpty(ShortName)) ? ((String.IsNullOrEmpty(MiddleName)) ? OrgName : MiddleName) : ShortName);
                 }
         }
@@ -260,6 +293,7 @@ namespace EmployerPartners
                                    Дата_начала = x.DocumentStart,
                                    Дата_окончания = x.DocumentFinish,
                                    Бессрочный = x.Permanent,
+                                   Адрес_проведения_практики = x.Address,
                                    Примечание = x.Comment,
                                    Действующий = x.IsActual
                                }).ToList();
@@ -297,6 +331,7 @@ namespace EmployerPartners
                         dgvDogovor.Columns["Рубрика"].Width = 150;
                         dgvDogovor.Columns["Договор"].Width = 300;
                         dgvDogovor.Columns["Бессрочный"].Width = 80;
+                        dgvDogovor.Columns["Адрес_проведения_практики"].Width = 200;
                         dgvDogovor.Columns["Примечание"].Width = 200;
                     }
                     catch (Exception)
@@ -356,6 +391,54 @@ namespace EmployerPartners
                         }
             }
         }
+        private void FillOrgAreaProfessional()
+        {
+            FillOrgAreaProfessional(null);
+        }
+        private void FillOrgAreaProfessional(int? id)
+        {
+            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            {
+                var lst = (from x in context.OrganizationActivityAreaProfessional
+                           join a in context.ActivityAreaProfessional on x.ActivityAreaProfessionalId equals a.Id
+                           where x.OrganizationId == _Id.Value
+                           orderby a.Id
+                           select new
+                           {
+                               Код = a.Code,
+                               Область_деятельности = a.Name,
+                               x.Id,
+                           }).ToList();
+
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                dgvActivityAreaProfessional.DataSource = dt;
+
+                foreach (string s in new List<string>() { "Id" })
+                {
+                    if (dgvActivityAreaProfessional.Columns.Contains(s))
+                        dgvActivityAreaProfessional.Columns[s].Visible = false;
+                }
+                foreach (DataGridViewColumn col in dgvActivityAreaProfessional.Columns)
+                    col.HeaderText = col.Name.Replace("_", " ");
+                try
+                {
+                    //dgv.Columns["Область_деятельности"].Frozen = true;
+                    dgvActivityAreaProfessional.Columns["Область_деятельности"].Width = 450;
+                }
+                catch (Exception)
+                {
+                }
+                //if (id.HasValue)
+                //    foreach (DataGridViewRow rw in dgvArea.Rows)
+                //        if (rw.Cells[0].Value.ToString() == id.Value.ToString())
+                //        {
+                //            dgvArea.CurrentCell = rw.Cells["Название"];
+                //            dgvActivityArea.CurrentCell = rw.Cells["Название"];
+                //            break;
+                //        }
+            }
+        }
         private void FillOkvedCode()
         {
             FillOkvedCode(null);
@@ -397,44 +480,93 @@ namespace EmployerPartners
         }
         private void FillOrganizationPerson(int? id)
         {
-            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            try
             {
-                var lst = (from x in context.OrganizationPerson
-                           join p in context.PartnerPerson on x.PartnerPersonId equals p.Id
-                           where x.OrganizationId == _Id.Value
-                           select new
-                           {
-                               x.Id,
-                               PersonId = p.Id,
-                               ФИО = p.Name,
-                               //Должность = x.Position + " (" + p.Title + ")",
-                               Должность = x.Position,
-                               Должность_англ = x.PositionEng,
-                               Комментарий = x.Comment,
-                               p.Email,
-                               Телефон = p.Phone,
-                               Мобильный = p.Mobiles,
-                           }).ToList();
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = (from x in context.OrganizationPerson
+                               join p in context.PartnerPerson on x.PartnerPersonId equals p.Id
+                               where x.OrganizationId == _Id.Value
+                               select new
+                               {
+                                   x.Id,
+                                   PersonId = p.Id,
+                                   ФИО = p.Name,
+                                   //Должность = x.Position + " (" + p.Title + ")",
+                                   Должность = x.Position,
+                                   Должность_англ = x.PositionEng,
+                                   Комментарий = x.Comment,
+                                   p.Email,
+                                   Телефон = p.Phone,
+                                   Мобильный = p.Mobiles,
+                               }).ToList();
 
-                DataTable dt = new DataTable();
-                dt = Utilities.ConvertToDataTable(lst);
-                dgvContacts.DataSource = dt;
+                    DataTable dt = new DataTable();
+                    dt = Utilities.ConvertToDataTable(lst);
+                    dgvContacts.DataSource = dt;
 
-                foreach (string s in new List<string>() { "Id", "PersonId" })
-                    if (dgvContacts.Columns.Contains(s))
-                        dgvContacts.Columns[s].Visible = false;
-                foreach (DataGridViewColumn col in dgvContacts.Columns)
-                    col.HeaderText = col.Name.Replace("_", " ");
-                if (id.HasValue)
-                    foreach (DataGridViewRow rw in dgvContacts.Rows)
-                        if (rw.Cells[0].Value.ToString() == id.Value.ToString())
-                        {
-                            dgvContacts.CurrentCell = rw.Cells["ФИО"];
-                            break;
-                        }
+                    foreach (string s in new List<string>() { "Id", "PersonId" })
+                        if (dgvContacts.Columns.Contains(s))
+                            dgvContacts.Columns[s].Visible = false;
+                    foreach (DataGridViewColumn col in dgvContacts.Columns)
+                        col.HeaderText = col.Name.Replace("_", " ");
+                    if (id.HasValue)
+                        foreach (DataGridViewRow rw in dgvContacts.Rows)
+                            if (rw.Cells[0].Value.ToString() == id.Value.ToString())
+                            {
+                                dgvContacts.CurrentCell = rw.Cells["ФИО"];
+                                break;
+                            }
+                }
+            }
+            catch (Exception)
+            {
             }
         }
 
+        private void FillOrganizationSubdivision()
+        {
+            FillOrganizationSubdivision(null);
+        }
+        private void FillOrganizationSubdivision(int? id)
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    var lst = (from x in context.OrganizationSubdivision
+                               //join org in context.Organization on x.OrganizationId equals org.Id
+                               where x.OrganizationId == _Id.Value
+                               select new
+                               {
+                                   x.Id,
+                                   Подразделение = x.Name,
+                                   Подразделение_англ = x.NameEng,
+                                   Комментарий = x.Comment,
+                               }).ToList();
+
+                    DataTable dt = new DataTable();
+                    dt = Utilities.ConvertToDataTable(lst);
+                    dgvSubdivisions.DataSource = dt;
+
+                    foreach (string s in new List<string>() { "Id" })
+                        if (dgvSubdivisions.Columns.Contains(s))
+                            dgvSubdivisions.Columns[s].Visible = false;
+                    foreach (DataGridViewColumn col in dgvSubdivisions.Columns)
+                        col.HeaderText = col.Name.Replace("_", " ");
+                    if (id.HasValue)
+                        foreach (DataGridViewRow rw in dgvSubdivisions.Rows)
+                            if (rw.Cells[0].Value.ToString() == id.Value.ToString())
+                            {
+                                dgvContacts.CurrentCell = rw.Cells["Подразделение"];
+                                break;
+                            }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
         #endregion
 
         #region CheckSaveUpdate_CommonInformation
@@ -599,6 +731,7 @@ namespace EmployerPartners
                         OwnershipTypeId = OwnershipTypeId,
                         ActivityGoalId = ActivityGoalId,
                         ActivityAreaId = AreaId,
+                        OrganizationEnglishSourceId = OrganizationEnglishSourceId,
 
                         INN = INN,
                         OGRN = OGRN,
@@ -655,6 +788,7 @@ namespace EmployerPartners
                     Org.NationalAffiliationId = NationalAffiliationId;
                     Org.ActivityAreaId = AreaId;
                     Org.ActivityAreaProfessionalId = AreaProfessionalId;
+                    Org.OrganizationEnglishSourceId = OrganizationEnglishSourceId;
 
                     Org.INN = INN;
                     if (!String.IsNullOrEmpty(NameDate))
@@ -700,6 +834,7 @@ namespace EmployerPartners
 
                     Org.Comment = Comment;
                     Org.Source = Source;
+                    Org.EngSourceOfficial = chkbEngSourceOfficial.Checked ? true : false;
                     Org.SourceCharter = chkbSourceCharter.Checked ? true : false;
                     Org.SourceEGRUL = chkbSourceEGRUL.Checked ? true : false;
                     Org.SourceSite = chkbSourceSite.Checked ? true : false;
@@ -1679,7 +1814,7 @@ namespace EmployerPartners
                         catch (Exception)
                         {
                         }
-                        ///
+                        
                         try
                         {
                             int id = int.Parse(dgvDogovor.CurrentRow.Cells["Id"].Value.ToString());
@@ -1947,6 +2082,111 @@ namespace EmployerPartners
             //if (Utilities.PracticeOrgCardIsOpened(id))
             //    return;
             new CardOrgPreviousName(OrgId).Show();
+        }
+
+        private void btnActivityAreaProfessionalAdd_Click(object sender, EventArgs e)
+        {
+            if (Utilities.CardOrgAAPIsOpened(OrgId))
+                return;
+            new CardOrgAAreaProfessional(OrgId, new UpdateVoidHandler(FillOrgAreaProfessional)).Show();
+        }
+
+        private void btnActivityAreaProfessionalDelete_Click(object sender, EventArgs e)
+        {
+            if (_Id.HasValue)
+                if (dgvActivityAreaProfessional.CurrentCell != null)
+                    if (dgvActivityAreaProfessional.CurrentRow.Index >= 0)
+                    {
+                        int id = int.Parse(dgvActivityAreaProfessional.CurrentRow.Cells["Id"].Value.ToString());
+                        string sAAreaP = "";
+                        try
+                        {
+                            sAAreaP = dgvActivityAreaProfessional.CurrentRow.Cells["Область_деятельности"].Value.ToString();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        if (MessageBox.Show("Удалить выбранную область деятельности? \r\n" + sAAreaP, "Запрос на подтверждение",
+                                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                        {
+                            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                            {
+                                context.OrganizationActivityAreaProfessional.RemoveRange(context.OrganizationActivityAreaProfessional.Where(x => x.Id == id));
+                                context.SaveChanges();
+                            }
+                            FillOrgAreaProfessional();
+                        }
+                        else
+                            return;
+                    }
+        }
+
+        private void CardOrganization_Load(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    if (this.Parent.Width > this.Width + 150 + this.Left)
+            //    {
+            //        this.Width = this.Parent.Width - 150 - this.Left;
+            //    }
+            //    if (this.Parent.Height > this.Height + 150 + this.Top)
+            //    {
+            //        this.Height = this.Parent.Height - 150 - this.Top;
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //}
+        }
+
+        private void btnSubdivisionDelete_Click(object sender, EventArgs e)
+        {
+            if (_Id.HasValue)
+                if (dgvSubdivisions.CurrentCell != null)
+                    if (dgvSubdivisions.CurrentRow.Index >= 0)
+                    {
+                        if (MessageBox.Show("Удалить выбранное подразделение? \r\n" + dgvSubdivisions.CurrentRow.Cells["Подразделение"].Value.ToString(), "Запрос на подтверждение",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != System.Windows.Forms.DialogResult.Yes)
+                            return;
+
+                        int id = int.Parse(dgvSubdivisions.CurrentRow.Cells["Id"].Value.ToString());
+                        using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                        {
+                            context.OrganizationSubdivision.RemoveRange(context.OrganizationSubdivision.Where(x => x.Id == id));
+                            context.SaveChanges();
+                        }
+                        FillOrganizationSubdivision();
+                    }
+        }
+
+        private void btnSubdivisionAdd_Click(object sender, EventArgs e)
+        {
+            new CardOrganizationSubdivision(null, OrgId, new UpdateVoidHandler(FillOrganizationSubdivision)).Show();
+        }
+
+        private void btnSubdivisionEdit_Click(object sender, EventArgs e)
+        {
+            if (dgvSubdivisions.CurrentCell != null)
+                if (dgvSubdivisions.CurrentRow.Index >= 0)
+                {
+                    int id = int.Parse(dgvSubdivisions.CurrentRow.Cells["Id"].Value.ToString());
+                    string name = "";
+                    string nameEng = "";
+                    try
+                    {
+                        name = dgvSubdivisions.CurrentRow.Cells["Подразделение"].Value.ToString();
+                    }
+                    catch (Exception)
+                    { }
+                    try
+                    {
+                        nameEng = dgvSubdivisions.CurrentRow.Cells["Подразделение_англ"].Value.ToString();
+                    }
+                    catch (Exception)
+                    { }
+
+                    new CardOrganizationSubdivision(id, OrgId, new UpdateVoidHandler(FillOrganizationSubdivision), name, nameEng).Show();
+                }
         }
 
     }

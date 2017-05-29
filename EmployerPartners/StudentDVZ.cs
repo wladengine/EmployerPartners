@@ -35,5 +35,7 @@ namespace EmployerPartners
         public string SpecName { get; set; }
         public string StatusName { get; set; }
         public string StudyingName { get; set; }
+        public Nullable<System.DateTime> TIMESTAMP { get; set; }
+        public Nullable<int> Sex { get; set; }
     }
 }

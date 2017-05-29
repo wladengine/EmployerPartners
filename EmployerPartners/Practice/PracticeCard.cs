@@ -153,6 +153,8 @@ namespace EmployerPartners
         bool StudentDelConfirm = true;
         bool StudentShowDelConfirmSettings = true;
 
+        private int? RowNumStartSearch;
+
         UpdateVoidHandler _hndl;
 
         public PracticeCard(int id, int pid, int lpid, string lp, UpdateVoidHandler _hdl)
@@ -704,7 +706,7 @@ namespace EmployerPartners
                     bindingSource3.DataSource = dt;
                     dgvStudent.DataSource = bindingSource3;
 
-                    List<string> Cols = new List<string>() { "Id", "StudDataId", "OrganizationId" }; 
+                    List<string> Cols = new List<string>() { "Id", "StudDataId", "OrganizationId", "Дата_рожд" }; 
 
                     foreach (string s in Cols)
                         if (dgvStudent.Columns.Contains(s))
@@ -797,7 +799,7 @@ namespace EmployerPartners
                     bindingSource3.DataSource = dt;
                     dgvStudent.DataSource = bindingSource3;
 
-                    List<string> Cols = new List<string>() { "Id", "OrganizationId" }; //{ "Id", "StudentId", "OrganizationId" };
+                    List<string> Cols = new List<string>() { "Id", "OrganizationId", "Дата_рожд" }; //{ "Id", "StudentId", "OrganizationId" };
 
                     foreach (string s in Cols)
                         if (dgvStudent.Columns.Contains(s))
@@ -913,7 +915,7 @@ namespace EmployerPartners
                     bindingSource4.DataSource = dt;
                     dgvStudentNew.DataSource = bindingSource4;
 
-                    List<string> Cols = new List<string>() { "Id", "StudDataId", "LicenseProgramId", "FacultyId" };
+                    List<string> Cols = new List<string>() { "Id", "StudDataId", "LicenseProgramId", "FacultyId", "Дата_рожд" };
 
                     foreach (string s in Cols)
                         if (dgvStudentNew.Columns.Contains(s))
@@ -1607,6 +1609,12 @@ namespace EmployerPartners
         {
             try
             {
+                bindingSource2.RemoveFilter();
+            }
+            catch (Exception)
+            { }
+            try
+            {
                 FillCombo();
                 FillOrgNewList(null, null);
                 dgv.Visible = !dgv.Visible;
@@ -1617,6 +1625,12 @@ namespace EmployerPartners
                 lbl_cbFaculty.Visible = !lbl_cbFaculty.Visible;
                 tbSearch.Visible = !tbSearch.Visible;
                 lbl_tbSearch.Visible = !lbl_tbSearch.Visible;
+
+                btnSearchNext.Visible = !btnSearchNext.Visible;
+                btnSearchPrevious.Visible = !btnSearchPrevious.Visible;
+                btnShowSearchResult.Visible = !btnShowSearchResult.Visible;
+                btnRemoveFilter.Visible = !btnRemoveFilter.Visible;
+
                 bindingNavigator2.Visible = !bindingNavigator2.Visible;
                 btnAddOrg.Text = (dgv.Visible) ? "Убрать добавление" : "Добавить организации";
                 //new PracticeOrg().Show();
@@ -1631,6 +1645,12 @@ namespace EmployerPartners
                 lbl_cbFaculty.Visible = false;
                 tbSearch.Visible = false;
                 lbl_tbSearch.Visible = false;
+
+                btnSearchNext.Visible = false;
+                btnSearchPrevious.Visible = false;
+                btnShowSearchResult.Visible = false;
+                btnRemoveFilter.Visible = false;
+
                 bindingNavigator2.Visible = false;
                 btnAddOrg.Text = "Добавить организации";
             }
@@ -2205,7 +2225,7 @@ namespace EmployerPartners
                                            }).ToList().Count();
                                 if (lst > 0)
                                 {
-                                    MessageBox.Show("Студент " + FIO + " (дата рожд. " + DR + ")" + "\r\n" + "уже находится в списке на практику ", "Инфо",
+                                    MessageBox.Show("Студент " + FIO + /*" (дата рожд. " + DR + ")" +*/ "\r\n" + "уже находится в списке на практику ", "Инфо",
                                         MessageBoxButtons.OK,MessageBoxIcon.Information);
                                     return;
                                 }
@@ -3067,6 +3087,7 @@ namespace EmployerPartners
                             //dgv[j, i].Style.BackColor = Color.White;
                             dgv.CurrentCell = dgv[j, i];
                             exit = true;
+                            RowNumStartSearch = i + 1;
                             break;
                         }
                     }
@@ -3147,6 +3168,103 @@ namespace EmployerPartners
             catch (Exception)
             {
             } 
+        }
+
+        private void btnSearchNext_Click(object sender, EventArgs e)
+        {
+            if (!RowNumStartSearch.HasValue)
+                return;
+            try
+            {
+                string search = tbSearch.Text.Trim().ToUpper();
+                bool exit = false;
+                int k = (int)RowNumStartSearch;
+                for (int i = k; i < dgv.RowCount; i++)
+                {
+                    if (exit)
+                    //{ break; }
+                    { return; }
+                    for (int j = 0; j < 8 /*dgv.Columns.Count*/; j++)
+                    {
+                        if (j == 0 || j == 1 || j == 2 || j == 4)
+                            continue;
+                        if (dgv[j, i].Value.ToString().ToUpper().Contains(search))
+                        {
+                            //dgv[j, i].Style.BackColor = Color.White;
+                            dgv.CurrentCell = dgv[j, i];
+                            exit = true;
+                            RowNumStartSearch = i + 1;
+                            break;
+                        }
+                    }
+                }
+                MessageBox.Show("Поиск завершен. Образец не найден.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void btnSearchPrevious_Click(object sender, EventArgs e)
+        {
+            if (!RowNumStartSearch.HasValue)
+                return;
+            try
+            {
+                string search = tbSearch.Text.Trim().ToUpper();
+                bool exit = false;
+                int k = (int)RowNumStartSearch - 2;
+                for (int i = k; i >= 0 /*dgv.RowCount*/; i--)
+                {
+                    if (exit)
+                    //{ break; }
+                    { return; }
+                    for (int j = 0; j < 8 /*dgv.Columns.Count*/; j++)
+                    {
+                        if (j == 0 || j == 1 || j == 2 || j == 4)
+                            continue;
+                        if (dgv[j, i].Value.ToString().ToUpper().Contains(search))
+                        {
+                            //dgv[j, i].Style.BackColor = Color.White;
+                            dgv.CurrentCell = dgv[j, i];
+                            exit = true;
+                            RowNumStartSearch = i - 1;
+                            break;
+                        }
+                    }
+                }
+                MessageBox.Show("Поиск завершен. Образец не найден.", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void btnShowSearchResult_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //dataView.RowFilter = "Name LIKE '%jo%'"     // values that contain 'jo'
+                string search = tbSearch.Text.Trim();   //.ToUpper();
+                bindingSource2.Filter = "Полное_наименование LIKE '%" + search + "%'" + " OR " +
+                                        "Среднее_наименование LIKE '%" + search + "%'" + " OR " +
+                                        "Краткое_наименование LIKE '%" + search + "%'" + " OR " +
+                                        "Наименование_англ LIKE '%" + search + "%'" + " OR " +
+                                        "Краткое_наименование_англ LIKE '%" + search + "%'";
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void btnRemoveFilter_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bindingSource2.RemoveFilter();
+            }
+            catch (Exception)
+            { }
         }
     }
 }

@@ -47,15 +47,15 @@
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv.Location = new System.Drawing.Point(23, 106);
             this.dgv.Name = "dgv";
-            this.dgv.Size = new System.Drawing.Size(901, 420);
+            this.dgv.Size = new System.Drawing.Size(1056, 476);
             this.dgv.TabIndex = 0;
             // 
             // btnAdd
             // 
             this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdd.Location = new System.Drawing.Point(465, 62);
+            this.btnAdd.Location = new System.Drawing.Point(530, 63);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(117, 24);
+            this.btnAdd.Size = new System.Drawing.Size(124, 24);
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "Добавить новый";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -64,7 +64,7 @@
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.Location = new System.Drawing.Point(807, 33);
+            this.btnRefresh.Location = new System.Drawing.Point(962, 33);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(117, 24);
             this.btnRefresh.TabIndex = 3;
@@ -74,9 +74,10 @@
             // 
             // tbNameToAdd
             // 
-            this.tbNameToAdd.Location = new System.Drawing.Point(696, 66);
+            this.tbNameToAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbNameToAdd.Location = new System.Drawing.Point(766, 66);
             this.tbNameToAdd.Name = "tbNameToAdd";
-            this.tbNameToAdd.Size = new System.Drawing.Size(228, 20);
+            this.tbNameToAdd.Size = new System.Drawing.Size(313, 20);
             this.tbNameToAdd.TabIndex = 4;
             // 
             // label1
@@ -89,8 +90,9 @@
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(611, 69);
+            this.label2.Location = new System.Drawing.Point(671, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 13);
             this.label2.TabIndex = 6;
@@ -98,7 +100,6 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEdit.Location = new System.Drawing.Point(23, 63);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(189, 24);
@@ -109,7 +110,6 @@
             // 
             // btnShow
             // 
-            this.btnShow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnShow.Location = new System.Drawing.Point(23, 33);
             this.btnShow.Name = "btnShow";
             this.btnShow.Size = new System.Drawing.Size(117, 24);
@@ -122,7 +122,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(949, 546);
+            this.ClientSize = new System.Drawing.Size(1104, 602);
             this.Controls.Add(this.btnShow);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.label2);

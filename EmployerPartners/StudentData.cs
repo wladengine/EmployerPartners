@@ -42,5 +42,6 @@ namespace EmployerPartners
         public Nullable<int> FacultyId { get; set; }
         public string ObrazProgramCrypt { get; set; }
         public Nullable<System.Guid> ObrazProgramInYearId { get; set; }
+        public Nullable<int> Sex { get; set; }
     }
 }

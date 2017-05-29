@@ -59,6 +59,11 @@ namespace EmployerPartners
             get { return tbDocumentDate.Text.Trim(); }
             set { tbDocumentDate.Text = value; }
         }
+        public string Address
+        {
+            get { return tbAddress.Text.Trim(); }
+            set { tbAddress.Text = value; }
+        }
         public string Comment
         {
             get { return tbComment.Text.Trim(); }
@@ -127,10 +132,12 @@ namespace EmployerPartners
                     Document = dogovor.Document;
                     DocumentStart = (dogovor.DocumentStart.HasValue) ? dogovor.DocumentStart.Value.Date.ToString("dd.MM.yyyy") : "";
                     DocumentFinish = (dogovor.DocumentFinish.HasValue) ? dogovor.DocumentFinish.Value.Date.ToString("dd.MM.yyyy") : "";
-                    Permanent = (bool)dogovor.Permanent;    //checkBoxPermanent.Checked = dogovor.Permanent.HasValue ? (bool)dogovor.Permanent : false;
-                    FromDocumentDate = (bool)dogovor.FromDocumentDate;
+                    //Permanent = (bool)dogovor.Permanent;    //checkBoxPermanent.Checked = dogovor.Permanent.HasValue ? (bool)dogovor.Permanent : false;
+                    Permanent = dogovor.Permanent.HasValue ? (bool)dogovor.Permanent : false;
+                    FromDocumentDate = dogovor.FromDocumentDate.HasValue ? (bool)dogovor.FromDocumentDate : false;
                     DocumentNumber = dogovor.DocumentNumber;
                     DocumentDate = (dogovor.DocumentDate.HasValue) ? dogovor.DocumentDate.Value.Date.ToString("dd.MM.yyyy") : "";
+                    Address = dogovor.Address;
                     Comment = dogovor.Comment;
                     IsActual = (bool)dogovor.IsActual;
 
@@ -326,6 +333,7 @@ namespace EmployerPartners
                     dogovor.Permanent = Permanent;      //checkBoxPermanent.Checked ? true : false;
                     dogovor.FromDocumentDate = FromDocumentDate;    //checkBoxFromDocumentDate.Checked ? true : false;
                     dogovor.DocumentNumber = DocumentNumber;
+                    dogovor.Address = Address;
                     dogovor.Comment = Comment;
                     dogovor.IsActual = IsActual;        //checkBoxIsActual.Checked ? true : false;
 

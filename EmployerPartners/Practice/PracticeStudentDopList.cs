@@ -146,7 +146,7 @@ namespace EmployerPartners
                     bindingSource1.DataSource = dt;
                     dgv.DataSource = bindingSource1;
 
-                    List<string> Cols = new List<string>() { "Id", "StudDataId" };
+                    List<string> Cols = new List<string>() { "Id", "StudDataId", "Дата_рожд" };
 
                     foreach (string s in Cols)
                         if (dgv.Columns.Contains(s))
@@ -223,7 +223,7 @@ namespace EmployerPartners
                                            }).ToList().Count();
                                 if (lst > 0)
                                 {
-                                    MessageBox.Show("Студент " + FIO + " (дата рожд. " + DR + ")" + "\r\n" + "уже находится в списке на практику ", "Инфо",
+                                    MessageBox.Show("Студент " + FIO + /*" (дата рожд. " + DR + ")" +*/ "\r\n" + "уже находится в списке на практику ", "Инфо",
                                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     return;
                                 }

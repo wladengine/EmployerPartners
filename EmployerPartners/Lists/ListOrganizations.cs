@@ -164,21 +164,22 @@ namespace EmployerPartners
                            select new
                            {
                                
-                               Полное_наименование = org.Name,
+                               Полное_наименование_официальное = org.Name,
+                               Среднее_наименование_удобное = org.MiddleName,
                                org.Id,
-                               Среднее_наименование = org.MiddleName,
-                               Краткое_наименование = org.ShortName,
+                               Краткое_наименование_официальное = org.ShortName,
                                Наименование_англ = org.NameEng,
                                Краткое_наименование_англ = org.ShortNameEng,
+                               Англ_наименование_проверено = org.EngSourceOfficial,
                                Дата_с_которой_актуально_наименование = org.NameDate,
                                Источник_Устав = org.SourceCharter,
                                Источник_ЕГРЮЛ = org.SourceEGRUL,
                                Источник_Сайт = org.SourceSite,
-                               Дополнит_источник = org.Source,
+                               //Дополнит_источник = org.Source,
                                Карточка_проверена = org.CardChecked,
                                Используется = org.IsActual,
                                OECD = org.OECD,
-                               ОКВЭД = org.Okved,
+                               ОКВЭД_основной = org.Okved,
                                Форма_собственности = org.OwnershipType.Name, 
                                Цель_деятельности = org.ActivityGoal.Name,
                                Национальная_принадлежность = org.NationalAffiliation.Name,
@@ -202,8 +203,9 @@ namespace EmployerPartners
                                Дом = org.House,
                                Помещение = org.Apartment,
                                Комментарий = org.Comment,
+                               Дата_заведения_карточки = org.DateCreated,
 
-                           }).Distinct().OrderBy(x => x.Полное_наименование).ToList();
+                           }).Distinct().OrderBy(x => x.Полное_наименование_официальное).ToList();
 
                 DataTable dt = new DataTable();
                 dt = Utilities.ConvertToDataTable(lst);
@@ -219,9 +221,13 @@ namespace EmployerPartners
                     col.HeaderText = col.Name.Replace("_", " ");
                 try
                 {
-                    dgv.Columns["Полное_наименование"].Frozen = true;
-                    dgv.Columns["Полное_наименование"].Width = 285;
-                    dgv.Columns["Среднее_наименование"].Width = 175;
+                    dgv.Columns["Полное_наименование_официальное"].Frozen = true;
+                    dgv.Columns["Полное_наименование_официальное"].Width = 300;
+                    dgv.Columns["Среднее_наименование_удобное"].Frozen = true;
+                    dgv.Columns["Среднее_наименование_удобное"].Width = 200;
+                    dgv.Columns["Краткое_наименование_официальное"].Width = 200;
+                    dgv.Columns["Наименование_англ"].Width = 150;
+                    dgv.Columns["Краткое_наименование_англ"].Width = 150;
                 }
                 catch (Exception)
                 {
@@ -296,6 +302,13 @@ namespace EmployerPartners
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            try
+            {
+                bindingSource1.RemoveFilter();
+            }
+            catch (Exception)
+            { }
+
             int? id = null;
             if (dgv.CurrentCell != null)
                 if (dgv.CurrentRow.Index >= 0)
@@ -313,6 +326,22 @@ namespace EmployerPartners
 
         private void btnXLS_Click(object sender, EventArgs e)
         {
+            try
+            {
+                int quan = 0;
+                quan = dgv.Rows.Count;
+                if (quan > 100)
+                {
+                    if (MessageBox.Show("Предполагается экспорт в Excel " + quan + " записей.\r\n" + "Это может занять некоторое время..\r\n" +
+                        "Продолжить ?","Запрос на подтверждение", 
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != System.Windows.Forms.DialogResult.Yes)
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+            }
+
             ToExcel();
         }
 
@@ -378,6 +407,17 @@ namespace EmployerPartners
                             else
                             {
                                 ws.Cells[rwInd + 2, colInd + 1].Value = cell.Value; //.ToString(); 
+
+                                string CellValue = cell.Value.ToString();
+                                DateTime res;
+                                if (!String.IsNullOrEmpty(CellValue))
+                                {
+                                    if (DateTime.TryParse(CellValue, out res))
+                                    {
+                                        ws.Cells[rwInd + 2, colInd + 1].Value = res.Date.ToString("dd.MM.yyyy");
+                                    }
+                                }
+                                
                             }
                             ws.Cells[rwInd + 2, colInd + 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
                             colInd++;
@@ -388,16 +428,22 @@ namespace EmployerPartners
                     int clmnInd = 0;
                     foreach (DataGridViewColumn clmn in dgv.Columns)
                     {
-                        if (clmn.Name == "Полное_наименование")
-                            ws.Column(++clmnInd).Width = 100;
-                        else if (clmn.Name == "Среднее_наименование")
-                            ws.Column(++clmnInd).Width = 80;
-                        else if (clmn.Name == "Краткое_наименование" || clmn.Name == "Наименование_англ" || clmn.Name == "Краткое_наименование_англ")
-                            ws.Column(++clmnInd).Width = 50;
+                        if (clmn.Name == "Полное_наименование_официальное")
+                            ws.Column(++clmnInd).Width = 60;
+                        else if (clmn.Name == "Среднее_наименование_удобное")
+                            ws.Column(++clmnInd).Width = 60;
+                        else if (clmn.Name == "Краткое_наименование_официальное" || clmn.Name == "Наименование_англ" || clmn.Name == "Краткое_наименование_англ")
+                            ws.Column(++clmnInd).Width = 40;
                         else if (clmn.Name == "Id")
+                        {
                             ws.Column(++clmnInd).Width = 0;
-                        else
-                            ws.Column(++clmnInd).AutoFit();
+                            clmnInd++;
+                        }
+                        else if (clmn.Name == "Источник_Устав" || clmn.Name == "Источник_ЕГРЮЛ" || clmn.Name == "Источник_Сайт" ||
+                            clmn.Name == "Карточка_проверена" || clmn.Name == "Используется" || clmn.Name == "Дата_заведения_карточки")
+                            ws.Column(++clmnInd).Width = 0;
+                        //else
+                            //ws.Column(++clmnInd).AutoFit();
                     }
                     doc.Save();
                 }
@@ -524,6 +570,48 @@ namespace EmployerPartners
             catch (Exception)
             {
             }
+        }
+
+        private void btnShowSearchResult_Click(object sender, EventArgs e)
+        {
+            try
+            {
+            //dataView.RowFilter = "Name LIKE '%jo%'"     // values that contain 'jo'
+            string search = tbSearch.Text.Trim();   //.ToUpper();
+            bindingSource1.Filter = "Полное_наименование_официальное LIKE '%" + search + "%'" + " OR " + 
+                                    "Среднее_наименование_удобное LIKE '%" + search + "%'" + " OR " +
+                                    "Краткое_наименование_официальное LIKE '%" + search + "%'" + " OR " + 
+                                    "Наименование_англ LIKE '%" + search + "%'" + " OR " +
+                                    "Краткое_наименование_англ LIKE '%" + search + "%'";
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void btnRemoveFilter_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bindingSource1.RemoveFilter();
+            }
+            catch (Exception)
+            { }
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

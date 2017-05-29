@@ -24,7 +24,17 @@ namespace EmployerPartners
         {
             get { return ComboServ.GetComboIdInt(cbRank); }
             set { ComboServ.SetComboId(cbRank, value); }
-        } 
+        }
+        public int? RankHonoraryId
+        {
+            get { return ComboServ.GetComboIdInt(cbRankHonorary); }
+            set { ComboServ.SetComboId(cbRankHonorary, value); }
+        }
+        public int? RankStateId
+        {
+            get { return ComboServ.GetComboIdInt(cbRankState); }
+            set { ComboServ.SetComboId(cbRankState, value); }
+        }
         public int? ActivityAreaId
         {
             get { return ComboServ.GetComboIdInt(cbActivityArea); }
@@ -50,6 +60,26 @@ namespace EmployerPartners
             get { return ComboServ.GetComboIdInt(cbFaculty); }
             set { ComboServ.SetComboId(cbFaculty, value); }
         }
+        public bool isGAK
+        {
+            get { return chbGAK.Checked; }
+            set { chbGAK.Checked = value; }
+        }
+        public bool isGAKChairMan
+        {
+            get { return chbGAKChairman.Checked; }
+            set { chbGAKChairman.Checked = value; }
+        }
+        public bool isGAK2016
+        {
+            get { return chbGAK2016.Checked; }
+            set { chbGAK2016.Checked = value; }
+        }
+        public bool isGAKChairMan2016
+        {
+            get { return chbGAKChairman2016.Checked; }
+            set { chbGAKChairman2016.Checked = value; }
+        }
 
         public ListPersons()
         {
@@ -57,7 +87,7 @@ namespace EmployerPartners
             this.MdiParent = Util.mainform;
             this.Text = "Список физических лиц";
             FillCard();
-            FillGrid();
+            FillGridStart();
             SetAccessRight();
         }
         private void SetAccessRight()
@@ -66,11 +96,17 @@ namespace EmployerPartners
             {
                 btnAddPartner.Enabled = true;
             }
+            if (Util.IsSuperUser())
+            {
+                groupBoxGAK.Visible = true;
+            }
         }
         private void FillCard()
         {
             ComboServ.FillCombo(cbDegree, HelpClass.GetComboListByTable("dbo.Degree"), false, true);
             ComboServ.FillCombo(cbRank, HelpClass.GetComboListByTable("dbo.Rank"), false, true);
+            ComboServ.FillCombo(cbRankHonorary, HelpClass.GetComboListByTable("dbo.RankHonorary"), false, true);
+            ComboServ.FillCombo(cbRankState, HelpClass.GetComboListByTable("dbo.RankState"), false, true);
             ComboServ.FillCombo(cbActivityArea, HelpClass.GetComboListByTable("dbo.ActivityArea"), false, true);
             ComboServ.FillCombo(cbCountry, HelpClass.GetComboListByTable("dbo.Country"), false, true);
             ComboServ.FillCombo(cbRegion, HelpClass.GetComboListByTable("dbo.Region"), false, true);
@@ -88,26 +124,46 @@ namespace EmployerPartners
             {
                 var lst = (from org in context.PartnerPerson
                            join r in context.PartnerPersonRubric on org.Id equals r.PartnerPersonId into _r
-                           from or in _r.DefaultIfEmpty()
+                           from r in _r.DefaultIfEmpty()
                            join f in context.PartnerPersonFaculty on org.Id equals f.PartnerPersonId into _f
-                           from of in _f.DefaultIfEmpty()
-                           where 
+                           from f in _f.DefaultIfEmpty()
+                           where
                            (DegreeId.HasValue ? org.DegreeId == DegreeId : true) &&
                            (RankId.HasValue ? org.RankId == RankId : true) &&
+                           (RankHonoraryId.HasValue ? org.RankHonoraryId == RankHonoraryId : true) &&
+                           (RankStateId.HasValue ? org.RankStateId == RankStateId : true) &&
                            (ActivityAreaId.HasValue ? org.ActivityAreaId == ActivityAreaId : true) &&
                            (CountryId.HasValue ? org.CountryId == CountryId : true) &&
                            (RegionId.HasValue ? org.RegionId == RegionId : true) &&
-                           (RubricId.HasValue ? or.RubricId == RubricId : true) &&
-                           (FacultyId.HasValue ? of.FacultyId == FacultyId : true)
+                           (RubricId.HasValue ? r.RubricId == RubricId : true) &&
+                           (FacultyId.HasValue ? f.FacultyId == FacultyId : true) &&
+                           ((isGAK == true) ? org.IsGAK == true : true) &&
+                           ((isGAKChairMan == true) ? org.IsGAKChairman == true : true) &&
+                           ((isGAK2016 == true) ? org.IsGAK2016 == true : true) &&
+                           ((isGAKChairMan2016 == true) ? org.IsGAKChairman2016 == true : true) 
+
+                           //((isGAK == true) ? ((isGAKChairMan == true) ? ((org.IsGAK == true) || (org.IsGAKChairman == true)) : (org.IsGAK == true)) : 
+                           //((isGAKChairMan == true) ? (org.IsGAKChairman == true): true))
+
                            orderby org.Name 
                            select new
                            {
                                ФИО = org.Name,
                                org.Id,
                                ФИО_англ = org.NameEng,
-                               Регалии = org.Title,
+                               Префикс = org.PartnerPersonPrefix.Name,
+                               Регистрационный_номер_ИС_Партнеры  = org.Account,
                                Ученая_степень = org.Degree.Name,
                                Ученое_звание = org.Rank.Name,
+                               Почетное_звание = org.RankHonorary.Name,
+                               Государственное_или_военное_звание = org.RankState.Name,
+                               Регалии_доп_данные = org.Title,
+                               Входит_в_составы_ГЭК_2017 = org.IsGAK,
+                               Председатель_ГЭК_2017 = org.IsGAKChairman,
+                               Входит_в_составы_ГЭК_2016 = org.IsGAK2016,
+                               Председатель_ГЭК_2016 = org.IsGAKChairman2016,
+                               Получено_согласие_на_персон_данные = org.IsPersonDataAgreed,
+                               Персональные_данные_проверены = org.IsPersonDataChecked,
                                Основная_сфера_деятельности = org.ActivityArea.Name,
                                Выпускник_СПбГУ = org.IsSPbGUGraduate.HasValue && org.IsSPbGUGraduate.Value ? "да" : "нет",
                                Год_выпуска = org.SPbGUGraduateYear,
@@ -118,7 +174,7 @@ namespace EmployerPartners
                                Мобильный_телефон = org.Mobiles,
                                Web_сайт = org.WebSite,
                                Комментарий = org.Comment,
-                           }).ToList();
+                           }).Distinct().OrderBy(x => x.ФИО).ToList();
 
                 DataTable dt = new DataTable();
                 dt = Utilities.ConvertToDataTable(lst);
@@ -136,7 +192,94 @@ namespace EmployerPartners
                 {
                     dgv.Columns["ФИО"].Frozen = true;
                     dgv.Columns["ФИО"].Width = 200;
-                    dgv.Columns["Регалии"].Width = 300;
+                    dgv.Columns["Префикс"].Width = 60;
+                    dgv.Columns["Ученая_степень"].Width = 150;
+                    dgv.Columns["Ученое_звание"].Width = 130;
+                    dgv.Columns["Почетное_звание"].Width = 130;
+                    dgv.Columns["Государственное_или_военное_звание"].Width = 130;
+                    dgv.Columns["Регалии_доп_данные"].Width = 130;
+                }
+                catch (Exception)
+                {
+                }
+
+                //if (id.HasValue)
+                //    foreach (DataGridViewRow rw in dgv.Rows)
+                //        if (rw.Cells[0].Value.ToString() == id.Value.ToString())
+                //        {
+                //            dgv.CurrentCell = rw.Cells["ФИО"];
+                //            break;
+                //        }
+            }
+
+        }
+
+        private void FillGridStart()
+        {
+            FillGridStart(null);
+        }
+        private void FillGridStart(int? id)
+        {
+            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            {
+                var lst = (from org in context.PartnerPerson
+                           join r in context.PartnerPersonRubric on org.Id equals r.PartnerPersonId into _r
+                           from r in _r.DefaultIfEmpty()
+                           join f in context.PartnerPersonFaculty on org.Id equals f.PartnerPersonId into _f
+                           from f in _f.DefaultIfEmpty()
+                           orderby org.Name
+                           select new
+                           {
+                               ФИО = org.Name,
+                               org.Id,
+                               ФИО_англ = org.NameEng,
+                               Префикс = org.PartnerPersonPrefix.Name,
+                               Регистрационный_номер_ИС_Партнеры = org.Account,
+                               Ученая_степень = org.Degree.Name,
+                               Ученое_звание = org.Rank.Name,
+                               Почетное_звание = org.RankHonorary.Name,
+                               Государственное_или_военное_звание = org.RankState.Name,
+                               Регалии_доп_данные = org.Title,
+                               Входит_в_составы_ГЭК_2017 = org.IsGAK,
+                               Председатель_ГЭК_2017 = org.IsGAKChairman,
+                               Входит_в_составы_ГЭК_2016 = org.IsGAK2016,
+                               Председатель_ГЭК_2016 = org.IsGAKChairman2016,
+                               Получено_согласие_на_персон_данные = org.IsPersonDataAgreed,
+                               Персональные_данные_проверены = org.IsPersonDataChecked,
+                               Основная_сфера_деятельности = org.ActivityArea.Name,
+                               Выпускник_СПбГУ = org.IsSPbGUGraduate.HasValue && org.IsSPbGUGraduate.Value ? "да" : "нет",
+                               Год_выпуска = org.SPbGUGraduateYear,
+                               Ассоциация_выпускников = org.AlumniAssociation.HasValue && org.AlumniAssociation.Value ? "да" : "нет",
+                               Страна = org.Country.Name,
+                               Email = org.Email,
+                               Телефон = org.Phone,
+                               Мобильный_телефон = org.Mobiles,
+                               Web_сайт = org.WebSite,
+                               Комментарий = org.Comment,
+                           }).Distinct().OrderBy(x => x.ФИО).ToList();
+
+                DataTable dt = new DataTable();
+                dt = Utilities.ConvertToDataTable(lst);
+                bindingSource1.DataSource = dt;
+                dgv.DataSource = bindingSource1;
+
+                List<string> Cols = new List<string>() { "Id" };
+
+                foreach (string s in Cols)
+                    if (dgv.Columns.Contains(s))
+                        dgv.Columns[s].Visible = false;
+                foreach (DataGridViewColumn col in dgv.Columns)
+                    col.HeaderText = col.Name.Replace("_", " ");
+                try
+                {
+                    dgv.Columns["ФИО"].Frozen = true;
+                    dgv.Columns["ФИО"].Width = 200;
+                    dgv.Columns["Префикс"].Width = 60;
+                    dgv.Columns["Ученая_степень"].Width = 150;
+                    dgv.Columns["Ученое_звание"].Width = 130;
+                    dgv.Columns["Почетное_звание"].Width = 130;
+                    dgv.Columns["Государственное_или_военное_звание"].Width = 130;
+                    dgv.Columns["Регалии_доп_данные"].Width = 130;
                 }
                 catch (Exception)
                 {
@@ -150,7 +293,6 @@ namespace EmployerPartners
                             break;
                         }
             }
-
         }
 
         private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -208,6 +350,21 @@ namespace EmployerPartners
 
         private void btnXLS_Click(object sender, EventArgs e)
         {
+            try
+            {
+                int quan = 0;
+                quan = dgv.Rows.Count;
+                if (quan > 100)
+                {
+                    if (MessageBox.Show("Предполагается экспорт в Excel " + quan + " записей.\r\n" + "Это может занять некоторое время..\r\n" +
+                        "Продолжить ?", "Запрос на подтверждение",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != System.Windows.Forms.DialogResult.Yes)
+                        return;
+                }
+            }
+            catch (Exception)
+            {
+            }
             ToExcel();
         }
 
@@ -283,13 +440,175 @@ namespace EmployerPartners
                     int clmnInd = 0;
                     foreach (DataGridViewColumn clmn in dgv.Columns)
                     {
-                        if (clmn.Name == "Регалии")
-                            ws.Column(++clmnInd).Width = 100;
+                        if (clmn.Name == "ФИО")
+                            //ws.Column(++clmnInd).Width = 100;
+                            ws.Column(++clmnInd).AutoFit();
                         else if (clmn.Name == "Id")
                             ws.Column(++clmnInd).Width = 0;
-                        else
-                            ws.Column(++clmnInd).AutoFit();
+                       // else
+                           // ws.Column(++clmnInd).AutoFit();
                     }
+                    doc.Save();
+                }
+                System.Diagnostics.Process.Start(filename);
+            }
+            catch
+            {
+            }
+        }
+
+        private void ToExcelGAK(int year)
+        {
+            try
+            {
+                string filenameDate = "Выгрузка составов ГЭК";
+                string filename = Util.TempFilesFolder + filenameDate + ".xlsx";
+                string[] fileList = Directory.GetFiles(Util.TempFilesFolder, "Выгрузка составов ГЭК*" + ".xlsx");
+
+                try
+                {
+                    File.Delete(filename);
+                    foreach (string f in fileList)
+                    {
+                        File.Delete(f);
+                    }
+                }
+                catch (Exception)
+                {
+                }
+
+                int fileindex = 1;
+                while (File.Exists(filename))
+                {
+                    filename = Util.TempFilesFolder + filenameDate + " (" + fileindex + ")" + ".xlsx";
+                    fileindex++;
+                }
+                System.IO.FileInfo newFile = new System.IO.FileInfo(filename);
+                if (newFile.Exists)
+                {
+                    newFile.Delete();  // ensures we create a new workbook
+                    newFile = new System.IO.FileInfo(filename);
+                }
+
+                if (year == 2016)
+                {
+                    using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                    {
+                        var lst = (from x in context.ECD_EmpContactsDetailsUNP_GAK2016
+                                   orderby x.Name
+                                   select new
+                                   {
+                                       СПбГУ = x.SPbGU,
+                                       Председатель = x.Chairman,
+                                       Обращение = x.Title,
+                                       ФИО = x.Name,
+                                       Имя_англ = x.FirstNameEng,
+                                       Фамилия_англ = x.LastNameEng,
+                                       Должность = x.Position,
+                                       Должность_англ = x.PositionEng,
+                                       Вид_проф_деятельности = x.AAP,
+                                       Вид_проф_деятельности_англ = x.AAPEng,
+                                       Организация = x.OrgName,
+                                       Организация_англ = x.OrgNameEng,
+                                       Страна = x.CountryName,
+                                       Страна_англ = x.CountryNameEng,
+                                       Email = x.Email,
+                                       Телефон = x.Phone,
+                                       УНП = x.UNP
+                                   }).ToList();
+
+                        dgvGAK.DataSource = lst;
+
+                        foreach (DataGridViewColumn col in dgvGAK.Columns)
+                            col.HeaderText = col.Name.Replace("_", " ");
+                    }
+                }
+                if (year == 2017)
+                {
+                    using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                    {
+                        var lst = (from x in context.ECD_EmpContactsDetailsUNP_GAK2017
+                                   orderby x.Name
+                                   select new
+                                   {
+                                       СПбГУ = x.SPbGU,
+                                       Председатель = x.Chairman,
+                                       Обращение = x.Title,
+                                       ФИО = x.Name,
+                                       Имя_англ = x.FirstNameEng,
+                                       Фамилия_англ = x.LastNameEng,
+                                       Должность = x.Position,
+                                       Должность_англ = x.PositionEng,
+                                       Вид_проф_деятельности = x.AAP,
+                                       Вид_проф_деятельности_англ = x.AAPEng,
+                                       Организация = x.OrgName,
+                                       Организация_англ = x.OrgNameEng,
+                                       Страна = x.CountryName,
+                                       Страна_англ = x.CountryNameEng,
+                                       Email = x.Email,
+                                       Телефон = x.Phone,
+                                       УНП = x.UNP
+                                   }).ToList();
+
+                        dgvGAK.DataSource = lst;
+
+                        foreach (DataGridViewColumn col in dgvGAK.Columns)
+                            col.HeaderText = col.Name.Replace("_", " ");
+                    }
+                }
+
+                using (ExcelPackage doc = new ExcelPackage(newFile))
+                {
+                    ExcelWorksheet ws = doc.Workbook.Worksheets.Add("Составы ГЭК");
+                    Color lightGray = Color.FromName("LightGray");
+                    Color darkGray = Color.FromName("DarkGray");
+
+                    int colind = 0;
+
+                    foreach (DataGridViewColumn cl in dgvGAK.Columns)
+                    {
+                        ws.Cells[1, ++colind].Value = cl.HeaderText.ToString();
+                        ws.Cells[1, colind].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                        ws.Cells[1, colind].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        ws.Cells[1, colind].Style.Fill.BackgroundColor.SetColor(lightGray);
+                    }
+
+                    for (int rwInd = 0; rwInd < dgvGAK.Rows.Count; rwInd++)
+                    {
+                        DataGridViewRow rw = dgvGAK.Rows[rwInd];
+                        int colInd = 0;
+                        foreach (DataGridViewCell cell in rw.Cells)
+                        {
+                            if (cell.Value == null)
+                            {
+                                ws.Cells[rwInd + 2, colInd + 1].Value = "";
+                            }
+                            else
+                            {
+                                ws.Cells[rwInd + 2, colInd + 1].Value = cell.Value; //.ToString(); 
+                            }
+                            ws.Cells[rwInd + 2, colInd + 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin, darkGray);
+                            colInd++;
+                        }
+                    }
+
+                    //форматирование
+                    //int clmnInd = 0;
+                    //foreach (DataGridViewColumn clmn in dgv.Columns)
+                    //{
+                    //    clmnInd++;
+                    //    if (clmn.Name == "ФИО")
+                    //    {
+                    //        ws.Column(clmnInd).AutoFit();
+                    //    }
+                    //    //if (clmn.Name == "ФИО")
+                    //    //    //ws.Column(++clmnInd).Width = 100;
+                    //    //    ws.Column(++clmnInd).AutoFit();
+                    //    //else if (clmn.Name == "Id")
+                    //    //    ws.Column(++clmnInd).Width = 0;
+                    //    //else
+                    //    //    ws.Column(++clmnInd).AutoFit();
+                    //}
                     doc.Save();
                 }
                 System.Diagnostics.Process.Start(filename);
@@ -327,7 +646,7 @@ namespace EmployerPartners
                 {
                     if (exit)
                     { break; }
-                    for (int j = 0; j < 4 /*dgv.Columns.Count*/; j++)
+                    for (int j = 0; j < 9 /*dgv.Columns.Count*/; j++)
                     {
                         if (j == 1)
                             continue;
@@ -359,6 +678,62 @@ namespace EmployerPartners
             {
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (rbtn2016.Checked)
+            {
+                ToExcelGAK(2016);
+                return;
+            }
+            if (rbtn2017.Checked)
+            {
+                ToExcelGAK(2017);
+                return;
+            }
+            
+        }
+
+        private void cbFaculty_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chbGAK_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chbGAKChairman_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chbGAK2016_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chbGAKChairman2016_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbRubric_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 
 }

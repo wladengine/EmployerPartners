@@ -78,5 +78,16 @@ namespace EmployerPartners
             if (MessageBox.Show("Закрыть без сохранения?", "", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 this.Close();
         }
+
+        private void btnAddQuotes_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                tbName.Text = "«" + tbName.Text + "»";
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

@@ -34,9 +34,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbLicense = new System.Windows.Forms.ComboBox();
+            this.btnUpdateLP = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cbLPProgramType = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbLPLevel = new System.Windows.Forms.ComboBox();
             this.btnCheckLP = new System.Windows.Forms.Button();
             this.labelLP = new System.Windows.Forms.Label();
-            this.btnUpdateLP = new System.Windows.Forms.Button();
             this.bindingNavigatorLP = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingSourceLP = new System.Windows.Forms.BindingSource(this.components);
@@ -125,9 +131,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(20, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(452, 16);
+            this.label1.Size = new System.Drawing.Size(369, 16);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Справочник направлений, образовательных программ и студентов";
+            this.label1.Text = "Справочник направлений, образовательных программ";
             // 
             // tabControl1
             // 
@@ -145,9 +151,15 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Controls.Add(this.cbLicense);
+            this.tabPage1.Controls.Add(this.btnUpdateLP);
+            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.cbLPProgramType);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.cbLPLevel);
             this.tabPage1.Controls.Add(this.btnCheckLP);
             this.tabPage1.Controls.Add(this.labelLP);
-            this.tabPage1.Controls.Add(this.btnUpdateLP);
             this.tabPage1.Controls.Add(this.bindingNavigatorLP);
             this.tabPage1.Controls.Add(this.dgvLP);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -157,6 +169,74 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Направления";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(313, 53);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(57, 13);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Лицензия";
+            // 
+            // cbLicense
+            // 
+            this.cbLicense.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLicense.FormattingEnabled = true;
+            this.cbLicense.Location = new System.Drawing.Point(390, 50);
+            this.cbLicense.Name = "cbLicense";
+            this.cbLicense.Size = new System.Drawing.Size(550, 21);
+            this.cbLicense.TabIndex = 9;
+            this.cbLicense.SelectedIndexChanged += new System.EventHandler(this.cbLicense_SelectedIndexChanged);
+            // 
+            // btnUpdateLP
+            // 
+            this.btnUpdateLP.Enabled = false;
+            this.btnUpdateLP.Location = new System.Drawing.Point(20, 47);
+            this.btnUpdateLP.Name = "btnUpdateLP";
+            this.btnUpdateLP.Size = new System.Drawing.Size(200, 25);
+            this.btnUpdateLP.TabIndex = 2;
+            this.btnUpdateLP.Text = "Обновить данные по направлениям";
+            this.btnUpdateLP.UseVisualStyleBackColor = true;
+            this.btnUpdateLP.Click += new System.EventHandler(this.btnUpdateLP_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(712, 22);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(88, 13);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Тип программы";
+            // 
+            // cbLPProgramType
+            // 
+            this.cbLPProgramType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLPProgramType.FormattingEnabled = true;
+            this.cbLPProgramType.Location = new System.Drawing.Point(819, 19);
+            this.cbLPProgramType.Name = "cbLPProgramType";
+            this.cbLPProgramType.Size = new System.Drawing.Size(121, 21);
+            this.cbLPProgramType.TabIndex = 7;
+            this.cbLPProgramType.SelectedIndexChanged += new System.EventHandler(this.cbLPProgramType_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(319, 22);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(51, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Уровень";
+            // 
+            // cbLPLevel
+            // 
+            this.cbLPLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLPLevel.FormattingEnabled = true;
+            this.cbLPLevel.Location = new System.Drawing.Point(390, 19);
+            this.cbLPLevel.Name = "cbLPLevel";
+            this.cbLPLevel.Size = new System.Drawing.Size(282, 21);
+            this.cbLPLevel.TabIndex = 5;
+            this.cbLPLevel.SelectedIndexChanged += new System.EventHandler(this.cbLPLevel_SelectedIndexChanged);
             // 
             // btnCheckLP
             // 
@@ -177,17 +257,6 @@
             this.labelLP.Size = new System.Drawing.Size(44, 13);
             this.labelLP.TabIndex = 3;
             this.labelLP.Text = "Список";
-            // 
-            // btnUpdateLP
-            // 
-            this.btnUpdateLP.Enabled = false;
-            this.btnUpdateLP.Location = new System.Drawing.Point(244, 15);
-            this.btnUpdateLP.Name = "btnUpdateLP";
-            this.btnUpdateLP.Size = new System.Drawing.Size(200, 25);
-            this.btnUpdateLP.TabIndex = 2;
-            this.btnUpdateLP.Text = "Обновить данные по направлениям";
-            this.btnUpdateLP.UseVisualStyleBackColor = true;
-            this.btnUpdateLP.Click += new System.EventHandler(this.btnUpdateLP_Click);
             // 
             // bindingNavigatorLP
             // 
@@ -545,6 +614,7 @@
             this.label2.Size = new System.Drawing.Size(78, 13);
             this.label2.TabIndex = 8;
             this.label2.Text = "Поиск (ФИО))";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // tbSearch
             // 
@@ -713,7 +783,7 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label1);
             this.Name = "UpdateFromSrv";
-            this.Text = "Справочник направлений, ОП, и студентов";
+            this.Text = "Справочник направлений, ОП";
             this.Load += new System.EventHandler(this.UpdateFromSrv_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -804,5 +874,11 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbSearchOP;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbLPLevel;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cbLPProgramType;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cbLicense;
     }
 }

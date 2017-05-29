@@ -102,6 +102,11 @@ namespace EmployerPartners
             get { return ComboServ.GetComboIdInt(cbAreaProfessional); }
             set { ComboServ.SetComboId(cbAreaProfessional, value); }
         }
+        public int? OrganizationEnglishSourceId
+        {
+            get { return ComboServ.GetComboIdInt(cbOrganizationEnglishSource); }
+            set { ComboServ.SetComboId(cbOrganizationEnglishSource, value); }
+        }
         public string INN
         {
             get { return tbINN.Text.Trim(); }
@@ -181,6 +186,11 @@ namespace EmployerPartners
         {
             get { return tbSource.Text.Trim(); }
             set { tbSource.Text = value; }
+        }
+        public bool EngSourceOfficial
+        {
+            get { return chkbEngSourceOfficial.Checked; }
+            set { chkbEngSourceOfficial.Checked = value; }
         }
         public bool SourceCharter
         {

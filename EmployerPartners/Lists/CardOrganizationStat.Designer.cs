@@ -111,7 +111,7 @@
             this.groupBox1.Size = new System.Drawing.Size(424, 425);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Ключевые слова";
+            this.groupBox1.Text = "Области профессиональной деятельности";
             // 
             // lblActivityArea
             // 
@@ -141,7 +141,6 @@
             this.dgvActivityArea.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvActivityArea.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvActivityArea.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvActivityArea.Location = new System.Drawing.Point(6, 19);
             this.dgvActivityArea.Name = "dgvActivityArea";

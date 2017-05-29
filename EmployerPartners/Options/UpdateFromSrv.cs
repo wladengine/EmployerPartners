@@ -16,26 +16,73 @@ namespace EmployerPartners
 {
     public partial class UpdateFromSrv : Form
     {
+        private int? LPLevel
+        {
+            get { return ComboServ.GetComboIdInt(cbLPLevel); }
+            set { ComboServ.SetComboId(cbLPLevel, value); }
+        }
+        private int? LPProgramType
+        {
+            get { return ComboServ.GetComboIdInt(cbLPProgramType); }
+            set { ComboServ.SetComboId(cbLPProgramType, value); }
+        }
+        private int? LPLicense
+        {
+            get { return ComboServ.GetComboIdInt(cbLicense); }
+            set { ComboServ.SetComboId(cbLicense, value); }
+        }
+
         public UpdateFromSrv()
         {
             InitializeComponent();
             FillLP();
+            FillLicense();
             //FillOP();
             FillOPInYear();
-            FillStudent();
+            //FillStudent();
+            HideTabPage();
+            FillCombo();
             SetAccessRight();
         }
         private void SetAccessRight()
         {
-            if (Util.IsOrgPersonWrite())
+            if (Util.IsOrgPersonWrite() || Util.IsDBOwner() || Util.IsAdministrator())
             {
                 btnCheckLP.Enabled = true;
                 btnUpdateLP.Enabled = true;
                 btnCheckOP.Enabled = true;
                 btnUpdateOP.Enabled = true;
-                btnUpdateStudent.Enabled = true;
+                //btnUpdateStudent.Enabled = true;
             }
         }
+        private void HideTabPage()
+        {
+            tabControl1.TabPages.Remove(tabPage3);
+
+        }
+        private void FillCombo()
+        {
+            FillLPLevel();
+            FillLPProgramType();
+        }
+        private void FillLPLevel()
+        {
+            ComboServ.FillCombo(cbLPLevel, HelpClass.GetComboListByTable("dbo.StudyLevel"), false, true);
+//            ComboServ.FillCombo(cbLPLevel, HelpClass.GetComboListByQuery(@" select distinct [Name]  AS Id, 
+//                        [Name] from dbo.StudyLevel order by Name"), false, true);
+        }
+        private void FillLPProgramType()
+        {
+            ComboServ.FillCombo(cbLPProgramType, HelpClass.GetComboListByTable("dbo.ProgramType"), false, true);
+        }
+        private void FillLicense()
+        {
+            ComboServ.FillCombo(cbLicense, HelpClass.GetComboListByQuery(@" SELECT DISTINCT CONVERT(varchar(100), Id) AS Id, 
+                ('Лицензия  Серия: ' + Isnull([Series], '') + '  Номер: ' + Isnull([Number], '') + '  Рег.номер: ' +
+                    IsNull(RegNum, '') + '  Дата: ' + case [DateOut] when null then '' when '' then '' else convert(char(12), [DateOut], 3) end)  As Name 
+                FROM dbo.License ORDER BY Id DESC "), false, true); //cast([DateOut] as varchar) //CONVERT(char(12), GETDATE(), 3)
+        }
+
         private void btnUpdateStudent_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Операция обновления данных потребует\r\n" + "обращения к другим серверам БД Университета \r\n" +
@@ -83,11 +130,16 @@ namespace EmployerPartners
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
                     var lst = (from lp in context.LicenseProgram
+                               //join linlp in context.LicenseInLicenseProgram on lp.Id equals linlp.LicenseId into _linlp
+                               //from linlp in _linlp.DefaultIfEmpty()
                                join st in context.StudyLevel on lp.StudyLevelId equals st.Id
                                join progt in context.ProgramType on lp.ProgramTypeId equals progt.Id
                                join q in context.Qualification on lp.QualificationId equals q.Id into _q
                                from q in _q.DefaultIfEmpty()
-                               orderby lp.Code, st.Name, lp.Name, progt.Id
+                               where ((LPLevel.HasValue) ? lp.StudyLevelId == LPLevel : true) &&
+                                        ((LPProgramType.HasValue) ? lp.ProgramTypeId == LPProgramType : true) &&
+                                        ((LPLicense.HasValue) ? lp.LicenseId == LPLicense : true) 
+                               orderby lp.Name, lp.Code, st.Name, progt.Id
                                select new
                                {
                                    Код = lp.Code,
@@ -183,7 +235,7 @@ namespace EmployerPartners
                                    Образовательная_программа = op.Name,
                                    //OPInYearName = opyear.Name,
                                    Номер = op.Number,
-                                   Урлвень = opyear.StudyLevelName,
+                                   Уровень = opyear.StudyLevelName,
                                    Год = opyear.Year,
                                    Шифр_ОП = opyear.ObrazProgramCrypt,
                                    Статус = ps.Name,
@@ -221,16 +273,19 @@ namespace EmployerPartners
             {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    string sqlLP = "SELECT * FROM  SRVEDUCATION.Education.ed.SP_LicenseProgram WHERE (Id not in (SELECT Id FROM dbo.LicenseProgram))";
+                    string sqlLP = "SELECT [Id], [Code], [Name] FROM  SRVEDUCATION.Education.ed.SP_LicenseProgram WHERE (Id not in (SELECT Id FROM dbo.LicenseProgram))";
 
-                    var LPTable = context.Database.SqlQuery<LicenseProgram>(sqlLP);
-                   
+                    var LPTable = context.Database.SqlQuery<LP>(sqlLP);
+
                     if (LPTable.Count() == 0)
                     {
-                        MessageBox.Show("Нет новых данных для обновления", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        labelLP.Text = "Список";
-                        FillLP();
-                        return;
+                        if (MessageBox.Show("Нет новых данных для обновления\r\n" + "Обновить существующие записи?", "Запрос на подтверждение",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                        {
+                            labelLP.Text = "Список";
+                            FillLP();
+                            return;
+                        }
                     }
                 }
             }
@@ -263,9 +318,9 @@ namespace EmployerPartners
             {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    string sqlLP = "SELECT * FROM  SRVEDUCATION.Education.ed.SP_LicenseProgram WHERE (Id not in (SELECT Id FROM dbo.LicenseProgram))";
+                    string sqlLP = "SELECT [Id], [Code], [Name] FROM  SRVEDUCATION.Education.ed.SP_LicenseProgram WHERE (Id not in (SELECT Id FROM dbo.LicenseProgram))";
 
-                    var LPTable = context.Database.SqlQuery<LicenseProgram>(sqlLP);
+                    var LPTable = context.Database.SqlQuery<LP>(sqlLP);
 
                     var lst = (from lp in LPTable
                                select new
@@ -296,11 +351,11 @@ namespace EmployerPartners
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 labelLP.Text = "Список";
                 MessageBox.Show("Не удалось получить данные... \r\n" + 
-                    "[В большинстве случаев это означает, что \r\n" + "недостаточно прав доступа к другим серверам баз данных.]", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    "[В большинстве случаев это означает, что \r\n" + "недостаточно прав доступа к другим серверам баз данных.]\r\n" + ex.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -377,11 +432,14 @@ namespace EmployerPartners
 
                     if (OPTable.Count() == 0)
                     {
-                        MessageBox.Show("Нет новых данных для обновления", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        labelOP.Text = "Список";
-                       // FillOP();
-                        FillOPInYear();
-                        return;
+                        if (MessageBox.Show("Нет новых данных для обновления\r\n" + "Обновить существующие записи?", "Запрос на подтверждение", 
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                        {
+                            labelOP.Text = "Список";
+                            // FillOP();
+                            FillOPInYear();
+                            return;
+                        }
                     }
                 }
             }
@@ -420,7 +478,8 @@ namespace EmployerPartners
                                {
                                    ФИО = x.FIO,
                                    Фамилия = x.Surname,
-                                   Дата_рожд = x.DR,
+                                   //Дата_рожд = x.DR,
+                                   Аккаунт = x.Accout,
                                    Курс = x.Course,
                                    Уровень = x.DegreeName,
                                    Форма_обуч = x.Department,
@@ -535,6 +594,26 @@ namespace EmployerPartners
             catch (Exception)
             {
             }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbLPLevel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillLP();
+        }
+
+        private void cbLPProgramType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillLP();
+        }
+
+        private void cbLicense_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillLP();
         }
     }
 }

@@ -22,8 +22,18 @@ namespace EmployerPartners
         public string Author { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public string PositionEng { get; set; }
+        public Nullable<int> PositionId { get; set; }
+        public Nullable<int> OrganizationSubdivisionId { get; set; }
+        public Nullable<int> Position2Id { get; set; }
+        public Nullable<int> OrganizationSubdivision2Id { get; set; }
+        public string Position2 { get; set; }
+        public string PositionEng2 { get; set; }
+        public Nullable<int> Sorting { get; set; }
+        public Nullable<bool> NotUseInDocs { get; set; }
     
         public virtual Organization Organization { get; set; }
         public virtual PartnerPerson PartnerPerson { get; set; }
+        public virtual Position Position1 { get; set; }
+        public virtual OrganizationSubdivision OrganizationSubdivision { get; set; }
     }
 }

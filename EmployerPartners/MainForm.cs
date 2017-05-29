@@ -16,6 +16,7 @@ namespace EmployerPartners
     public partial class MainForm : Form
     {
         private int LogId;
+        public bool newAppFormIsOpend = false;
 
         public MainForm()
         {
@@ -40,6 +41,16 @@ namespace EmployerPartners
                 helpEditToolStripMenuItem.Visible = true;
                 tmplToolStripMenuItem.Visible = true;
                 smiNewOrgHelpLoad.Visible = true;
+                smiVKRAddEdit.Visible = true;
+                smiVKRAddEdit.Enabled = true;
+                smiVKRMain.Visible = true;
+                smiVKRMain.Enabled = true;
+                smiVKRThemesStudent.Visible = true;
+                smiVKRThemesStudent.Enabled = true;
+                smiGAKLists.Visible = true;
+                smiGAKLists.Enabled = true;
+                //smiGAKMembers.Visible = true;
+                //smiGAKMembers.Enabled = true;
             }
 
             if (Util.IsPractice() || Util.IsPracticeRead() || Util.IsPracticeWrite() || Util.IsReadOnlyAll())
@@ -50,8 +61,25 @@ namespace EmployerPartners
 
             if (Util.IsVKRRead() || Util.IsVKRWrite() || Util.IsReadOnlyAll())
             {
-                smiVKRMain.Visible = true;
-                smiVKRMain.Enabled = true;
+                //smiVKRMain.Visible = true;
+                //smiVKRMain.Enabled = true;
+                smiVKRAddEdit.Visible = true;
+                smiVKRAddEdit.Enabled = true;
+                smiVKRThemesStudent.Visible = true;
+                smiVKRThemesStudent.Enabled = true;
+            }
+
+            if (Util.IsGAKRead() || Util.IsGAKWrite() || Util.IsReadOnlyAll())
+            {
+                smiGAKLists.Visible = true;
+                smiGAKLists.Enabled = true;
+                smiGAKMembers.Visible = true;
+                smiGAKMembers.Enabled = true;
+            }
+            if (Util.IsSuperUser())
+            {
+                smiGAKMembers.Visible = true;
+                smiGAKMembers.Enabled = true;
             }
         }
         private void Log()
@@ -443,6 +471,137 @@ namespace EmployerPartners
             System.Diagnostics.Process.Start(@filePath);
         }
 
+        private void smiNPR_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("SAP_NPS"))
+                return;
+            SAP_NPS sapnps = new SAP_NPS();
+            sapnps.MdiParent = this;
+            sapnps.Show();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            MainTimer.Enabled = true; //Utilities.CheckCurrentDir();
+            MainTimer.Start();
+        }
+
+        private void MainTimer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Utilities.MainTimerStop)
+                {
+                    MainTimer.Stop();
+                    MainTimer.Enabled = false;
+                    return;
+                }
+                //if (Utilities.FormIsOpened("NewAppVersion"))
+                //{
+                //    return;
+                //}
+                //else
+                //{
+                //    NewAppVersion newapp = new NewAppVersion();
+                //    //newapp.MdiParent = this;
+                //    newapp.Show();
+                //}
+
+                MainTimer.Interval = 600000;
+
+                if (newAppFormIsOpend)
+                {
+                    return;
+                }
+                string curdir = Application.StartupPath;
+                if (curdir.Contains("bin\\Debug") || curdir.Contains("bin\\Release"))
+                {
+                    MainTimer.Stop();
+                    MainTimer.Enabled = false;
+                    return;
+                }
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    string targetdir = context.C_Settings.Where(x => (x.Key == "CurrentDir_EmployerPartners")).First().Value.ToString();
+                    if (targetdir != curdir)
+                    {
+                        newAppFormIsOpend = true;
+                        if (MessageBox.Show("Имеется новая версия приложения.\r\n" + 
+                        "Запустить новую версию ?", "Запрос на подтверждение",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                        {
+                            string newApp = targetdir + "\\" + "EmployerPartners.exe";
+                            //MessageBox.Show("Текущий каталог: \r\n" + curdir + "\r\nКаталог новой версии: \r\n" + targetdir +"\r\nФайл для запуска: " + newApp, "Инфо",
+                            //    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            System.Diagnostics.Process.Start(newApp);
+                            Application.Exit();
+                            //System.Environment.Exit(0);
+                            return;
+                        }
+                        else
+                        {
+                            newAppFormIsOpend = false;
+                            return;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Сообщение", MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
+        }
+
+        private void smiVKRAddEdit_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("VKRThemesEdit"))
+                return;
+            new VKRThemesEdit().Show();
+        }
+
+        private void smiPosition_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("Positions"))
+                return;
+            new Positions().Show();   
+        }
+
+        private void smiStudent_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("UpdateStudentFromSrv"))
+                return;
+            UpdateStudentFromSrv updateform = new UpdateStudentFromSrv();
+            updateform.MdiParent = this;
+            updateform.Show();
+        }
+
+        private void smiGAKLists_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("GAK_Lists"))
+                return;
+            new GAK_Lists().Show();
+        }
+
+        private void smiVKRThemesStudent_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("VKRThemesStudent"))
+                return;
+            new VKRThemesStudent().Show();
+        }
+
+        private void smiGAKMembers_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("GAK_Members"))
+                return;
+            new GAK_Members().Show();
+        }
+
+        private void smiGAKStatistics_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("GAK_Statistics"))
+                return;
+            new GAK_Statistics().Show();
+        }
         
     }
 }

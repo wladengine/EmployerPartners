@@ -37,6 +37,11 @@ namespace EmployerPartners
             get { return ComboServ.GetComboIdInt(cbQulification); }
             set { ComboServ.SetComboId(cbQulification, value); }
         }
+        public int? LPLicenseId
+        {
+            get { return ComboServ.GetComboIdInt(cbLicense); }
+            set { ComboServ.SetComboId(cbLicense, value); }
+        }
 
         public CardLP()
         {
@@ -64,6 +69,10 @@ namespace EmployerPartners
             ComboServ.FillCombo(cbLevel, HelpClass.GetComboListByTable("dbo.StudyLevel"), false, true);
             ComboServ.FillCombo(cbRubric, HelpClass.GetComboListByQuery(@" select distinct  CONVERT(varchar(100), Rubric.Id) AS Id, Rubric.Name as Name
                 from dbo.Rubric order by Name"), true, false);
+            ComboServ.FillCombo(cbLicense, HelpClass.GetComboListByQuery(@" SELECT DISTINCT CONVERT(varchar(100), Id) AS Id, 
+                ('Лицензия  Серия: ' + Isnull([Series], '') + '  Номер: ' + Isnull([Number], '') + '  Рег.номер: ' +
+                    IsNull(RegNum, '') + '  Дата: ' + case [DateOut] when null then '' when '' then '' else convert(char(12), [DateOut], 3) end)  As Name 
+                FROM dbo.License ORDER BY Id DESC "), false, true); //cast([DateOut] as varchar) //CONVERT(char(12), GETDATE(), 3)
         }
         virtual public void FillLP()
         {
@@ -171,6 +180,11 @@ namespace EmployerPartners
                     lblQualification.Text = lst.Qualification;
                     lblStudyLevel.Text = lst.Level;
                 }
+        }
+
+        private void cbLicense_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillLP();
         }
     }
 }
