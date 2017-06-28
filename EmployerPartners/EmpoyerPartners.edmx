@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EmployerPartnersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EmployerPartnersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="_AppSettings">
           <Key>
             <PropertyRef Name="Key" />
@@ -712,6 +712,8 @@
           <Property Name="ActivityAreaId" Type="int" />
           <Property Name="ActivityAreaProfessionalId" Type="int" />
           <Property Name="Contact" Type="nvarchar" MaxLength="500" />
+          <Property Name="OrgBranchesOffices" Type="bit" />
+          <Property Name="EGRULBranchNumber" Type="int" />
           <Property Name="INN" Type="nvarchar" MaxLength="50" />
           <Property Name="OGRN" Type="nvarchar" MaxLength="50" />
           <Property Name="OGRNDate" Type="date" />
@@ -1970,6 +1972,7 @@
           <Property Name="Review_PP_Subdivision2_Changed2" Type="nvarchar" MaxLength="500" />
           <Property Name="Review_PP_Organization2_Changed2" Type="nvarchar" MaxLength="500" />
           <Property Name="Review_PP_OrgPosition2_Changed2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Review_NotUsePrevious_Changed2" Type="bit" />
           <Property Name="Review_SPbGU" Type="bit" />
           <Property Name="Review_FIO_Final" Type="nvarchar" MaxLength="255" />
           <Property Name="Review_Position_Final" Type="nvarchar" MaxLength="255" />
@@ -2321,12 +2324,15 @@
           <Property Name="RankHonoraryEng" Type="nvarchar" MaxLength="255" />
           <Property Name="RankState" Type="nvarchar" MaxLength="255" />
           <Property Name="RankStateEng" Type="nvarchar" MaxLength="255" />
+          <Property Name="Title" Type="nvarchar" MaxLength="1000" />
+          <Property Name="TitleEng" Type="nvarchar" MaxLength="1000" />
           <Property Name="Country" Type="nvarchar" MaxLength="255" />
           <Property Name="Email" Type="nvarchar" MaxLength="255" />
           <Property Name="OrgPosition" Type="nvarchar" MaxLength="4000" />
           <Property Name="OrgPositionEng" Type="nvarchar" MaxLength="4000" />
           <Property Name="PartnerId" Type="int" />
           <Property Name="Account" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsAbsent" Type="bit" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "EmployerPartners.dbo.GAK_StatChairmanPPNPR_Itog" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -4632,12 +4638,15 @@
     [ext_GAK_2017].[RankHonoraryEng] AS [RankHonoraryEng], 
     [ext_GAK_2017].[RankState] AS [RankState], 
     [ext_GAK_2017].[RankStateEng] AS [RankStateEng], 
+    [ext_GAK_2017].[Title] AS [Title], 
+    [ext_GAK_2017].[TitleEng] AS [TitleEng], 
     [ext_GAK_2017].[Country] AS [Country], 
     [ext_GAK_2017].[Email] AS [Email], 
     [ext_GAK_2017].[OrgPosition] AS [OrgPosition], 
     [ext_GAK_2017].[OrgPositionEng] AS [OrgPositionEng], 
     [ext_GAK_2017].[PartnerId] AS [PartnerId], 
-    [ext_GAK_2017].[Account] AS [Account]
+    [ext_GAK_2017].[Account] AS [Account], 
+    [ext_GAK_2017].[IsAbsent] AS [IsAbsent]
     FROM [dbo].[ext_GAK_2017] AS [ext_GAK_2017]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="GAK_StatChairmanPPNPR_Itog" EntityType="Self.GAK_StatChairmanPPNPR_Itog" store:Type="Views" store:Schema="dbo">
@@ -5756,6 +5765,8 @@
           <NavigationProperty Name="OrganizationSubdivision" Relationship="EmployerPartnersModel.FK_OrganizationSubdivision_Organization" FromRole="Organization" ToRole="OrganizationSubdivision" />
           <NavigationProperty Name="VKR_ThemesStudentOrder" Relationship="EmployerPartnersModel.FK_VKR_ThemesStudentOrder_Organization" FromRole="Organization" ToRole="VKR_ThemesStudentOrder" />
           <Property Name="OrganizationEnglishSourceId" Type="Int32" />
+          <Property Name="OrgBranchesOffices" Type="Boolean" />
+          <Property Name="EGRULBranchNumber" Type="Int32" />
         </EntityType>
         <EntityType Name="OrganizationActivityArea">
           <Key>
@@ -10489,6 +10500,7 @@
           <NavigationProperty Name="PartnerPerson1" Relationship="EmployerPartnersModel.FK_VKR_ThemesStudentOrder_PartnerPerson1" FromRole="VKR_ThemesStudentOrder" ToRole="PartnerPerson" />
           <Property Name="OrganizationDop_Changed2" Type="Boolean" />
           <Property Name="OrganizationNotAgreed_Changed2" Type="Boolean" />
+          <Property Name="Review_NotUsePrevious_Changed2" Type="Boolean" />
         </EntityType>
         <Association Name="FK_VKR_ThemesStudentOrder_Faculty">
           <End Type="EmployerPartnersModel.Faculty" Role="Faculty" Multiplicity="0..1" />
@@ -10797,6 +10809,9 @@
           <Property Name="OrgPositionEng" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="PartnerId" Type="Int32" />
           <Property Name="Account" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TitleEng" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsAbsent" Type="Boolean" />
         </EntityType>
         <EntityType Name="GAK_StatOP">
           <Key>
@@ -11103,6 +11118,8 @@
           <EntitySetMapping Name="Organization">
             <EntityTypeMapping TypeName="EmployerPartnersModel.Organization">
               <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="EGRULBranchNumber" ColumnName="EGRULBranchNumber" />
+                <ScalarProperty Name="OrgBranchesOffices" ColumnName="OrgBranchesOffices" />
                 <ScalarProperty Name="OrganizationEnglishSourceId" ColumnName="OrganizationEnglishSourceId" />
                 <ScalarProperty Name="EngSourceOfficial" ColumnName="EngSourceOfficial" />
                 <ScalarProperty Name="OkvedDop" ColumnName="OkvedDop" />
@@ -13019,6 +13036,7 @@
           <EntitySetMapping Name="VKR_ThemesStudentOrder">
             <EntityTypeMapping TypeName="EmployerPartnersModel.VKR_ThemesStudentOrder">
               <MappingFragment StoreEntitySet="VKR_ThemesStudentOrder">
+                <ScalarProperty Name="Review_NotUsePrevious_Changed2" ColumnName="Review_NotUsePrevious_Changed2" />
                 <ScalarProperty Name="OrganizationNotAgreed_Changed2" ColumnName="OrganizationNotAgreed_Changed2" />
                 <ScalarProperty Name="OrganizationDop_Changed2" ColumnName="OrganizationDop_Changed2" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -13338,6 +13356,9 @@
           <EntitySetMapping Name="ext_GAK_2017">
             <EntityTypeMapping TypeName="EmployerPartnersModel.ext_GAK_2017">
               <MappingFragment StoreEntitySet="ext_GAK_2017">
+                <ScalarProperty Name="IsAbsent" ColumnName="IsAbsent" />
+                <ScalarProperty Name="TitleEng" ColumnName="TitleEng" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Account" ColumnName="Account" />
                 <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
                 <ScalarProperty Name="OrgPositionEng" ColumnName="OrgPositionEng" />

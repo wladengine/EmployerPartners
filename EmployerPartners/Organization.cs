@@ -87,6 +87,8 @@ namespace EmployerPartners
         public string OkvedDop { get; set; }
         public Nullable<bool> EngSourceOfficial { get; set; }
         public Nullable<int> OrganizationEnglishSourceId { get; set; }
+        public Nullable<bool> OrgBranchesOffices { get; set; }
+        public Nullable<int> EGRULBranchNumber { get; set; }
     
         public virtual ActivityArea ActivityArea { get; set; }
         public virtual ActivityGoal ActivityGoal { get; set; }
