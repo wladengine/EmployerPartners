@@ -35,6 +35,9 @@
             this.err = new System.Windows.Forms.ErrorProvider(this.components);
             this.SaveSuccess = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label56 = new System.Windows.Forms.Label();
+            this.tbEGRULBranchNumber = new System.Windows.Forms.TextBox();
+            this.chbOrgBranchesOffices = new System.Windows.Forms.CheckBox();
             this.label55 = new System.Windows.Forms.Label();
             this.cbOrganizationEnglishSource = new System.Windows.Forms.ComboBox();
             this.chkbEngSourceOfficial = new System.Windows.Forms.CheckBox();
@@ -204,9 +207,18 @@
             this.label31 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.dgvBranches = new System.Windows.Forms.DataGridView();
+            this.ColumnDiv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCard = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.cbGraduateYear = new System.Windows.Forms.ComboBox();
+            this.btnVKRThemeAdd = new System.Windows.Forms.Button();
+            this.dgvVKR = new System.Windows.Forms.DataGridView();
             this.btnDelete = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tbAuthor = new System.Windows.Forms.TextBox();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.err)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SaveSuccess)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -235,6 +247,11 @@
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOkvedCodes)).BeginInit();
             this.tabPage5.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBranches)).BeginInit();
+            this.tabPage9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVKR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblName
@@ -270,6 +287,9 @@
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.label56);
+            this.tabPage1.Controls.Add(this.tbEGRULBranchNumber);
+            this.tabPage1.Controls.Add(this.chbOrgBranchesOffices);
             this.tabPage1.Controls.Add(this.label55);
             this.tabPage1.Controls.Add(this.cbOrganizationEnglishSource);
             this.tabPage1.Controls.Add(this.chkbEngSourceOfficial);
@@ -364,6 +384,32 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные сведения";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Location = new System.Drawing.Point(636, 209);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(195, 13);
+            this.label56.TabIndex = 62;
+            this.label56.Text = "номер (из ЕГРЮЛ) записи о филиале";
+            // 
+            // tbEGRULBranchNumber
+            // 
+            this.tbEGRULBranchNumber.Location = new System.Drawing.Point(550, 205);
+            this.tbEGRULBranchNumber.Name = "tbEGRULBranchNumber";
+            this.tbEGRULBranchNumber.Size = new System.Drawing.Size(75, 20);
+            this.tbEGRULBranchNumber.TabIndex = 61;
+            // 
+            // chbOrgBranchesOffices
+            // 
+            this.chbOrgBranchesOffices.AutoSize = true;
+            this.chbOrgBranchesOffices.Location = new System.Drawing.Point(550, 183);
+            this.chbOrgBranchesOffices.Name = "chbOrgBranchesOffices";
+            this.chbOrgBranchesOffices.Size = new System.Drawing.Size(281, 17);
+            this.chbOrgBranchesOffices.TabIndex = 60;
+            this.chbOrgBranchesOffices.Text = "Организация с филиалами/представительствами";
+            this.chbOrgBranchesOffices.UseVisualStyleBackColor = true;
             // 
             // label55
             // 
@@ -764,7 +810,7 @@
             // chkbIsActual
             // 
             this.chkbIsActual.AutoSize = true;
-            this.chkbIsActual.Location = new System.Drawing.Point(724, 184);
+            this.chkbIsActual.Location = new System.Drawing.Point(1060, 180);
             this.chkbIsActual.Name = "chkbIsActual";
             this.chkbIsActual.Size = new System.Drawing.Size(98, 17);
             this.chkbIsActual.TabIndex = 39;
@@ -774,7 +820,7 @@
             // chkbCardChecked
             // 
             this.chkbCardChecked.AutoSize = true;
-            this.chkbCardChecked.Location = new System.Drawing.Point(572, 184);
+            this.chkbCardChecked.Location = new System.Drawing.Point(908, 180);
             this.chkbCardChecked.Name = "chkbCardChecked";
             this.chkbCardChecked.Size = new System.Drawing.Size(130, 17);
             this.chkbCardChecked.TabIndex = 38;
@@ -917,7 +963,7 @@
             // btnAreaDelete
             // 
             this.btnAreaDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnAreaDelete.Image")));
-            this.btnAreaDelete.Location = new System.Drawing.Point(1153, 177);
+            this.btnAreaDelete.Location = new System.Drawing.Point(1154, 302);
             this.btnAreaDelete.Name = "btnAreaDelete";
             this.btnAreaDelete.Size = new System.Drawing.Size(25, 24);
             this.btnAreaDelete.TabIndex = 42;
@@ -928,7 +974,7 @@
             // btnAreaAdd
             // 
             this.btnAreaAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnAreaAdd.Image")));
-            this.btnAreaAdd.Location = new System.Drawing.Point(1184, 177);
+            this.btnAreaAdd.Location = new System.Drawing.Point(1185, 302);
             this.btnAreaAdd.Name = "btnAreaAdd";
             this.btnAreaAdd.Size = new System.Drawing.Size(25, 24);
             this.btnAreaAdd.TabIndex = 41;
@@ -942,10 +988,10 @@
             this.dgvArea.AllowUserToDeleteRows = false;
             this.dgvArea.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvArea.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvArea.Location = new System.Drawing.Point(890, 204);
+            this.dgvArea.Location = new System.Drawing.Point(1093, 329);
             this.dgvArea.Name = "dgvArea";
             this.dgvArea.ReadOnly = true;
-            this.dgvArea.Size = new System.Drawing.Size(319, 10);
+            this.dgvArea.Size = new System.Drawing.Size(117, 10);
             this.dgvArea.TabIndex = 40;
             this.dgvArea.Visible = false;
             this.dgvArea.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvActivityArea_CellDoubleClick);
@@ -997,28 +1043,28 @@
             // 
             // tbFax
             // 
-            this.tbFax.Location = new System.Drawing.Point(651, 315);
+            this.tbFax.Location = new System.Drawing.Point(651, 344);
             this.tbFax.Name = "tbFax";
             this.tbFax.Size = new System.Drawing.Size(433, 20);
             this.tbFax.TabIndex = 33;
             // 
             // tbWebSite
             // 
-            this.tbWebSite.Location = new System.Drawing.Point(651, 238);
+            this.tbWebSite.Location = new System.Drawing.Point(651, 268);
             this.tbWebSite.Name = "tbWebSite";
             this.tbWebSite.Size = new System.Drawing.Size(433, 20);
             this.tbWebSite.TabIndex = 30;
             // 
             // tbEmail
             // 
-            this.tbEmail.Location = new System.Drawing.Point(651, 213);
+            this.tbEmail.Location = new System.Drawing.Point(651, 243);
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Size = new System.Drawing.Size(433, 20);
             this.tbEmail.TabIndex = 29;
             // 
             // tbMobiles
             // 
-            this.tbMobiles.Location = new System.Drawing.Point(651, 289);
+            this.tbMobiles.Location = new System.Drawing.Point(651, 319);
             this.tbMobiles.Name = "tbMobiles";
             this.tbMobiles.Size = new System.Drawing.Size(433, 20);
             this.tbMobiles.TabIndex = 32;
@@ -1092,7 +1138,7 @@
             // 
             // tbPhone
             // 
-            this.tbPhone.Location = new System.Drawing.Point(650, 264);
+            this.tbPhone.Location = new System.Drawing.Point(651, 294);
             this.tbPhone.Name = "tbPhone";
             this.tbPhone.Size = new System.Drawing.Size(434, 20);
             this.tbPhone.TabIndex = 31;
@@ -1178,7 +1224,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(606, 318);
+            this.label9.Location = new System.Drawing.Point(606, 348);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(39, 13);
             this.label9.TabIndex = 5;
@@ -1205,7 +1251,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(581, 241);
+            this.label8.Location = new System.Drawing.Point(581, 271);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(61, 13);
             this.label8.TabIndex = 5;
@@ -1268,7 +1314,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(887, 185);
+            this.label27.Location = new System.Drawing.Point(1092, 286);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(118, 13);
             this.label27.TabIndex = 3;
@@ -1296,7 +1342,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(607, 216);
+            this.label5.Location = new System.Drawing.Point(607, 246);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(35, 13);
             this.label5.TabIndex = 5;
@@ -1305,7 +1351,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(530, 292);
+            this.label24.Location = new System.Drawing.Point(530, 322);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(115, 13);
             this.label24.TabIndex = 4;
@@ -1314,7 +1360,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(587, 267);
+            this.label6.Location = new System.Drawing.Point(587, 297);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(55, 13);
             this.label6.TabIndex = 4;
@@ -1393,6 +1439,8 @@
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage8);
+            this.tabControl1.Controls.Add(this.tabPage9);
             this.tabControl1.Location = new System.Drawing.Point(10, 48);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -2146,6 +2194,101 @@
             this.tbDescription.Size = new System.Drawing.Size(1200, 566);
             this.tbDescription.TabIndex = 0;
             // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.dgvBranches);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(1234, 664);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "Филиалы/представительства";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // dgvBranches
+            // 
+            this.dgvBranches.AllowUserToAddRows = false;
+            this.dgvBranches.AllowUserToDeleteRows = false;
+            this.dgvBranches.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvBranches.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBranches.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnDiv,
+            this.ColumnCard});
+            this.dgvBranches.Location = new System.Drawing.Point(15, 50);
+            this.dgvBranches.Name = "dgvBranches";
+            this.dgvBranches.ReadOnly = true;
+            this.dgvBranches.Size = new System.Drawing.Size(1200, 566);
+            this.dgvBranches.TabIndex = 0;
+            this.dgvBranches.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBranches_CellClick);
+            // 
+            // ColumnDiv
+            // 
+            this.ColumnDiv.Frozen = true;
+            this.ColumnDiv.HeaderText = "";
+            this.ColumnDiv.Name = "ColumnDiv";
+            this.ColumnDiv.ReadOnly = true;
+            this.ColumnDiv.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnDiv.Width = 5;
+            // 
+            // ColumnCard
+            // 
+            this.ColumnCard.Frozen = true;
+            this.ColumnCard.HeaderText = "Действие";
+            this.ColumnCard.Name = "ColumnCard";
+            this.ColumnCard.ReadOnly = true;
+            this.ColumnCard.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnCard.Text = "Карточка";
+            this.ColumnCard.UseColumnTextForButtonValue = true;
+            this.ColumnCard.Width = 80;
+            // 
+            // tabPage9
+            // 
+            this.tabPage9.Controls.Add(this.cbGraduateYear);
+            this.tabPage9.Controls.Add(this.btnVKRThemeAdd);
+            this.tabPage9.Controls.Add(this.dgvVKR);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage9.Size = new System.Drawing.Size(1234, 664);
+            this.tabPage9.TabIndex = 8;
+            this.tabPage9.Text = "Выпускные квалификационные работы";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // cbGraduateYear
+            // 
+            this.cbGraduateYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGraduateYear.FormattingEnabled = true;
+            this.cbGraduateYear.Location = new System.Drawing.Point(19, 24);
+            this.cbGraduateYear.Name = "cbGraduateYear";
+            this.cbGraduateYear.Size = new System.Drawing.Size(168, 21);
+            this.cbGraduateYear.TabIndex = 2;
+            this.cbGraduateYear.SelectedIndexChanged += new System.EventHandler(this.cbGraduateYear_SelectedIndexChanged);
+            // 
+            // btnVKRThemeAdd
+            // 
+            this.btnVKRThemeAdd.Location = new System.Drawing.Point(1048, 24);
+            this.btnVKRThemeAdd.Name = "btnVKRThemeAdd";
+            this.btnVKRThemeAdd.Size = new System.Drawing.Size(165, 23);
+            this.btnVKRThemeAdd.TabIndex = 1;
+            this.btnVKRThemeAdd.Text = "Добавить тему";
+            this.btnVKRThemeAdd.UseVisualStyleBackColor = true;
+            this.btnVKRThemeAdd.Click += new System.EventHandler(this.btnVKRThemeAdd_Click);
+            // 
+            // dgvVKR
+            // 
+            this.dgvVKR.AllowUserToAddRows = false;
+            this.dgvVKR.AllowUserToDeleteRows = false;
+            this.dgvVKR.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvVKR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVKR.Location = new System.Drawing.Point(19, 53);
+            this.dgvVKR.Name = "dgvVKR";
+            this.dgvVKR.ReadOnly = true;
+            this.dgvVKR.Size = new System.Drawing.Size(1194, 596);
+            this.dgvVKR.TabIndex = 0;
+            this.dgvVKR.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVKR_CellDoubleClick);
+            // 
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -2173,11 +2316,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 782);
+            this.Controls.Add(this.lblName);
             this.Controls.Add(this.tbAuthor);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.lblName);
             this.Name = "CardOrganization";
             this.Text = "Организация";
             this.Load += new System.EventHandler(this.CardOrganization_Load);
@@ -2217,6 +2360,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOkvedCodes)).EndInit();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBranches)).EndInit();
+            this.tabPage9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVKR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2401,6 +2549,18 @@
         private System.Windows.Forms.TextBox tbAuthor;
         private System.Windows.Forms.ComboBox cbOrganizationEnglishSource;
         private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.TextBox tbEGRULBranchNumber;
+        private System.Windows.Forms.CheckBox chbOrgBranchesOffices;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.DataGridView dgvBranches;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDiv;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnCard;
+        private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.DataGridView dgvVKR;
+        private System.Windows.Forms.Button btnVKRThemeAdd;
+        private System.Windows.Forms.ComboBox cbGraduateYear;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }
 

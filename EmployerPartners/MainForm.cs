@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -22,64 +23,39 @@ namespace EmployerPartners
         {
             InitializeComponent();
             var x = Util.lstCountry;
-            this.Text = "Организации партнеры";
+            this.Text = "Организации партнеры: " + Util.GetUserName() + " ("+GetVersion()+")" ;
             Log();
             SetAccessRight();
         }
         private void SetAccessRight()
         {
-            if (Util.IsAdministrator())
-            {
-                smiSettings.Visible = true;
-            }
-            else
-            {
-                smiSettings.Visible = false;
-            }
+            smiSettings.Visible = Util.IsAdministrator();
+            smiPracticeMain.Visible = smiPracticeMain.Enabled = (Util.IsPractice() || Util.IsPracticeRead() || Util.IsPracticeWrite() || Util.IsReadOnlyAll());
+            smiVKRAddEdit.Visible = smiVKRAddEdit.Enabled =  
+            smiVKRThemesStudent.Visible = smiVKRThemesStudent.Enabled =  
+            smiVKRThemesAspirant.Visible = smiVKRThemesAspirant.Enabled = (Util.IsVKRRead() || Util.IsVKRWrite() || Util.IsReadOnlyAll());
+            smiGAKLists.Visible = smiGAKLists.Enabled = 
+            smiGAKMembers.Visible = smiGAKMembers.Enabled =  
+            smiSOP.Visible = smiSOP.Enabled = (Util.IsGAKRead() || Util.IsGAKWrite() || Util.IsReadOnlyAll());
+            smiSOP.Visible = smiSOP.Enabled = Util.IsSOPReadWrite();
+
             if (Util.IsDBOwner() || Util.IsAdministrator())
             {
                 helpEditToolStripMenuItem.Visible = true;
                 tmplToolStripMenuItem.Visible = true;
                 smiNewOrgHelpLoad.Visible = true;
-                smiVKRAddEdit.Visible = true;
-                smiVKRAddEdit.Enabled = true;
-                smiVKRMain.Visible = true;
-                smiVKRMain.Enabled = true;
-                smiVKRThemesStudent.Visible = true;
-                smiVKRThemesStudent.Enabled = true;
-                smiGAKLists.Visible = true;
-                smiGAKLists.Enabled = true;
-                //smiGAKMembers.Visible = true;
-                //smiGAKMembers.Enabled = true;
-            }
-
-            if (Util.IsPractice() || Util.IsPracticeRead() || Util.IsPracticeWrite() || Util.IsReadOnlyAll())
-            {
-                smiPracticeMain.Visible = true;
-                smiPracticeMain.Enabled = true;
-            }
-
-            if (Util.IsVKRRead() || Util.IsVKRWrite() || Util.IsReadOnlyAll())
-            {
-                //smiVKRMain.Visible = true;
-                //smiVKRMain.Enabled = true;
-                smiVKRAddEdit.Visible = true;
-                smiVKRAddEdit.Enabled = true;
-                smiVKRThemesStudent.Visible = true;
-                smiVKRThemesStudent.Enabled = true;
-            }
-
-            if (Util.IsGAKRead() || Util.IsGAKWrite() || Util.IsReadOnlyAll())
-            {
-                smiGAKLists.Visible = true;
-                smiGAKLists.Enabled = true;
-                smiGAKMembers.Visible = true;
-                smiGAKMembers.Enabled = true;
-            }
+                smiVKRAddEdit.Visible = smiVKRAddEdit.Enabled = true;
+                smiVKRMain.Visible = smiVKRMain.Enabled = true;
+                smiVKRThemesStudent.Visible = smiVKRThemesStudent.Enabled = true;
+                smiVKRThemesAspirant.Visible = smiVKRThemesAspirant.Enabled = true;
+                smiGAKLists.Visible = smiGAKLists.Enabled = true;
+                smiSOP.Visible = smiSOP.Enabled = true;
+            } 
             if (Util.IsSuperUser())
             {
-                smiGAKMembers.Visible = true;
-                smiGAKMembers.Enabled = true;
+                smiGAKMembers.Visible = smiGAKMembers.Enabled = true;
+                smiSOP.Visible = smiSOP.Enabled = true;
+
             }
         }
         private void Log()
@@ -88,9 +64,32 @@ namespace EmployerPartners
             {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
+                    TimerSetLastUdateTime = new Timer();
+                    TimerSetLastUdateTime.Interval = 1000 * 60 * 5 ; // 5 минут
+                    TimerSetLastUdateTime.Tick += TimerSetLastUdateTime_Tick;
+                    TimerSetLastUdateTime.Start();
+
+                    bool isnew = false;
+                    string UserName = Util.GetUserName();
+                    string Version = GetVersion();
+                    C_AppUsersVersion vers = context.C_AppUsersVersion.Where(x => x.UserName == UserName).FirstOrDefault();
+                    if (vers== null)
+                    {
+                        isnew = true;
+                        vers = new C_AppUsersVersion();
+                        vers.UserName = UserName;
+                    }
+
+                    vers.Version = Version;
+                    vers.OpenTimestamp = DateTime.Now;
+                    vers.LastUpdateTimestamp = DateTime.Now;
+                    if (isnew)
+                        context.C_AppUsersVersion.Add(vers);
+
                     EPLog log = new EPLog();
                     log.ActionName = "Открытие программы";
-                    log.ActionValue = Util.GetUserName();
+                    log.Version = Version;
+                    log.ActionValue = UserName;
                     context.EPLog.Add(log);
                     context.SaveChanges();
                     LogId = log.Id;
@@ -99,6 +98,42 @@ namespace EmployerPartners
             catch (Exception)
             {
             }
+        }
+        public static string GetVersion()
+        {
+            int ind = Application.StartupPath.LastIndexOf("\\") + 1;
+            if (ind > 0 && ind < Application.StartupPath.ToString().Length)
+            {
+                return Application.StartupPath.ToString().Substring(ind);
+            }
+            return "";
+        }
+        private static void TimerSetLastUdateTime_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    string UserName = Util.GetUserName();
+                    C_AppUsersVersion vers = context.C_AppUsersVersion.Where(x => x.UserName == UserName).FirstOrDefault();
+                    if (vers != null)
+                    {
+                        vers.LastUpdateTimestamp = DateTime.Now;
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        vers = new C_AppUsersVersion();
+                        vers.UserName = UserName;
+                        vers.Version = GetVersion();
+                        vers.LastUpdateTimestamp = DateTime.Now;
+                        vers.OpenTimestamp = DateTime.Now;
+                        context.C_AppUsersVersion.Add(vers);
+                        context.SaveChanges();
+                    }
+                }
+            }
+            catch { }
         }
         private void smiOrganizationList_Click(object sender, EventArgs e)
         {
@@ -291,7 +326,7 @@ namespace EmployerPartners
 
         private void tmplToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Templates template = new Templates();
+            TemplatesCard template = new TemplatesCard();
             template.MdiParent = this;
             template.Show();
         }
@@ -325,10 +360,18 @@ namespace EmployerPartners
             {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
+                    string UserName = Util.GetUserName();
+                    C_AppUsersVersion vers = context.C_AppUsersVersion.Where(x => x.UserName == UserName).FirstOrDefault();
+                    if (vers != null)
+                    {
+                        vers.Version = null;
+                        vers.OpenTimestamp = null;
+                        vers.LastUpdateTimestamp = DateTime.Now;
+                    }
                     var log = context.EPLog.Where(x => x.Id == LogId).First();
                     log.ActionName1 = "Закрытие программы";
                     log.ActionTime1 = DateTime.Now;
-                    log.ActionValue1 = Util.GetUserName();
+                    log.ActionValue1 = UserName;
                     context.SaveChanges();
                 }
             }
@@ -482,7 +525,7 @@ namespace EmployerPartners
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            MainTimer.Enabled = true; //Utilities.CheckCurrentDir();
+            MainTimer.Enabled = true; 
             MainTimer.Start();
         }
 
@@ -496,16 +539,6 @@ namespace EmployerPartners
                     MainTimer.Enabled = false;
                     return;
                 }
-                //if (Utilities.FormIsOpened("NewAppVersion"))
-                //{
-                //    return;
-                //}
-                //else
-                //{
-                //    NewAppVersion newapp = new NewAppVersion();
-                //    //newapp.MdiParent = this;
-                //    newapp.Show();
-                //}
 
                 MainTimer.Interval = 600000;
 
@@ -531,11 +564,8 @@ namespace EmployerPartners
                         MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
                         {
                             string newApp = targetdir + "\\" + "EmployerPartners.exe";
-                            //MessageBox.Show("Текущий каталог: \r\n" + curdir + "\r\nКаталог новой версии: \r\n" + targetdir +"\r\nФайл для запуска: " + newApp, "Инфо",
-                            //    MessageBoxButtons.OK, MessageBoxIcon.Information);
                             System.Diagnostics.Process.Start(newApp);
                             Application.Exit();
-                            //System.Environment.Exit(0);
                             return;
                         }
                         else
@@ -601,6 +631,43 @@ namespace EmployerPartners
             if (Utilities.FormIsOpened("GAK_Statistics"))
                 return;
             new GAK_Statistics().Show();
+        }
+
+        private void smiAspirant_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("UpdateAspirantFromSrv"))
+                return;
+            UpdateAspirantFromSrv updateform = new UpdateAspirantFromSrv();
+            updateform.MdiParent = this;
+            updateform.Show();
+        }
+
+        private void smiVKRThemesAspirant_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("VKRThemesAspirant"))
+                return;
+            new VKRThemesAspirant().Show();
+        }
+
+        private void smiSOP_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("SOPList"))
+                return;
+            new SOPList().Show();
+        }
+
+        private void smiPositionSOP_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("CardDictionaryPositionSOP"))
+                return;
+            new CardDictionaryPositionSOP().Show();
+        }
+
+        private void smiObrazProgramCharacteristics_Click(object sender, EventArgs e)
+        {
+            if (Utilities.FormIsOpened("ObrazProgramCharacteristicList"))
+                return;
+            new ObrazProgramCharacteristicList().Show();
         }
         
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -16,7 +17,7 @@ namespace EmployerPartners
             : base()
         {
         }
-        public CardPersonArea(int? Id, int persId, UpdateVoidHandler h)
+        public CardPersonArea(int? Id, int persId, UpdateIntHandler h)
             : base(Id, persId, h)
         {
         }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -15,7 +16,7 @@ namespace EmployerPartners
         
         public int? _id;
         public int ObjectId;
-        UpdateVoidHandler _hdl;
+        UpdateIntHandler _hdl;
 
         public int? RubricId
         {
@@ -26,7 +27,7 @@ namespace EmployerPartners
         {
             InitializeComponent();
         }
-        public CardFaculty(int? Id, int objId, UpdateVoidHandler h)
+        public CardFaculty(int? Id, int objId, UpdateIntHandler h)
         {
             InitializeComponent();
             _id = Id;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -14,13 +15,13 @@ namespace EmployerPartners
     {
         public int? _id;
         public int PersId;
-        UpdateVoidHandler _hdl;
+        UpdateIntHandler _hdl;
 
         public CardOrganizationPerson()
         {
             InitializeComponent();
         }
-        public CardOrganizationPerson(int? Id, int persId, UpdateVoidHandler h)
+        public CardOrganizationPerson(int? Id, int persId, UpdateIntHandler h)
         {
             InitializeComponent();
             _id = Id;
@@ -194,7 +195,7 @@ namespace EmployerPartners
         {
             //if (Utilities.OrgCardIsOpened((int)_OrgId))
             //    return;
-            new ContactNewPerson(PersId, new UpdateVoidHandler(FillCardNewContact)).Show();
+            new ContactNewPerson(PersId, new UpdateIntHandler(FillCardNewContact)).Show();
         }
     }
 }

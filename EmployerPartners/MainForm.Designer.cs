@@ -35,19 +35,26 @@
             this.smiPersonList = new System.Windows.Forms.ToolStripMenuItem();
             this.smiRubric = new System.Windows.Forms.ToolStripMenuItem();
             this.smiPracticeMain = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiVKRblock = new System.Windows.Forms.ToolStripMenuItem();
             this.smiVKRAddEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.smiVKRThemesStudent = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiVKRThemesAspirant = new System.Windows.Forms.ToolStripMenuItem();
             this.smiVKRMain = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiGAK = new System.Windows.Forms.ToolStripMenuItem();
             this.smiGAKLists = new System.Windows.Forms.ToolStripMenuItem();
             this.smiGAKMembers = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiSOP = new System.Windows.Forms.ToolStripMenuItem();
             this.smiStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.smiOrgaanizationStatistics = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiGAKStatistics = new System.Windows.Forms.ToolStripMenuItem();
             this.smiSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.smiEmailSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.smiTables = new System.Windows.Forms.ToolStripMenuItem();
             this.smiDegree = new System.Windows.Forms.ToolStripMenuItem();
             this.smiRank = new System.Windows.Forms.ToolStripMenuItem();
             this.smiPosition = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiPositionSOP = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.smiActivityArea = new System.Windows.Forms.ToolStripMenuItem();
             this.smiOwnership = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,8 +63,8 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.smiLPOP = new System.Windows.Forms.ToolStripMenuItem();
             this.smiStudent = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiAspirant = new System.Windows.Forms.ToolStripMenuItem();
             this.smiNPR = new System.Windows.Forms.ToolStripMenuItem();
-            this.smiWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.smiHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.helpShowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,7 +72,9 @@
             this.smiNewOrgHelpLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.tmplToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTimer = new System.Windows.Forms.Timer(this.components);
-            this.smiGAKStatistics = new System.Windows.Forms.ToolStripMenuItem();
+            this.TimerSetLastUdateTime = new System.Windows.Forms.Timer(this.components);
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.smiObrazProgramCharacteristics = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,8 +85,8 @@
             this.smiRubric,
             this.smiStatistics,
             this.smiSettings,
-            this.smiTables,
             this.smiWindow,
+            this.smiTables,
             this.smiHelp});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.MdiWindowListItem = this.smiWindow;
@@ -113,11 +122,10 @@
             // 
             this.smiRubric.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.smiPracticeMain,
-            this.smiVKRAddEdit,
-            this.smiVKRThemesStudent,
-            this.smiVKRMain,
-            this.smiGAKLists,
-            this.smiGAKMembers});
+            this.smiVKRblock,
+            this.smiGAK,
+            this.smiSOP,
+            this.smiObrazProgramCharacteristics});
             this.smiRubric.Name = "smiRubric";
             this.smiRubric.Size = new System.Drawing.Size(66, 20);
             this.smiRubric.Text = "Рубрики";
@@ -126,9 +134,20 @@
             // 
             this.smiPracticeMain.Enabled = false;
             this.smiPracticeMain.Name = "smiPracticeMain";
-            this.smiPracticeMain.Size = new System.Drawing.Size(282, 22);
+            this.smiPracticeMain.Size = new System.Drawing.Size(274, 22);
             this.smiPracticeMain.Text = "Практика (главное окно)";
             this.smiPracticeMain.Click += new System.EventHandler(this.smiPracticeMain_Click);
+            // 
+            // smiVKRblock
+            // 
+            this.smiVKRblock.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.smiVKRAddEdit,
+            this.smiVKRThemesStudent,
+            this.smiVKRThemesAspirant,
+            this.smiVKRMain});
+            this.smiVKRblock.Name = "smiVKRblock";
+            this.smiVKRblock.Size = new System.Drawing.Size(274, 22);
+            this.smiVKRblock.Text = "ВКР";
             // 
             // smiVKRAddEdit
             // 
@@ -146,6 +165,15 @@
             this.smiVKRThemesStudent.Text = "Студенты - темы ВКР";
             this.smiVKRThemesStudent.Click += new System.EventHandler(this.smiVKRThemesStudent_Click);
             // 
+            // smiVKRThemesAspirant
+            // 
+            this.smiVKRThemesAspirant.Enabled = false;
+            this.smiVKRThemesAspirant.Name = "smiVKRThemesAspirant";
+            this.smiVKRThemesAspirant.Size = new System.Drawing.Size(282, 22);
+            this.smiVKRThemesAspirant.Text = "Аспиранты - темы ВКР";
+            this.smiVKRThemesAspirant.Visible = false;
+            this.smiVKRThemesAspirant.Click += new System.EventHandler(this.smiVKRThemesAspirant_Click);
+            // 
             // smiVKRMain
             // 
             this.smiVKRMain.Enabled = false;
@@ -155,11 +183,20 @@
             this.smiVKRMain.Visible = false;
             this.smiVKRMain.Click += new System.EventHandler(this.smiVKRMain_Click);
             // 
+            // smiGAK
+            // 
+            this.smiGAK.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.smiGAKLists,
+            this.smiGAKMembers});
+            this.smiGAK.Name = "smiGAK";
+            this.smiGAK.Size = new System.Drawing.Size(274, 22);
+            this.smiGAK.Text = "Составы ГЭК";
+            // 
             // smiGAKLists
             // 
             this.smiGAKLists.Enabled = false;
             this.smiGAKLists.Name = "smiGAKLists";
-            this.smiGAKLists.Size = new System.Drawing.Size(282, 22);
+            this.smiGAKLists.Size = new System.Drawing.Size(247, 22);
             this.smiGAKLists.Text = "Составы ГЭК: председатели";
             this.smiGAKLists.Click += new System.EventHandler(this.smiGAKLists_Click);
             // 
@@ -167,10 +204,17 @@
             // 
             this.smiGAKMembers.Enabled = false;
             this.smiGAKMembers.Name = "smiGAKMembers";
-            this.smiGAKMembers.Size = new System.Drawing.Size(282, 22);
+            this.smiGAKMembers.Size = new System.Drawing.Size(247, 22);
             this.smiGAKMembers.Text = "Составы ГЭК: список комиссий";
             this.smiGAKMembers.Visible = false;
             this.smiGAKMembers.Click += new System.EventHandler(this.smiGAKMembers_Click);
+            // 
+            // smiSOP
+            // 
+            this.smiSOP.Name = "smiSOP";
+            this.smiSOP.Size = new System.Drawing.Size(274, 22);
+            this.smiSOP.Text = "Советы образовательных программ";
+            this.smiSOP.Click += new System.EventHandler(this.smiSOP_Click);
             // 
             // smiStatistics
             // 
@@ -188,6 +232,13 @@
             this.smiOrgaanizationStatistics.Text = "Статистика по организациям";
             this.smiOrgaanizationStatistics.Click += new System.EventHandler(this.smiOrgaanizationStatistics_Click);
             // 
+            // smiGAKStatistics
+            // 
+            this.smiGAKStatistics.Name = "smiGAKStatistics";
+            this.smiGAKStatistics.Size = new System.Drawing.Size(234, 22);
+            this.smiGAKStatistics.Text = "Статистика по ГЭК";
+            this.smiGAKStatistics.Click += new System.EventHandler(this.smiGAKStatistics_Click);
+            // 
             // smiSettings
             // 
             this.smiSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -204,12 +255,19 @@
             this.smiEmailSettings.Text = "Логин/Пароль для email";
             this.smiEmailSettings.Click += new System.EventHandler(this.smiEmailSettings_Click);
             // 
+            // smiWindow
+            // 
+            this.smiWindow.Name = "smiWindow";
+            this.smiWindow.Size = new System.Drawing.Size(48, 20);
+            this.smiWindow.Text = "Окно";
+            // 
             // smiTables
             // 
             this.smiTables.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.smiDegree,
             this.smiRank,
             this.smiPosition,
+            this.smiPositionSOP,
             this.toolStripSeparator1,
             this.smiActivityArea,
             this.smiOwnership,
@@ -218,6 +276,7 @@
             this.toolStripSeparator2,
             this.smiLPOP,
             this.smiStudent,
+            this.smiAspirant,
             this.smiNPR});
             this.smiTables.Name = "smiTables";
             this.smiTables.Size = new System.Drawing.Size(94, 20);
@@ -243,6 +302,13 @@
             this.smiPosition.Size = new System.Drawing.Size(320, 22);
             this.smiPosition.Text = "Должности в организациях";
             this.smiPosition.Click += new System.EventHandler(this.smiPosition_Click);
+            // 
+            // smiPositionSOP
+            // 
+            this.smiPositionSOP.Name = "smiPositionSOP";
+            this.smiPositionSOP.Size = new System.Drawing.Size(320, 22);
+            this.smiPositionSOP.Text = "Должность в совете обр. программ";
+            this.smiPositionSOP.Click += new System.EventHandler(this.smiPositionSOP_Click);
             // 
             // toolStripSeparator1
             // 
@@ -296,18 +362,19 @@
             this.smiStudent.Text = "Справочник студентов";
             this.smiStudent.Click += new System.EventHandler(this.smiStudent_Click);
             // 
+            // smiAspirant
+            // 
+            this.smiAspirant.Name = "smiAspirant";
+            this.smiAspirant.Size = new System.Drawing.Size(320, 22);
+            this.smiAspirant.Text = "Справочник аспирантов";
+            this.smiAspirant.Click += new System.EventHandler(this.smiAspirant_Click);
+            // 
             // smiNPR
             // 
             this.smiNPR.Name = "smiNPR";
             this.smiNPR.Size = new System.Drawing.Size(320, 22);
             this.smiNPR.Text = "Научно-педагогические работники";
             this.smiNPR.Click += new System.EventHandler(this.smiNPR_Click);
-            // 
-            // smiWindow
-            // 
-            this.smiWindow.Name = "smiWindow";
-            this.smiWindow.Size = new System.Drawing.Size(48, 20);
-            this.smiWindow.Text = "Окно";
             // 
             // smiHelp
             // 
@@ -364,12 +431,18 @@
             this.MainTimer.Interval = 1000;
             this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
-            // smiGAKStatistics
+            // toolStripMenuItem2
             // 
-            this.smiGAKStatistics.Name = "smiGAKStatistics";
-            this.smiGAKStatistics.Size = new System.Drawing.Size(234, 22);
-            this.smiGAKStatistics.Text = "Статистика по ГЭК";
-            this.smiGAKStatistics.Click += new System.EventHandler(this.smiGAKStatistics_Click);
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Text = "11";
+            // 
+            // smiObrazProgramCharacteristics
+            // 
+            this.smiObrazProgramCharacteristics.Name = "smiObrazProgramCharacteristics";
+            this.smiObrazProgramCharacteristics.Size = new System.Drawing.Size(274, 22);
+            this.smiObrazProgramCharacteristics.Text = "Характеристика обр. программ";
+            this.smiObrazProgramCharacteristics.Click += new System.EventHandler(this.smiObrazProgramCharacteristics_Click);
             // 
             // MainForm
             // 
@@ -430,5 +503,14 @@
         private System.Windows.Forms.ToolStripMenuItem smiVKRThemesStudent;
         private System.Windows.Forms.ToolStripMenuItem smiGAKMembers;
         private System.Windows.Forms.ToolStripMenuItem smiGAKStatistics;
+        private System.Windows.Forms.ToolStripMenuItem smiAspirant;
+        private System.Windows.Forms.ToolStripMenuItem smiVKRThemesAspirant;
+        private System.Windows.Forms.Timer TimerSetLastUdateTime;
+        private System.Windows.Forms.ToolStripMenuItem smiSOP;
+        private System.Windows.Forms.ToolStripMenuItem smiPositionSOP;
+        private System.Windows.Forms.ToolStripMenuItem smiVKRblock;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem smiGAK;
+        private System.Windows.Forms.ToolStripMenuItem smiObrazProgramCharacteristics;
     }
 }

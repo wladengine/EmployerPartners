@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -327,7 +328,7 @@ namespace EmployerPartners
                         string lp = dgv.CurrentRow.Cells["Направление"].Value.ToString();
                         if (Utilities.PracticeCardIsOpened(id))
                             return;
-                        new PracticeCard(id, pid, lpid, lp, new UpdateVoidHandler(FillGrid)).Show();
+                        new PracticeCard(id, pid, lpid, lp, new UpdateIntHandler(FillGrid)).Show();
                     }
             }
             catch (Exception)
@@ -348,7 +349,7 @@ namespace EmployerPartners
                         string lp = dgv.CurrentRow.Cells["Направление"].Value.ToString();
                         if (Utilities.PracticeCardIsOpened(id))
                             return;
-                        new PracticeCard(id, pid, lpid, lp, new UpdateVoidHandler(FillGrid)).Show();
+                        new PracticeCard(id, pid, lpid, lp, new UpdateIntHandler(FillGrid)).Show();
                     }
             }
             catch (Exception)

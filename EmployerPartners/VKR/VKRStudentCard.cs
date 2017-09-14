@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -92,9 +93,9 @@ namespace EmployerPartners
             get;
             set;
         }
-        UpdateVoidHandler _hndl;
+        UpdateIntHandler _hndl;
 
-        public VKRStudentCard(int id, string op, string lp, string facname, UpdateVoidHandler _hdl)
+        public VKRStudentCard(int id, string op, string lp, string facname, UpdateIntHandler _hdl)
         {
             InitializeComponent();
             _Id = id;

@@ -83,6 +83,8 @@
             this.chbAlumni = new System.Windows.Forms.CheckBox();
             this.chbIsGraduate = new System.Windows.Forms.CheckBox();
             this.lbCountry = new System.Windows.Forms.ListBox();
+            this.btnAreaDelete = new System.Windows.Forms.Button();
+            this.btnAreaAdd = new System.Windows.Forms.Button();
             this.dgvArea = new System.Windows.Forms.DataGridView();
             this.cbDegree = new System.Windows.Forms.ComboBox();
             this.cbArea = new System.Windows.Forms.ComboBox();
@@ -125,29 +127,29 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.btnLPDelete = new System.Windows.Forms.Button();
+            this.btnLPAdd = new System.Windows.Forms.Button();
             this.dgvLP = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.btnFacultyDelete = new System.Windows.Forms.Button();
+            this.btnFacultyAdd = new System.Windows.Forms.Button();
             this.dgvFaculty = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.btnActivityAreaDelete = new System.Windows.Forms.Button();
+            this.btnActivityAreaAdd = new System.Windows.Forms.Button();
             this.dgvActivityArea = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.btnRubricDelete = new System.Windows.Forms.Button();
+            this.btnRublrikAdd = new System.Windows.Forms.Button();
             this.dgvRubric = new System.Windows.Forms.DataGridView();
             this.btnDelete = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tbAuthor = new System.Windows.Forms.TextBox();
-            this.btnAreaDelete = new System.Windows.Forms.Button();
-            this.btnAreaAdd = new System.Windows.Forms.Button();
-            this.btnLPDelete = new System.Windows.Forms.Button();
-            this.btnLPAdd = new System.Windows.Forms.Button();
-            this.btnFacultyDelete = new System.Windows.Forms.Button();
-            this.btnFacultyAdd = new System.Windows.Forms.Button();
-            this.btnActivityAreaDelete = new System.Windows.Forms.Button();
-            this.btnActivityAreaAdd = new System.Windows.Forms.Button();
-            this.btnRubricDelete = new System.Windows.Forms.Button();
-            this.btnRublrikAdd = new System.Windows.Forms.Button();
+            this.rbSexMale = new System.Windows.Forms.RadioButton();
+            this.rbSexNotMale = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.err)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SaveSuccess)).BeginInit();
             this.tabPage1.SuspendLayout();
@@ -199,6 +201,8 @@
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.rbSexNotMale);
+            this.tabPage1.Controls.Add(this.rbSexMale);
             this.tabPage1.Controls.Add(this.chbIsPersonDataChecked);
             this.tabPage1.Controls.Add(this.chbIsPersonDataAgreed);
             this.tabPage1.Controls.Add(this.btnAgreement);
@@ -321,7 +325,7 @@
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(934, 28);
+            this.label40.Location = new System.Drawing.Point(916, 13);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(56, 13);
             this.label40.TabIndex = 68;
@@ -331,7 +335,7 @@
             // 
             this.cbPrefix.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPrefix.FormattingEnabled = true;
-            this.cbPrefix.Location = new System.Drawing.Point(934, 51);
+            this.cbPrefix.Location = new System.Drawing.Point(919, 29);
             this.cbPrefix.Name = "cbPrefix";
             this.cbPrefix.Size = new System.Drawing.Size(66, 21);
             this.cbPrefix.TabIndex = 11;
@@ -610,6 +614,7 @@
             // chbGAKChairman
             // 
             this.chbGAKChairman.AutoSize = true;
+            this.chbGAKChairman.Enabled = false;
             this.chbGAKChairman.Location = new System.Drawing.Point(713, 484);
             this.chbGAKChairman.Name = "chbGAKChairman";
             this.chbGAKChairman.Size = new System.Drawing.Size(237, 17);
@@ -620,6 +625,7 @@
             // chbGAK
             // 
             this.chbGAK.AutoSize = true;
+            this.chbGAK.Enabled = false;
             this.chbGAK.Location = new System.Drawing.Point(713, 462);
             this.chbGAK.Name = "chbGAK";
             this.chbGAK.Size = new System.Drawing.Size(171, 17);
@@ -727,6 +733,30 @@
             this.lbCountry.Visible = false;
             this.lbCountry.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lbCountry_MouseClick);
             this.lbCountry.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbCountry_KeyDown);
+            // 
+            // btnAreaDelete
+            // 
+            this.btnAreaDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAreaDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnAreaDelete.Image")));
+            this.btnAreaDelete.Location = new System.Drawing.Point(941, 612);
+            this.btnAreaDelete.Name = "btnAreaDelete";
+            this.btnAreaDelete.Size = new System.Drawing.Size(25, 24);
+            this.btnAreaDelete.TabIndex = 36;
+            this.btnAreaDelete.UseVisualStyleBackColor = true;
+            this.btnAreaDelete.Visible = false;
+            this.btnAreaDelete.Click += new System.EventHandler(this.btnAreaDelete_Click);
+            // 
+            // btnAreaAdd
+            // 
+            this.btnAreaAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAreaAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnAreaAdd.Image")));
+            this.btnAreaAdd.Location = new System.Drawing.Point(972, 612);
+            this.btnAreaAdd.Name = "btnAreaAdd";
+            this.btnAreaAdd.Size = new System.Drawing.Size(25, 24);
+            this.btnAreaAdd.TabIndex = 36;
+            this.btnAreaAdd.UseVisualStyleBackColor = true;
+            this.btnAreaAdd.Visible = false;
+            this.btnAreaAdd.Click += new System.EventHandler(this.btnAreaAdd_Click);
             // 
             // dgvArea
             // 
@@ -1151,6 +1181,30 @@
             this.label14.TabIndex = 5;
             this.label14.Text = "DoubleClick - редакт.";
             // 
+            // btnLPDelete
+            // 
+            this.btnLPDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLPDelete.Enabled = false;
+            this.btnLPDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnLPDelete.Image")));
+            this.btnLPDelete.Location = new System.Drawing.Point(816, 202);
+            this.btnLPDelete.Name = "btnLPDelete";
+            this.btnLPDelete.Size = new System.Drawing.Size(26, 26);
+            this.btnLPDelete.TabIndex = 1;
+            this.btnLPDelete.UseVisualStyleBackColor = true;
+            this.btnLPDelete.Click += new System.EventHandler(this.btnLPDelete_Click);
+            // 
+            // btnLPAdd
+            // 
+            this.btnLPAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLPAdd.Enabled = false;
+            this.btnLPAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnLPAdd.Image")));
+            this.btnLPAdd.Location = new System.Drawing.Point(848, 202);
+            this.btnLPAdd.Name = "btnLPAdd";
+            this.btnLPAdd.Size = new System.Drawing.Size(26, 26);
+            this.btnLPAdd.TabIndex = 1;
+            this.btnLPAdd.UseVisualStyleBackColor = true;
+            this.btnLPAdd.Click += new System.EventHandler(this.btnLPAdd_Click);
+            // 
             // dgvLP
             // 
             this.dgvLP.AllowUserToAddRows = false;
@@ -1189,6 +1243,30 @@
             this.label12.Size = new System.Drawing.Size(94, 12);
             this.label12.TabIndex = 3;
             this.label12.Text = "DoubleClick - редакт.";
+            // 
+            // btnFacultyDelete
+            // 
+            this.btnFacultyDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFacultyDelete.Enabled = false;
+            this.btnFacultyDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnFacultyDelete.Image")));
+            this.btnFacultyDelete.Location = new System.Drawing.Point(342, 146);
+            this.btnFacultyDelete.Name = "btnFacultyDelete";
+            this.btnFacultyDelete.Size = new System.Drawing.Size(26, 26);
+            this.btnFacultyDelete.TabIndex = 1;
+            this.btnFacultyDelete.UseVisualStyleBackColor = true;
+            this.btnFacultyDelete.Click += new System.EventHandler(this.btnFacultyDelete_Click);
+            // 
+            // btnFacultyAdd
+            // 
+            this.btnFacultyAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFacultyAdd.Enabled = false;
+            this.btnFacultyAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnFacultyAdd.Image")));
+            this.btnFacultyAdd.Location = new System.Drawing.Point(374, 146);
+            this.btnFacultyAdd.Name = "btnFacultyAdd";
+            this.btnFacultyAdd.Size = new System.Drawing.Size(26, 26);
+            this.btnFacultyAdd.TabIndex = 1;
+            this.btnFacultyAdd.UseVisualStyleBackColor = true;
+            this.btnFacultyAdd.Click += new System.EventHandler(this.btnFacultyAdd_Click);
             // 
             // dgvFaculty
             // 
@@ -1230,6 +1308,30 @@
             this.label13.TabIndex = 4;
             this.label13.Text = "DoubleClick - редакт.";
             // 
+            // btnActivityAreaDelete
+            // 
+            this.btnActivityAreaDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnActivityAreaDelete.Enabled = false;
+            this.btnActivityAreaDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnActivityAreaDelete.Image")));
+            this.btnActivityAreaDelete.Location = new System.Drawing.Point(404, 330);
+            this.btnActivityAreaDelete.Name = "btnActivityAreaDelete";
+            this.btnActivityAreaDelete.Size = new System.Drawing.Size(26, 26);
+            this.btnActivityAreaDelete.TabIndex = 1;
+            this.btnActivityAreaDelete.UseVisualStyleBackColor = true;
+            this.btnActivityAreaDelete.Click += new System.EventHandler(this.btnAreaDelete_Click);
+            // 
+            // btnActivityAreaAdd
+            // 
+            this.btnActivityAreaAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnActivityAreaAdd.Enabled = false;
+            this.btnActivityAreaAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnActivityAreaAdd.Image")));
+            this.btnActivityAreaAdd.Location = new System.Drawing.Point(436, 330);
+            this.btnActivityAreaAdd.Name = "btnActivityAreaAdd";
+            this.btnActivityAreaAdd.Size = new System.Drawing.Size(26, 26);
+            this.btnActivityAreaAdd.TabIndex = 1;
+            this.btnActivityAreaAdd.UseVisualStyleBackColor = true;
+            this.btnActivityAreaAdd.Click += new System.EventHandler(this.btnAreaAdd_Click);
+            // 
             // dgvActivityArea
             // 
             this.dgvActivityArea.AllowUserToAddRows = false;
@@ -1269,6 +1371,30 @@
             this.label9.TabIndex = 2;
             this.label9.Text = "DoubleClick - редакт.";
             // 
+            // btnRubricDelete
+            // 
+            this.btnRubricDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRubricDelete.Enabled = false;
+            this.btnRubricDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnRubricDelete.Image")));
+            this.btnRubricDelete.Location = new System.Drawing.Point(342, 146);
+            this.btnRubricDelete.Name = "btnRubricDelete";
+            this.btnRubricDelete.Size = new System.Drawing.Size(26, 26);
+            this.btnRubricDelete.TabIndex = 1;
+            this.btnRubricDelete.UseVisualStyleBackColor = true;
+            this.btnRubricDelete.Click += new System.EventHandler(this.btnRubricDelete_Click);
+            // 
+            // btnRublrikAdd
+            // 
+            this.btnRublrikAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRublrikAdd.Enabled = false;
+            this.btnRublrikAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnRublrikAdd.Image")));
+            this.btnRublrikAdd.Location = new System.Drawing.Point(374, 146);
+            this.btnRublrikAdd.Name = "btnRublrikAdd";
+            this.btnRublrikAdd.Size = new System.Drawing.Size(26, 26);
+            this.btnRublrikAdd.TabIndex = 1;
+            this.btnRublrikAdd.UseVisualStyleBackColor = true;
+            this.btnRublrikAdd.Click += new System.EventHandler(this.btnRublrikAdd_Click);
+            // 
             // dgvRubric
             // 
             this.dgvRubric.AllowUserToAddRows = false;
@@ -1307,125 +1433,26 @@
             this.tbAuthor.Size = new System.Drawing.Size(687, 13);
             this.tbAuthor.TabIndex = 7;
             // 
-            // btnAreaDelete
+            // rbSexMale
             // 
-            this.btnAreaDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAreaDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnAreaDelete.Image")));
-            this.btnAreaDelete.Location = new System.Drawing.Point(941, 612);
-            this.btnAreaDelete.Name = "btnAreaDelete";
-            this.btnAreaDelete.Size = new System.Drawing.Size(25, 24);
-            this.btnAreaDelete.TabIndex = 36;
-            this.btnAreaDelete.UseVisualStyleBackColor = true;
-            this.btnAreaDelete.Visible = false;
-            this.btnAreaDelete.Click += new System.EventHandler(this.btnAreaDelete_Click);
+            this.rbSexMale.AutoSize = true;
+            this.rbSexMale.Location = new System.Drawing.Point(922, 56);
+            this.rbSexMale.Name = "rbSexMale";
+            this.rbSexMale.Size = new System.Drawing.Size(50, 17);
+            this.rbSexMale.TabIndex = 72;
+            this.rbSexMale.Text = "Муж.";
+            this.rbSexMale.UseVisualStyleBackColor = true;
             // 
-            // btnAreaAdd
+            // rbSexNotMale
             // 
-            this.btnAreaAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAreaAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnAreaAdd.Image")));
-            this.btnAreaAdd.Location = new System.Drawing.Point(972, 612);
-            this.btnAreaAdd.Name = "btnAreaAdd";
-            this.btnAreaAdd.Size = new System.Drawing.Size(25, 24);
-            this.btnAreaAdd.TabIndex = 36;
-            this.btnAreaAdd.UseVisualStyleBackColor = true;
-            this.btnAreaAdd.Visible = false;
-            this.btnAreaAdd.Click += new System.EventHandler(this.btnAreaAdd_Click);
-            // 
-            // btnLPDelete
-            // 
-            this.btnLPDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLPDelete.Enabled = false;
-            this.btnLPDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnLPDelete.Image")));
-            this.btnLPDelete.Location = new System.Drawing.Point(816, 202);
-            this.btnLPDelete.Name = "btnLPDelete";
-            this.btnLPDelete.Size = new System.Drawing.Size(26, 26);
-            this.btnLPDelete.TabIndex = 1;
-            this.btnLPDelete.UseVisualStyleBackColor = true;
-            this.btnLPDelete.Click += new System.EventHandler(this.btnLPDelete_Click);
-            // 
-            // btnLPAdd
-            // 
-            this.btnLPAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLPAdd.Enabled = false;
-            this.btnLPAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnLPAdd.Image")));
-            this.btnLPAdd.Location = new System.Drawing.Point(848, 202);
-            this.btnLPAdd.Name = "btnLPAdd";
-            this.btnLPAdd.Size = new System.Drawing.Size(26, 26);
-            this.btnLPAdd.TabIndex = 1;
-            this.btnLPAdd.UseVisualStyleBackColor = true;
-            this.btnLPAdd.Click += new System.EventHandler(this.btnLPAdd_Click);
-            // 
-            // btnFacultyDelete
-            // 
-            this.btnFacultyDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFacultyDelete.Enabled = false;
-            this.btnFacultyDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnFacultyDelete.Image")));
-            this.btnFacultyDelete.Location = new System.Drawing.Point(342, 146);
-            this.btnFacultyDelete.Name = "btnFacultyDelete";
-            this.btnFacultyDelete.Size = new System.Drawing.Size(26, 26);
-            this.btnFacultyDelete.TabIndex = 1;
-            this.btnFacultyDelete.UseVisualStyleBackColor = true;
-            this.btnFacultyDelete.Click += new System.EventHandler(this.btnFacultyDelete_Click);
-            // 
-            // btnFacultyAdd
-            // 
-            this.btnFacultyAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFacultyAdd.Enabled = false;
-            this.btnFacultyAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnFacultyAdd.Image")));
-            this.btnFacultyAdd.Location = new System.Drawing.Point(374, 146);
-            this.btnFacultyAdd.Name = "btnFacultyAdd";
-            this.btnFacultyAdd.Size = new System.Drawing.Size(26, 26);
-            this.btnFacultyAdd.TabIndex = 1;
-            this.btnFacultyAdd.UseVisualStyleBackColor = true;
-            this.btnFacultyAdd.Click += new System.EventHandler(this.btnFacultyAdd_Click);
-            // 
-            // btnActivityAreaDelete
-            // 
-            this.btnActivityAreaDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnActivityAreaDelete.Enabled = false;
-            this.btnActivityAreaDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnActivityAreaDelete.Image")));
-            this.btnActivityAreaDelete.Location = new System.Drawing.Point(404, 330);
-            this.btnActivityAreaDelete.Name = "btnActivityAreaDelete";
-            this.btnActivityAreaDelete.Size = new System.Drawing.Size(26, 26);
-            this.btnActivityAreaDelete.TabIndex = 1;
-            this.btnActivityAreaDelete.UseVisualStyleBackColor = true;
-            this.btnActivityAreaDelete.Click += new System.EventHandler(this.btnAreaDelete_Click);
-            // 
-            // btnActivityAreaAdd
-            // 
-            this.btnActivityAreaAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnActivityAreaAdd.Enabled = false;
-            this.btnActivityAreaAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnActivityAreaAdd.Image")));
-            this.btnActivityAreaAdd.Location = new System.Drawing.Point(436, 330);
-            this.btnActivityAreaAdd.Name = "btnActivityAreaAdd";
-            this.btnActivityAreaAdd.Size = new System.Drawing.Size(26, 26);
-            this.btnActivityAreaAdd.TabIndex = 1;
-            this.btnActivityAreaAdd.UseVisualStyleBackColor = true;
-            this.btnActivityAreaAdd.Click += new System.EventHandler(this.btnAreaAdd_Click);
-            // 
-            // btnRubricDelete
-            // 
-            this.btnRubricDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRubricDelete.Enabled = false;
-            this.btnRubricDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnRubricDelete.Image")));
-            this.btnRubricDelete.Location = new System.Drawing.Point(342, 146);
-            this.btnRubricDelete.Name = "btnRubricDelete";
-            this.btnRubricDelete.Size = new System.Drawing.Size(26, 26);
-            this.btnRubricDelete.TabIndex = 1;
-            this.btnRubricDelete.UseVisualStyleBackColor = true;
-            this.btnRubricDelete.Click += new System.EventHandler(this.btnRubricDelete_Click);
-            // 
-            // btnRublrikAdd
-            // 
-            this.btnRublrikAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRublrikAdd.Enabled = false;
-            this.btnRublrikAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnRublrikAdd.Image")));
-            this.btnRublrikAdd.Location = new System.Drawing.Point(374, 146);
-            this.btnRublrikAdd.Name = "btnRublrikAdd";
-            this.btnRublrikAdd.Size = new System.Drawing.Size(26, 26);
-            this.btnRublrikAdd.TabIndex = 1;
-            this.btnRublrikAdd.UseVisualStyleBackColor = true;
-            this.btnRublrikAdd.Click += new System.EventHandler(this.btnRublrikAdd_Click);
+            this.rbSexNotMale.AutoSize = true;
+            this.rbSexNotMale.Location = new System.Drawing.Point(922, 76);
+            this.rbSexNotMale.Name = "rbSexNotMale";
+            this.rbSexNotMale.Size = new System.Drawing.Size(51, 17);
+            this.rbSexNotMale.TabIndex = 72;
+            this.rbSexNotMale.TabStop = true;
+            this.rbSexNotMale.Text = "Жен.";
+            this.rbSexNotMale.UseVisualStyleBackColor = true;
             // 
             // CardPerson
             // 
@@ -1587,6 +1614,8 @@
         private System.Windows.Forms.Button btnAgreement;
         private System.Windows.Forms.CheckBox chbIsPersonDataAgreed;
         private System.Windows.Forms.CheckBox chbIsPersonDataChecked;
+        private System.Windows.Forms.RadioButton rbSexNotMale;
+        private System.Windows.Forms.RadioButton rbSexMale;
     }
 }
 

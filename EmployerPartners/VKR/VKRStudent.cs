@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -738,7 +739,7 @@ namespace EmployerPartners
                             FacName = dgv.CurrentRow.Cells["Подразделение"].Value.ToString();
                             if (Utilities.VKRStudentCardIsOpened(id))
                                 return;
-                            new VKRStudentCard(id, OP, LP, FacName, new UpdateVoidHandler(FillGrid)).Show();
+                            new VKRStudentCard(id, OP, LP, FacName, new UpdateIntHandler(FillGrid)).Show();
                         }
                         catch (Exception ex)
                         {

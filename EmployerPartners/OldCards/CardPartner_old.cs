@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using EmployerPartners.EDMX;
 
 using KLADR;
 
@@ -17,7 +18,7 @@ namespace EmployerPartners
     {
         PartnerContactPersonList lstContacts;
 
-        public CardPartner_old(int? id, UpdateVoidHandler _hdl)
+        public CardPartner_old(int? id, UpdateIntHandler _hdl)
         {
             InitializeComponent();
             _hndl = _hdl;

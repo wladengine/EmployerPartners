@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -60,9 +61,9 @@ namespace EmployerPartners
             get;
             set;
         }
-        UpdateVoidHandler _hndl;
+        UpdateIntHandler _hndl;
 
-        public PracticeOrgCard(int? id, int orgid, UpdateVoidHandler _hdl)
+        public PracticeOrgCard(int? id, int orgid, UpdateIntHandler _hdl)
         {
             InitializeComponent();
             _Id = id;

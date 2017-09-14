@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WordOut;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -155,9 +156,9 @@ namespace EmployerPartners
 
         private int? RowNumStartSearch;
 
-        UpdateVoidHandler _hndl;
+        UpdateIntHandler _hndl;
 
-        public PracticeCard(int id, int pid, int lpid, string lp, UpdateVoidHandler _hdl)
+        public PracticeCard(int id, int pid, int lpid, string lp, UpdateIntHandler _hdl)
         {
             InitializeComponent();
             _Id = id;
@@ -1844,7 +1845,7 @@ namespace EmployerPartners
                             int orgid = int.Parse(dgvOrg.CurrentRow.Cells["OrganizationId"].Value.ToString());
                             if (Utilities.PracticeOrgCardIsOpened(id))
                                 return;
-                            new PracticeOrgCard(id, orgid, new UpdateVoidHandler(FillOrg)).Show();
+                            new PracticeOrgCard(id, orgid, new UpdateIntHandler(FillOrg)).Show();
                         }
                         catch (Exception)
                         {
@@ -1860,7 +1861,7 @@ namespace EmployerPartners
                 {
                     int id = int.Parse(dgvOrg.CurrentRow.Cells["Id"].Value.ToString());
                     int orgid = int.Parse(dgvOrg.CurrentRow.Cells["OrganizationId"].Value.ToString());
-                    new PracticeOrgCard(id, orgid, new UpdateVoidHandler(FillOrg)).Show();
+                    new PracticeOrgCard(id, orgid, new UpdateIntHandler(FillOrg)).Show();
                 }
         }
 
@@ -2373,7 +2374,7 @@ namespace EmployerPartners
                             }
                             if (Utilities.PracticeStudentCardIsOpened(id))
                                 return;
-                            new PracticeStudentCard(id, orgid, orgname, new UpdateVoidHandler(FillStudent)).Show();
+                            new PracticeStudentCard(id, orgid, orgname, new UpdateIntHandler(FillStudent)).Show();
                         }
                         catch (Exception)
                         {
@@ -3163,7 +3164,7 @@ namespace EmployerPartners
 
             try
             {
-                new PracticeStudentDopList((int)_Id, (int)_PId, (int)_LPId, LP, new UpdateVoidHandler(FillStudent)).Show();
+                new PracticeStudentDopList((int)_Id, (int)_PId, (int)_LPId, LP, new UpdateIntHandler(FillStudent)).Show();
             }
             catch (Exception)
             {

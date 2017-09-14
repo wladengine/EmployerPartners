@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using FastMember;
 using System.IO;
 using OfficeOpenXml;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -62,25 +63,35 @@ namespace EmployerPartners
         }
         public bool isGAK
         {
-            get { return chbGAK.Checked; }
+            get { return chbGAK.Checked && chbGAK.Enabled; }
             set { chbGAK.Checked = value; }
         }
         public bool isGAKChairMan
         {
-            get { return chbGAKChairman.Checked; }
+            get { return chbGAKChairman.Checked && chbGAKChairman.Enabled; }
             set { chbGAKChairman.Checked = value; }
         }
         public bool isGAK2016
         {
-            get { return chbGAK2016.Checked; }
+            get { return chbGAK2016.Checked && chbGAK2016.Enabled; }
             set { chbGAK2016.Checked = value; }
         }
         public bool isGAKChairMan2016
         {
-            get { return chbGAKChairman2016.Checked; }
+            get { return chbGAKChairman2016.Checked && chbGAKChairman2016.Enabled; }
             set { chbGAKChairman2016.Checked = value; }
         }
+        public bool isGAKMemberOrChairman
+        {
+            get { return chbIsGAK2017MemberChairman.Checked; }
+            set { chbIsGAK2017MemberChairman.Checked = value; }
+        }
 
+        public bool isGAK2016MemberOrChairman
+        {
+            get { return chbIsGAK2016MemberChairman.Checked; }
+            set { chbIsGAK2016MemberChairman.Checked = value; }
+        }
         public ListPersons()
         {
             InitializeComponent();
@@ -100,6 +111,7 @@ namespace EmployerPartners
             {
                 groupBoxGAK.Visible = true;
             }
+            btnSendLetter.Enabled = Util.IsLetterCreator();
         }
         private void FillCard()
         {
@@ -122,11 +134,11 @@ namespace EmployerPartners
         {
             using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
+                var PP_Rubric = context.PartnerPersonRubric.Where(x => x.RubricId == RubricId).Select(x => x.PartnerPersonId);
+                var PP_Faculty = context.PartnerPersonFaculty.Where(x => x.FacultyId == FacultyId).Select(x => x.PartnerPersonId);
+                
                 var lst = (from org in context.PartnerPerson
-                           join r in context.PartnerPersonRubric on org.Id equals r.PartnerPersonId into _r
-                           from r in _r.DefaultIfEmpty()
-                           join f in context.PartnerPersonFaculty on org.Id equals f.PartnerPersonId into _f
-                           from f in _f.DefaultIfEmpty()
+                           
                            where
                            (DegreeId.HasValue ? org.DegreeId == DegreeId : true) &&
                            (RankId.HasValue ? org.RankId == RankId : true) &&
@@ -135,15 +147,15 @@ namespace EmployerPartners
                            (ActivityAreaId.HasValue ? org.ActivityAreaId == ActivityAreaId : true) &&
                            (CountryId.HasValue ? org.CountryId == CountryId : true) &&
                            (RegionId.HasValue ? org.RegionId == RegionId : true) &&
-                           (RubricId.HasValue ? r.RubricId == RubricId : true) &&
-                           (FacultyId.HasValue ? f.FacultyId == FacultyId : true) &&
-                           ((isGAK == true) ? org.IsGAK == true : true) &&
-                           ((isGAKChairMan == true) ? org.IsGAKChairman == true : true) &&
-                           ((isGAK2016 == true) ? org.IsGAK2016 == true : true) &&
-                           ((isGAKChairMan2016 == true) ? org.IsGAKChairman2016 == true : true) 
-
-                           //((isGAK == true) ? ((isGAKChairMan == true) ? ((org.IsGAK == true) || (org.IsGAKChairman == true)) : (org.IsGAK == true)) : 
-                           //((isGAKChairMan == true) ? (org.IsGAKChairman == true): true))
+                           
+                           (RubricId.HasValue ? PP_Rubric.Contains(org.Id) : true) &&
+                           (FacultyId.HasValue ? PP_Faculty.Contains(org.Id) : true) &&
+                           ((isGAKMemberOrChairman) ? ((org.IsGAK ?? false) || (org.IsGAKChairman ?? false)) : true) &&
+                           ((isGAK2016MemberOrChairman) ? ((org.IsGAK2016 ?? false) || (org.IsGAKChairman2016 ?? false)) : true) &&
+                           ((isGAK) ? (org.IsGAK ?? false) : true) &&
+                           ((isGAKChairMan) ? (org.IsGAKChairman ?? false)  : true) &&
+                           ((isGAK2016) ? (org.IsGAK2016?? false) : true) &&
+                           ((isGAKChairMan2016) ? (org.IsGAKChairman2016 ?? false) : true) 
 
                            orderby org.Name 
                            select new
@@ -158,6 +170,7 @@ namespace EmployerPartners
                                Почетное_звание = org.RankHonorary.Name,
                                Государственное_или_военное_звание = org.RankState.Name,
                                Регалии_доп_данные = org.Title,
+                               Письмо_отправлено = false,
                                Входит_в_составы_ГЭК_2017 = org.IsGAK,
                                Председатель_ГЭК_2017 = org.IsGAKChairman,
                                Входит_в_составы_ГЭК_2016 = org.IsGAK2016,
@@ -174,18 +187,36 @@ namespace EmployerPartners
                                Мобильный_телефон = org.Mobiles,
                                Web_сайт = org.WebSite,
                                Комментарий = org.Comment,
+                               
                            }).Distinct().OrderBy(x => x.ФИО).ToList();
 
                 DataTable dt = new DataTable();
                 dt = Utilities.ConvertToDataTable(lst);
+
+                if (chbShowColumnLetter.Checked)
+                {
+                    dgv.CellValueChanged += dgv_CellValueChanged;
+                    foreach (DataRow  rw in dt.Rows)
+                    {
+                        int Id = rw.Field<int>("Id");
+                        rw.SetField("Письмо_отправлено", context.PartnerPersonOrganizationLetter.Where(x => x.PartnerPersonId == Id && x.IsSend).Count() > 0);
+                    }
+                }
+                else
+                    dgv.CellValueChanged -= dgv_CellValueChanged;
+
                 bindingSource1.DataSource = dt;
                 dgv.DataSource = bindingSource1;
 
-                List<string> Cols = new List<string>() { "Id" };
-
-                foreach (string s in Cols)
+                foreach (string s in new List<string>() { "Id" })
                     if (dgv.Columns.Contains(s))
                         dgv.Columns[s].Visible = false;
+                if (dgv.Columns.Contains("Письмо_отправлено"))
+                {
+                    dgv.Columns["Письмо_отправлено"].Visible = chbShowColumnLetter.Checked;
+                    dgv.Columns["Письмо_отправлено"].DisplayIndex = dgv.Columns["Регалии_доп_данные"].DisplayIndex+1;
+                }
+                
                 foreach (DataGridViewColumn col in dgv.Columns)
                     col.HeaderText = col.Name.Replace("_", " ");
                 try
@@ -203,19 +234,27 @@ namespace EmployerPartners
                 {
                 }
 
-                //if (id.HasValue)
-                //    foreach (DataGridViewRow rw in dgv.Rows)
-                //        if (rw.Cells[0].Value.ToString() == id.Value.ToString())
-                //        {
-                //            dgv.CurrentCell = rw.Cells["ФИО"];
-                //            break;
-                //        }
+                
+                if (chbShowColumnLetter.Checked)
+                {
+                    dgv.ReadOnly = false;
+                    foreach (DataGridViewRow rw in dgv.Rows)
+                    {
+                        rw.ReadOnly = false;
+                        foreach (DataGridViewCell cell in rw.Cells)
+                        {
+                            cell.ReadOnly = true;
+                        }
+                        rw.Cells["Письмо_отправлено"].ReadOnly =  !Util.IsLetterCreator();
+                    }
+                }
+                
             }
-
         }
 
         private void FillGridStart()
         {
+            dgv.CellValueChanged -= dgv_CellValueChanged;
             FillGridStart(null);
         }
         private void FillGridStart(int? id)
@@ -303,7 +342,7 @@ namespace EmployerPartners
                     int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
                     if (Utilities.PersonCardIsOpened(id))
                         return;
-                    new CardPerson(id, new UpdateVoidHandler(FillGrid)).Show();
+                    new CardPerson(id, new UpdateIntHandler(FillGrid)).Show();
                 }
         }
 
@@ -315,7 +354,7 @@ namespace EmployerPartners
                     int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
                     if (Utilities.PersonCardIsOpened(id))
                         return;
-                    new CardPerson(id, new UpdateVoidHandler(FillGrid)).Show();
+                    new CardPerson(id, new UpdateIntHandler(FillGrid)).Show();
                 }
         }
 
@@ -334,7 +373,7 @@ namespace EmployerPartners
             {
             }
             //new CardPartner(null, new UpdateVoidHandler(FillCard)).Show();
-            new CardNewPerson(new UpdateVoidHandler(FillGrid)).Show();
+            new CardNewPerson(new UpdateIntHandler(FillGrid)).Show();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -733,6 +772,63 @@ namespace EmployerPartners
         {
 
         }
+
+        private void btnSendLetter_Click(object sender, EventArgs e)
+        {
+            List<int> PartnerPersonlst = new List<int>();
+            foreach (DataGridViewRow rw in dgv.Rows)
+            {
+                PartnerPersonlst.Add((int)rw.Cells["Id"].Value);
+            }
+            new CardPersonOrganizationLetter(PartnerPersonlst).Show();
+        }
+        
+        private void chbIsGAK2017MemberChairman_CheckedChanged(object sender, EventArgs e)
+        {
+            chbGAK.Enabled = chbGAKChairman.Enabled = chbIsGAK2017MemberChairman.Checked;
+        }
+
+        private void chbIsGAK2016MemberChairman_CheckedChanged(object sender, EventArgs e)
+        {
+            chbGAK2016.Enabled = chbGAKChairman2016.Enabled = chbIsGAK2016MemberChairman.Checked;
+        }
+
+        private void dgv_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgv.Columns.Contains("Письмо_отправлено"))
+            {
+                if (dgv.CurrentCell == null) return;
+                if (dgv.CurrentCell.RowIndex < 0) return;
+                if (dgv.CurrentCell.ColumnIndex != dgv.Columns["Письмо_отправлено"].Index) return;
+                int PartnerPersonId = (int)dgv.CurrentRow.Cells["Id"].Value;
+                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                {
+                    List<PartnerPersonOrganizationLetter> lst = context.PartnerPersonOrganizationLetter.Where(x => x.PartnerPersonId == PartnerPersonId).ToList();
+                    if (lst.Count > 0)
+                    {
+                        foreach (var x in lst)
+                        {
+                            x.IsSend = (bool)dgv.CurrentRow.Cells["Письмо_отправлено"].Value;
+                            x.IsSendAuthor = Util.GetUserName();
+                            x.Timestamp = DateTime.Now;
+                        }
+                        context.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        private void dgv_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (dgv.Columns.Contains("Письмо_отправлено"))
+            {
+                if (dgv.CurrentCell == null) return;
+                if (dgv.CurrentCell.RowIndex < 0) return;
+                if (dgv.CurrentCell.ColumnIndex != dgv.Columns["Письмо_отправлено"].Index) return;
+                dgv.EndEdit();
+            }
+        }
+
 
     }
 

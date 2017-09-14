@@ -11,6 +11,7 @@ using System.IO;
 using OfficeOpenXml;
 using WordOut;
 using FastMember;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {

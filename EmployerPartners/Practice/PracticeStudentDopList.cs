@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -53,9 +54,9 @@ namespace EmployerPartners
             set;
         }
 
-        UpdateVoidHandler _hndl;
+        UpdateIntHandler _hndl;
 
-        public PracticeStudentDopList(int plpid, int pid, int lpid, string lp, UpdateVoidHandler _hdl)
+        public PracticeStudentDopList(int plpid, int pid, int lpid, string lp, UpdateIntHandler _hdl)
         {
             InitializeComponent();
             _PLPId = plpid;

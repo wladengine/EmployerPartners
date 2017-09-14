@@ -107,6 +107,18 @@ namespace EmployerPartners
             get { return ComboServ.GetComboIdInt(cbOrganizationEnglishSource); }
             set { ComboServ.SetComboId(cbOrganizationEnglishSource, value); }
         }
+
+        public bool OrgBranchesOffices
+        {
+            get { return chbOrgBranchesOffices.Checked; }
+            set { chbOrgBranchesOffices.Checked = value; }
+        }
+        public string EGRULBranchNumber
+        {
+            get { return tbEGRULBranchNumber.Text.Trim(); }
+            set { tbEGRULBranchNumber.Text = value; }
+        }
+
         public string INN
         {
             get { return tbINN.Text.Trim(); }

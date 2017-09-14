@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.DirectoryServices.AccountManagement;
 using System.Data.Entity.Core.Objects;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -23,6 +24,7 @@ namespace EmployerPartners
 
         public static List<KeyValuePair<int, string>> lstCountryCity;
         public static List<KeyValuePair<string, string>> lstCityStreet;
+        public static List<KeyValuePair<string, string>> lstSOPPositions;
 
 
         static Util()
@@ -69,6 +71,10 @@ namespace EmployerPartners
                         .Select(x => new { key = x.City, value = x.Street }).Distinct().ToList();
                     lstCityStreet = (from lst in lst_city_street
                                      select new KeyValuePair<string, string>(lst.key, lst.value)).ToList();
+
+                    lstSOPPositions = HelpClass.GetComboListByTable("dbo.SOP_Position", null);
+                    lstSOPPositions.Add(new KeyValuePair<string, string>(ComboServ.NO_VALUE, "нет"));
+                    lstSOPPositions = lstSOPPositions.OrderBy(x => x.Key).ToList();
                 }
             }
             catch (Exception)
@@ -156,7 +162,14 @@ namespace EmployerPartners
         {
             return IsRoleMember("ReadOnlyAll"); 
         }
-		
+        public static bool IsLetterCreator()
+        {
+            return IsRoleMember("LetterCreator");
+        }
+        public static bool IsSOPReadWrite()
+        {
+            return IsRoleMember("SOPReadWrite");
+        }
         public static bool IsRoleMember(string roleName)
         {
             try
@@ -190,8 +203,9 @@ namespace EmployerPartners
             return false;
         }
     }
-   
-    public delegate void UpdateVoidHandler(int? id);
+
+    public delegate void UpdateVoidHandler();
+    public delegate void UpdateIntHandler(int? id);
     public delegate void UpdateStringHandler(int? id, string Name);
 
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -76,7 +77,7 @@ namespace EmployerPartners
 
         public int? _id;
         public int PersId;
-        UpdateVoidHandler _hdl;
+        UpdateIntHandler _hdl;
 
         private bool setPosition = false;
 
@@ -84,7 +85,7 @@ namespace EmployerPartners
         {
             InitializeComponent();
         }
-        public CardPersonOrganization(int? Id, int persId, UpdateVoidHandler h)
+        public CardPersonOrganization(int? Id, int persId, UpdateIntHandler h)
         {
             InitializeComponent();
             _id = Id;
@@ -379,7 +380,7 @@ namespace EmployerPartners
             if (Utilities.FormIsOpened("OrgListToFind"))
                 Utilities.FormClose("OrgListToFind");
                 
-            new OrgListToFind(new UpdateVoidHandler(OrgListSetToFound)).Show();
+            new OrgListToFind(new UpdateIntHandler(OrgListSetToFound)).Show();
         }
 
         private void btnPosHandBook_Click(object sender, EventArgs e)
@@ -390,7 +391,7 @@ namespace EmployerPartners
             if (Utilities.FormIsOpened("PositionListToFind"))
                 Utilities.FormClose("PositionListToFind");
 
-            new PositionListToFind(new UpdateVoidHandler(PositionListSetToFound)).Show();
+            new PositionListToFind(new UpdateIntHandler(PositionListSetToFound)).Show();
         }
 
         private void cbOrganization_SelectedIndexChanged(object sender, EventArgs e)
@@ -458,7 +459,7 @@ namespace EmployerPartners
             if (Utilities.FormIsOpened("PositionListToFind"))
                 Utilities.FormClose("PositionListToFind");
 
-            new PositionListToFind(new UpdateVoidHandler(Position2ListSetToFound)).Show();
+            new PositionListToFind(new UpdateIntHandler(Position2ListSetToFound)).Show();
         }
     }
 }

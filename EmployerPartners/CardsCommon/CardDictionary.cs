@@ -38,7 +38,7 @@ namespace EmployerPartners
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            new CardDictionaryItem(null, new UpdateVoidHandler(FillCard), new UpdateStringHandler(AddRec)).Show();
+            new CardDictionaryItem(null, new UpdateIntHandler(FillCard), new UpdateStringHandler(AddRec)).Show();
         }
         private void btnEdit_Click(object sender, EventArgs e)
         {
@@ -63,7 +63,7 @@ namespace EmployerPartners
                 if (dgv.CurrentRow.Index >= 0)
                 {
                     int Id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
-                    CardDictionaryItem crd = new CardDictionaryItem(Id, new UpdateVoidHandler(FillCard), new UpdateStringHandler(UpdateRec));
+                    CardDictionaryItem crd = new CardDictionaryItem(Id, new UpdateIntHandler(FillCard), new UpdateStringHandler(UpdateRec));
                     crd.ObjectName = dgv.CurrentRow.Cells["Name"].Value.ToString();
                     crd.Show();
                 }

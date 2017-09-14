@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -58,6 +59,7 @@ namespace EmployerPartners
                                orderby fac.Name, lp.Code, st.Name, op.Number, op.Name, org.Name, x.VKRName
                                select new
                                {
+                                   x.Id,
                                    Организация = ((String.IsNullOrEmpty(org.ShortName)) ? ((String.IsNullOrEmpty(org.MiddleName)) ? org.Name : org.MiddleName) : org.ShortName),
                                    Согласовано = ((String.IsNullOrEmpty(orgagreed.ShortName)) ? ((String.IsNullOrEmpty(orgagreed.MiddleName)) ? orgagreed.Name : orgagreed.MiddleName) : orgagreed.ShortName),
                                    Тема_ВКР = x.VKRName,
@@ -75,9 +77,8 @@ namespace EmployerPartners
                     bindingSource1.DataSource = dt;
                     dgv.DataSource = bindingSource1;
 
-                    List<string> Cols = new List<string>() { "VKRId" };  //{ "Id", "ObrazProgramId" };
 
-                    foreach (string s in Cols)
+                    foreach (string s in new List<string>() { "VKRId", "Id" })
                         if (dgv.Columns.Contains(s))
                             dgv.Columns[s].Visible = false;
                     foreach (DataGridViewColumn col in dgv.Columns)
@@ -122,5 +123,7 @@ namespace EmployerPartners
         {
             FillGrid(_VKRId);
         }
+
+       
     }
 }

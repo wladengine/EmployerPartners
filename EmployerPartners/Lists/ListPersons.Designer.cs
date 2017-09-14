@@ -79,6 +79,10 @@
             this.groupBoxGAK = new System.Windows.Forms.GroupBox();
             this.rbtn2017 = new System.Windows.Forms.RadioButton();
             this.rbtn2016 = new System.Windows.Forms.RadioButton();
+            this.btnSendLetter = new System.Windows.Forms.Button();
+            this.chbIsGAK2017MemberChairman = new System.Windows.Forms.CheckBox();
+            this.chbIsGAK2016MemberChairman = new System.Windows.Forms.CheckBox();
+            this.chbShowColumnLetter = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -98,14 +102,16 @@
             this.dgv.Location = new System.Drawing.Point(15, 164);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
-            this.dgv.Size = new System.Drawing.Size(1159, 400);
+            this.dgv.Size = new System.Drawing.Size(1331, 400);
             this.dgv.TabIndex = 0;
             this.dgv.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellDoubleClick);
+            this.dgv.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_CellMouseUp);
+            this.dgv.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellValueChanged);
             // 
             // btnOpen
             // 
             this.btnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpen.Location = new System.Drawing.Point(1057, 570);
+            this.btnOpen.Location = new System.Drawing.Point(1229, 570);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(117, 24);
             this.btnOpen.TabIndex = 1;
@@ -117,7 +123,7 @@
             // 
             this.btnAddPartner.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddPartner.Enabled = false;
-            this.btnAddPartner.Location = new System.Drawing.Point(1055, 113);
+            this.btnAddPartner.Location = new System.Drawing.Point(1227, 113);
             this.btnAddPartner.Name = "btnAddPartner";
             this.btnAddPartner.Size = new System.Drawing.Size(117, 30);
             this.btnAddPartner.TabIndex = 1;
@@ -127,7 +133,7 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(923, 113);
+            this.btnRefresh.Location = new System.Drawing.Point(825, 123);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(117, 30);
             this.btnRefresh.TabIndex = 1;
@@ -193,7 +199,7 @@
             // 
             this.cbRegion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRegion.FormattingEnabled = true;
-            this.cbRegion.Location = new System.Drawing.Point(672, 39);
+            this.cbRegion.Location = new System.Drawing.Point(626, 39);
             this.cbRegion.Name = "cbRegion";
             this.cbRegion.Size = new System.Drawing.Size(179, 21);
             this.cbRegion.TabIndex = 9;
@@ -201,7 +207,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(620, 42);
+            this.label5.Location = new System.Drawing.Point(574, 42);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(46, 13);
             this.label5.TabIndex = 12;
@@ -211,7 +217,7 @@
             // 
             this.cbCountry.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCountry.FormattingEnabled = true;
-            this.cbCountry.Location = new System.Drawing.Point(672, 12);
+            this.cbCountry.Location = new System.Drawing.Point(626, 12);
             this.cbCountry.Name = "cbCountry";
             this.cbCountry.Size = new System.Drawing.Size(179, 21);
             this.cbCountry.TabIndex = 8;
@@ -219,7 +225,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(620, 15);
+            this.label4.Location = new System.Drawing.Point(574, 15);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(46, 13);
             this.label4.TabIndex = 13;
@@ -357,7 +363,7 @@
             // btnXLS
             // 
             this.btnXLS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnXLS.Location = new System.Drawing.Point(1055, 15);
+            this.btnXLS.Location = new System.Drawing.Point(1227, 15);
             this.btnXLS.Name = "btnXLS";
             this.btnXLS.Size = new System.Drawing.Size(117, 30);
             this.btnXLS.TabIndex = 19;
@@ -369,7 +375,7 @@
             // 
             this.cbRubric.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRubric.FormattingEnabled = true;
-            this.cbRubric.Location = new System.Drawing.Point(672, 66);
+            this.cbRubric.Location = new System.Drawing.Point(626, 66);
             this.cbRubric.Name = "cbRubric";
             this.cbRubric.Size = new System.Drawing.Size(179, 21);
             this.cbRubric.TabIndex = 10;
@@ -378,7 +384,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(614, 69);
+            this.label6.Location = new System.Drawing.Point(568, 69);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(52, 13);
             this.label6.TabIndex = 21;
@@ -390,7 +396,7 @@
             this.cbFaculty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbFaculty.FormattingEnabled = true;
             this.cbFaculty.ItemHeight = 13;
-            this.cbFaculty.Location = new System.Drawing.Point(672, 93);
+            this.cbFaculty.Location = new System.Drawing.Point(626, 93);
             this.cbFaculty.Name = "cbFaculty";
             this.cbFaculty.Size = new System.Drawing.Size(179, 21);
             this.cbFaculty.TabIndex = 22;
@@ -399,7 +405,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(632, 96);
+            this.label8.Location = new System.Drawing.Point(586, 96);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 13);
             this.label8.TabIndex = 23;
@@ -464,7 +470,7 @@
             // chbGAKChairman
             // 
             this.chbGAKChairman.AutoSize = true;
-            this.chbGAKChairman.Location = new System.Drawing.Point(543, 141);
+            this.chbGAKChairman.Location = new System.Drawing.Point(1007, 60);
             this.chbGAKChairman.Name = "chbGAKChairman";
             this.chbGAKChairman.Size = new System.Drawing.Size(147, 17);
             this.chbGAKChairman.TabIndex = 50;
@@ -475,11 +481,11 @@
             // chbGAK
             // 
             this.chbGAK.AutoSize = true;
-            this.chbGAK.Location = new System.Drawing.Point(543, 120);
+            this.chbGAK.Location = new System.Drawing.Point(1007, 39);
             this.chbGAK.Name = "chbGAK";
-            this.chbGAK.Size = new System.Drawing.Size(119, 17);
+            this.chbGAK.Size = new System.Drawing.Size(107, 17);
             this.chbGAK.TabIndex = 49;
-            this.chbGAK.Text = "составы ГЭК 2017";
+            this.chbGAK.Text = "члены ГЭК 2017";
             this.chbGAK.UseVisualStyleBackColor = true;
             this.chbGAK.CheckedChanged += new System.EventHandler(this.chbGAK_CheckedChanged);
             // 
@@ -496,23 +502,25 @@
             // chbGAKChairman2016
             // 
             this.chbGAKChairman2016.AutoSize = true;
-            this.chbGAKChairman2016.Location = new System.Drawing.Point(750, 139);
+            this.chbGAKChairman2016.Location = new System.Drawing.Point(992, 83);
             this.chbGAKChairman2016.Name = "chbGAKChairman2016";
             this.chbGAKChairman2016.Size = new System.Drawing.Size(150, 17);
             this.chbGAKChairman2016.TabIndex = 53;
             this.chbGAKChairman2016.Text = "председатели ГЭК 2016 ";
             this.chbGAKChairman2016.UseVisualStyleBackColor = true;
+            this.chbGAKChairman2016.Visible = false;
             this.chbGAKChairman2016.CheckedChanged += new System.EventHandler(this.chbGAKChairman2016_CheckedChanged);
             // 
             // chbGAK2016
             // 
             this.chbGAK2016.AutoSize = true;
-            this.chbGAK2016.Location = new System.Drawing.Point(750, 118);
+            this.chbGAK2016.Location = new System.Drawing.Point(979, 83);
             this.chbGAK2016.Name = "chbGAK2016";
             this.chbGAK2016.Size = new System.Drawing.Size(119, 17);
             this.chbGAK2016.TabIndex = 52;
             this.chbGAK2016.Text = "составы ГЭК 2016";
             this.chbGAK2016.UseVisualStyleBackColor = true;
+            this.chbGAK2016.Visible = false;
             this.chbGAK2016.CheckedChanged += new System.EventHandler(this.chbGAK2016_CheckedChanged);
             // 
             // button1
@@ -539,7 +547,7 @@
             this.groupBoxGAK.Controls.Add(this.rbtn2017);
             this.groupBoxGAK.Controls.Add(this.rbtn2016);
             this.groupBoxGAK.Controls.Add(this.button1);
-            this.groupBoxGAK.Location = new System.Drawing.Point(910, 3);
+            this.groupBoxGAK.Location = new System.Drawing.Point(825, 12);
             this.groupBoxGAK.Name = "groupBoxGAK";
             this.groupBoxGAK.Size = new System.Drawing.Size(139, 75);
             this.groupBoxGAK.TabIndex = 56;
@@ -569,11 +577,57 @@
             this.rbtn2016.Text = "2016";
             this.rbtn2016.UseVisualStyleBackColor = true;
             // 
+            // btnSendLetter
+            // 
+            this.btnSendLetter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSendLetter.Location = new System.Drawing.Point(1227, 48);
+            this.btnSendLetter.Name = "btnSendLetter";
+            this.btnSendLetter.Size = new System.Drawing.Size(117, 39);
+            this.btnSendLetter.TabIndex = 19;
+            this.btnSendLetter.Text = "Благодарственное письмо";
+            this.btnSendLetter.UseVisualStyleBackColor = true;
+            this.btnSendLetter.Click += new System.EventHandler(this.btnSendLetter_Click);
+            // 
+            // chbIsGAK2017MemberChairman
+            // 
+            this.chbIsGAK2017MemberChairman.AutoSize = true;
+            this.chbIsGAK2017MemberChairman.Location = new System.Drawing.Point(979, 16);
+            this.chbIsGAK2017MemberChairman.Name = "chbIsGAK2017MemberChairman";
+            this.chbIsGAK2017MemberChairman.Size = new System.Drawing.Size(158, 17);
+            this.chbIsGAK2017MemberChairman.TabIndex = 57;
+            this.chbIsGAK2017MemberChairman.Text = "Входит в состав ГЭК 2017";
+            this.chbIsGAK2017MemberChairman.UseVisualStyleBackColor = true;
+            this.chbIsGAK2017MemberChairman.CheckedChanged += new System.EventHandler(this.chbIsGAK2017MemberChairman_CheckedChanged);
+            // 
+            // chbIsGAK2016MemberChairman
+            // 
+            this.chbIsGAK2016MemberChairman.AutoSize = true;
+            this.chbIsGAK2016MemberChairman.Location = new System.Drawing.Point(979, 83);
+            this.chbIsGAK2016MemberChairman.Name = "chbIsGAK2016MemberChairman";
+            this.chbIsGAK2016MemberChairman.Size = new System.Drawing.Size(158, 17);
+            this.chbIsGAK2016MemberChairman.TabIndex = 57;
+            this.chbIsGAK2016MemberChairman.Text = "Входит в состав ГЭК 2016";
+            this.chbIsGAK2016MemberChairman.UseVisualStyleBackColor = true;
+            this.chbIsGAK2016MemberChairman.Visible = false;
+            this.chbIsGAK2016MemberChairman.CheckedChanged += new System.EventHandler(this.chbIsGAK2016MemberChairman_CheckedChanged);
+            // 
+            // chbShowColumnLetter
+            // 
+            this.chbShowColumnLetter.Location = new System.Drawing.Point(979, 117);
+            this.chbShowColumnLetter.Name = "chbShowColumnLetter";
+            this.chbShowColumnLetter.Size = new System.Drawing.Size(210, 41);
+            this.chbShowColumnLetter.TabIndex = 58;
+            this.chbShowColumnLetter.Text = "Выводить столбцы с отметкой отправки письма";
+            this.chbShowColumnLetter.UseVisualStyleBackColor = true;
+            // 
             // ListPersons
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 602);
+            this.ClientSize = new System.Drawing.Size(1356, 602);
+            this.Controls.Add(this.chbShowColumnLetter);
+            this.Controls.Add(this.chbIsGAK2016MemberChairman);
+            this.Controls.Add(this.chbIsGAK2017MemberChairman);
             this.Controls.Add(this.groupBoxGAK);
             this.Controls.Add(this.dgvGAK);
             this.Controls.Add(this.chbGAKChairman2016);
@@ -591,6 +645,7 @@
             this.Controls.Add(this.cbFaculty);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cbRubric);
+            this.Controls.Add(this.btnSendLetter);
             this.Controls.Add(this.btnXLS);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.label7);
@@ -609,7 +664,7 @@
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.dgv);
             this.Name = "ListPersons";
-            this.Text = "ListOrganizations";
+            this.Text = "ListPersons";
             this.Load += new System.EventHandler(this.ListPersons_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
@@ -675,5 +730,9 @@
         private System.Windows.Forms.GroupBox groupBoxGAK;
         private System.Windows.Forms.RadioButton rbtn2017;
         private System.Windows.Forms.RadioButton rbtn2016;
+        private System.Windows.Forms.Button btnSendLetter;
+        private System.Windows.Forms.CheckBox chbIsGAK2017MemberChairman;
+        private System.Windows.Forms.CheckBox chbIsGAK2016MemberChairman;
+        private System.Windows.Forms.CheckBox chbShowColumnLetter;
     }
 }

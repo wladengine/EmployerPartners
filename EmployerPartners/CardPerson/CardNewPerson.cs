@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -81,9 +82,9 @@ namespace EmployerPartners
         private int? NewPersonId;
         private bool setPosition = false;
 
-        UpdateVoidHandler _hdl;
+        UpdateIntHandler _hdl;
 
-        public CardNewPerson(UpdateVoidHandler h)
+        public CardNewPerson(UpdateIntHandler h)
         {
             InitializeComponent();
             _hdl = h;
@@ -403,7 +404,7 @@ namespace EmployerPartners
             if (Utilities.FormIsOpened("PositionListToFind"))
                 Utilities.FormClose("PositionListToFind");
 
-            new PositionListToFind(new UpdateVoidHandler(PositionListSetToFound)).Show();
+            new PositionListToFind(new UpdateIntHandler(PositionListSetToFound)).Show();
         }
 
         private void btnRefreshOrgList_Click(object sender, EventArgs e)
@@ -424,7 +425,7 @@ namespace EmployerPartners
             if (Utilities.FormIsOpened("OrgListToFind"))
                 Utilities.FormClose("OrgListToFind");
 
-            new OrgListToFind(new UpdateVoidHandler(OrgListSetToFound)).Show();
+            new OrgListToFind(new UpdateIntHandler(OrgListSetToFound)).Show();
         }
 
         private void ddd(object sender, EventArgs e)

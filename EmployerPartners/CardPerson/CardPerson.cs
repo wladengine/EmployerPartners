@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using FastMember;
+using EmployerPartners.EDMX;
 
 using KLADR;
 using WordOut;
@@ -29,9 +30,9 @@ namespace EmployerPartners
         }
         //bool EditMode = false;
 
-        UpdateVoidHandler _hndl;
+        UpdateIntHandler _hndl;
 
-        public CardPerson(int? id, UpdateVoidHandler _hdl)
+        public CardPerson(int? id, UpdateIntHandler _hdl)
         {
             InitializeComponent();
             _hndl = _hdl;
@@ -147,6 +148,7 @@ namespace EmployerPartners
 
                     PrefixId = Partner.PartnerPersonPrefixId;
                     Title = Partner.Title;
+                    TitleEng = Partner.TitleEng;
                     Account = String.IsNullOrEmpty(Partner.Account) ? "pt" : Partner.Account;
                     DegreeId = Partner.DegreeId;
                     Degree2Id = Partner.Degree2Id;
@@ -170,6 +172,12 @@ namespace EmployerPartners
                     CountryId = Partner.CountryId;
                     FillCountry(CountryId);
                     Comment = Partner.Comment;
+
+                    if (Partner.SexMale.HasValue)
+                    {
+                        rbSexMale.Checked = Partner.SexMale.Value;
+                        rbSexNotMale.Checked = !Partner.SexMale.Value;
+                    }
 
                     try
                     {
@@ -360,6 +368,14 @@ namespace EmployerPartners
             //}
             //else
             //    err.Clear();
+            if (!rbSexMale.Checked && !rbSexNotMale.Checked)
+            {
+                err.SetError(rbSexMale, "не указан пол");
+                tabControl1.SelectedTab = tabPage1;
+                return false;
+            }
+            else
+                err.Clear();
 
             if (!String.IsNullOrEmpty(tbGraduateYear.Text))
             {
@@ -467,6 +483,7 @@ namespace EmployerPartners
                         IsPersonDataChecked = IsPersonDataChecked,
    
                         Title = Title,
+                        TitleEng = Title,
                         Account = (Account == "pt") ? "" : Account,
                         RankId = RankId,
                         Rank2Id = Rank2Id,
@@ -489,6 +506,7 @@ namespace EmployerPartners
                         Phone = Phone,
                         Mobiles = Mobiles,
                         Comment = Comment,
+                        SexMale = rbSexMale.Checked,
                     });
                     context.SaveChanges();
                     _Id = context.PartnerPerson.Where(x => x.rowguid == gId).Select(x => x.Id).First();
@@ -528,6 +546,7 @@ namespace EmployerPartners
                     Org.IsPersonDataChecked = IsPersonDataChecked;
 
                     Org.Title = Title;
+                    Org.TitleEng = TitleEng;
                     Org.Account = (Account == "pt") ? "" : Account;
                     Org.ActivityAreaId = AreaId;
                     Org.DegreeId = DegreeId;
@@ -551,6 +570,8 @@ namespace EmployerPartners
 
                     Org.CountryId = CountryId;
                     Org.Comment = Comment;
+                    Org.SexMale = rbSexMale.Checked;
+
                     context.SaveChanges();
                     return true;
                 }
@@ -653,7 +674,7 @@ namespace EmployerPartners
                 MessageBox.Show("Сначала сохраните карточку Физ.лица");
                 return;
             }
-            new CardPersonOrganization(null, _Id.Value, new UpdateVoidHandler(FillPersonOrganization)).Show();
+            new CardPersonOrganization(null, _Id.Value, new UpdateIntHandler(FillPersonOrganization)).Show();
         }
         private void dgvContacts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -664,7 +685,7 @@ namespace EmployerPartners
                         if (dgvContacts.CurrentRow.Index >= 0)
                         {
                             int id = int.Parse(dgvContacts.CurrentRow.Cells["Id"].Value.ToString());
-                            new CardPersonOrganization(id, _Id.Value, new UpdateVoidHandler(FillPersonOrganization)).Show();
+                            new CardPersonOrganization(id, _Id.Value, new UpdateIntHandler(FillPersonOrganization)).Show();
                         }
             }
         }
@@ -712,7 +733,7 @@ namespace EmployerPartners
                         int id = int.Parse(dgvContacts.CurrentRow.Cells["OrgId"].Value.ToString());
                         if (Utilities.OrgCardIsOpened(id))
                             return;
-                        new CardOrganization(id, new UpdateVoidHandler(FillPersonOrganization)).Show();
+                        new CardOrganization(id, new UpdateIntHandler(FillPersonOrganization)).Show();
                     }
         }
         #endregion
@@ -725,7 +746,7 @@ namespace EmployerPartners
                 MessageBox.Show("Сначала сохраните карточку Организации");
                 return;
             }
-            new CardPersonArea(null, _Id.Value, new UpdateVoidHandler(FillPersonArea)).Show();
+            new CardPersonArea(null, _Id.Value, new UpdateIntHandler(FillPersonArea)).Show();
         }
         private void dgvActivityArea_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -737,7 +758,7 @@ namespace EmployerPartners
                         if (dgv.CurrentRow.Index >= 0)
                         {
                             int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
-                            new CardPersonArea(id, _Id.Value, new UpdateVoidHandler(FillPersonArea)).Show();
+                            new CardPersonArea(id, _Id.Value, new UpdateIntHandler(FillPersonArea)).Show();
                         }
             }
         }
@@ -809,7 +830,7 @@ namespace EmployerPartners
                 MessageBox.Show("Сначала сохраните карточку Организации");
                 return;
             }
-            new CardPersonRubric(null, _Id.Value, new UpdateVoidHandler(FillRubrics)).Show();
+            new CardPersonRubric(null, _Id.Value, new UpdateIntHandler(FillRubrics)).Show();
         }
         private void btnRubricDelete_Click(object sender, EventArgs e)
         {
@@ -848,7 +869,7 @@ namespace EmployerPartners
                         if (dgvRubric.CurrentRow.Index >= 0)
                         {
                             int id = int.Parse(dgvRubric.CurrentRow.Cells["Id"].Value.ToString());
-                            new CardPersonRubric(id, _Id.Value, new UpdateVoidHandler(FillRubrics)).Show();
+                            new CardPersonRubric(id, _Id.Value, new UpdateIntHandler(FillRubrics)).Show();
                         }
             }
         }
@@ -898,7 +919,7 @@ namespace EmployerPartners
                 MessageBox.Show("Сначала сохраните карточку Организации");
                 return;
             }
-            new CardPersonFaculty(null, _Id.Value, new UpdateVoidHandler(FillFaculty)).Show();
+            new CardPersonFaculty(null, _Id.Value, new UpdateIntHandler(FillFaculty)).Show();
         }
         private void btnFacultyDelete_Click(object sender, EventArgs e)
         {
@@ -945,7 +966,7 @@ namespace EmployerPartners
                         if (dgvFaculty.CurrentRow.Index >= 0)
                         {
                             int id = int.Parse(dgvFaculty.CurrentRow.Cells["Id"].Value.ToString());
-                            new CardPersonFaculty(id, _Id.Value, new UpdateVoidHandler(FillFaculty)).Show();
+                            new CardPersonFaculty(id, _Id.Value, new UpdateIntHandler(FillFaculty)).Show();
                         }
             }
         }
@@ -1002,7 +1023,7 @@ namespace EmployerPartners
                 MessageBox.Show("Сначала сохраните карточку Организации");
                 return;
             }
-            new CardPersonLP(null, _Id.Value, new UpdateVoidHandler(FillLP)).Show();
+            new CardPersonLP(null, _Id.Value, new UpdateIntHandler(FillLP)).Show();
         }
         private void btnLPDelete_Click(object sender, EventArgs e)
         {
@@ -1057,7 +1078,7 @@ namespace EmployerPartners
                         if (dgvLP.CurrentRow.Index >= 0)
                         {
                             int id = int.Parse(dgvLP.CurrentRow.Cells["Id"].Value.ToString());
-                            new CardPersonLP(id, _Id.Value, new UpdateVoidHandler(FillLP)).Show();
+                            new CardPersonLP(id, _Id.Value, new UpdateIntHandler(FillLP)).Show();
                         }
             }
         }
@@ -1106,7 +1127,7 @@ namespace EmployerPartners
                     if (dgvContacts.CurrentRow.Index >= 0)
                     {
                         int id = int.Parse(dgvContacts.CurrentRow.Cells["Id"].Value.ToString());
-                        new CardPersonOrganization(id, _Id.Value, new UpdateVoidHandler(FillPersonOrganization)).Show();
+                        new CardPersonOrganization(id, _Id.Value, new UpdateIntHandler(FillPersonOrganization)).Show();
                     }
         }
 

@@ -21,7 +21,7 @@ namespace EmployerPartners
         int CurrentFilesRowIndex;
 
         int? InboxMessageId;
-        UpdateVoidHandler _hndl;
+        UpdateIntHandler _hndl;
 
         #region Common
         public string OrgName

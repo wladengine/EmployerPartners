@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
+
 
 namespace EmployerPartners
 {
@@ -16,7 +18,7 @@ namespace EmployerPartners
             : base()
         {
         }
-        public CardOrganizationRubric(int? Id, int objId, UpdateVoidHandler h)
+        public CardOrganizationRubric(int? Id, int objId, UpdateIntHandler h)
             : base(Id, objId, h)
         {
         }

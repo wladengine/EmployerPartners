@@ -12,7 +12,7 @@ namespace EmployerPartners
 {
     public partial class CardDictionaryItem : Form
     {
-        UpdateVoidHandler _h;
+        UpdateIntHandler _h;
         UpdateStringHandler _s;
         int? _Id;
 
@@ -27,7 +27,7 @@ namespace EmployerPartners
             InitializeComponent();
             this.MdiParent = Util.mainform;
         }
-        public CardDictionaryItem(int? id, UpdateVoidHandler h,UpdateStringHandler s)
+        public CardDictionaryItem(int? id, UpdateIntHandler h,UpdateStringHandler s)
         {
             InitializeComponent();
             this.MdiParent = Util.mainform;

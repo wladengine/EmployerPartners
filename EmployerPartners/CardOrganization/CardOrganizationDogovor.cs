@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -88,9 +89,9 @@ namespace EmployerPartners
             set;
         }
 
-        UpdateVoidHandler _hndl;
+        UpdateIntHandler _hndl;
 
-        public CardOrganizationDogovor(int? Id, int orgId, UpdateVoidHandler _hdl)
+        public CardOrganizationDogovor(int? Id, int orgId, UpdateIntHandler _hdl)
         {
             InitializeComponent();
             _hndl = _hdl;

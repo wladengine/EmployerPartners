@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -347,7 +348,7 @@ namespace EmployerPartners
                         string op = dgv.CurrentRow.Cells["Образовательная_программа"].Value.ToString();
                         string lp = dgv.CurrentRow.Cells["Направление"].Value.ToString();
                         string facname = dgv.CurrentRow.Cells["FacName"].Value.ToString();
-                        if (Utilities.VKRCardIsOpened(id))
+                        if (Utilities.VKRStudentIsOpened(id))
                             return;
                         new VKRStudent(id, (int)_VKRId, opid, opinyearid, lpid, op, lp, facname).Show();
                     }
@@ -371,7 +372,7 @@ namespace EmployerPartners
                         string op = dgv.CurrentRow.Cells["Образовательная_программа"].Value.ToString();
                         string lp = dgv.CurrentRow.Cells["Направление"].Value.ToString();
                         string facname = dgv.CurrentRow.Cells["FacName"].Value.ToString();
-                        if (Utilities.VKRCardIsOpened(id))
+                        if (Utilities.VKRStudentIsOpened(id))
                             return;
                         new VKRStudent(id, (int)_VKRId, opid, opinyearid, lpid, op, lp, facname).Show();
                     }

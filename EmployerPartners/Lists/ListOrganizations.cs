@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
@@ -254,7 +255,7 @@ namespace EmployerPartners
                         int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
                         if (Utilities.OrgCardIsOpened(id))
                             return;
-                        new CardOrganization(id, new UpdateVoidHandler(FillGrid)).Show();
+                        new CardOrganization(id, new UpdateIntHandler(FillGrid)).Show();
                     }
             }
             catch (Exception exc)
@@ -273,7 +274,7 @@ namespace EmployerPartners
                         int id = int.Parse(dgv.CurrentRow.Cells["Id"].Value.ToString());
                         if (Utilities.OrgCardIsOpened(id))
                             return;
-                        new CardOrganization(id, new UpdateVoidHandler(FillGrid)).Show();
+                        new CardOrganization(id, new UpdateIntHandler(FillGrid)).Show();
                     }
             }
             catch (Exception exc)
@@ -297,7 +298,7 @@ namespace EmployerPartners
             {
             }
             //new CardPartner(null, new UpdateVoidHandler(FillCard)).Show();
-            new CardNewOrganization(new UpdateVoidHandler(FillGrid)).Show();
+            new CardNewOrganization(new UpdateIntHandler(FillGrid)).Show();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)

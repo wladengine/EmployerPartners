@@ -5,6 +5,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
+using EmployerPartners.EDMX;
 
 
 namespace EmployerPartners

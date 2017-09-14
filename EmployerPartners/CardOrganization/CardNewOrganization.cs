@@ -7,14 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EmployerPartners.EDMX;
 
 namespace EmployerPartners
 {
     public partial class CardNewOrganization : Form
     {
-        UpdateVoidHandler _hdl;
+        UpdateIntHandler _hdl;
 
-        public CardNewOrganization(UpdateVoidHandler h)
+        public CardNewOrganization(UpdateIntHandler h)
         {
             InitializeComponent();
             _hdl = h;
