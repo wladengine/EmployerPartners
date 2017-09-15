@@ -203,6 +203,7 @@ namespace EmployerPartners.EDMX
         public virtual DbSet<ObrazProgramCharacteristic> ObrazProgramCharacteristic { get; set; }
         public virtual DbSet<VKR_Themes> VKR_Themes { get; set; }
         public virtual DbSet<VKR_Themes_OrderNums> VKR_Themes_OrderNums { get; set; }
+        public virtual DbSet<extPartnerPersonRubric> extPartnerPersonRubric { get; set; }
     
         public virtual int RoleMember(string roleName, ObjectParameter result)
         {

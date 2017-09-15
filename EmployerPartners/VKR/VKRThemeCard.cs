@@ -52,6 +52,8 @@ namespace EmployerPartners
 
             FillOrganization();
             ComboServ.FillCombo(cbAggregateGroup, HelpClass.GetComboListByTable(@"dbo.SP_AggregateGroup", " order by Name"), false, false);
+            ComboServ.FillCombo(cbConsultPerson, HelpClass.GetComboListByQuery( @"  select convert(nvarchar, PartnerPerson.Id) as Id,
+                PartnerPerson.Name as Name  from dbo.PartnerPerson "), true, false);
             ComboServ.FillCombo(cbStudyLevel, HelpClass.GetComboListByTable(@"dbo.StudyLevel", " where StudyLevel.Id in (select StudyLevelId from dbo.LicenseProgram lp join dbo.SP_AggregateGroup agg on lp.AggregateGroupId = agg.Id)"), false, false);
             ComboServ.SetComboId(cbStudyLevel, "16");
 
@@ -690,9 +692,10 @@ namespace EmployerPartners
         {
             int? ConsultID =  ComboServ.GetComboIdInt(cbConsultPerson);
             btnConsultPersonCardOpen.Enabled = ConsultID.HasValue;
-            if (ConsultID.HasValue)
+
+            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
             {
-                using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+                if (ConsultID.HasValue)
                 {
                     var Consult = context.PartnerPerson.Where(x => x.Id == ConsultID.Value).First();
                     tbConsultSurname.Text = Consult.LastName;
@@ -700,6 +703,15 @@ namespace EmployerPartners
                     tbConsultSecondName.Text = Consult.SecondName;
                     tbConsultDegree.Text = Consult.Degree.Name;
                     tbConsultRank.Text = Consult.Rank.Name;
+                }
+                else
+                {
+                    var Consult = context.VKR_Themes.Where(x => x.Id == _id.Value).First();
+                    tbConsultSurname.Text = Consult.Consult_Surname;
+                    tbConsultName.Text = Consult.Consult_Name;
+                    tbConsultSecondName.Text = Consult.Consult_SecondName;
+                    tbConsultDegree.Text = Consult.Consult_Degree;
+                    tbConsultRank.Text = Consult.Consult_Rank;
                 }
             }
         }

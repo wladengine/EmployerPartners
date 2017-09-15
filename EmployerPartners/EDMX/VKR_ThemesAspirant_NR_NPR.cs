@@ -27,5 +27,7 @@ namespace EmployerPartners.EDMX
         public string Surname { get; set; }
         public string Name { get; set; }
         public string SecondName { get; set; }
+    
+        public virtual VKR_ThemesAspirantOrder VKR_ThemesAspirantOrder { get; set; }
     }
 }

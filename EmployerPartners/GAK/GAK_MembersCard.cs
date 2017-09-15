@@ -144,38 +144,27 @@ namespace EmployerPartners
             set { chbGAKChairman2016.Checked = value; }
         }
         string GAKNUmberOld;
-        private int GAKId
-        {
-            get;
-            set;
-        }
-        private int OPId
-        {
-            get;
-            set;
-        }
-        private int? _Id
-        {
-            get;
-            set;
-        }
-        public int GAK_MembersCardId
-        {
-            get;
-            set;
-        }
+        private int GAKId;
+        private int? _Id;
 
         UpdateIntHandler _hndl;
-
-        public GAK_MembersCard(int id, int opid, int gakid, UpdateIntHandler _hdl)
+        public GAK_MembersCard(int id, UpdateIntHandler _hdl)
         {
             InitializeComponent();
             _Id = id;
-            OPId = opid;
-            GAKId = gakid;
-            GAK_MembersCardId = id;
             _hndl = _hdl;
+
+            Init();
+        } 
+        private void Init()
+        {
             this.MdiParent = Util.mainform;
+
+            using (EmployerPartnersEntities context = new EmployerPartnersEntities())
+            {
+                GAKId = context.GAK_Number.Where(x => x.Id == _Id).Select(x => x.GAKId).First();
+            }
+
             SetAccessRight();
             FillComboPerson();
             FillChairman();
@@ -236,20 +225,33 @@ namespace EmployerPartners
 //                "(lpp.LicenseProgramId in (select LicenseProgramId from dbo.VKR_ThemesStudentOrder where ObrazProgramId  = " + OPId + "))) " +
 //                "and (lpp.GAKId = " + GAKId + ")) order by Name"), true, false);
 
-            int LPid;
-            string lpCode = "";
-            string opNumber = "";
             try
             {
                 using (EmployerPartnersEntities context = new EmployerPartnersEntities())
                 {
-                    var obrazprog = context.ObrazProgram.Where(x => x.Id == OPId).First();
-                    LPid = obrazprog.LicenseProgramId;
-                    opNumber = (!String.IsNullOrEmpty(obrazprog.Number)) ? obrazprog.Number : "";
+                    var Op = (from x in context.GAK_Number
+                              join o in context.ObrazProgram on x.ObrazProgramId equals o.Id
+                              join lp in context.LicenseProgram on o.LicenseProgramId equals lp.Id
+                              where x.Id == _Id
+                              select new
+                              {
+                                  o.Id,
+                                  o.LicenseProgramId,
+                                  o.Number,
+                                  lp.Code,
+                              }).First();
 
-                    var lp = context.LicenseProgram.Where(x => x.Id == LPid).First();
-                    lpCode = lp.Code;
-
+                    ComboServ.FillCombo(cbPerson, HelpClass.GetComboListByQuery(@" select  CONVERT(varchar(100), pp.Id) AS Id, 
+                (pp.Name + CASE WHEN d.Name is NULL THEN '' ELSE ',  ' + d.Name END + CASE WHEN r.Name is NULL THEN '' ELSE ',  ' + r.Name END) as Name 
+                from dbo.PartnerPerson pp 
+left outer join dbo.Degree d on pp.DegreeId = d.Id 
+left outer join dbo.Rank r on pp.RankId = r.Id  
+                where pp.Id in (select PartnerPersonId from dbo.GAK_LP_Person lpp 
+                where ((lpp.LicenseProgramId in (select LicenseProgramId from dbo.ObrazProgram op where Id = " + Op.Id + @")) or 
+                (lpp.LicenseProgramId in (select SecondLicenseProgramId from dbo.ObrazProgram op where Id = " + Op.Id + @")) or 
+                (lpp.LicenseProgramId in (select Id from dbo.LicenseProgram where code in (select LPCode from dbo.GAK_Adapter where OPNumber = " + (Op.Number ?? "") + @"))) or  
+                (lpp.LicenseProgramId in (select Id from dbo.LicenseProgram where Code = '" + Op.Code + @"')))  
+                and (lpp.GAKId = " + GAKId + ")) order by Name"), true, false);
                 }
             }
             catch (Exception ex)
@@ -257,15 +259,7 @@ namespace EmployerPartners
                 MessageBox.Show(ex.Message);
             }
 
-            ComboServ.FillCombo(cbPerson, HelpClass.GetComboListByQuery(@" select  CONVERT(varchar(100), pp.Id) AS Id, 
-                (pp.Name + CASE WHEN d.Name is NULL THEN '' ELSE ',  ' + d.Name END + CASE WHEN r.Name is NULL THEN '' ELSE ',  ' + r.Name END) as Name 
-                from dbo.PartnerPerson pp left outer join dbo.Degree d on pp.DegreeId = d.Id left outer join dbo.Rank r on pp.RankId = r.Id " +
-                "where pp.Id in (select PartnerPersonId from dbo.GAK_LP_Person lpp " +
-                "where ((lpp.LicenseProgramId in (select LicenseProgramId from dbo.ObrazProgram op where Id = " + OPId + ")) or " +
-                "(lpp.LicenseProgramId in (select SecondLicenseProgramId from dbo.ObrazProgram op where Id = " + OPId + ")) or " +
-                "(lpp.LicenseProgramId in (select Id from dbo.LicenseProgram where code in (select LPCode from dbo.GAK_Adapter where OPNumber = " + opNumber + "))) or " + 
-                "(lpp.LicenseProgramId in (select Id from dbo.LicenseProgram where Code = '" + lpCode + "'))) " +
-                "and (lpp.GAKId = " + GAKId + ")) order by Name"), true, false);
+
         }
         private void FillAddress()
         {

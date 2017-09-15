@@ -441,7 +441,7 @@ union all select ObrazProgramId from dbo.VKR_ThemesAspirantOrder {1}) order by d
                 int gakid = int.Parse(dgv.CurrentRow.Cells["GAKId"].Value.ToString());
                 //if (Utilities.VKRThemesStudentCardIsOpened(id))
                 //    return;
-                new GAK_MembersCard(id, opid, gakid, new UpdateIntHandler(FillGAKList)).Show();
+                new GAK_MembersCard(id, new UpdateIntHandler(FillGAKList)).Show();
 
             }
             catch (Exception ex)

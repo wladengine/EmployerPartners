@@ -2988,6 +2988,27 @@ warning 6002: The table/view 'EmployerPartners.dbo.ext_GAK_2017' does not have a
           <Property Name="NPR_Tabnum" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'EmployerPartners.dbo.extPartnerPersonRubric' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="extPartnerPersonRubric">
+          <Key>
+            <PropertyRef Name="Рубрика" />
+            <PropertyRef Name="RubricTypeId" />
+            <PropertyRef Name="ObjectId" />
+            <PropertyRef Name="ObjectCard" />
+          </Key>
+          <Property Name="PartnerPersonId" Type="int" />
+          <Property Name="Рубрика" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Год" Type="nvarchar" MaxLength="10" />
+          <Property Name="Уровень" Type="nvarchar" MaxLength="100" />
+          <Property Name="Направление" Type="nvarchar" MaxLength="1051" />
+          <Property Name="Тип программы" Type="nvarchar" MaxLength="100" />
+          <Property Name="Квалификация" Type="nvarchar" MaxLength="1000" />
+          <Property Name="RubricTypeId" Type="int" Nullable="false" />
+          <Property Name="Sorting" Type="int" />
+          <Property Name="ObjectId" Type="int" Nullable="false" />
+          <Property Name="ObjectCard" Type="varchar" MaxLength="21" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'EmployerPartners.dbo.GAK_StatChairmanPPNPR_Itog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="GAK_StatChairmanPPNPR_Itog">
           <Key>
@@ -4930,6 +4951,34 @@ warning 6002: The table/view 'EmployerPartners.dbo.VKR_Student_Not_In_StudData_I
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VKR_ThemesAspirant_NR_NPR_VKR_ThemesAspirantOrder">
+          <End Role="VKR_ThemesAspirantOrder" Type="Self.VKR_ThemesAspirantOrder" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VKR_ThemesAspirant_NR_NPR" Type="Self.VKR_ThemesAspirant_NR_NPR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR_ThemesAspirantOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKR_ThemesAspirant_NR_NPR">
+              <PropertyRef Name="VKR_ThemesAspirantOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKR_ThemesAspirant_NR_PartnerPerson_VKR_ThemesAspirantOrder">
+          <End Role="VKR_ThemesAspirantOrder" Type="Self.VKR_ThemesAspirantOrder" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VKR_ThemesAspirant_NR_PartnerPerson" Type="Self.VKR_ThemesAspirant_NR_PartnerPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR_ThemesAspirantOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKR_ThemesAspirant_NR_PartnerPerson">
+              <PropertyRef Name="VKR_ThemesAspirantOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_VKR_ThemesStudentOrder_Faculty">
           <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
           <End Role="VKR_ThemesStudentOrder" Type="Self.VKR_ThemesStudentOrder" Multiplicity="*" />
@@ -5656,6 +5705,21 @@ warning 6002: The table/view 'EmployerPartners.dbo.VKR_Student_Not_In_StudData_I
     [ext_GAK_2017].[IsAbsent] AS [IsAbsent], 
     [ext_GAK_2017].[NPR_Tabnum] AS [NPR_Tabnum]
     FROM [dbo].[ext_GAK_2017] AS [ext_GAK_2017]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="extPartnerPersonRubric" EntityType="Self.extPartnerPersonRubric" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [extPartnerPersonRubric].[PartnerPersonId] AS [PartnerPersonId], 
+    [extPartnerPersonRubric].[Рубрика] AS [Рубрика], 
+    [extPartnerPersonRubric].[Год] AS [Год], 
+    [extPartnerPersonRubric].[Уровень] AS [Уровень], 
+    [extPartnerPersonRubric].[Направление] AS [Направление], 
+    [extPartnerPersonRubric].[Тип программы] AS [Тип программы], 
+    [extPartnerPersonRubric].[Квалификация] AS [Квалификация], 
+    [extPartnerPersonRubric].[RubricTypeId] AS [RubricTypeId], 
+    [extPartnerPersonRubric].[Sorting] AS [Sorting], 
+    [extPartnerPersonRubric].[ObjectId] AS [ObjectId], 
+    [extPartnerPersonRubric].[ObjectCard] AS [ObjectCard]
+    FROM [dbo].[extPartnerPersonRubric] AS [extPartnerPersonRubric]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="GAK_StatChairmanPPNPR_Itog" EntityType="Self.GAK_StatChairmanPPNPR_Itog" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -6409,6 +6473,14 @@ warning 6002: The table/view 'EmployerPartners.dbo.VKR_Student_Not_In_StudData_I
           <AssociationSet Name="FK_VKR_Themes_StudyPlans_VKR_Themes" Association="Self.FK_VKR_Themes_StudyPlans_VKR_Themes">
             <End Role="VKR_Themes" EntitySet="VKR_Themes" />
             <End Role="VKR_Themes_StudyPlans" EntitySet="VKR_Themes_StudyPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKR_ThemesAspirant_NR_NPR_VKR_ThemesAspirantOrder" Association="Self.FK_VKR_ThemesAspirant_NR_NPR_VKR_ThemesAspirantOrder">
+            <End Role="VKR_ThemesAspirantOrder" EntitySet="VKR_ThemesAspirantOrder" />
+            <End Role="VKR_ThemesAspirant_NR_NPR" EntitySet="VKR_ThemesAspirant_NR_NPR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKR_ThemesAspirant_NR_PartnerPerson_VKR_ThemesAspirantOrder" Association="Self.FK_VKR_ThemesAspirant_NR_PartnerPerson_VKR_ThemesAspirantOrder">
+            <End Role="VKR_ThemesAspirantOrder" EntitySet="VKR_ThemesAspirantOrder" />
+            <End Role="VKR_ThemesAspirant_NR_PartnerPerson" EntitySet="VKR_ThemesAspirant_NR_PartnerPerson" />
           </AssociationSet>
           <AssociationSet Name="FK_VKR_ThemesStudentOrder_Faculty" Association="Self.FK_VKR_ThemesStudentOrder_Faculty">
             <End Role="Faculty" EntitySet="Faculty" />
@@ -8738,6 +8810,15 @@ warning 6002: The table/view 'EmployerPartners.dbo.VKR_Student_Not_In_StudData_I
           <AssociationSet Name="FK_VKR_Themes_OrderNums_VKR_Themes" Association="EmployerPartnersModel.FK_VKR_Themes_OrderNums_VKR_Themes">
             <End Role="VKR_Themes" EntitySet="VKR_Themes" />
             <End Role="VKR_Themes_OrderNums" EntitySet="VKR_Themes_OrderNums" />
+          </AssociationSet>
+          <EntitySet Name="extPartnerPersonRubric" EntityType="EmployerPartnersModel.extPartnerPersonRubric" />
+          <AssociationSet Name="FK_VKR_ThemesAspirant_NR_NPR_VKR_ThemesAspirantOrder" Association="EmployerPartnersModel.FK_VKR_ThemesAspirant_NR_NPR_VKR_ThemesAspirantOrder">
+            <End Role="VKR_ThemesAspirantOrder" EntitySet="VKR_ThemesAspirantOrder" />
+            <End Role="VKR_ThemesAspirant_NR_NPR" EntitySet="VKR_ThemesAspirant_NR_NPR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VKR_ThemesAspirant_NR_PartnerPerson_VKR_ThemesAspirantOrder" Association="EmployerPartnersModel.FK_VKR_ThemesAspirant_NR_PartnerPerson_VKR_ThemesAspirantOrder">
+            <End Role="VKR_ThemesAspirantOrder" EntitySet="VKR_ThemesAspirantOrder" />
+            <End Role="VKR_ThemesAspirant_NR_PartnerPerson" EntitySet="VKR_ThemesAspirant_NR_PartnerPerson" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="PartnerPersonActivityArea">
@@ -12194,6 +12275,8 @@ warning 6002: The table/view 'EmployerPartners.dbo.VKR_Student_Not_In_StudData_I
           <Property Name="WorkPlan" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="RegNomWP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="FIOEng" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VKR_ThemesAspirant_NR_NPR" Relationship="EmployerPartnersModel.FK_VKR_ThemesAspirant_NR_NPR_VKR_ThemesAspirantOrder" FromRole="VKR_ThemesAspirantOrder" ToRole="VKR_ThemesAspirant_NR_NPR" />
+          <NavigationProperty Name="VKR_ThemesAspirant_NR_PartnerPerson" Relationship="EmployerPartnersModel.FK_VKR_ThemesAspirant_NR_PartnerPerson_VKR_ThemesAspirantOrder" FromRole="VKR_ThemesAspirantOrder" ToRole="VKR_ThemesAspirant_NR_PartnerPerson" />
         </EntityType>
         <EntityType Name="VKR_ThemesAspirant_NR_NPR">
           <Key>
@@ -12212,6 +12295,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.VKR_Student_Not_In_StudData_I
           <Property Name="Surname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SecondName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VKR_ThemesAspirantOrder" Relationship="EmployerPartnersModel.FK_VKR_ThemesAspirant_NR_NPR_VKR_ThemesAspirantOrder" FromRole="VKR_ThemesAspirant_NR_NPR" ToRole="VKR_ThemesAspirantOrder" />
         </EntityType>
         <EntityType Name="VKR_ThemesAspirant_NR_PartnerPerson">
           <Key>
@@ -12228,6 +12312,7 @@ warning 6002: The table/view 'EmployerPartners.dbo.VKR_Student_Not_In_StudData_I
           <Property Name="Surname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="SecondName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VKR_ThemesAspirantOrder" Relationship="EmployerPartnersModel.FK_VKR_ThemesAspirant_NR_PartnerPerson_VKR_ThemesAspirantOrder" FromRole="VKR_ThemesAspirant_NR_PartnerPerson" ToRole="VKR_ThemesAspirantOrder" />
         </EntityType>
         <EntityType Name="VKR_ThemesAspirant_Review_NPR">
           <Key>
@@ -13095,6 +13180,53 @@ warning 6002: The table/view 'EmployerPartners.dbo.VKR_Student_Not_In_StudData_I
             </Principal>
             <Dependent Role="VKR_Themes_OrderNums">
               <PropertyRef Name="VKRThemeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="extPartnerPersonRubric">
+          <Key>
+            <PropertyRef Name="Рубрика" />
+            <PropertyRef Name="RubricTypeId" />
+            <PropertyRef Name="ObjectId" />
+            <PropertyRef Name="ObjectCard" />
+          </Key>
+          <Property Name="PartnerPersonId" Type="Int32" />
+          <Property Name="Рубрика" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Год" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Уровень" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Направление" Type="String" MaxLength="1051" FixedLength="false" Unicode="true" />
+          <Property Name="Тип_программы" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Квалификация" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RubricTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Sorting" Type="Int32" />
+          <Property Name="ObjectId" Type="Int32" Nullable="false" />
+          <Property Name="ObjectCard" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_VKR_ThemesAspirant_NR_NPR_VKR_ThemesAspirantOrder">
+          <End Type="EmployerPartnersModel.VKR_ThemesAspirantOrder" Role="VKR_ThemesAspirantOrder" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EmployerPartnersModel.VKR_ThemesAspirant_NR_NPR" Role="VKR_ThemesAspirant_NR_NPR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR_ThemesAspirantOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKR_ThemesAspirant_NR_NPR">
+              <PropertyRef Name="VKR_ThemesAspirantOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VKR_ThemesAspirant_NR_PartnerPerson_VKR_ThemesAspirantOrder">
+          <End Type="EmployerPartnersModel.VKR_ThemesAspirantOrder" Role="VKR_ThemesAspirantOrder" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EmployerPartnersModel.VKR_ThemesAspirant_NR_PartnerPerson" Role="VKR_ThemesAspirant_NR_PartnerPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VKR_ThemesAspirantOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VKR_ThemesAspirant_NR_PartnerPerson">
+              <PropertyRef Name="VKR_ThemesAspirantOrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16471,6 +16603,23 @@ warning 6002: The table/view 'EmployerPartners.dbo.VKR_Student_Not_In_StudData_I
                 <ScalarProperty Name="OrderNum" ColumnName="OrderNum" />
                 <ScalarProperty Name="VKRThemeId" ColumnName="VKRThemeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="extPartnerPersonRubric">
+            <EntityTypeMapping TypeName="EmployerPartnersModel.extPartnerPersonRubric">
+              <MappingFragment StoreEntitySet="extPartnerPersonRubric">
+                <ScalarProperty Name="ObjectCard" ColumnName="ObjectCard" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+                <ScalarProperty Name="Sorting" ColumnName="Sorting" />
+                <ScalarProperty Name="RubricTypeId" ColumnName="RubricTypeId" />
+                <ScalarProperty Name="Квалификация" ColumnName="Квалификация" />
+                <ScalarProperty Name="Тип_программы" ColumnName="Тип программы" />
+                <ScalarProperty Name="Направление" ColumnName="Направление" />
+                <ScalarProperty Name="Уровень" ColumnName="Уровень" />
+                <ScalarProperty Name="Год" ColumnName="Год" />
+                <ScalarProperty Name="Рубрика" ColumnName="Рубрика" />
+                <ScalarProperty Name="PartnerPersonId" ColumnName="PartnerPersonId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -352,6 +352,9 @@
         <AssociationConnector Association="EmployerPartnersModel.FK_VKR_Themes_StudyPlans_VKR_Themes" />
         <EntityTypeShape EntityType="EmployerPartnersModel.VKR_Themes_OrderNums" Width="1.5" PointX="45.375" PointY="32" />
         <AssociationConnector Association="EmployerPartnersModel.FK_VKR_Themes_OrderNums_VKR_Themes" />
+        <EntityTypeShape EntityType="EmployerPartnersModel.extPartnerPersonRubric" Width="1.5" PointX="45.375" PointY="34.75" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKR_ThemesAspirant_NR_NPR_VKR_ThemesAspirantOrder" />
+        <AssociationConnector Association="EmployerPartnersModel.FK_VKR_ThemesAspirant_NR_PartnerPerson_VKR_ThemesAspirantOrder" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

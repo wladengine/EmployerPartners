@@ -391,6 +391,9 @@
     <Compile Include="EDMX\EPLog.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>
+    <Compile Include="EDMX\extPartnerPersonRubric.cs">
+      <DependentUpon>EmpoyerPartners.tt</DependentUpon>
+    </Compile>
     <Compile Include="EDMX\ext_GAK_2017.cs">
       <DependentUpon>EmpoyerPartners.tt</DependentUpon>
     </Compile>

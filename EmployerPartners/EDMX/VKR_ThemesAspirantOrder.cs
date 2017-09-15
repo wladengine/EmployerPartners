@@ -14,6 +14,13 @@ namespace EmployerPartners.EDMX
     
     public partial class VKR_ThemesAspirantOrder
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public VKR_ThemesAspirantOrder()
+        {
+            this.VKR_ThemesAspirant_NR_NPR = new HashSet<VKR_ThemesAspirant_NR_NPR>();
+            this.VKR_ThemesAspirant_NR_PartnerPerson = new HashSet<VKR_ThemesAspirant_NR_PartnerPerson>();
+        }
+    
         public int Id { get; set; }
         public string GraduateYear { get; set; }
         public Nullable<int> StudDataId { get; set; }
@@ -45,5 +52,10 @@ namespace EmployerPartners.EDMX
         public string WorkPlan { get; set; }
         public string RegNomWP { get; set; }
         public string FIOEng { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKR_ThemesAspirant_NR_NPR> VKR_ThemesAspirant_NR_NPR { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VKR_ThemesAspirant_NR_PartnerPerson> VKR_ThemesAspirant_NR_PartnerPerson { get; set; }
     }
 }

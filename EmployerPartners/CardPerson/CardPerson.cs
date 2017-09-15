@@ -988,20 +988,36 @@ namespace EmployerPartners
                            where x.PartnerPersonId == _Id
                            select new
                            {
-                               x.Id,
+                               Id = (int?)x.Id,
                                Рубрика = r.ShortName,
-                               Код = а.Code,
-                               Уровень = а.StudyLevel.Name,
-                               Направление = а.Name,
+                               Год = "",
+                               Уровень =а.StudyLevel.Name,
+                               Направление = а.Code + " " + а.Name,
                                Тип_программы = а.ProgramType.Name,
                                Квалификация = а.Qualification.Name,
-                           }).ToList();
-
+                               r.Sorting,
+                               ObjectCard = "",
+                               ObjectId = (int?)null,
+                           }).ToList().Union((from x in context.extPartnerPersonRubric
+                                              where x.PartnerPersonId == _Id
+                                              select new
+                                              {
+                                                  Id = (int?)null,
+                                                  Рубрика = x.Рубрика,
+                                                  Год = x.Год,
+                                                  Уровень = x.Уровень,
+                                                  Направление = x.Направление,
+                                                  Тип_программы = x.Тип_программы,
+                                                  Квалификация = x.Квалификация,
+                                                  x.Sorting,
+                                                  x.ObjectCard,
+                                                  ObjectId = (int?)x.ObjectId
+                                              }).ToList()).Distinct().OrderBy(x=>x.Sorting).ToList();
                 DataTable dt = new DataTable();
                 dt = Utilities.ConvertToDataTable(lst);
                 dgvLP.DataSource = dt;
 
-                foreach (string s in new List<string>() { "Id" })
+                foreach (string s in new List<string>() { "Id", "Sorting", "ObjectId", "ObjectCard" })
                     if (dgvLP.Columns.Contains(s))
                         dgvLP.Columns[s].Visible = false;
                 foreach (DataGridViewColumn col in dgvLP.Columns)
@@ -1031,6 +1047,11 @@ namespace EmployerPartners
                 if (dgvLP.CurrentCell != null)
                     if (dgvLP.CurrentRow.Index >= 0)
                     {
+                        if (dgvLP.CurrentRow.Cells["Id"].Value != null)
+                        {
+                            MessageBox.Show("Эта запись не была заведена вручную. Удаление невозможно.");
+                            return;
+                        }
                         int id = int.Parse(dgvLP.CurrentRow.Cells["Id"].Value.ToString());
                         string sCode = "";
                         try
@@ -1077,8 +1098,27 @@ namespace EmployerPartners
                     if (dgvLP.CurrentCell != null)
                         if (dgvLP.CurrentRow.Index >= 0)
                         {
-                            int id = int.Parse(dgvLP.CurrentRow.Cells["Id"].Value.ToString());
-                            new CardPersonLP(id, _Id.Value, new UpdateIntHandler(FillLP)).Show();
+                            if (!String.IsNullOrEmpty(dgvLP.CurrentRow.Cells["Id"].Value.ToString()))
+                            {
+                                int id = int.Parse(dgvLP.CurrentRow.Cells["Id"].Value.ToString()); 
+                                new CardPersonLP(id, _Id.Value, new UpdateIntHandler(FillLP)).Show();
+                            }
+                            else
+                            {
+                                if (!String.IsNullOrEmpty(dgvLP.CurrentRow.Cells["ObjectId"].Value.ToString()) && !String.IsNullOrEmpty(dgvLP.CurrentRow.Cells["ObjectCard"].Value.ToString()))
+                                {
+                                    int Id = int.Parse(dgvLP.CurrentRow.Cells["ObjectId"].Value.ToString());
+                                    string Card = dgvLP.CurrentRow.Cells["ObjectCard"].Value.ToString();
+                                    switch (Card)
+                                    {
+                                        case "VKRThemesStudentCard": { new VKRThemesStudentCard(Id, null).Show(); break; }
+                                        case "VKRThemesAspirantCard": { new VKRThemesAspirantCard(Id, null).Show(); break; }
+                                        case "GAK_MembersCard": { new GAK_MembersCard(Id, null).Show(); break; }
+                                        case "SOPCard": { new SOPCard(Id, null).Show(); break; }
+                                        default: { MessageBox.Show("Неизвестная карточка"); break; }
+                                    }
+                                }
+                            }
                         }
             }
         }
